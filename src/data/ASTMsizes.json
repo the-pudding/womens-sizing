@@ -1,0 +1,682 @@
+[
+  {
+    "year": "2021",
+    "size": "00",
+    "alphaSize": "XXS",
+    "sizeRange": "straight",
+    "bust": "31.13",
+    "waist": "25.38",
+    "hip": "33.24",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "0",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "31.75",
+    "waist": "26.5",
+    "hip": "33.88",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "33",
+    "waist": "26.88",
+    "hip": "35.13",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "34.13",
+    "waist": "27.63",
+    "hip": "36.38",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "35.25",
+    "waist": "28.5",
+    "hip": "37.5",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "36.25",
+    "waist": "29.5",
+    "hip": "38.5",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "37.25",
+    "waist": "30.5",
+    "hip": "39.5",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "38.75",
+    "waist": "32.25",
+    "hip": "41",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "40.38",
+    "waist": "34",
+    "hip": "42.5",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "42.13",
+    "waist": "36",
+    "hip": "44.25",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "44",
+    "waist": "38.25",
+    "hip": "46",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "straight",
+    "bust": "46",
+    "waist": "40.5",
+    "hip": "48",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "00",
+    "alphaSize": "XXS",
+    "sizeRange": "curvy",
+    "bust": "31.13",
+    "waist": "23.88",
+    "hip": "34",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "0",
+    "alphaSize": "XS",
+    "sizeRange": "curvy",
+    "bust": "31.75",
+    "waist": "24.63",
+    "hip": "34.63",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "curvy",
+    "bust": "33",
+    "waist": "25.38",
+    "hip": "35.88",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "curvy",
+    "bust": "34.13",
+    "waist": "26.13",
+    "hip": "37.13",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "curvy",
+    "bust": "35.25",
+    "waist": "27",
+    "hip": "38.25",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "curvy",
+    "bust": "36.25",
+    "waist": "28",
+    "hip": "39.25",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "curvy",
+    "bust": "37.25",
+    "waist": "29",
+    "hip": "40.25",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "curvy",
+    "bust": "38.75",
+    "waist": "30.75",
+    "hip": "41.75",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "curvy",
+    "bust": "40.38",
+    "waist": "32.5",
+    "hip": "43.25",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "curvy",
+    "bust": "42.13",
+    "waist": "34.5",
+    "hip": "45",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "curvy",
+    "bust": "44",
+    "waist": "36.75",
+    "hip": "46.75",
+    "link": ""
+  },
+  {
+    "year": "2021",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "curvy",
+    "bust": "46",
+    "waist": "39",
+    "hip": "48.75",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "00",
+    "alphaSize": "XXS",
+    "sizeRange": "straight",
+    "bust": "31.125",
+    "waist": "25.375",
+    "hip": "33.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "0",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "31.75",
+    "waist": "26.125",
+    "hip": "33.875",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "33",
+    "waist": "26.875",
+    "hip": "35.125",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "34.125",
+    "waist": "27.625",
+    "hip": "36.375",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "35.25",
+    "waist": "28.5",
+    "hip": "37.5",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "36.25",
+    "waist": "29.5",
+    "hip": "38.5",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "37.25",
+    "waist": "30.5",
+    "hip": "39.5",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "38.75",
+    "waist": "32.25",
+    "hip": "41",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "40.375",
+    "waist": "34",
+    "hip": "42.5",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "42.125",
+    "waist": "36",
+    "hip": "44.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "44",
+    "waist": "38.25",
+    "hip": "46",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "straight",
+    "bust": "46",
+    "waist": "40.5",
+    "hip": "48",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "00",
+    "alphaSize": "XXS",
+    "sizeRange": "curvy",
+    "bust": "31.125",
+    "waist": "23.875",
+    "hip": "34",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "0",
+    "alphaSize": "XS",
+    "sizeRange": "curvy",
+    "bust": "31.75",
+    "waist": "24.625",
+    "hip": "34.625",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "curvy",
+    "bust": "33",
+    "waist": "25.375",
+    "hip": "35.875",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "curvy",
+    "bust": "34.125",
+    "waist": "26.125",
+    "hip": "37.125",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "curvy",
+    "bust": "35.25",
+    "waist": "27",
+    "hip": "38.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "curvy",
+    "bust": "36.25",
+    "waist": "28",
+    "hip": "39.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "curvy",
+    "bust": "37.25",
+    "waist": "29",
+    "hip": "40.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "curvy",
+    "bust": "38.75",
+    "waist": "30.75",
+    "hip": "41.75",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "curvy",
+    "bust": "40.375",
+    "waist": "32.5",
+    "hip": "43.25",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "curvy",
+    "bust": "42.125",
+    "waist": "34.5",
+    "hip": "45",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "curvy",
+    "bust": "44",
+    "waist": "36.75",
+    "hip": "46.75",
+    "link": ""
+  },
+  {
+    "year": "2011",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "curvy",
+    "bust": "46",
+    "waist": "39",
+    "hip": "48.75",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "32",
+    "waist": "24",
+    "hip": "34.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "33",
+    "waist": "25",
+    "hip": "35.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "34",
+    "waist": "26",
+    "hip": "36.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "35",
+    "waist": "27",
+    "hip": "37.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "36",
+    "waist": "28",
+    "hip": "38.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "37.5",
+    "waist": "29.5",
+    "hip": "40",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "39",
+    "waist": "31",
+    "hip": "41.5",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "40.5",
+    "waist": "32.5",
+    "hip": "43",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "42.5",
+    "waist": "34.5",
+    "hip": "45",
+    "link": ""
+  },
+  {
+    "year": "2001",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "straight",
+    "bust": "44.5",
+    "waist": "36.5",
+    "hip": "47",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "14",
+    "alphaSize": "14W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "39.5",
+    "waist": "31.5",
+    "hip": "41.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "16",
+    "alphaSize": "16W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "41.5",
+    "waist": "33.5",
+    "hip": "43.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "18",
+    "alphaSize": "18W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "43.5",
+    "waist": "35.5",
+    "hip": "45.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "20",
+    "alphaSize": "20W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "45.5",
+    "waist": "37.5",
+    "hip": "47.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "22",
+    "alphaSize": "22W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "47.5",
+    "waist": "39.5",
+    "hip": "49.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "24",
+    "alphaSize": "24W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "49.5",
+    "waist": "41.5",
+    "hip": "51.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "26",
+    "alphaSize": "26W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "51.5",
+    "waist": "43.5",
+    "hip": "53.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "28",
+    "alphaSize": "28W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "53.5",
+    "waist": "45.5",
+    "hip": "55.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "30",
+    "alphaSize": "30W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "55.5",
+    "waist": "47.5",
+    "hip": "57.5",
+    "link": ""
+  },
+  {
+    "year": "2004",
+    "size": "32",
+    "alphaSize": "32W",
+    "sizeRange": "plus (2004 only)",
+    "bust": "57.5",
+    "waist": "49.5",
+    "hip": "59.5",
+    "link": ""
+  }
+]

@@ -5,7 +5,7 @@
     
     // binds the container w and h
     let w = $state();
-	let h = $state();
+	  let h = $state();
     
     // filters the data so we're looking at what we want
     const onlyRegularLargeDresses = data.filter(
@@ -13,6 +13,7 @@
         && d.sizeRange == "Regular"
         && d.garmentType == "Dresses"
     );
+    
     
     // draws the paths
     function createPath(dress, centerX, offsetY) {
@@ -55,6 +56,7 @@
         C ${waistRight} ${yWaist}, ${bustRight} ${yBust}, ${bustRight} ${yBust}
         Z
       `;
+
     }
 
     function handleMouseOver(dress) {
