@@ -168,26 +168,23 @@
                 <option value={option}>{option}</option>
             {/each}
         </select>
+        <label for="ASTMYear">ASTM Year:</label>
+        <select id="ASTMYear" bind:value={$ASTMFilters.year}>
+            {#each getUniqueOptions(ASTMsizes, "year") as option}
+                <option value={option}>{option}</option>
+            {/each}
+        </select>
+        <label for="ASTMType">ASTM Type:</label>
+        <select id="ASTMType" bind:value={$ASTMFilters.sizeRange}>
+            {#each getUniqueOptions(ASTMsizes, "sizeRange") as option}
+                <option value={option}>{option}</option>
+            {/each}
+        </select>
     </div>
 
 
 <!-- ASTM Filters -->
-<!-- <h4>ASTM Sizes</h4>
-<div>
-    <label for="ASTMYear">ASTM Year:</label>
-    <select id="ASTMYear" bind:value={$ASTMFilters.year}>
-        {#each getUniqueOptions(ASTMsizes, "year") as option}
-            <option value={option}>{option}</option>
-        {/each}
-    </select>
 
-    <label for="ASTMType">ASTM Type:</label>
-    <select id="ASTMType" bind:value={$ASTMFilters.sizeRange}>
-        {#each getUniqueOptions(ASTMsizes, "sizeRange") as option}
-            <option value={option}>{option}</option>
-        {/each}
-    </select>
-</div> -->
 
 
 <!-- ASTM Size Chart -->
