@@ -4,7 +4,7 @@
     import waistlines from "$data/waistlines.json";
     import ASTMsizes from "$data/ASTMsizes.json";
     import { writable, get } from "svelte/store"; 
-    import { getFilteredWaistlineData, getFilteredASTMData,findMatchingASTMSizes, getUniqueOptions } from "./helpers/Filters.js"
+    import { getFilteredWaistlineData, getFilteredASTMData,findMatchingASTMSizes, getUniqueOptions } from "../helpers/Filters.js"
 
     let svg;
 

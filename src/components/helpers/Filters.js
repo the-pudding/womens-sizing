@@ -138,3 +138,23 @@ export const sizeBackgroundColors = {
         }
         return backgrounds;
     }
+
+
+
+    //for flat line scatterplot
+    export function getAlphaSizeLabel(waistValue) {
+        // Find the closest waist match
+        let closest = sizeLabels[0];
+        let minDiff = Math.abs(waistValue - closest.waist);
+      
+        for (const size of sizeLabels) {
+          const diff = Math.abs(waistValue - size.waist);
+          if (diff < minDiff) {
+            closest = size;
+            minDiff = diff;
+          }
+        }
+      
+        return closest.alphaSize;
+      }
+      

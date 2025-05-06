@@ -1,10 +1,8 @@
 <script>
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
-	import MeasurementDrawings from "$components/MeasurementDrawings.svelte";
-	import WaistChart from "./WaistChart.svelte";
-	import AstmSizeChart from "./ASTMSizeChart.svelte";
-	import SizeWaistComparisons from "./SizeWaistComparisons.svelte";
+	import WaistlineBeeswarm from "./WaistlineBeeswarm.svelte";
+
 
 
 
@@ -13,10 +11,6 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<AstmSizeChart />
-	<SizeWaistComparisons />
-	<WaistChart />
-
-	<MeasurementDrawings />
+	<WaistlineBeeswarm />
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

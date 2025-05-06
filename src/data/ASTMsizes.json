@@ -821,7 +821,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "0",
     "alphaSize": "0",
     "sizeRange": "junior",
     "bust": "30.51",
@@ -831,7 +831,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "1",
     "alphaSize": "1",
     "sizeRange": "junior",
     "bust": "31.50",
@@ -841,7 +841,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "3",
     "alphaSize": "3",
     "sizeRange": "junior",
     "bust": "32.48",
@@ -851,7 +851,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "5",
     "alphaSize": "5",
     "sizeRange": "junior",
     "bust": "33.50",
@@ -861,7 +861,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "7",
     "alphaSize": "7",
     "sizeRange": "junior",
     "bust": "34.49",
@@ -871,7 +871,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "9",
     "alphaSize": "9",
     "sizeRange": "junior",
     "bust": "35.51",
@@ -881,7 +881,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "11",
     "alphaSize": "11",
     "sizeRange": "junior",
     "bust": "37.01",
@@ -891,7 +891,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "13",
     "alphaSize": "13",
     "sizeRange": "junior",
     "bust": "38.50",
@@ -901,7 +901,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "15",
     "alphaSize": "15",
     "sizeRange": "junior",
     "bust": "40",
@@ -911,7 +911,7 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "17",
     "alphaSize": "17",
     "sizeRange": "junior",
     "bust": "41.50",
@@ -921,12 +921,112 @@
   },
   {
     "year": "2015",
-    "size": "",
+    "size": "19",
     "alphaSize": "19",
     "sizeRange": "junior",
     "bust": "42.99",
     "waist": "35",
     "hip": "45",
     "link": "https://img.antpedia.com/standard/files/pdfs_ora/20221211/astm/ASTM%20D6829-02%20(2015).pdf"
+  },
+  {
+    "year": "1995",
+    "size": "2",
+    "alphaSize": "XS",
+    "sizeRange": "straight",
+    "bust": "32",
+    "waist": "24",
+    "hip": "34.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "4",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "33",
+    "waist": "25",
+    "hip": "35.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "6",
+    "alphaSize": "S",
+    "sizeRange": "straight",
+    "bust": "34",
+    "waist": "26",
+    "hip": "36.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "8",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "35",
+    "waist": "27",
+    "hip": "37.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "10",
+    "alphaSize": "M",
+    "sizeRange": "straight",
+    "bust": "36",
+    "waist": "28",
+    "hip": "38.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "12",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "37.5",
+    "waist": "29.5",
+    "hip": "40",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "14",
+    "alphaSize": "L",
+    "sizeRange": "straight",
+    "bust": "39",
+    "waist": "31",
+    "hip": "41.5",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "16",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "40.5",
+    "waist": "32.5",
+    "hip": "43",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "18",
+    "alphaSize": "XL",
+    "sizeRange": "straight",
+    "bust": "42.5",
+    "waist": "34.5",
+    "hip": "45",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
+  },
+  {
+    "year": "1995",
+    "size": "20",
+    "alphaSize": "XXL",
+    "sizeRange": "straight",
+    "bust": "44.5",
+    "waist": "36.5",
+    "hip": "47",
+    "link": "https://cdn.standards.iteh.ai/samples/17779/db94584529654d7c8b7542a747302ce5/ASTM-D5585-95.pdf"
   }
 ]
