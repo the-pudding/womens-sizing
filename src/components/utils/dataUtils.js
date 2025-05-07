@@ -1,52 +1,106 @@
-
  import * as d3 from 'd3';
 
+ /**
+  * Generates synthetic data points based on percentile distribution stats
+  * @param {Object} stats - Object containing percentile information
+  * @returns {Object} - Contains generated points, markers, and range
+  */
  export function generateDataFromPercentiles(stats) {
-   if (!stats) return [];
+   if (!stats) return { points: [], markers: [], range: [20, 50] };
    
    // Extract percentile values
    const percentiles = {
-     5: parseFloat(stats.percent5),
-     10: parseFloat(stats.percent10),
-     15: parseFloat(stats.percent15),
-     25: parseFloat(stats.percent25),
-     50: parseFloat(stats.percent50),
-     75: parseFloat(stats.percent75),
-     85: parseFloat(stats.percent85),
-     90: parseFloat(stats.percent90),
-     95: parseFloat(stats.percent95)
+    //  0: parseFloat(stats.percent5 || "0") - 3, // Estimate for 0th percentile
+     5: parseFloat(stats.percent5 || "0"),
+     10: parseFloat(stats.percent10 || "0"),
+     15: parseFloat(stats.percent15 || "0"),
+     25: parseFloat(stats.percent25 || "0"),
+     50: parseFloat(stats.percent50 || "0"),
+     75: parseFloat(stats.percent75 || "0"),
+     85: parseFloat(stats.percent85 || "0"),
+     90: parseFloat(stats.percent90 || "0"),
+     95: parseFloat(stats.percent95 || "0"),
+    //  100: parseFloat(stats.percent95 || "0") + 3 // Estimate for 100th percentile
    };
    
-   // Create a d3 quantile scale to map random values to the distribution
+   // Create markers for each percentile point
+   const markers = Object.entries(percentiles).map(([percentile, value]) => ({
+     percentile: parseInt(percentile),
+     value: value,
+     isKey: [5, 10, 25, 50, 75, 90, 95].includes(parseInt(percentile))
+   }));
+   
+   // Create a quantile scale that maps random values to the distribution
    const quantileScale = d3.scaleQuantile()
      .domain([0, 0.05, 0.1, 0.15, 0.25, 0.5, 0.75, 0.85, 0.9, 0.95, 1])
      .range([
-       percentiles[5] - 2, // Estimate below 5th percentile
-       percentiles[5],
-       percentiles[10],
-       percentiles[15],
-       percentiles[25],
-       percentiles[50],
-       percentiles[75],
-       percentiles[85],
-       percentiles[90],
-       percentiles[95],
-       percentiles[95] + 2 // Estimate above 95th percentile
+       percentiles[0],  // 0th percentile estimate
+       percentiles[5],  // 5th percentile
+       percentiles[10], // 10th percentile
+       percentiles[15], // 15th percentile
+       percentiles[25], // 25th percentile
+       percentiles[50], // 50th percentile
+       percentiles[75], // 75th percentile
+       percentiles[85], // 85th percentile
+       percentiles[90], // 90th percentile
+       percentiles[95], // 95th percentile
+       percentiles[100] // 100th percentile estimate
      ]);
    
-   // Generate 100 data points following the percentile distribution
-   return Array.from({ length: 100 }, (_, i) => {
-     const random = Math.random(); // Random value 0-1
-     return {
-       id: i,
-       value: quantileScale(random),
-       percentile: Math.round(random * 100),
-       // Add additional properties that will be useful for future implementations
-       type: 'standard', // For future customization of dot type
-       iconPath: null, // For future custom PNG implementation
-       category: i % 4 // Example categorical variable for future filtering
-     };
+   // Generate data points with better distribution
+   const points = [];
+   
+   // Generate points with better distribution
+   for (let i = 0; i < 15; i++) {
+     // Points for 0-5th percentile (more points in this range)
+     const randomLow = Math.random() * 0.05;
+     points.push({
+       id: `low-${i}`,
+       value: quantileScale(randomLow),
+       percentile: Math.round(randomLow * 100),
+       type: 'standard'
+     });
+     
+     // Points for 5-95th percentile (regular distribution)
+     const randomMid = 0.05 + Math.random() * 0.9;
+     points.push({
+       id: `mid-${i}`,
+       value: quantileScale(randomMid),
+       percentile: Math.round(randomMid * 100),
+       type: 'standard'
+     });
+     
+     // Points for 95-100th percentile (more points in this range)
+     const randomHigh = 0.95 + Math.random() * 0.05;
+     points.push({
+       id: `high-${i}`,
+       value: quantileScale(randomHigh),
+       percentile: Math.round(randomHigh * 100),
+       type: 'standard'
+     });
+   }
+   
+   // Add specific points for each percentile of interest
+   [5, 10, 25, 50, 75, 90, 95].forEach(p => {
+     points.push({
+       id: `p${p}`,
+       value: percentiles[p],
+       percentile: p,
+       type: 'percentile'
+     });
    });
+   
+   // Calculate the dynamic x-axis range
+   const allValues = points.map(p => p.value);
+   const minValue = d3.min(allValues) - 2;
+   const maxValue = d3.max(allValues) + 2;
+   const dynamicRange = [minValue, maxValue];
+   
+   return { 
+     points: points, 
+     markers: markers, 
+     range: dynamicRange 
+   };
  }
  
  /**

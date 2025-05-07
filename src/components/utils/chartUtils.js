@@ -1,4 +1,6 @@
-
+/**
+ * D3-specific utility functions for chart creation and manipulation
+ */
  import * as d3 from 'd3';
 
  /**
@@ -18,7 +20,7 @@
    const simulation = d3.forceSimulation(data)
      // Force all points to be at their x position based on the data value
      .force('x', d3.forceX(d => xScale(d.value)).strength(1))
-     // Force points to be at vertical center
+     // Force points to be at vertical center with some randomness
      .force('y', d3.forceY(height / 2).strength(0.1))
      // Force to prevent circles from overlapping (adjusted for overlap factor)
      .force('collide', d3.forceCollide(collisionRadius))
@@ -37,48 +39,6 @@
    for (let i = 0; i < iterations; ++i) {
      simulation.tick();
    }
- }
- 
- /**
-  * Draws percentile lines on the chart
-  * @param {Object} chart - D3 selection for the chart
-  * @param {Object} stats - Statistics object with percentile data
-  * @param {Function} xScale - D3 scale function for x-axis
-  * @param {number} height - Height of the chart
-  * @param {Object} colors - Color settings for chart elements
-  * @returns {Object} - D3 selection containing the percentile lines group
-  */
- export function drawPercentileLines(chart, stats, xScale, height, colors) {
-   const percentiles = [5, 10, 25, 50, 75, 90, 95];
-   const percentileGroup = chart.append('g').attr('class', 'percentile-lines');
-   
-   percentiles.forEach(p => {
-     const value = parseFloat(stats[`percent${p}`]);
-     const x = xScale(value);
-     
-     // Draw vertical line for percentile
-     percentileGroup.append('line')
-       .attr('class', `percentile-line p${p}`)
-       .attr('x1', x)
-       .attr('y1', 0)
-       .attr('x2', x)
-       .attr('y2', height)
-       .attr('stroke', p === 50 ? colors.medianLine : colors.percentileLines)
-       .attr('stroke-width', p === 50 ? 2 : 1)
-       .attr('stroke-dasharray', p === 50 ? 'none' : '3,3');
-     
-     // Add percentile label
-     percentileGroup.append('text')
-       .attr('class', `percentile-label p${p}`)
-       .attr('x', x)
-       .attr('y', -5)
-       .attr('text-anchor', 'middle')
-       .style('font-size', '10px')
-       .style('fill', p === 50 ? colors.medianLine : colors.percentileLines)
-       .text(`P${p}`);
-   });
-   
-   return percentileGroup;
  }
  
  /**
@@ -113,10 +73,10 @@
   * @param {Object} chart - D3 selection for the chart
   * @param {Array} data - Array of data points
   * @param {number} radius - Dot radius
-  * @param {string|Function} color - Color or color function for dots
+  * @param {Object} colors - Colors for different dot types
   * @returns {Object} - D3 selection containing the dots
   */
- export function createDots(chart, data, radius, color) {
+ export function createDots(chart, data, radius, colors) {
    const dots = chart.append('g')
      .attr('class', 'dots')
      .selectAll('circle')
@@ -124,27 +84,29 @@
      .join('circle')
      .attr('cx', d => d.x)
      .attr('cy', d => d.y)
-     .attr('r', radius)
-     .attr('fill', typeof color === 'function' ? d => color(d) : color)
+     .attr('r', d => d.type === 'percentile' ? radius * 1.5 : radius)
+     .attr('fill', d => d.type === 'percentile' ? colors.percentileDot : colors.dots)
      .attr('stroke', '#fff')
-     .attr('stroke-width', 0.5)
-     .attr('opacity', 0.7);
+     .attr('stroke-width', d => d.type === 'percentile' ? 1.5 : 0.5)
+     .attr('opacity', d => d.type === 'percentile' ? 1 : 0.7);
    
    // Add tooltips
    dots.append('title')
-     .text(d => `Value: ${d.value.toFixed(2)}\nPercentile: ~${d.percentile}`);
+     .text(d => d.type === 'percentile' ? 
+       `${d.percentile}th Percentile: ${d.value.toFixed(2)}` : 
+       `Value: ${d.value.toFixed(2)}\nPercentile: ~${d.percentile}`);
    
    // Add event listeners for interactive features
    dots
      .on('mouseover', function(event, d) {
        d3.select(this)
-         .attr('r', radius * 1.5)
+         .attr('r', d.type === 'percentile' ? radius * 2 : radius * 1.5)
          .attr('opacity', 1);
      })
-     .on('mouseout', function() {
+     .on('mouseout', function(event, d) {
        d3.select(this)
-         .attr('r', radius)
-         .attr('opacity', 0.7);
+         .attr('r', d.type === 'percentile' ? radius * 1.5 : radius)
+         .attr('opacity', d.type === 'percentile' ? 1 : 0.7);
      });
    
    return dots;

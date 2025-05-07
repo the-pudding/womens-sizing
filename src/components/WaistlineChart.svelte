@@ -5,54 +5,60 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
-  import { generateDataFromPercentiles } from './utils/dataUtils';
+  import { generateDataFromPercentiles } from './utils/dataUtils.js';
   import { 
     createForceSimulation, 
     runSimulation, 
-    drawPercentileLines,
     createAxes,
     createDots,
     createChartHeader
-  } from './utils/chartUtils';
+  } from './utils/chartUtils.js';
   
   // Component props
   let { 
     stats = null,
     width = 800,
-    height = 400,
+    height = 300,
     radius = 6,
     colors = {
       dots: '#4682b4',
-      percentileLines: '#999',
-      medianLine: '#e41a1c',
+      percentileDot: '#e41a1c',
       axes: '#333'
     },
     margin = { top: 40, right: 40, bottom: 60, left: 60 },
     title = 'Waistline Distribution',
     xAxisLabel = 'Waistline (cm)',
-    xRange = [20, 50],
-    overlapFactor = 0.1
+    overlapFactor = 0.2
   } = $props();
   
   // Internal state
   let svg;
-  let chartElement = null;
-  let generatedData = [];
+  let chartElement = $state(null);
+  let generatedData = $state([]);
+  let percentileMarkers = $state([]);
+  let xRange = $state([20, 50]); // Will be dynamically adjusted
   
   // Reactive update when stats change
   $effect(() => {
     if (stats) {
-      generatedData = generateDataFromPercentiles(stats);
+      const generated = generateDataFromPercentiles(stats);
+      generatedData = generated.points;
+      percentileMarkers = generated.markers;
+      xRange = generated.range;
+      
       if (chartElement) {
         renderBeeswarmChart();
       }
     }
-  })
+  });
   
   // Initialize the chart after the component mounts
   onMount(() => {
     if (stats) {
-      generatedData = generateDataFromPercentiles(stats);
+      const generated = generateDataFromPercentiles(stats);
+      generatedData = generated.points;
+      percentileMarkers = generated.markers;
+      xRange = generated.range;
       renderBeeswarmChart();
     }
   });
@@ -75,19 +81,16 @@
       .append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
     
-    // Create the x scale using the provided range
+    // Add chart title and metadata
+    createChartHeader(chart, title, stats, innerWidth);
+    
+    // Create the x scale using the dynamic range
     const xScale = d3.scaleLinear()
       .domain(xRange)
       .range([0, innerWidth]);
     
-    // Add chart title and metadata
-    createChartHeader(chart, title, stats, innerWidth);
-    
     // Add axes
     createAxes(chart, xScale, innerHeight, xAxisLabel, innerWidth);
-    
-    // Draw percentile lines
-    drawPercentileLines(chart, stats, xScale, innerHeight, colors);
     
     // Set up force simulation for the beeswarm pattern
     const simulation = createForceSimulation(
@@ -102,7 +105,7 @@
     runSimulation(simulation);
     
     // Create the circles for each data point
-    createDots(chart, generatedData, radius, colors.dots);
+    createDots(chart, generatedData, radius, colors);
   }
 </script>
 
@@ -127,14 +130,6 @@
     width: 100%;
     height: auto;
     max-width: 100%;
-  }
-  
-  :global(.percentile-line) {
-    opacity: 0.6;
-  }
-  
-  :global(.percentile-line.p50) {
-    opacity: 0.8;
   }
   
   :global(.dots circle:hover) {
