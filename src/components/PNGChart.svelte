@@ -3,11 +3,19 @@
     import * as d3 from 'd3';
     import waistlinesData from '../data/waistlines.json';
     import ASTMsizes from "../data/ASTMsizes.json";
+    import { 
+      filterASTMData, 
+      processASTMSizeData, 
+      findSizesForMeasurement,
+      generateDataPoints,
+      createForceSimulation,
+      formatTooltipText
+    } from './utils/chart-utilities.js';
     
     let { 
       width = 800,
-      height = 500,
-      margin = { top: 40, right: 20, bottom: 10, left: 20 },
+      height = 600,
+      margin = { top: 40, right: 20, bottom: 50, left: 20 },
       
       waistlineFilters = {
         yearRange: "2015-2018",
@@ -35,17 +43,21 @@
     let ready = $state(false);
     let filteredData = $state(null);
     let filteredASTM = $state([]);
-    let alphaSizeRanges = $state([]);
     let currentSizeRanges = $state([]);
     let allSizeData = $state([]);
     let resizeObserver = $state(null);
     
     // Initialize on mount
     onMount(() => { 
-      filterASTMData();
-      processASTMSizeData();
-      setCurrentSizeRanges();
+      // Filter ASTM data using utility function
+      filteredASTM = filterASTMData(ASTMsizes, ASTMFilters);
       
+      // Process size data using utility function
+      const sizeData = processASTMSizeData(filteredASTM, omittedSizes, colors.sizeBandBase);
+      currentSizeRanges = sizeData.currentSizeRanges;
+      allSizeData = sizeData.allSizeData;
+      
+      // Find matching waistline data
       filteredData = waistlinesData.find(item => 
         item.yearRange === waistlineFilters.yearRange &&
         item.race === waistlineFilters.race &&
@@ -88,7 +100,7 @@
       margin = { 
         top: Math.max(20, Math.floor(height * 0.05)), 
         right: Math.max(10, Math.floor(width * 0.025)), 
-        bottom: Math.max(30, Math.floor(height * 0.08)), 
+        bottom: Math.max(30, Math.floor(height * 0.06)), 
         left: Math.max(10, Math.floor(width * 0.025))
       };
       
@@ -99,258 +111,12 @@
       }
     }
     
-    // Filter ASTM data
-    function filterASTMData() {
-      filteredASTM = ASTMsizes.filter(item => 
-        item.year === ASTMFilters.year &&
-        item.sizeRange === ASTMFilters.sizeRange
-      );
-    }
-    
-    // Set current size ranges
-    function setCurrentSizeRanges() {
-      currentSizeRanges = alphaSizeRanges.filter(range => 
-        !omittedSizes.includes(range.size)
-      );
-      
-      // Apply color gradient
-      if (currentSizeRanges.length > 0) {
-        const centerIndex = Math.floor(currentSizeRanges.length / 2);
-        const maxDistance = Math.max(centerIndex, currentSizeRanges.length - 1 - centerIndex);
-        
-        currentSizeRanges.forEach((range, index) => {
-          const distance = Math.abs(index - centerIndex);
-          const opacity = 1 - (distance / maxDistance) * 0.7;
-          
-          range.color = colors.sizeBandBase;
-          range.opacity = opacity;
-          range.isCenter = index === centerIndex;
-        });
-      }
-    }
-    
-    // Process ASTM size data
-    function processASTMSizeData() {
-      if (filteredASTM.length === 0) return;
-      
-      // Store data for tooltip lookups
-      allSizeData = filteredASTM.map(item => ({
-        alphaSize: item.alphaSize,
-        numericSize: item.size,
-        waist: parseFloat(item.waist)
-      }));
-      
-      // Process Alpha Sizes
-      const alphaSizeOrder = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
-      
-      // Group measurements by alpha size
-      const sizeGroups = {};
-      filteredASTM.forEach(item => {
-        const alphaSize = item.alphaSize;
-        if (!alphaSize) return;
-        
-        if (!sizeGroups[alphaSize]) {
-          sizeGroups[alphaSize] = [];
-        }
-        sizeGroups[alphaSize].push(parseFloat(item.waist));
-      });
-      
-      // Get min/max for each size
-      const sizeData = {};
-      Object.keys(sizeGroups).forEach(size => {
-        if (sizeGroups[size].length === 0) return;
-        
-        sizeData[size] = {
-          min: Math.min(...sizeGroups[size]),
-          max: Math.max(...sizeGroups[size]),
-          size: size
-        };
-      });
-      
-      // Sort sizes in standard order
-      const sortedSizes = alphaSizeOrder
-        .filter(size => sizeData[size])
-        .map(size => sizeData[size]);
-      
-      if (sortedSizes.length === 0) return;
-      
-      // Calculate ranges with transition points
-      const ranges = [];
-      
-      for (let i = 0; i < sortedSizes.length; i++) {
-        const currentSize = sortedSizes[i];
-        let rangeMin, rangeMax;
-        
-        // If it's the first size, extend 1 inch below
-        if (i === 0) {
-          rangeMin = currentSize.min - 1;
-        } else {
-          // Calculate midpoint between this size's min and previous size's max
-          rangeMin = (currentSize.min + sortedSizes[i-1].max) / 2;
-        }
-        
-        // If it's the last size, extend 1 inch above
-        if (i === sortedSizes.length - 1) {
-          rangeMax = currentSize.max + 1;
-        } else {
-          // Calculate midpoint between this size's max and next size's min
-          rangeMax = (currentSize.max + sortedSizes[i+1].min) / 2;
-        }
-        
-        ranges.push({
-          sizeType: 'alpha',
-          size: currentSize.size,
-          min: rangeMin,
-          max: rangeMax,
-          exactMin: currentSize.min,
-          exactMax: currentSize.max,
-          index: i
-        });
-      }
-      
-      alphaSizeRanges = ranges;
-    }
-    
-    // Find sizes for a measurement
-    function findSizesForMeasurement(value) {
-      // Check for alpha sizes within +/- 1 inch
-      const matchingAlphaSizes = allSizeData
-        .filter(item => Math.abs(item.waist - value) <= 1)
-        .map(item => item.alphaSize);
-      
-      // Check for numeric sizes within +/- 1 inch
-      const matchingNumericSizes = allSizeData
-        .filter(item => Math.abs(item.waist - value) <= 1)
-        .map(item => item.numericSize);
-      
-      // Remove duplicates
-      const uniqueAlphaSizes = [...new Set(matchingAlphaSizes)].filter(Boolean);
-      const uniqueNumericSizes = [...new Set(matchingNumericSizes)].filter(Boolean);
-      
-      return {
-        alphaSizes: uniqueAlphaSizes,
-        numericSizes: uniqueNumericSizes
-      };
-    }
-    
-    // Generate data points from percentiles
-    function generateDataPoints(data) {
-      const highlightPercentiles = [5, 25, 50, 75, 95];
-      const allPercentiles = [5, 10, 25, 50, 75, 90, 95];
-      const percentiles = {};
-      
-      allPercentiles.forEach(p => {
-        percentiles[p] = parseFloat(data[`percent${p}`]);
-      });
-      
-      const points = [];
-      
-      // Generate percentile points
-      allPercentiles.forEach(p => {
-        points.push({
-          id: `p${p}`,
-          value: percentiles[p],
-          percentile: p,
-          type: highlightPercentiles.includes(p) ? 'percentile' : 'standard'
-        });
-      });
-      
-      // Generate points between percentiles
-      const percentileRanges = [
-        { start: 5, end: 10, range: 5 },
-        { start: 10, end: 25, range: 15 },
-        { start: 25, end: 50, range: 25 },
-        { start: 50, end: 75, range: 25 },
-        { start: 75, end: 90, range: 15 },
-        { start: 90, end: 95, range: 5 }
-      ];
-      
-      const totalRange = percentileRanges.reduce((sum, segment) => sum + segment.range, 0);
-      const totalPointsToDistribute = 85; // Fixed number of points
-      
-      // Calculate points for each segment
-      const segments = percentileRanges.map(segment => ({
-        start: segment.start,
-        end: segment.end,
-        count: Math.round((segment.range / totalRange) * totalPointsToDistribute)
-      }));
-      
-      // Add points to the left of 5th percentile
-      const p5Value = percentiles[5];
-      const p10Value = percentiles[10];
-      const firstSegmentWidth = p10Value - p5Value;
-      
-      for (let i = 0; i < 4; i++) {
-        const leftShift = (i + 1) * (firstSegmentWidth * 0.25);
-        points.push({
-          id: `low-${i}`,
-          value: p5Value - leftShift,
-          percentile: i + 1,
-          type: 'standard'
-        });
-      }
-      
-      // Add points to the right of 95th percentile
-      const p95Value = percentiles[95];
-      const p90Value = percentiles[90];
-      const lastSegmentWidth = p95Value - p90Value;
-      
-      for (let i = 0; i < 4; i++) {
-        const rightShift = (i + 1) * (lastSegmentWidth * 0.25);
-        points.push({
-          id: `high-${i}`,
-          value: p95Value + rightShift,
-          percentile: 96 + i,
-          type: 'standard'
-        });
-      }
-      
-      // Fill in points between percentiles
-      segments.forEach(segment => {
-        const startValue = percentiles[segment.start];
-        const endValue = percentiles[segment.end];
-        const step = (endValue - startValue) / (segment.count + 1);
-        
-        for (let i = 0; i < segment.count; i++) {
-          const value = startValue + step * (i + 1);
-          const percentile = segment.start + (segment.end - segment.start) * (i + 1) / (segment.count + 1);
-          
-          points.push({
-            id: `segment-${segment.start}-${segment.end}-${i}`,
-            value: value,
-            percentile: Math.round(percentile),
-            type: 'standard'
-          });
-        }
-      });
-      
-      // Calculate axis range
-      const allValues = points.map(p => p.value);
-      const min = Math.min(d3.min(allValues), 24);
-      const max = d3.max(allValues);
-      const padding = (max - min) * 0.05;
-      
-      // Make sure range encompasses all size ranges
-      let xMin = min;
-      let xMax = max;
-      
-      if (currentSizeRanges.length > 0) {
-        xMin = Math.min(xMin, d3.min(currentSizeRanges, d => d.min));
-        xMax = Math.max(xMax, d3.max(currentSizeRanges, d => d.max));
-      }
-      
-      return {
-        points,
-        xRange: [xMin - padding, xMax + padding]
-      };
-    }
-    
     // Render the chart
     function renderChart() {
       if (!chartElement || !filteredData) return;
       
-      // Generate data
-      const { points, xRange } = generateDataPoints(filteredData);
+      // Generate data points using utility function
+      const { points, xRange } = generateDataPoints(filteredData, currentSizeRanges);
       
       // Clear existing content
       d3.select(svg).selectAll('*').remove();
@@ -447,16 +213,14 @@
       const rectWidth = baseRectWidth * scaleFactor;
       const rectHeight = baseRectHeight * scaleFactor;
       
-      // Set up force simulation
-      const simulation = d3.forceSimulation(points)
-        .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
-        .force('y', d3.forceY(d => {
-          return d.type === 'percentile' ? innerHeight * 0.5 : innerHeight * 0.4;
-        }).strength(width < 600 ? 0.2 : 0.05))
-        .force('collide', d3.forceCollide(d => {
-          return d.type === 'percentile' ? rectHeight/3 : rectHeight/4;
-        }))
-        .stop();
+      // Set up force simulation with utility function
+      const simulation = createForceSimulation(
+        points, 
+        xScale, 
+        innerHeight, 
+        rectHeight,
+        width
+      );
   
       // Run simulation
       for (let i = 0; i < (width < 600 ? 200 : 300); ++i) simulation.tick();
@@ -494,53 +258,26 @@
         .attr('stroke-width', 2)
         .attr('opacity', 1);
       
+      // Create tooltip functions that use our utility
+      const getTooltipForRegular = d => formatTooltipText(
+        d, 
+        value => findSizesForMeasurement(allSizeData, value)
+      );
+      
+      const getTooltipForPercentile = d => formatTooltipText(
+        d, 
+        value => findSizesForMeasurement(allSizeData, value)
+      );
+      
       // Add tooltips to standard dots
       regularDots
         .append('title')
-        .text(d => {
-          const value = d.value;
-          const valueStr = value.toString();
-          const baseText = `Value: ${valueStr}″${d.percentile ? `\nPercentile: ~${d.percentile}` : ''}`;
-          const matchingSizes = findSizesForMeasurement(value);
-          let sizeText = '';
-          
-          if (matchingSizes.alphaSizes.length > 0 || matchingSizes.numericSizes.length > 0) {
-            if (matchingSizes.alphaSizes.length > 0) {
-              sizeText += `\nAlpha Size: ${matchingSizes.alphaSizes.join(', ')}`;
-            }
-            if (matchingSizes.numericSizes.length > 0) {
-              sizeText += `\nNumeric Size: ${matchingSizes.numericSizes.join(', ')}`;
-            }
-          } else {
-            sizeText = '\nNo size match';
-          }
-          
-          return baseText + sizeText;
-        });
+        .text(getTooltipForRegular);
       
       // Add tooltips to percentile dots
       percentileDots
         .append('title')
-        .text(d => {
-          const value = d.value;
-          const valueStr = value.toString();
-          const baseText = `${d.percentile}th Percentile: ${valueStr}″`;
-          const matchingSizes = findSizesForMeasurement(value);
-          let sizeText = '';
-          
-          if (matchingSizes.alphaSizes.length > 0 || matchingSizes.numericSizes.length > 0) {
-            if (matchingSizes.alphaSizes.length > 0) {
-              sizeText += `\nAlpha Size: ${matchingSizes.alphaSizes.join(', ')}`;
-            }
-            if (matchingSizes.numericSizes.length > 0) {
-              sizeText += `\nNumeric Size: ${matchingSizes.numericSizes.join(', ')}`;
-            }
-          } else {
-            sizeText = '\nNo size match';
-          }
-          
-          return baseText + sizeText;
-        });
+        .text(getTooltipForPercentile);
       
       // Add hover effects to standard dots
       regularDots
