@@ -207,8 +207,8 @@
         .attr('dy', '1em');
       
       // Responsive rectangle sizing
-      const baseRectWidth = 40;
-      const baseRectHeight = 100;
+      const baseRectWidth = 80;
+      const baseRectHeight = 150;
       const scaleFactor = Math.max(0.5, Math.min(1, width / 800));
       const rectWidth = baseRectWidth * scaleFactor;
       const rectHeight = baseRectHeight * scaleFactor;
@@ -232,31 +232,32 @@
       const dotsBackground = chart.append('g').attr('class', 'dots-background');
       const dotsForeground = chart.append('g').attr('class', 'dots-foreground');
       
-      // Create standard dots (in background)
-      const regularDots = dotsBackground.selectAll('rect')
-        .data(points.filter(d => d.type !== 'percentile'))
-        .join('rect')
-        .attr('x', d => d.x - rectWidth/2)
-        .attr('y', d => d.y - rectHeight/2)
-        .attr('width', rectWidth)
-        .attr('height', rectHeight)
-        .attr('fill', colors.dots)
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 0.8)
-        .attr('opacity', 0.7);
+      // Path to the avatar image
+      const avatarPath = '/assets/avatars/2-avatar.png';
       
-      // Create percentile dots (in foreground)
-      const percentileDots = dotsForeground.selectAll('rect')
-        .data(points.filter(d => d.type === 'percentile'))
-        .join('rect')
+      // Create standard dots (in background) using the avatar image
+      const regularDots = dotsBackground.selectAll('image')
+        .data(points.filter(d => d.type !== 'percentile'))
+        .join('image')
+        .attr('href', avatarPath)
         .attr('x', d => d.x - rectWidth/2)
         .attr('y', d => d.y - rectHeight/2)
         .attr('width', rectWidth)
         .attr('height', rectHeight)
-        .attr('fill', colors.percentileDot)
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 2)
-        .attr('opacity', 1);
+        .style('opacity', 0.7)
+        .style('filter', 'none'); // No filter for regular dots
+      
+      // Create percentile dots (in foreground) using the avatar image with visual distinction
+      const percentileDots = dotsForeground.selectAll('image')
+        .data(points.filter(d => d.type === 'percentile'))
+        .join('image')
+        .attr('href', avatarPath)
+        .attr('x', d => d.x - rectWidth/2)
+        .attr('y', d => d.y - rectHeight/2)
+        .attr('width', rectWidth)
+        .attr('height', rectHeight)
+        .style('opacity', 1)
+        .style('filter', 'hue-rotate(330deg) saturate(180%)'); // Reddish hue for percentile avatars
       
       // Create tooltip functions that use our utility
       const getTooltipForRegular = d => formatTooltipText(
@@ -283,24 +284,24 @@
       regularDots
         .on('mouseover', function() {
           d3.select(this)
-            .attr('opacity', 1)
-            .attr('stroke-width', 1.5);
+            .style('opacity', 1)
+            .style('filter', 'brightness(1.2)');
         })
         .on('mouseout', function() {
           d3.select(this)
-            .attr('opacity', 0.7)
-            .attr('stroke-width', 0.8);
+            .style('opacity', 0.7)
+            .style('filter', 'none');
         });
       
       // Add hover effects to percentile dots
       percentileDots
         .on('mouseover', function() {
           d3.select(this)
-            .attr('stroke-width', 3);
+            .style('filter', 'hue-rotate(330deg) saturate(180%) brightness(1.2) drop-shadow(0 0 3px rgba(255,255,255,0.7))');
         })
         .on('mouseout', function() {
           d3.select(this)
-            .attr('stroke-width', 2);
+            .style('filter', 'hue-rotate(330deg) saturate(180%)');
         });
     }
   </script>
