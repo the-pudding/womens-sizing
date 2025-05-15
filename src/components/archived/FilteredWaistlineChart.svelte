@@ -1,8 +1,8 @@
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-    import waistlinesData from '../data/waistlines.json';
-    import ASTMsizes from "../data/ASTMsizes.json";
+    import waistlinesData from '../../data/waistlines.json';
+    import ASTMsizes from "../../data/ASTMsizes.json";
     
     let { 
       width = 800,

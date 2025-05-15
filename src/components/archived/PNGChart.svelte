@@ -1,8 +1,8 @@
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-    import waistlinesData from '../data/waistlines.json';
-    import ASTMsizes from "../data/ASTMsizes.json";
+    import waistlinesData from '../../data/waistlines.json';
+    import ASTMsizes from "../../data/ASTMsizes.json";
     import { 
       filterASTMData, 
       processASTMSizeData, 
@@ -10,7 +10,7 @@
       generateDataPoints,
       createForceSimulation,
       formatTooltipText
-    } from './utils/chart-utilities.js';
+    } from '../utils/chart-utilities.js';
     
     let { 
       width = 800,

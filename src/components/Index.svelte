@@ -1,10 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
-	import FilteredWaistlineChart from "./FilteredWaistlineChart.svelte";
-	import PngChart from "./PNGChart.svelte";
-	import AvatarChart from "./AvatarChart.svelte";
-	import Debugging from "./Debugging.svelte";
+	import Beeswarm from "./Beeswarm.svelte";
 
 
 	// const copy = getContext("copy");
@@ -12,10 +9,7 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<PngChart />
-	<!-- <Debugging /> -->
-	<AvatarChart />
-	<!-- <FilteredWaistlineChart />	 -->
+	<Beeswarm />
 
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

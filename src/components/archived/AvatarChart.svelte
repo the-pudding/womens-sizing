@@ -1,8 +1,10 @@
+<!-- AvatarChart.svelte -->
+
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-    import waistlinesData from '../data/waistlines.json';
-    import ASTMsizes from "../data/ASTMsizes.json";
+    import waistlinesData from '../../data/waistlines.json';
+    import ASTMsizes from "../../data/ASTMsizes.json";
     import { 
       filterASTMData, 
       processASTMSizeData, 
@@ -10,8 +12,8 @@
       generateDataPoints,
       createForceSimulation,
       formatTooltipText
-    } from './utils/chart-utilities.js';
-    import { generateRandomAvatar } from './utils/avatar-generator.js';
+    } from '../utils/chart-utilities.js';
+    import { generateRandomAvatar } from '../utils/avatar-generator.js';
     
     let { 
       width = 800,
@@ -49,15 +51,13 @@
     let resizeObserver = $state(null);
     let error = $state(null);
     
-    // Initialize on mount
+
     onMount(() => {
-      console.log("Component mounted");
       
       try {
-        // Filter ASTM data using utility function
+        //applies filters to datasets
         filteredASTM = filterASTMData(ASTMsizes, ASTMFilters);
         
-        // Process size data using utility function
         const sizeData = processASTMSizeData(filteredASTM, omittedSizes, colors.sizeBandBase);
         currentSizeRanges = sizeData.currentSizeRanges;
         allSizeData = sizeData.allSizeData;
@@ -68,12 +68,6 @@
           item.race === waistlineFilters.race &&
           item.age === waistlineFilters.age
         );
-        
-        if (!filteredData) {
-          console.error("No matching data found for filters:", waistlineFilters);
-          error = "No data found for the selected filters";
-          return;
-        }
         
         ready = true;
         
@@ -132,7 +126,7 @@
       const avatarGroup = selection.append('g')
         .attr('class', isPercentile ? 'avatar percentile' : 'avatar')
         .attr('transform', `translate(${avatar.x - avatarWidth/2}, ${avatar.y - avatarHeight/2})`)
-        .style('opacity', isPercentile ? 1 : 0.7);
+        .style('opacity', isPercentile ? 1 : 0.9);
         
       // Add mouseover/mouseout effects
       if (isPercentile) {
@@ -218,7 +212,7 @@
         
         // Responsive avatar sizing
         const baseAvatarWidth = 100;
-        const baseAvatarHeight = 200;
+        const baseAvatarHeight = 180;
         const scaleFactor = Math.max(0.5, Math.min(1, width / 800));
         const avatarWidth = baseAvatarWidth * scaleFactor;
         const avatarHeight = baseAvatarHeight * scaleFactor;
@@ -443,5 +437,6 @@
       :global(.metadata) {
         font-size: 10px !important;
       }
+
     }
   </style>
