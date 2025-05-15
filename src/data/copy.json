@@ -1,1 +1,21 @@
-[]
+{
+  "test": "check",
+  "steps": [
+    {
+      "type": "text",
+      "value": "Step 1"
+    },
+    {
+      "type": "text",
+      "value": "Step 2"
+    },
+    {
+      "type": "text",
+      "value": "Step 3"
+    },
+    {
+      "type": "text",
+      "value": "Step 4"
+    }
+  ]
+}

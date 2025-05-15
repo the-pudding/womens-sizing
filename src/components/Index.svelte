@@ -10,6 +10,8 @@
 	const copy = getContext("copy");
 	// const data = getContext("data");
 
+	console.log("copy", copy);
+
 	let scrollIndex;
 </script>
 
@@ -22,12 +24,12 @@
 	<Scrolly bind:scrollIndex>
 		{#each copy.steps as step, i}
 		<div class="step">
-		  <div class="stepText">
+		  <div class="step-inner">
 			<p>{step.value}</p>
 		  </div>
 		</div>
 		{/each}
-	  </Scrolly>
+	</Scrolly>
 
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
@@ -42,4 +44,34 @@
         z-index: 1;
         overflow: hidden;
 	}
+
+	.step {
+		height: 100vh;
+        z-index: 1000;
+        max-width: 550px;
+        margin: 0 auto;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 1000;
+	}
+
+	.step-inner {
+        padding: 2rem; 
+        border-radius: 3px;
+        position: relative;
+		background: white;
+		border: 1px solid black;
+		z-index: 1000;
+    }
+
+	.step p {
+        text-align: left;
+        max-width: 600px;
+        font-size: var(--18px);
+        line-height: 1.65;
+        background: none;
+        z-index: 1000;
+        margin: 0;
+        pointer-events: auto;
+    }
 </style>
