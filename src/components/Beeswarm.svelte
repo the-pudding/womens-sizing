@@ -215,56 +215,28 @@
       // Create regular avatars
       const avatarsGroup = chart.append('g').attr('class', 'avatars');
       
-      // Regular avatars first (they'll be at the back)
-      avatarData
-        .filter(d => d.type !== 'percentile')
-        .forEach(avatar => {
-          // Use different dimensions based on avatar size type
-          let avatarWidth, avatarHeight;
-          
-          switch(avatar.avatarSizeType) {
+     // Render all avatars in the sorted order (rather than separating percentiles)
+        avatarData.forEach(avatar => {
+        // Use different dimensions based on avatar size type
+        let avatarWidth, avatarHeight;
+        
+        switch(avatar.avatarSizeType) {
             case AVATAR_SIZE.LARGE:
-              avatarWidth = largeAvatarWidth;
-              avatarHeight = largeAvatarHeight;
-              break;
+            avatarWidth = largeAvatarWidth;
+            avatarHeight = largeAvatarHeight;
+            break;
             case AVATAR_SIZE.MID:
-              avatarWidth = midAvatarWidth;
-              avatarHeight = midAvatarHeight;
-              break;
+            avatarWidth = midAvatarWidth;
+            avatarHeight = midAvatarHeight;
+            break;
             case AVATAR_SIZE.SMALL:
             default:
-              avatarWidth = smallAvatarWidth;
-              avatarHeight = smallAvatarHeight;
-              break;
-          }
-          
-          renderAvatar(avatarsGroup, avatar, avatarWidth, avatarHeight, false);
-        });
-      
-      // Percentile avatars after (they'll be in front)
-      avatarData
-        .filter(d => d.type === 'percentile')
-        .forEach(avatar => {
-          // Use different dimensions based on avatar size type
-          let avatarWidth, avatarHeight;
-          
-          switch(avatar.avatarSizeType) {
-            case AVATAR_SIZE.LARGE:
-              avatarWidth = largeAvatarWidth;
-              avatarHeight = largeAvatarHeight;
-              break;
-            case AVATAR_SIZE.MID:
-              avatarWidth = midAvatarWidth;
-              avatarHeight = midAvatarHeight;
-              break;
-            case AVATAR_SIZE.SMALL:
-            default:
-              avatarWidth = smallAvatarWidth;
-              avatarHeight = smallAvatarHeight;
-              break;
-          }
-          
-          renderAvatar(avatarsGroup, avatar, avatarWidth, avatarHeight, true);
+            avatarWidth = smallAvatarWidth;
+            avatarHeight = smallAvatarHeight;
+            break;
+        }
+        
+        renderAvatar(avatarsGroup, avatar, avatarWidth, avatarHeight, avatar.type === 'percentile');
         });
       
       // metadata above the chart 
