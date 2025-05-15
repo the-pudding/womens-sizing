@@ -1,15 +1,45 @@
 <script>
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
-	import Beeswarm from "./Beeswarm.svelte";
+	import Beeswarm from "./BeeswarmJD.svelte";
+
+	// import Scrolly component
+	import Scrolly from "$components/helpers/Scrolly.svelte";
 
 
-	// const copy = getContext("copy");
+	const copy = getContext("copy");
 	// const data = getContext("data");
+
+	let scrollIndex;
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<Beeswarm />
+	<!-- Sticky container to house graphic -->
+	<div class="sticky">
+		<Beeswarm />
+	</div>
+	<!-- scrolly container to house steps -->
+	<Scrolly bind:scrollIndex>
+		{#each copy.steps as step, i}
+		<div class="step">
+		  <div class="stepText">
+			<p>{step.value}</p>
+		  </div>
+		</div>
+		{/each}
+	  </Scrolly>
 
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
+
+<style>
+	.sticky {
+        width: 100%;
+        height: 100svh;
+		position: sticky;
+		top: 0;
+        left: 0;
+        z-index: 1;
+        overflow: hidden;
+	}
+</style>
