@@ -6,28 +6,28 @@
 	// import Scrolly component
 	import Scrolly from "$components/helpers/Scrolly.svelte";
 
-
+	// import copy from json that is piped in from google doc
 	const copy = getContext("copy");
-	// const data = getContext("data");
 
-	console.log("copy", copy);
-
-	let scrollIndex;
+	// variable for scrollIndex that is bound to the Scrolly value
+	let scrollIndex = $state();
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<!-- Sticky container to house graphic -->
 	<div class="sticky">
-		<Beeswarm />
+		<!-- Pass the scrollIndex to the beeswarm component for use in there -->
+		<Beeswarm scrollIndex={scrollIndex}/>
 	</div>
 	<!-- scrolly container to house steps -->
-	<Scrolly bind:scrollIndex>
+	<Scrolly bind:value={scrollIndex}>
+		<!-- for each paragraph in the steps object in the copy, add another step -->
 		{#each copy.steps as step, i}
-		<div class="step">
-		  <div class="step-inner">
-			<p>{step.value}</p>
-		  </div>
-		</div>
+			<div class="step">
+			<div class="step-inner">
+				<p>{step.value}</p>
+			</div>
+			</div>
 		{/each}
 	</Scrolly>
 
