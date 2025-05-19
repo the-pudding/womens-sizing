@@ -1,1 +1,25 @@
-[]
+{
+  "scrolly1": [
+    {
+      "id": "1",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "20 and over",
+      "text": "This is a test"
+    },
+    {
+      "id": "2",
+      "text": "This is a follow-up test",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "15"
+    },
+    {
+      "id": "3",
+      "text": "This is a final test",
+      "yearRange": "2015-2018",
+      "race": "white",
+      "age": "20 and over"
+    }
+  ]
+}

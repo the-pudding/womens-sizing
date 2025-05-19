@@ -1,6 +1,8 @@
 import fs from "fs";
 import csv from "csvtojson";
 import docs from "../google.config.js";
+import archieml from "archieml";
+
 
 const CWD = process.cwd();
 
@@ -63,26 +65,36 @@ const transformData = (rawData) => {
 // Function to fetch CSV and convert to JSON
 const fetchGoogle = async ({ id, gid }) => {
     console.log(`Fetching... ${id}`);
-
+  
     const base = "https://docs.google.com";
-    const post = `spreadsheets/u/1/d/${id}/export?format=csv&id=${id}&gid=${gid}`;
+    const post = gid
+      ? `spreadsheets/u/1/d/${id}/export?format=csv&id=${id}&gid=${gid}`
+      : `document/d/${id}/export?format=txt`;
     const url = `${base}/${post}`;
-
+  
     try {
-        const response = await fetch(url);
-        const csvText = await response.text();
-
-        // Convert CSV to JSON
-        const rawData = await csv().fromString(csvText);
-
-        // Apply transformation based on detected structure
+      const response = await fetch(url);
+      const text = await response.text();
+  
+      if (gid) {
+        const rawData = await csv().fromString(text);
         const formattedData = transformData(rawData);
-
+        
         return JSON.stringify(formattedData, null, 2); // Pretty-print JSON
+      } else {
+   
+        try {
+          const parsed = archieml.load(text);
+          
+          return JSON.stringify(parsed, null, 2); // Pretty-print JSON
+        } catch (parseErr) {
+          console.warn(`⚠️ Error parsing document with ArchieML: ${parseErr}`);
+        }
+      }
     } catch (err) {
-        throw new Error(`Error fetching CSV: ${err}`);
+      throw new Error(`Error fetching from Google: ${err}`);
     }
-};
+  };
 
 // Run fetch for each document
 (async () => {
@@ -98,3 +110,4 @@ const fetchGoogle = async ({ id, gid }) => {
         }
     }
 })();
+
