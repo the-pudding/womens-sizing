@@ -2,6 +2,7 @@
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
 	import Beeswarm from "./Beeswarm.svelte";
+	import Section1 from "./Section1.svelte";
 
 
 	// const copy = getContext("copy");
@@ -9,7 +10,7 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<Beeswarm />
-
+	<!-- <Beeswarm /> -->
+	<Section1 />
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

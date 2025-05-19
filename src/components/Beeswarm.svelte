@@ -15,14 +15,15 @@
   import { generateRandomAvatar, determineAvatarSize, AVATAR_SIZE } from './utils/avatar-generator.js';
   import Scrolly from './helpers/Scrolly.svelte';
 
+
   let { 
     width = 1800,
     height = 1200,
     margin = { top: 40, right: 10, bottom: 10, left: 10 },
-    
+
     ASTMFilters = {
-      year: "2021",
-      sizeRange: "straight"
+      year: "2015",
+      sizeRange: "junior"
     },
     
     omittedSizes = ["XXL", "XL", "XS", "XXS"], 
@@ -44,13 +45,16 @@
   
   let yearRange = $state("2015-2018");
   let race = $state("all");
-  let age = $state("20 and over");
+  let age = $state("11");
+  let ASTMyear = $state("2015");
+  let ASTMrange = $state("junior");
   
   let currentStage = $derived(copy?.scrolly1?.[value] || null);
   
   $effect(() => {
       // Skip if no data
-      if (!currentStage) return;
+      // if (!currentStage) return;
+      if (value === undefined) value = 0;
       
       // Update individual state variables separately
       // This avoids refreshing the entire component at once
@@ -68,6 +72,7 @@
       item.race === race &&
       item.age === age
     ) || null;
+    
     
     renderChart();  
   }
