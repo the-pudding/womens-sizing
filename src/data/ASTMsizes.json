@@ -822,7 +822,7 @@
   {
     "year": "2015",
     "size": "0",
-    "alphaSize": "0",
+    "alphaSize": "XXS",
     "sizeRange": "junior",
     "bust": "30.51",
     "waist": "22.48",
@@ -832,7 +832,7 @@
   {
     "year": "2015",
     "size": "1",
-    "alphaSize": "1",
+    "alphaSize": "XS",
     "sizeRange": "junior",
     "bust": "31.50",
     "waist": "23.50",
@@ -842,7 +842,7 @@
   {
     "year": "2015",
     "size": "3",
-    "alphaSize": "3",
+    "alphaSize": "S",
     "sizeRange": "junior",
     "bust": "32.48",
     "waist": "24.49",
@@ -852,7 +852,7 @@
   {
     "year": "2015",
     "size": "5",
-    "alphaSize": "5",
+    "alphaSize": "S",
     "sizeRange": "junior",
     "bust": "33.50",
     "waist": "25.51",
@@ -862,7 +862,7 @@
   {
     "year": "2015",
     "size": "7",
-    "alphaSize": "7",
+    "alphaSize": "M",
     "sizeRange": "junior",
     "bust": "34.49",
     "waist": "26.50",
@@ -872,7 +872,7 @@
   {
     "year": "2015",
     "size": "9",
-    "alphaSize": "9",
+    "alphaSize": "M",
     "sizeRange": "junior",
     "bust": "35.51",
     "waist": "27.48",
@@ -882,7 +882,7 @@
   {
     "year": "2015",
     "size": "11",
-    "alphaSize": "11",
+    "alphaSize": "L",
     "sizeRange": "junior",
     "bust": "37.01",
     "waist": "29.02",
@@ -892,7 +892,7 @@
   {
     "year": "2015",
     "size": "13",
-    "alphaSize": "13",
+    "alphaSize": "L",
     "sizeRange": "junior",
     "bust": "38.50",
     "waist": "30.51",
@@ -902,7 +902,7 @@
   {
     "year": "2015",
     "size": "15",
-    "alphaSize": "15",
+    "alphaSize": "XL",
     "sizeRange": "junior",
     "bust": "40",
     "waist": "32.01",
@@ -912,7 +912,7 @@
   {
     "year": "2015",
     "size": "17",
-    "alphaSize": "17",
+    "alphaSize": "XL",
     "sizeRange": "junior",
     "bust": "41.50",
     "waist": "33.50",
@@ -922,7 +922,7 @@
   {
     "year": "2015",
     "size": "19",
-    "alphaSize": "19",
+    "alphaSize": "XXL",
     "sizeRange": "junior",
     "bust": "42.99",
     "waist": "35",

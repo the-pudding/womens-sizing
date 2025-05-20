@@ -1,5 +1,5 @@
-// chart-utilities.js
-// Refactored utility functions for the waistline chart component
+// refactored-chart-utilities.js
+
 
 import * as d3 from 'd3';
 
@@ -38,13 +38,11 @@ export function filterAndProcessASTMData(ASTMsizes, criteria, omittedSizes, base
   
   if (!filter) return { filter: null, filteredData: [], currentSizeRanges: [], allSizeData: [] };
   
-  // Filter data
   const filteredData = ASTMsizes.filter(item => 
     item.year === criteria.year &&
     item.sizeRange === criteria.sizeRange
   );
   
-  // Process data
   const sizeData = processASTMSizeData(filteredData, omittedSizes, baseColor);
   
   return {
@@ -68,7 +66,8 @@ export function generateChartData({
   height,
   margin,
   findSizesCallback,
-  avatarFunctions = {}
+  avatarFunctions = {},
+  avatarDimensions = {}
 }) {
   // Use provided avatar functions or placeholders
   const determineSize = avatarFunctions.determineAvatarSize || determineAvatarSize;
@@ -97,8 +96,23 @@ export function generateChartData({
     };
   });
   
-  // Run simulation to position avatars
-  const simulation = createForceSimulation(avatarData, xScale, innerHeight);
+  // Use responsive dimensions for collision detection if provided
+  const avatarWidth = avatarDimensions.width || 80; // Default fallback
+  const avatarHeight = avatarDimensions.height || 180; // Default fallback
+  
+  // Run simulation to position avatars with responsive dimensions
+  const simulation = d3.forceSimulation(avatarData)
+    .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
+    .force('y', d3.forceY(d => {
+      return d.type === 'percentile' ? innerHeight * 0.5 : innerHeight * 0.45;
+    }).strength(0.05))
+    .force('collide', d3.forceCollide(d => {
+      // Use different collision radius based on percentile status
+      if (d.type === 'percentile') {
+        return avatarHeight / 3;
+      }
+      return avatarHeight / 4;
+    }).strength(0.8));
   
   // Run simulation for a fixed number of iterations
   for (let i = 0; i < 300; ++i) {
@@ -114,6 +128,12 @@ export function generateChartData({
     });
   }
   
+  // Ensure avatars stay within bounds
+  avatarData.forEach(avatar => {
+    avatar.x = Math.max(avatarWidth/2, Math.min(innerWidth - avatarWidth/2, avatar.x));
+    avatar.y = Math.max(avatarHeight/2, Math.min(innerHeight - avatarHeight/2, avatar.y));
+  });
+  
   // Sort avatars by y-position
   avatarData.sort((a, b) => a.y - b.y);
   
@@ -124,7 +144,9 @@ export function generateChartData({
     innerWidth,
     innerHeight,
     xRange,
-    currentSizeRanges
+    currentSizeRanges,
+    avatarWidth,
+    avatarHeight
   };
 }
 
@@ -136,22 +158,50 @@ export function renderChartElements({
   chart,
   chartData,
   metadata,
-  renderFunctions
+  renderFunctions,
+  customRenderers = {}
 }) {
-  const { avatarData, xScale, innerWidth, innerHeight, currentSizeRanges } = chartData;
+  const { avatarData, xScale, innerWidth, innerHeight, currentSizeRanges, avatarWidth, avatarHeight } = chartData;
   const { filteredData, ASTMfilter } = metadata;
   
+  // Use custom renderers or default renderers
+  const renderSizeBandsFunc = customRenderers.renderSizeBands || 
+    ((chart, ranges, scale, height) => renderSizeBands(chart, ranges, scale, height));
+  
+  const renderAxesFunc = customRenderers.renderAxes || 
+    ((chart, scale, height, width) => renderAxes(chart, scale, height, width));
+  
+  const renderMetadataFunc = customRenderers.renderMetadata || 
+    ((chart, filtered, filter, width) => renderMetadata(chart, filtered, filter, width));
+  
   // Render size bands
-  renderSizeBands(chart, currentSizeRanges, xScale, innerHeight);
+  renderSizeBandsFunc(chart, currentSizeRanges, xScale, innerHeight);
   
   // Render avatars
-  renderAvatars(chart, avatarData, renderFunctions);
+  if (renderFunctions && renderFunctions.renderAvatar) {
+    const avatarsGroup = chart.append('g').attr('class', 'avatars');
+    
+    // Use responsive avatar dimensions if provided
+    const avatarW = avatarWidth || 80; // Default fallback
+    const avatarH = avatarHeight || 180; // Default fallback
+    
+    // Render all avatars in the sorted order
+    avatarData.forEach(avatar => {
+      renderFunctions.renderAvatar(
+        avatarsGroup, 
+        avatar, 
+        avatarW, 
+        avatarH, 
+        avatar.type === 'percentile'
+      );
+    });
+  }
   
   // Render axes
-  renderAxes(chart, xScale, innerHeight, innerWidth);
+  renderAxesFunc(chart, xScale, innerHeight, innerWidth);
   
   // Render metadata
-  renderMetadata(chart, filteredData, ASTMfilter, innerWidth);
+  renderMetadataFunc(chart, filteredData, ASTMfilter, innerWidth);
 }
 
 /**

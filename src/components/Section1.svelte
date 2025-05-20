@@ -1,5 +1,4 @@
 <!-- Section1.svelte -->
-
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
@@ -21,12 +20,16 @@
     } from './utils/avatar-generator.js';
     import Scrolly from './helpers/Scrolly.svelte';
   
-  
+    let containerHeight = $state(0);
+    let containerWidth = $state(0);
+    let margin = { top: 40, right: 10, bottom: 10, left: 10 };
+    let width = $derived(containerWidth - margin.left - margin.right);
+    let height = $derived(containerHeight - margin.top - margin.bottom);
+    
+    let avatarWidth = $derived(Math.max(30, width / 20));
+    let avatarHeight = $derived(avatarWidth * 1.8);
+    
     let { 
-      width = 1800,
-      height = 1200,
-      margin = { top: 40, right: 10, bottom: 10, left: 10 },
-      
       omittedSizes = ["XXL", "XL", "XS", "XXS"], 
       
       colors = {
@@ -36,47 +39,51 @@
       }
     } = $props();
     
+
     let value = $state(0);
     let svg;
-    let chartElement;
     let filteredData = null;
     let ASTMfilter = null;
     let filteredASTM = [];
     let currentSizeRanges = [];
     let allSizeData = [];
     
+    // Filter state
     let yearRange = $state("2015-2018");
     let race = $state("all");
     let age = $state("11");
     let ASTMyear = $state("2015");
     let ASTMrange = $state("junior");
     
-    let currentStage = $derived(copy?.scrolly1?.[value] || null);
-    
-    $effect(() => {
-        if (value === undefined) value = 0;
-        
-        // Update individual state variables separately
-        // This avoids refreshing the entire component at once
-        if (currentStage.yearRange) yearRange = currentStage.yearRange;
-        if (currentStage.race) race = currentStage.race; 
-        if (currentStage.age) age = currentStage.age;
 
-        if (currentStage.year) ASTMyear = currentStage.year;
-        if (currentStage.sizeRange) ASTMrange = currentStage.sizeRange; 
+    $effect(() => {
+        // Get current stage data safely
+        const stage = copy?.scrolly1?.[value];
+        if (!stage) return;
         
+        // Update filters if values changed
+        if (stage.yearRange) yearRange = stage.yearRange;
+        if (stage.race) race = stage.race;
+        if (stage.age) age = stage.age;
+        if (stage.year) ASTMyear = stage.year;
+        if (stage.sizeRange) ASTMrange = stage.sizeRange;
+
         updateData();
     });
+    
+    $effect(() => {
+        if (containerWidth > 0 && containerHeight > 0 && filteredData) {
+            renderChart();
+        }
+    });
 
-    function updateData() {    
-        // Filter and process waistline data in one step
+    function updateData() {
         const waistlineResults = filterAndProcessWaistlineData(
             waistlinesData,
             { yearRange, race, age }
         );
         filteredData = waistlineResults.filteredData;
 
-        // Filter and process ASTM data in one step
         const astmResults = filterAndProcessASTMData(
             ASTMsizes,
             { year: ASTMyear, sizeRange: ASTMrange },
@@ -84,14 +91,14 @@
             colors.sizeBandBase
         );
         
-        // Update all related state at once
         ASTMfilter = astmResults.filter;
         filteredASTM = astmResults.filteredData;
         currentSizeRanges = astmResults.currentSizeRanges;
         allSizeData = astmResults.allSizeData;
         
-        // Render chart after data is updated
-        renderChart();  
+        if (containerWidth > 0 && containerHeight > 0) {
+            renderChart();
+        }
     }
   
     onMount(() => {
@@ -99,9 +106,8 @@
     });
     
     function renderChart() {
-        if (!filteredData || !ASTMfilter) return;
+        if (!filteredData || !ASTMfilter || width <= 0 || height <= 0) return;
         
-        // Generate chart data (points, avatars, scales) in one step
         const chartData = generateChartData({
             filteredData,
             currentSizeRanges,
@@ -110,27 +116,24 @@
             height,
             margin,
             findSizesCallback: (value) => findSizesForMeasurement(allSizeData, value),
-            // Pass the avatar generator functions
             avatarFunctions: {
                 determineAvatarSize,
                 generateRandomAvatar
+            },
+            avatarDimensions: {
+                width: avatarWidth,
+                height: avatarHeight
             }
         });
         
-        // Clear existing content
         d3.select(svg).selectAll('*').remove();
         
-        // Set SVG dimensions
-        d3.select(svg)
-            .attr('width', width)
-            .attr('height', height);
-        
-        // Create main chart group
         const chart = d3.select(svg)
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
             .append('g')
             .attr('transform', `translate(${margin.left}, ${margin.top})`);
         
-        // Render all chart elements using a single utility function
         renderChartElements({
             chart,
             chartData,
@@ -145,15 +148,20 @@
     }
     
     function renderAvatar(selection, avatar, avatarWidth, avatarHeight, isPercentile = false) {
-        // Check if avatar has position coordinates
         if (typeof avatar.x !== 'number' || typeof avatar.y !== 'number') {
             console.warn('Avatar missing position coordinates:', avatar);
             return null;
         }
         
+        // Constrain position to ensure avatars stay within bounds
+        const x = Math.max(0, Math.min(width - avatarWidth/2, avatar.x));
+        const y = Math.max(0, Math.min(height - avatarHeight/2, avatar.y));
+        
         const avatarGroup = selection.append('g')
-            .attr('class', isPercentile ? 'avatar percentile' : 'avatar')
-            .attr('transform', `translate(${avatar.x - avatarWidth/2}, ${avatar.y - avatarHeight/2})`);
+            .attr('class', 'avatar-group')
+            .classed('percentile', isPercentile)
+            .classed('standard', !isPercentile)
+            .attr('transform', `translate(${x - avatarWidth/2}, ${y - avatarHeight/2})`)
                 
         const tooltipText = formatTooltipText(
             avatar, 
@@ -168,8 +176,7 @@
                 .attr('width', avatarWidth)
                 .attr('height', avatarHeight)
                 .attr('x', 0)
-                .attr('y', 0)
-                .style('filter', isPercentile ? 'none' : 'grayscale(1)');
+                .attr('y', 0);
         });
                 
         return avatarGroup;
@@ -177,56 +184,75 @@
 </script>
   
 <div class="outer-container">
-    <div class="visual-container">
-        <svg 
-            bind:this={svg} 
-            width={width}
-            height={height}
-            bind:this={chartElement}
-        ></svg>
-        
-        <!-- Debug info -->
-        <div class="debug-info">
-            <p>Step: {value}</p>
-            <p>Year: {yearRange}</p>
-            <p>Race: {race}</p>
-            <p>Age: {age}</p>
+    <div class="sticky-container">
+        <div class="visual-container">
+            <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+                <svg bind:this={svg}></svg>
+            </div>
+            
+            <div class="debug-info">
+                <p>Step: {value}</p>
+                <p>Year: {yearRange}</p>
+                <p>Race: {race}</p>
+                <p>Age: {age}</p>
+                <p>ASTM: {ASTMyear}, {ASTMrange}</p>
+            </div>
         </div>
     </div>
-  
-    <Scrolly bind:value>
-        {#each copy.scrolly1 as stage, i}
-            <div class="step">
-                <div class="text">
-                    <p>{@html stage.text}</p>
+    
+    <div class="scrolly-outer">
+        <Scrolly bind:value>
+            {#each copy.scrolly1 as stage, i}
+                <div class="step" >
+                    <div class="text">
+                        <p>{@html stage.text}</p>
+                    </div>
                 </div>
-            </div>
-        {/each}
-    </Scrolly>
+            {/each}
+        </Scrolly>
+    </div>
 </div>
   
 <style>
     .outer-container {
-        display: block;
+        position: relative;
         width: 100%;
+    }
+    
+    .sticky-container {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        z-index: 1;
     }
   
     .visual-container {
-        position: sticky;
-        top: 0;
         width: 100%;
-        height: 100vh;
-        text-align: center;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 1;
+    }
+    
+    .chart-container {
+        width: calc(100% - 4rem);
+        height: 80vh;
+        margin: 0 auto;
+        padding: 5px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background-color: white;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
   
     svg {
         display: block;
-        max-width: 95%;
-        max-height: 90%;
+        width: 100%;
+        height: 100%;
     }
   
     /* Debug info */
@@ -240,27 +266,38 @@
         font-size: 14px;
         z-index: 100;
     }
-  
-    :global(.x-axis path),
-    :global(.x-axis line),
-    :global(.x-axis-labels path),
-    :global(.x-axis-labels line) {
-        stroke: #333;
+    
+    .scrolly-outer {
+        position: relative;
+        z-index: 2;
     }
-  
-    :global(.x-axis text),
-    :global(.x-axis-labels text) {
-        font-size: 12px;
-        font-weight: 500;
-    }
-  
+    
     .step {
         height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-  
+    
     .step .text {
-        width: 100%;
-        padding: 20px;
+        max-width: 500px;
+        width: 90%;
+        padding: 25px;
         background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin: 0 auto;
+    }
+    
+    :global(.avatar-group.standard image) {
+        filter: grayscale(100%);
+    }
+    
+    :global(.avatar-group.percentile image) {
+        filter: none;
+    }
+    
+    :global(.avatar-group) {
+        transition: transform 0.2s ease;
     }
 </style>
