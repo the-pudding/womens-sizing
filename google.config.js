@@ -17,6 +17,11 @@ export default [
 		"id": "1YuUrDGQozbCG99KNOMlkxBFxFa7VjvaxisflDU_wsm4",
 		"gid": "418808451",
 		"filepath": "src/data/ASTMsizes.csv"
+	},
+	{
+		"id": "1YuUrDGQozbCG99KNOMlkxBFxFa7VjvaxisflDU_wsm4",
+		"gid": "1100413339",
+		"filepath": "src/data/generatedPercentiles.csv"
 	}
 
 ]

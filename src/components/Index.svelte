@@ -1,8 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
-	import Beeswarm from "./Beeswarm.svelte";
-	import Section1 from "./Section1.svelte";
+	import Intro from "./Intro.svelte";
 	import S1Scroll from "./S1Scroll.svelte";
 
 
@@ -11,8 +10,7 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<!-- <Beeswarm /> -->
+	<!-- <Intro /> -->
 	<S1Scroll />
-	<!-- <Section1 /> -->
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

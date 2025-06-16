@@ -11,7 +11,7 @@
     generateDataPoints,
     createForceSimulation,
     formatTooltipText
-  } from './utils/chart-utilities.js';
+  } from './archived/chart-utilities.js';
   import { generateRandomAvatar, determineAvatarSize, AVATAR_SIZE } from './utils/avatar-generator.js';
   import Scrolly from './helpers/Scrolly.svelte';
 

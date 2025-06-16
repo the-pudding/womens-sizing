@@ -10,7 +10,7 @@
       generateDataPoints,
       createForceSimulation,
       formatTooltipText
-    } from '../utils/chart-utilities.js';
+    } from './chart-utilities.js';
     
     let { 
       width = 800,

@@ -5,21 +5,21 @@
 import { 
     filterAndProcessWaistlineData,
     filterAndProcessASTMData
-  } from './data-processing.js';
+  } from './data-processing';
   
   import {
     generateDataPoints,
     formatTooltipText,
     findSizesForMeasurement,
     generateChartData
-  } from './data-generation.js';
+  } from './data-generation';
   
   import {
     renderChartElements,
     renderSizeBands,
     renderAxes,
     renderMetadata
-  } from './chart-rendering.js';
+  } from './chart-rendering';
   
   // Re-export everything (removing the duplicate default export)
   export { 

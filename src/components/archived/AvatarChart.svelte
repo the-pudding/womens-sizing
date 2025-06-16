@@ -12,7 +12,7 @@
       generateDataPoints,
       createForceSimulation,
       formatTooltipText
-    } from '../utils/chart-utilities.js';
+    } from './chart-utilities.js';
     import { generateRandomAvatar } from '../utils/avatar-generator.js';
     
     let { 
