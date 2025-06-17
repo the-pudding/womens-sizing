@@ -10,7 +10,7 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<!-- <Intro /> -->
-	<S1Scroll />
+	<Intro />
+	<!-- <S1Scroll /> -->
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
