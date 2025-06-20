@@ -1,9 +1,9 @@
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-    import waistlinesData from '../data/waistlines.json';
-    import ASTMsizes from "../data/ASTMsizes.json";
-    import copy from "../data/copy.json";
+    import waistlinesData from '../../data/waistlines.json';
+    import ASTMsizes from "../../data/ASTMsizes.json";
+    import copy from "../../data/copy.json";
     
     // Import utilities from the modular structure
     import {
@@ -15,13 +15,13 @@
       renderSizeBands,
       renderAxes,
       renderMetadata
-    } from './utils/chart/index.js';
+    } from './chart/index.js';
     
     import { 
       generateRandomAvatar, 
       determineAvatarSize
-    } from './utils/avatar-generator.js';
-    import Scrolly from './helpers/Scrolly.svelte';
+    } from '../utils/avatar-generator.js';
+    import Scrolly from '../helpers/Scrolly.svelte';
   
     // Responsive dimensions
     let containerHeight = $state(0);

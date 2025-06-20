@@ -12,6 +12,8 @@
       "sizeBands": "",
       "sizeType": "",
       "bandColor": "",
+      "highlightBand": "",
+      "highlightBandColor": "",
       "text": "This is your average 11-year-old kid"
     },
     {
@@ -25,8 +27,9 @@
       "highlightedPercentile": "50",
       "sizeBands": "S, M, L",
       "sizeType": "alpha",
-      "bandColor": "gradient",
-      "showBands": "yes",
+      "bandColor": "purple",
+      "highlightBand": "",
+      "highlightBandColor": "",
       "text": "They wear around a size 9 in junior-size clothing, which is about a size Medium"
     },
     {
@@ -39,31 +42,15 @@
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "highlightedPercentile": "50",
-      "sizeBands": "S, M, L",
-      "sizeType": "",
-      "bandColor": "gradient",
-      "showBands": "yes",
-      "text": "Here are the rest of the girls her age, grouped by their waistline measurements"
+      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeType": "alpha",
+      "bandColor": "purple",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "Here are the rest of the girls her age, grouped by their waistline measurements. \r\n\r\n\r\nAt this point, most are still too young to fit into clothes designed for adult women."
     },
     {
       "id": "4",
-      "yearRange": "2015-2018",
-      "race": "all",
-      "age": "11",
-      "year": "2015",
-      "sizeRange": "junior",
-      "avatarStyle": "greyscale",
-      "avatarDisplay": "all",
-      "percentileStyle": "color",
-      "highlightedPercentile": "50",
-      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
-      "sizeType": "alpha",
-      "bandColor": "gradient",
-      "showBands": "true",
-      "text": "and here are all the sizes they wear. \r\nAt this point, most are still too young to fit into clothes designed for adult women."
-    },
-    {
-      "id": "5",
       "yearRange": "2015-2018",
       "race": "all",
       "age": "15",
@@ -75,9 +62,28 @@
       "highlightedPercentile": "50",
       "sizeBands": "XXS, XS, S, M, L, XL, XXL",
       "sizeType": "alpha",
-      "bandColor": "gradient",
-      "showBands": "true",
-      "text": "But by age 15, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have outgrown the junior size section"
+      "bandColor": "purple",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "But by age 15, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have outgrown the junior size section.\r\n\r\n\r\nThey may not have the same curves as an adult, but this marks an important turning point for them in being able to try out women’s clothing lines"
+    },
+    {
+      "id": "5",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "15",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeType": "alpha",
+      "bandColor": "green",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "Here are the adult women’s sizes that our group of 15-year-old girls can generally fit into"
     },
     {
       "id": "6",
@@ -92,9 +98,86 @@
       "highlightedPercentile": "50",
       "sizeBands": "XXS, XS, S, M, L, XL, XXL",
       "sizeType": "alpha",
-      "bandColor": "gradient",
-      "showBands": "true",
-      "text": "They may not have the same curves as an adult, but this marks an important turning point for them in being able to try out women’s clothing lines"
+      "bandColor": "green",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "This will be the first time that nearly every girl in their cohort will be able to find sizes in adult clothing ranges that line up within an inch of their waistline measurements.\r\n\r\n\r\nThis will also likely be the last time this ever happens in their lifetimes.\r\n\r\n\r\nMost adult women do not maintain the physique of a 15-year-old girl — nor probably should they. As they age and reach major life milestones in adulthood — perhaps graduation, marriage, having kids, or advancing in their career — their bodies continue to develop and change. \r\n\r\n\r\nBut for most women as they progress through life, the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
+    },
+    {
+      "id": "7",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "20s",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeType": "alpha",
+      "bandColor": "green",
+      "highlightBand": "M",
+      "highlightBandColor": "orange",
+      "text": "By their 20s, a size Medium will no longer reflect the median or average woman’s waistline."
+    },
+    {
+      "id": "8",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "20s",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "12, 14, 16",
+      "sizeType": "numeric",
+      "bandColor": "orange",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "Instead, the median woman is between sizes 14 and 16 — a common threshold where many clothing brands stop carrying larger sizes."
+    },
+    {
+      "id": "9",
+      "yearRange": "2015-2018",
+      "race": "all",
+      "age": "20 and over",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green",
+      "highlightBand": "18",
+      "highlightBandColor": "orange",
+      "text": "Looking at all adult women over age 20, the median woman fits around a size 18."
+    }
+  ],
+  "scrolly2": [
+    {
+      "id": "0",
+      "text": "<br>People often blame so-called “vanity sizing” for ill-fitting clothes and sizing inconsistencies across many clothing brands.</br>\r\n\r\n\r\n<br>Indeed, sizes have changed over time — just not in the way we need.</br>"
+    },
+    {
+      "id": "1",
+      "text": "This is what standard sizes looked like in 1995…"
+    },
+    {
+      "id": "2",
+      "text": "…And here is how they looked in 2021"
+    },
+    {
+      "id": "3",
+      "text": "Notice how in 1995, a 27-inch waist was considered a size 8; in 2021 it was between sizes 2 and 4"
+    },
+    {
+      "id": "4",
+      "text": "<p>For years, many have blamed sizing inconsistencies on so-called “vanity sizing,” a practice that assumes women are more likely to buy clothes labeled as sizes that are smaller than they actually are. And while vanity sizing has indeed shifted how we label each size, there’s more to the story. </p>"
     }
   ]
 }

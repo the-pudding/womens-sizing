@@ -8,21 +8,18 @@
     import { generateRandomAvatar } from './utils/avatar-generator.js';
     import Scrolly from './helpers/Scrolly.svelte';
   
-    // Responsive dimensions
     let containerHeight = $state(0);
     let containerWidth = $state(0);
     let margin = { top: 40, right: 10, bottom: 10, left: 10 };
     let width = $derived(containerWidth - margin.left - margin.right);
     let height = $derived(containerHeight - margin.top - margin.bottom);
     
-    // Scrolly and chart state
     let value = $state(0);
     let svg;
     let filteredData = null;
     let ASTMfilter = null;
     let currentSizeRanges = [];
     
-    // Filter states defined in copy.json and set via scrollytelling
     let yearRange = $state("2015-2018");
     let race = $state("all");
     let age = $state("11");
@@ -34,6 +31,8 @@
     let highlightedPercentile = $state(50);
     let sizeType = $state("alpha");
     let bandColor = $state("");
+    let highlightBand = $state("");
+    let highlightBandColor = $state("");
     let sizeBandRendered = false;
     let avatarsRendered = false;
     let isUpdating = false;
@@ -70,15 +69,20 @@
       return { filter, currentSizeRanges: sizeRanges };
     }
 
-    /**  Process size data to determine size ranges (unified for both alpha and numeric) */
+    /** Process size data to determine alpha vs. numeric size ranges  */
     function processSizeData(filteredASTM, criteria) {
         if (!filteredASTM || filteredASTM.length === 0) return [];
         
-        //Handle empty sizeBands 
+        // Handle empty sizeBands 
         if (!criteria.sizeBands || criteria.sizeBands.trim() === '') return [];
         
-        const sizesToInclude = criteria.sizeBands.split(',').map(s => s.trim()).filter(s => s); // Filter empty strings
+        const sizesToInclude = criteria.sizeBands.split(',').map(s => s.trim()).filter(s => s);
         const isNumeric = criteria.sizeType === 'numeric';
+        
+        // Process highlight band sizes (if provided)
+        const highlightSizesToInclude = criteria.highlightBand && criteria.highlightBand.trim() !== '' 
+            ? criteria.highlightBand.split(',').map(s => s.trim()).filter(s => s)
+            : [];
         
         const sizeGroups = {};
         filteredASTM.forEach(item => {
@@ -130,13 +134,60 @@
             };
         });
         
+        // Filter ranges for regular bands (this is your main set of ranges)
         const filteredRanges = ranges.filter(range => sizesToInclude.includes(range.size));
+        
+        // Apply regular band colors to all ranges
         applySizeColors(filteredRanges, criteria.bandColor);
+        
+        // For ranges that should also have highlights, add highlight properties
+        filteredRanges.forEach(range => {
+            if (highlightSizesToInclude.includes(range.size)) {
+                // Add highlight properties to this existing range
+                addHighlightProperties(range, criteria.highlightBandColor, highlightSizesToInclude);
+            } else {
+                // Clear highlight properties if this range shouldn't be highlighted
+                range.hasHighlight = false;
+                delete range.highlightColor;
+                delete range.highlightOpacity;
+            }
+        });
         
         return filteredRanges;
     }
 
-    /** Sort numeric sizes */
+    function addHighlightProperties(range, highlightColor, highlightSizes) {
+        if (!highlightColor) return;
+        
+        // Find the index of this range within the highlight sizes for gradient calculation
+        const highlightIndex = highlightSizes.indexOf(range.size);
+        const centerIndex = Math.floor(highlightSizes.length / 2);
+        const maxDistance = Math.max(centerIndex, highlightSizes.length - 1 - centerIndex);
+        
+        const distance = Math.abs(highlightIndex - centerIndex);
+        const opacity = 1 - (distance / maxDistance) * 0.7;
+        
+        // Define color mapping for gradient options
+        const gradientColorMap = {
+            "green": "#C2D932",
+            "purple": "#B57BDC", 
+            "orange": "#D96F32",
+            "blue": "#9ABBD9"
+        };
+        
+        if (highlightColor === "gradient" || gradientColorMap[highlightColor]) {
+            // Use gradient effect with appropriate color
+            range.highlightColor = highlightColor === "gradient" ? "#C2D932" : gradientColorMap[highlightColor];
+            range.highlightOpacity = opacity;
+        } else {
+            // Default behavior for other colors
+            range.highlightColor = highlightColor;
+            range.highlightOpacity = 0.3;
+        }
+        
+        range.hasHighlight = true;
+    }
+
     function sortNumericSizes(sizes) {
       return sizes
         .map(size => ({
@@ -150,18 +201,33 @@
 
     /** Apply color gradient to size ranges */
     function applySizeColors(ranges, baseColor) {
-      if (!ranges || ranges.length === 0) return;
-      
-      const centerIndex = Math.floor(ranges.length / 2);
-      const maxDistance = Math.max(centerIndex, ranges.length - 1 - centerIndex);
-      
-      ranges.forEach((range, index) => {
-        const distance = Math.abs(index - centerIndex);
-        const opacity = 1 - (distance / maxDistance) * 0.7;
+        if (!ranges || ranges.length === 0) return;
         
-        range.color = baseColor === "gradient" ? "#C2D932" : baseColor;
-        range.opacity = baseColor === "gradient" ? opacity : 0.3;
-      });
+        const centerIndex = Math.floor(ranges.length / 2);
+        const maxDistance = Math.max(centerIndex, ranges.length - 1 - centerIndex);
+        
+        // Define color mapping for gradient options
+        const gradientColorMap = {
+            "green": "#C2D932",
+            "purple": "#B57BDC", 
+            "orange": "#D96F32",
+            "blue": "#9ABBD9"
+        };
+        
+        ranges.forEach((range, index) => {
+            const distance = Math.abs(index - centerIndex);
+            const opacity = 1 - (distance / maxDistance) * 0.7;
+            
+            if (baseColor === "gradient" || gradientColorMap[baseColor]) {
+                // Use gradient effect with appropriate color
+                range.color = baseColor === "gradient" ? "#C2D932" : gradientColorMap[baseColor];
+                range.opacity = opacity;
+            } else if (baseColor) {
+                // Default behavior for other colors
+                range.color = baseColor;
+                range.opacity = 0.3;
+            }
+        });
     }
     
     // =============================================================================
@@ -192,7 +258,6 @@
         const avatarHeight = Math.max(80, baseSize * 0.18);
         const avatarWidth = avatarHeight * 0.571;
         
-        // More controlled spread factor - limit the maximum spread
         const aspectRatio = innerWidth / innerHeight;
         const isMobile = innerWidth < 600;
         
@@ -227,9 +292,8 @@
                 return d.y; 
             }).strength(d => d.percentile === highlightedPercentile ? 0.4 : 0))
             
-            // More reasonable collision with limits
             .force('collide', d3.forceCollide(d => {
-                const baseRadius = avatarHeight / 6; // Smaller base radius
+                const baseRadius = avatarHeight / 6; 
                 const spreadRadius = baseRadius * Math.min(spreadFactor, 1.8); // Cap the spread
                 return d.percentile === highlightedPercentile ? spreadRadius * 1.2 : spreadRadius;
             }).strength(0.12)); // Slightly stronger collision
@@ -273,23 +337,20 @@
     
     /** Renders size bands in the chart */
     function renderSizeBands(selection, xScale, innerHeight) {
-        // Show bands if sizeBands has content, hide if empty
         const shouldShowBands = sizeBands && sizeBands.trim() !== "" && currentSizeRanges && currentSizeRanges.length > 0;
         
         if (!shouldShowBands) {
-            // Remove all bands if no data
             selection.selectAll('.size-band').remove();
+            selection.selectAll('.size-band-highlight').remove();
             selection.selectAll('.size-band-text').remove();
             sizeBandRendered = false;
             return;
         }
         
-        // Bind data to rectangles
+        // REGULAR BANDS
         const rects = selection.selectAll('.size-band')
             .data(currentSizeRanges, d => d.size); // Use size as key for consistent binding
         
-        // Handle rectangles
-        // EXIT: Remove old elements
         rects.exit().remove();
         
         // ENTER: Add new elements
@@ -309,15 +370,49 @@
             .attr('fill', d => d.color)
             .attr('opacity', d => d.opacity);
         
-        // Bind data to text elements
+        // HIGHLIGHT BANDS (rendered as outlines only if highlightBand exists)
+        // Only show highlight outlines if highlightBand is not empty
+        const shouldShowHighlights = highlightBand && highlightBand.trim() !== "";
+        
+        if (!shouldShowHighlights) {
+            // If no highlights should be shown, remove all highlight elements
+            selection.selectAll('.size-band-highlight').remove();
+        } else {
+            // Show highlights for ranges that have them
+            const highlightRanges = currentSizeRanges.filter(d => d.hasHighlight);
+            
+            const highlightRects = selection.selectAll('.size-band-highlight')
+                .data(highlightRanges, d => d.size);
+            
+            // EXIT: Remove old highlight elements
+            highlightRects.exit().remove();
+            
+            // ENTER: Add new highlight elements (as outlines only)
+            const newHighlightRects = highlightRects.enter()
+                .append('rect')
+                .attr('class', d => `size-band-highlight size-${d.size}-highlight`)
+                .attr('y', 0)
+                .attr('opacity', 0); // Start invisible
+            
+            // UPDATE: Merge enter and update selections, then animate
+            newHighlightRects.merge(highlightRects)
+                .transition()
+                .duration(sizeBandRendered ? 750 : 0)
+                .attr('x', d => xScale(d.min))
+                .attr('width', d => xScale(d.max) - xScale(d.min))
+                .attr('height', innerHeight)
+                .attr('fill', 'none') // No fill - outline only
+                .attr('stroke', d => d.highlightColor)
+                .attr('stroke-width', 3)
+                .attr('opacity', d => d.highlightOpacity);
+        }
+        
+        // TEXT LABELS
         const texts = selection.selectAll('.size-band-text')
             .data(currentSizeRanges, d => d.size);
         
-        // Handle text elements
-        // EXIT: Remove old elements
         texts.exit().remove();
         
-        // ENTER: Add new elements
         const newTexts = texts.enter()
             .append('text')
             .attr('class', d => `size-band-text size-${d.size}`)
@@ -327,7 +422,7 @@
             .attr('fill', 'rgba(0,0,0,0.3)')
             .attr('opacity', 0); // Start invisible
         
-        // UPDATE: Merge enter and update selections, then animate
+     
         newTexts.merge(texts)
             .text(d => d.size)
             .transition()
@@ -341,13 +436,11 @@
 
     /** Renders axes for the chart */
     function renderAxes(selection, xScale, innerHeight) {
-        // Small ticks
         selection.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${innerHeight})`)
             .call(d3.axisBottom(xScale).tickSize(15).ticks(30).tickFormat(''));
         
-        // Major ticks with labels
         const xAxisLabels = selection.append('g')
             .attr('class', 'x-axis-labels')
             .attr('transform', `translate(0, ${innerHeight})`)
@@ -362,27 +455,16 @@
     function renderMetadata(selection, innerWidth) {
         if (!filteredData || !ASTMfilter) return;
         
-        const metadataText = `${filteredData.yearRange}, Age: ${filteredData.age}, Race: ${filteredData.race} | ASTM: ${ASTMfilter.year}, ${ASTMfilter.sizeRange}`;
+        const metadataText = `Age: ${filteredData.age}`;
         
         selection.append('text')
             .attr('class', 'metadata')
-            .attr('x', innerWidth / 2)
-            .attr('y', -25)
-            .attr('text-anchor', 'middle')
-            .style('font-size', '14px')
+            .attr('x', innerWidth)
+            .attr('y', -1)
+            .attr('text-anchor', 'end')
+            .style('font-size', '24px')
             .text(metadataText);
     }
-
-    // function getHighlightedPercentiles() {
-    //     if (Array.isArray(highlightedPercentile)) {
-    //         return highlightedPercentile;
-    //     } else if (typeof highlightedPercentile === 'number') {
-    //         return [highlightedPercentile];
-    //     } else if (typeof highlightedPercentile === 'string') {
-    //         return highlightedPercentile.split(',').map(p => parseInt(p.trim())).filter(p => !isNaN(p));
-    //     }
-    //     return [];
-    // }
 
     function renderAvatars(selection, points, avatarWidth, avatarHeight) {
         if (!points || points.length === 0) {
@@ -551,14 +633,14 @@
         if (stage.avatarStyle) avatarStyle = stage.avatarStyle;
         if (stage.avatarDisplay) avatarDisplay = stage.avatarDisplay;
         
-        // Handle highlightedPercentile with type conversion
         if (stage.highlightedPercentile !== undefined) {
             highlightedPercentile = parseInt(stage.highlightedPercentile);
         }
         
         if (stage.sizeType) sizeType = stage.sizeType;
         if (stage.bandColor) bandColor = stage.bandColor;
-        // Removed showBands handling
+        if (stage.highlightBand !== undefined) highlightBand = stage.highlightBand;
+        if (stage.highlightBandColor !== undefined) highlightBandColor = stage.highlightBandColor;
         
         updateData();
     });
@@ -579,7 +661,9 @@
             sizeRange: ASTMrange,
             sizeType: sizeType,
             sizeBands: sizeBands,
-            bandColor: bandColor
+            bandColor: bandColor,
+            highlightBand: highlightBand,
+            highlightBandColor: highlightBandColor
         });
         
         ASTMfilter = astmResults.filter;
@@ -602,13 +686,11 @@
         // Create data points with avatars
         const points = createDataPoints(filteredData);
         
-        // Calculate dimensions
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
         
-        // Create scale
         const xScale = d3.scaleLinear()
-        .domain([20, 50])
+        .domain([20, 55])
         .range([0, innerWidth]);
         
         // Position avatars
@@ -742,6 +824,10 @@
     
     :global(.size-band) {
         transition: opacity 0.5s ease, fill 0.5s ease;
+    }
+
+    :global(.size-band-highlight) {
+        transition: opacity 0.5s ease, stroke 0.5s ease;
     }
 
 </style>

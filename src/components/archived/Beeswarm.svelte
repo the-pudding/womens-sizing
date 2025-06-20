@@ -1,9 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
-  import waistlinesData from '../data/waistlines.json';
-  import ASTMsizes from "../data/ASTMsizes.json";
-  import copy from "../data/copy.json";
+  import waistlinesData from '../../data/waistlines.json';
+  import ASTMsizes from "../../data/ASTMsizes.json";
+  import copy from "../../data/copy.json";
   import { 
     filterASTMData, 
     processASTMSizeData, 
@@ -11,9 +11,9 @@
     generateDataPoints,
     createForceSimulation,
     formatTooltipText
-  } from './archived/chart-utilities.js';
-  import { generateRandomAvatar, determineAvatarSize, AVATAR_SIZE } from './utils/avatar-generator.js';
-  import Scrolly from './helpers/Scrolly.svelte';
+  } from './chart-utilities.js';
+  import { generateRandomAvatar, determineAvatarSize, AVATAR_SIZE } from '../utils/avatar-generator.js';
+  import Scrolly from '../helpers/Scrolly.svelte';
 
 
   let { 
