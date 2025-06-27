@@ -216,7 +216,7 @@
         
         ranges.forEach((range, index) => {
             const distance = Math.abs(index - centerIndex);
-            const opacity = 1 - (distance / maxDistance) * 0.7;
+            const opacity = 1 - (distance / maxDistance) * 0.9;
             
             if (baseColor === "gradient" || gradientColorMap[baseColor]) {
                 // Use gradient effect with appropriate color
@@ -225,7 +225,7 @@
             } else if (baseColor) {
                 // Default behavior for other colors
                 range.color = baseColor;
-                range.opacity = 0.3;
+                range.opacity = 0.1;
             }
         });
     }
@@ -255,8 +255,8 @@
     
     function positionAvatars(points, xScale, innerWidth, innerHeight) {
         const baseSize = Math.min(innerWidth, innerHeight);
-        const avatarHeight = Math.max(80, baseSize * 0.18);
-        const avatarWidth = avatarHeight * 0.571;
+        const avatarHeight = Math.max(90, baseSize * 0.18);
+        const avatarWidth = avatarHeight * 0.6;
         
         const aspectRatio = innerWidth / innerHeight;
         const isMobile = innerWidth < 600;
@@ -455,14 +455,14 @@
     function renderMetadata(selection, innerWidth) {
         if (!filteredData || !ASTMfilter) return;
         
-        const metadataText = `Age: ${filteredData.age}`;
+        const metadataText = `Age: ${filteredData.age}, Size Range: ${ASTMfilter.sizeRange}`;
         
         selection.append('text')
             .attr('class', 'metadata')
             .attr('x', innerWidth)
             .attr('y', -1)
             .attr('text-anchor', 'end')
-            .style('font-size', '24px')
+            .style('font-size', '14px')
             .text(metadataText);
     }
 
@@ -759,6 +759,7 @@
     .outer-container {
         position: relative;
         width: 100%;
+        /* color: #FBFFE9; */
     }
     
     .sticky-container {
@@ -767,6 +768,7 @@
         height: 100vh;
         width: 100%;
         z-index: 1;
+
     }
   
     .visual-container {
@@ -775,6 +777,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        
     }
     
     .chart-container {
@@ -782,7 +785,7 @@
         height: 100vh;
         margin: 0 auto;
         padding: 5px;
-        background-color: white;
+        /* background-color: #FBFFE9; */
         position: relative;
         display: flex;
         justify-content: center;

@@ -2,11 +2,11 @@
   "scrolly1": [
     {
       "id": "1",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "11",
+      "age": "10-11",
       "year": "2015",
-      "sizeRange": "junior",
+      "sizeRange": "Juniors",
       "avatarDisplay": "percentile-only",
       "highlightedPercentile": "50",
       "sizeBands": "",
@@ -14,66 +14,48 @@
       "bandColor": "",
       "highlightBand": "",
       "highlightBandColor": "",
-      "text": "This is your average 11-year-old kid"
+      "text": "Meet your typical tween.\r\n\r\n\r\n<br>Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.</br>"
     },
     {
       "id": "2",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "11",
+      "age": "10-11",
       "year": "2015",
-      "sizeRange": "junior",
+      "sizeRange": "Juniors",
       "avatarDisplay": "percentile-only",
       "highlightedPercentile": "50",
       "sizeBands": "S, M, L",
       "sizeType": "alpha",
-      "bandColor": "purple",
+      "bandColor": "green",
       "highlightBand": "",
       "highlightBandColor": "",
-      "text": "They wear around a size 9 in junior-size clothing, which is about a size Medium"
+      "text": "“Junior” clothing sections often channel this interest with styles that feel more adult, but are made to reflect the body proportions of tweens and teens who are still growing and maturing.\r\n\r\n\r\n<br>The median 10- or 11-year-old wears around a size Medium in Juniors clothing ranges. </br>"
     },
     {
       "id": "3",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "11",
+      "age": "10-11",
       "year": "2015",
-      "sizeRange": "junior",
+      "sizeRange": "Juniors",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "highlightedPercentile": "50",
       "sizeBands": "XXS, XS, S, M, L, XL, XXL",
       "sizeType": "alpha",
-      "bandColor": "purple",
+      "bandColor": "green",
       "highlightBand": "",
       "highlightBandColor": "",
-      "text": "Here are the rest of the girls her age, grouped by their waistline measurements. \r\n\r\n\r\nAt this point, most are still too young to fit into clothes designed for adult women."
+      "text": "But not all tweens wear the same size.\r\n\r\n\r\n<br>Here’s a look at the varying sizes for all 10- and 11-year-old girls from across the U.S.</br>"
     },
     {
       "id": "4",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "15",
+      "age": "14-15",
       "year": "2015",
-      "sizeRange": "junior",
-      "avatarStyle": "greyscale",
-      "avatarDisplay": "all",
-      "percentileStyle": "color",
-      "highlightedPercentile": "50",
-      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
-      "sizeType": "alpha",
-      "bandColor": "purple",
-      "highlightBand": "",
-      "highlightBandColor": "",
-      "text": "But by age 15, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have outgrown the junior size section.\r\n\r\n\r\nThey may not have the same curves as an adult, but this marks an important turning point for them in being able to try out women’s clothing lines"
-    },
-    {
-      "id": "5",
-      "yearRange": "2015-2018",
-      "race": "all",
-      "age": "15",
-      "year": "2021",
-      "sizeRange": "straight",
+      "sizeRange": "Juniors",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -83,15 +65,33 @@
       "bandColor": "green",
       "highlightBand": "",
       "highlightBandColor": "",
-      "text": "Here are the adult women’s sizes that our group of 15-year-old girls can generally fit into"
+      "text": "But by age 15, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have outgrown the junior size section.\r\n\r\n\r\nThey may not have the same curves as an adult, but this marks an important turning point for them in being able to try out women’s clothing lines"
+    },
+    {
+      "id": "5",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "14-15",
+      "year": "2021",
+      "sizeRange": "Womens",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeType": "alpha",
+      "bandColor": "green",
+      "highlightBand": "",
+      "highlightBandColor": "",
+      "text": "Some may find that adult Women’s sizes actually fit better"
     },
     {
       "id": "6",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "15",
+      "age": "14-15",
       "year": "2021",
-      "sizeRange": "straight",
+      "sizeRange": "Womens",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -105,11 +105,11 @@
     },
     {
       "id": "7",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "20s",
+      "age": "20-29",
       "year": "2021",
-      "sizeRange": "straight",
+      "sizeRange": "Womens",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -123,29 +123,29 @@
     },
     {
       "id": "8",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "20s",
+      "age": "20-29",
       "year": "2021",
-      "sizeRange": "straight",
+      "sizeRange": "Womens",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
       "highlightedPercentile": "50",
       "sizeBands": "12, 14, 16",
       "sizeType": "numeric",
-      "bandColor": "orange",
+      "bandColor": "green",
       "highlightBand": "",
       "highlightBandColor": "",
-      "text": "Instead, the median woman is between sizes 14 and 16 — a common threshold where many clothing brands stop carrying larger sizes."
+      "text": "Instead, the median 20-something fits a size 14.\r\n\r\n\r\nThis places them in the middle of what’s sometimes referred to as the “mid-size gap” — a murky space that varies from brand to brand in determining where “regular-” or “straight-size” clothing lines end, and separate “plus-size” ranges begin."
     },
     {
       "id": "9",
-      "yearRange": "2015-2018",
+      "yearRange": "2021-2023",
       "race": "all",
-      "age": "20 and over",
+      "age": "20 and older",
       "year": "2021",
-      "sizeRange": "straight",
+      "sizeRange": "Womens",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -155,29 +155,37 @@
       "bandColor": "green",
       "highlightBand": "18",
       "highlightBandColor": "orange",
-      "text": "Looking at all adult women over age 20, the median woman fits around a size 18."
+      "text": "Sizing options are even worse when you look at all adult women over the age of 20.\r\n\r\n\r\nThe median woman in the U.S. fits around a size 18 based on their waistline measurement.\r\n\r\n\r\nThis has meaningful implications."
+    }
+  ],
+  "scrollysub2": [
+    {
+      "id": "0",
+      "text": "<br>People often blame so-called “vanity sizing” for ill-fitting clothes and sizing inconsistencies across many clothing brands.</br>\r\n<br>Indeed, sizes have changed over time — just not in the way we need.</br>\r\n<br>But as sizes have changed, so too have our waistlines.</br>\r\n\r\n\r\n<br>Between 1988 and 1994, the average woman’s waistline was 34.88 inches. By 2018, it was 38.74</br>\r\n\r\n\r\n<p>An organization called ASTM International has tried to standardize apparel with a universal size chart that is updated every decade or so. Brands and manufacturers are meant to use this sizing system as a template to develop their unique size ranges. </p>\r\n\r\n\r\n<p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p>\r\n\r\n\r\n<p>In many ways, this has been intentional.</p>\r\n\r\n\r\n<p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p>\r\n\r\n\r\n<p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>\r\n\r\n\r\n<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
     }
   ],
   "scrolly2": [
     {
       "id": "0",
-      "text": "<br>People often blame so-called “vanity sizing” for ill-fitting clothes and sizing inconsistencies across many clothing brands.</br>\r\n\r\n\r\n<br>Indeed, sizes have changed over time — just not in the way we need.</br>"
-    },
-    {
-      "id": "1",
       "text": "This is what standard sizes looked like in 1995…"
     },
     {
-      "id": "2",
+      "id": "1",
       "text": "…And here is how they looked in 2021"
     },
     {
-      "id": "3",
+      "id": "2",
       "text": "Notice how in 1995, a 27-inch waist was considered a size 8; in 2021 it was between sizes 2 and 4"
     },
     {
-      "id": "4",
+      "id": "3",
       "text": "<p>For years, many have blamed sizing inconsistencies on so-called “vanity sizing,” a practice that assumes women are more likely to buy clothes labeled as sizes that are smaller than they actually are. And while vanity sizing has indeed shifted how we label each size, there’s more to the story. </p>"
+    }
+  ],
+  "scrolly3": [
+    {
+      "id": "0",
+      "text": "<br>But as sizes have changed, so too have our waistlines.</br>\r\n\r\n\r\n<br>Between 1988 and 1994, the average woman’s waistline was 34.88 inches. By 2018, it was 38.74</br>\r\n\r\n\r\n<p>An organization called ASTM International has tried to standardize apparel with a universal size chart that is updated every decade or so. Brands and manufacturers are meant to use this sizing system as a template to develop their unique size ranges. </p>\r\n\r\n\r\n<p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p>\r\n\r\n\r\n<p>In many ways, this has been intentional.</p>\r\n\r\n\r\n<p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p>\r\n\r\n\r\n<p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>\r\n\r\n\r\n<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
     }
   ]
 }

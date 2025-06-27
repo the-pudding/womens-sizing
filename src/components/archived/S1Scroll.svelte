@@ -43,15 +43,15 @@
     let allSizeData = [];
     
     // Filter states defined in copy.json and set via scrollytelling
-    let yearRange = $state("2015-2018");
+    let yearRange = $state("2021-2023");
     let race = $state("all");
-    let age = $state("11");
+    let age = $state("12-13");
     let ASTMyear = $state("2015");
     let ASTMrange = $state("junior");
     let avatarStyle = $state("greyscale");
     let avatarDisplay = $state("all");
     let percentileStyle = $state("color");
-    let percentileHighlight = $state("5,50,95");
+    let percentileHighlight = $state("50");
     let sizeBands = $state("S,M,L");
     let sizeType = $state("alpha");
     let bandColor = $state("gradient");
@@ -63,7 +63,7 @@
     // Update settings when scroll position changes
     $effect(() => {
         // Get current stage data
-        const stage = copy?.scrolly1?.[value];
+        const stage = copy?.scrollytest?.[value];
         if (!stage) return;
         
         // Apply filter settings from copy data directly
@@ -394,7 +394,7 @@
     
     <div class="scrolly-outer">
         <Scrolly bind:value>
-            {#each copy.scrolly1 as stage, i}
+            {#each copy.scrollytest as stage, i}
                 <div class="step" >
                     <div class="text">
                         <p>{@html stage.text}</p>
