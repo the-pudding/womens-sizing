@@ -24,7 +24,7 @@
     let race = $state("all");
     let age = $state("11");
     let ASTMyear = $state("2015");
-    let ASTMrange = $state("junior");
+    let ASTMrange = $state("juniors");
     let sizeBands = $state("");
     let avatarStyle = $state("color")
     let avatarDisplay = $state("all");

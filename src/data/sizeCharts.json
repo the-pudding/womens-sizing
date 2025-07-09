@@ -2856,7 +2856,7 @@
     "sizeRange": "Regular",
     "garmentType": "Apparel",
     "alphaSize": "XS",
-    "numericSizeMin": "2",
+    "numericSizeMin": "4",
     "numericSizeMax": null,
     "numericBottoms": null,
     "bustMin": 31.5,

@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import data from "$data/data.csv";
+    // import data from "$data/data.csv";
+    import sizeCharts from "$data/sizeCharts.json"
     import * as d3 from "d3";
     
     // binds the container w and h
@@ -8,7 +9,7 @@
 	  let h = $state();
     
     // filters the data so we're looking at what we want
-    const onlyRegularLargeDresses = data.filter(
+    const onlyRegularLargeDresses = sizeCharts.filter(
       d => d.alphaSize == "L" 
         && d.sizeRange == "Regular"
         && d.garmentType == "Dresses"

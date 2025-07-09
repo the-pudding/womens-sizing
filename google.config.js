@@ -6,7 +6,7 @@ export default [
 	{
 		"id": "1YuUrDGQozbCG99KNOMlkxBFxFa7VjvaxisflDU_wsm4",
 		"gid": "0",
-		"filepath": "src/data/data.csv"
+		"filepath": "src/data/sizeCharts.csv"
 	},
 	{
 		"id": "1YuUrDGQozbCG99KNOMlkxBFxFa7VjvaxisflDU_wsm4",

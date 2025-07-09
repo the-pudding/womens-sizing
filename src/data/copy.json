@@ -6,7 +6,7 @@
       "race": "all",
       "age": "10-11",
       "year": "2015",
-      "sizeRange": "Juniors",
+      "sizeRange": "juniors",
       "avatarDisplay": "percentile-only",
       "highlightedPercentile": "50",
       "sizeBands": "",
@@ -22,7 +22,7 @@
       "race": "all",
       "age": "10-11",
       "year": "2015",
-      "sizeRange": "Juniors",
+      "sizeRange": "juniors",
       "avatarDisplay": "percentile-only",
       "highlightedPercentile": "50",
       "sizeBands": "S, M, L",
@@ -38,7 +38,7 @@
       "race": "all",
       "age": "10-11",
       "year": "2015",
-      "sizeRange": "Juniors",
+      "sizeRange": "juniors",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "highlightedPercentile": "50",
@@ -55,7 +55,7 @@
       "race": "all",
       "age": "14-15",
       "year": "2015",
-      "sizeRange": "Juniors",
+      "sizeRange": "juniors",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -73,7 +73,7 @@
       "race": "all",
       "age": "14-15",
       "year": "2021",
-      "sizeRange": "Womens",
+      "sizeRange": "straight",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -91,7 +91,7 @@
       "race": "all",
       "age": "14-15",
       "year": "2021",
-      "sizeRange": "Womens",
+      "sizeRange": "straight",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -109,7 +109,7 @@
       "race": "all",
       "age": "20-29",
       "year": "2021",
-      "sizeRange": "Womens",
+      "sizeRange": "straight",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -127,7 +127,7 @@
       "race": "all",
       "age": "20-29",
       "year": "2021",
-      "sizeRange": "Womens",
+      "sizeRange": "straight",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -143,9 +143,9 @@
       "id": "9",
       "yearRange": "2021-2023",
       "race": "all",
-      "age": "20 and older",
+      "age": "20 and over",
       "year": "2021",
-      "sizeRange": "Womens",
+      "sizeRange": "straight",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "percentileStyle": "color",
@@ -158,13 +158,32 @@
       "text": "Sizing options are even worse when you look at all adult women over the age of 20.\r\n\r\n\r\nThe median woman in the U.S. fits around a size 18 based on their waistline measurement.\r\n\r\n\r\nThis has meaningful implications."
     }
   ],
-  "scrollysub2": [
+  "scrollywaistlines": [
     {
       "id": "0",
-      "text": "<br>People often blame so-called “vanity sizing” for ill-fitting clothes and sizing inconsistencies across many clothing brands.</br>\r\n<br>Indeed, sizes have changed over time — just not in the way we need.</br>\r\n<br>But as sizes have changed, so too have our waistlines.</br>\r\n\r\n\r\n<br>Between 1988 and 1994, the average woman’s waistline was 34.88 inches. By 2018, it was 38.74</br>\r\n\r\n\r\n<p>An organization called ASTM International has tried to standardize apparel with a universal size chart that is updated every decade or so. Brands and manufacturers are meant to use this sizing system as a template to develop their unique size ranges. </p>\r\n\r\n\r\n<p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p>\r\n\r\n\r\n<p>In many ways, this has been intentional.</p>\r\n\r\n\r\n<p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p>\r\n\r\n\r\n<p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>\r\n\r\n\r\n<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
+      "text": "\r\n\r\n<br>As sizes have changed, so too have our waistlines.</br>\r\n\r\n\r\n<br>Between 1988 and 1994, the average woman’s waistline was 34.88 inches. By 2018, it was 38.74</br>"
     }
   ],
-  "scrolly2": [
+  "scrollywaistlines2": [
+    {
+      "id": "1",
+      "text": "Stuff about waistlines"
+    },
+    {
+      "id": "2",
+      "text": "More stuff about waistlines"
+    },
+    {
+      "id": "3",
+      "text": "even more stuff about waistlines"
+    }
+  ],
+  "scrollyvanity": [
+    {
+      "text": "<p>For years, many have blamed sizing inconsistencies on so-called “vanity sizing,” a practice that assumes women are more likely to buy clothes labeled as sizes that are smaller than they actually are. And while vanity sizing has indeed shifted how we label each size, there’s more to the story. </p>"
+    }
+  ],
+  "scrollyvanity2": [
     {
       "id": "0",
       "text": "This is what standard sizes looked like in 1995…"
@@ -178,14 +197,36 @@
       "text": "Notice how in 1995, a 27-inch waist was considered a size 8; in 2021 it was between sizes 2 and 4"
     },
     {
-      "id": "3",
-      "text": "<p>For years, many have blamed sizing inconsistencies on so-called “vanity sizing,” a practice that assumes women are more likely to buy clothes labeled as sizes that are smaller than they actually are. And while vanity sizing has indeed shifted how we label each size, there’s more to the story. </p>"
+      "id": "3"
     }
   ],
   "scrolly3": [
     {
       "id": "0",
-      "text": "<br>But as sizes have changed, so too have our waistlines.</br>\r\n\r\n\r\n<br>Between 1988 and 1994, the average woman’s waistline was 34.88 inches. By 2018, it was 38.74</br>\r\n\r\n\r\n<p>An organization called ASTM International has tried to standardize apparel with a universal size chart that is updated every decade or so. Brands and manufacturers are meant to use this sizing system as a template to develop their unique size ranges. </p>\r\n\r\n\r\n<p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p>\r\n\r\n\r\n<p>In many ways, this has been intentional.</p>\r\n\r\n\r\n<p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p>\r\n\r\n\r\n<p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>\r\n\r\n\r\n<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
+      "text": "<p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p>\r\n\r\n\r\n<p>In many ways, this has been intentional.</p>\r\n\r\n\r\n<p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p>\r\n\r\n\r\n<p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>\r\n\r\n\r\n<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
+    }
+  ],
+  "scrolly4": [
+    {
+      "id": "0",
+      "displayRegular": "true",
+      "displayPlus": "false",
+      "displayedBrands": "COS, Louis Vuitton, Prada, Anthropologie, Uniqlo",
+      "text": "Many prominent (particularly high-end) brands do not carry sizes higher than a size 14 or 16"
+    },
+    {
+      "id": "1",
+      "displayRegular": "true",
+      "displayPlus": "false",
+      "displayedBrands": "COS, Louis Vuitton, Prada, Anthropologie, Uniqlo, Shein, Aritzia, J.Crew, Old Navy, H&M",
+      "text": "Some brands carry extended options within their “Regular” or “Straight” size ranges"
+    },
+    {
+      "id": "2",
+      "displayRegular": "true",
+      "displayPlus": "true",
+      "displayedBrands": "COS, Louis Vuitton, Prada, Anthropologie, Uniqlo, Shein, Aritzia, J.Crew, Old Navy, H&M",
+      "text": "While others have a “Plus” size range that is kept separate, often with simpler styles that differ from other straight size collections"
     }
   ]
 }
