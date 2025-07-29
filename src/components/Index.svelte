@@ -8,6 +8,7 @@
 	import SizeChart from "./SizeChart.svelte";
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizes.svelte";
+	import Ransom from "$components/Ransom.svelte";
 
 
 
@@ -17,8 +18,9 @@
 
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<!-- <Intro /> -->
-	<Waistlines />
-	<VanitySizes />
+	 <Ransom string="the pudding!" width={100}/>
+	<!-- <Waistlines />
+	<VanitySizes /> -->
 	<!-- <History /> -->
 	<!-- <SizeChart />	 -->
 	<!-- <Footer recirc={true} /> -->
