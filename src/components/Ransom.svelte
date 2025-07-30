@@ -1,9 +1,11 @@
 <script>
     // Takes a string (word) and a maxWidth (in pixels) to size the letters
-    const { string, width } = $props();
+    const { string } = $props();
 
     // Splits the string into individual letters
     const letters = string.split("");
+
+    const rotations = [-2, -1, 0, 1, 2];
 
     // Special characters mapping to their names
     const specialCharNames = {
@@ -70,7 +72,10 @@
 
 <p class="ransom">
     {#each randomizedImagePaths as { letter, src, isSpace}}
-        <span class="ransom-letter" style="width: {100/randomizedImagePaths.length}%">
+        <span 
+            class="ransom-letter" 
+            style="width: {100/randomizedImagePaths.length}%;
+            transform: rotate({rotations[getRandomIndex(rotations.length - 1)]}deg);">
             {#if !isSpace}
                 <img src={src} alt={letter} />
             {/if}
@@ -91,21 +96,24 @@
         display: inline-block;
     }
 
+    img {
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.06)) 
+          drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)) 
+          drop-shadow(0 4px 4px rgba(0, 0, 0, 0.06));
+    }
+
     /* span.ransom-letter:nth-of-type(1) {
         animation: rock 1s infinite linear;
         transform-origin: center center;
     } */
 
-    @keyframes rock {
+    /* @keyframes rock {
         0% { transform: rotate(0deg); }
         25% { transform: rotate(2deg); }
         50% { transform: rotate(0deg); }
         75% { transform: rotate(-2deg); }
         100% { transform: rotate(0deg); }
-    }
-
-    img {
-        height: 100%;
-        aspect-ratio: 1 / 1;
-    }
+    } */
 </style>
