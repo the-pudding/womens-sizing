@@ -1,26 +1,21 @@
 <script>
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-    import ASTMsizes from '../data/ASTMsizes.json';
     import waistlines from '../data/waistlines.json';
     import copy from '../data/copy.json';
-    import Scrolly from './helpers/Scrolly.svelte';
 
-   
     let containerWidth = $state(0);
     let containerHeight = $state(0);
     let margin = { top: 40, right: 20, bottom: 80, left: 30 };
     let width = $derived(containerWidth - margin.left - margin.right);
     let height = $derived(containerHeight - margin.top - margin.bottom);
 
-    let value = $state(0); 
     let svg = $state(null);
     let mounted = $state(false);
 
     let plotData = [];
 
     function updatePlotData() {
-        // Process waistlines data - filter for race "all" and age "20 and over"
         const waistlinesData = waistlines
             .filter(d => d.race === 'all' && d.age === '20 and over')
             .map(d => ({
@@ -34,7 +29,6 @@
     }
 
     function renderChart() {
-        // Create time scale for x-axis
         const timeExtent = d3.extent([
             new Date(1988, 0, 1), // Start of first bar
             new Date(2023, 11, 31) // End of last bar
@@ -74,8 +68,8 @@
         // Break title into multiple lines on smaller screens
         if (containerWidth < 500) {
             // Split into two lines for mobile
-            const line1 = "Waistlines Have Largely";
-            const line2 = "Increased Over Time";
+            const line1 = "Median Waistlines Have Increased By";
+            const line2 = "Nearly 4 Inches Over Last 30 Years";
             
             g.append('text')
                 .attr('class', 'chart-title')
@@ -106,7 +100,7 @@
                 .attr('font-size', titleFontSize + 'px')
                 .attr('font-weight', 'bold')
                 .attr('fill', '#313326')
-                .text('Waistlines Have Largely Increased Over Time');
+                .text('Median Waistlines Have Increased By Nearly 4 Inches Over Last 30 Years');
         }
 
         // X-axis
@@ -246,14 +240,6 @@
         });
     }
 
-    // Update data and chart when stage changes
-    $effect(() => {
-        const stage = copy?.scrollysub2?.[value];
-        if (!stage) return;
-        
-        renderChart();
-    });
-
     onMount(() => {
         mounted = true;
 
@@ -265,54 +251,34 @@
     });
 </script>
 
-<div class="outer-container">
-    <div class="scrolly-outer">
-        <Scrolly bind:value>
-            {#each copy.scrollywaistlines as stage, i}
-                <div class="step">
-                    <div class="text">
-                        <p>{@html stage.text}</p>
-                    </div>
-                </div>
-            {/each}
-        </Scrolly>
+<div class="text-block">
+    {#each copy.scrollywaistlines as block}
+    <div>
+        {#if block.subhed}
+            <h3>{block.subhed}</h3>
+        {/if}
+        <p>{@html block.text}</p>
     </div>
+{/each}
+</div>
 
-    <div class="sticky-container">
-        <div class="visual-container">
-                <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-                    {#if mounted}
-                        <svg bind:this={svg}></svg>
-                    {/if}
-                </div>
+
+<div class="visual-container">
+    <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+        {#if mounted}
+            <svg bind:this={svg}></svg>
+        {/if}
+    </div>
+</div>
+<div class="text-block">
+    {#each copy.scrollyvanity as block}
+        <div>
+            <p>{@html block.text}</p>
         </div>
-    </div>
-
-    <div class="scrolly-outer">
-            <Scrolly bind:value>
-                {#each copy.scrollywaistlines2 as stage, i}
-                    <div class="step">
-                        <div class="text">
-                            <p>{@html stage.text}</p>
-                        </div>
-                    </div>
-                {/each}
-            </Scrolly>
-    </div>
+    {/each}
 </div>
 
 <style>
-    .outer-container {
-        position: relative;
-        width: 100%;
-    }
-    .sticky-container {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        width: 100%;
-        z-index: 1;
-    }
     .visual-container {
         width: 100%;
         height: 100%;
@@ -321,8 +287,8 @@
         align-items: center;
     }
     .chart-container {
-        width: min(90%, 800px); /* Limits max width to 800px on desktop */
-        height: 80vh;
+        width: min(90%, 800px); 
+        height: 60vh;
         margin: 0 auto;
         padding: 5px;
         background-color: white;
@@ -336,25 +302,32 @@
         width: 100%;
         height: 100%;
     }
-    .scrolly-outer {
-        position: relative;
-        z-index: 2;
-        pointer-events: none;
+    .text-block {
+        width: min(90%, 550px);
+        margin: 0 auto;
+        margin-bottom: 60px;
+        margin-top: 60px;
     }
-    .step {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-right: 2rem;
+
+    :global(ul) {
+        margin: 1em 0;
+        padding-left: 1.5em;
+        list-style-type: disc;
     }
-    .step .text {
-        max-width: 500px;
-        width: 90%;
-        padding: 20px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        margin: 0;
+
+    :global(li) {
+        margin: 0.5em 0;
+        line-height: 1.4;
     }
+
+    :global(ul li::marker) {
+        color: #666;
+    }
+
+    :global(p) {
+        margin: 1em 0;
+        line-height: 1.6;
+    }
+
+
 </style>

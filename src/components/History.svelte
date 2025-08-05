@@ -13,11 +13,11 @@
 
 </script>
 <div>
-
+    <h3>TK history section</h3>
 </div>
 <div class="scrolly-outer">
     <Scrolly bind:value>
-        {#each copy.scrolly3 as stage, i}
+        {#each copy.history as stage, i}
             <div class="step">
                 <div class="text">
                     <p>{@html stage.text}</p>

@@ -19,13 +19,10 @@
     let svg;
     let processedData = $state([]);
     
-    // Display controls as separate boolean variables
-    let displayRegular = $state(true);
-    let displayPlus = $state(false);
-    let displayedBrands = $state(null);
-
-    // Tooltip state
-    let tooltip = $state({ visible: false, x: 0, y: 0, content: '' });
+    // Display controls - initialize based on first stage
+    const initialStage = copy.sizeCharts && copy.sizeCharts[0] ? copy.sizeCharts[0] : {};
+    let displayRegular = $state(initialStage.displayRegular === 'true' || initialStage.displayRegular === true);
+    let displayPlus = $state(initialStage.displayPlus === 'true' || initialStage.displayPlus === true);
 
     // Get median waistline value
     const medianWaistline = (() => {
@@ -44,12 +41,11 @@
             d.sizeRange === "straight"
         );
         
-        // Convert waist values to numbers and filter out invalid data
         const processedData = filteredData
             .map(d => ({
                 ...d,
                 waistMin: parseFloat(d.waist),
-                waistMax: parseFloat(d.waist), // Same value for both since ASTM is exact measurements
+                waistMax: parseFloat(d.waist),
                 numericSizeMin: d.size,
                 numericSizeMax: d.size
             }))
@@ -67,21 +63,52 @@
         };
     })();
 
+    // Function to get brands to display based on current stage configuration
+    function getBrandsToDisplay(stageConfig) {
+        if (!stageConfig || !stageConfig.brandFilter) {
+            return null;
+        }
+        
+        if (stageConfig.brandFilter === 'excludeNearMedian') {
+            const groupedByBrand = d3.group(sizeCharts, d => d.brand);
+            const brandsNotNearMedian = [];
+            
+            groupedByBrand.forEach((brandData, brandName) => {
+                const regularSizes = brandData.filter(d => 
+                    d.sizeRange && d.sizeRange.toLowerCase() === 'regular' &&
+                    d.waistMin !== null && d.waistMin !== undefined
+                );
+                
+                if (regularSizes.length === 0) {
+                    brandsNotNearMedian.push(brandName);
+                } else {
+                    const hasNearMedianSize = regularSizes.some(d => {
+                        const waistMax = d.waistMax !== null && d.waistMax !== undefined ? d.waistMax : d.waistMin;
+                        return waistMax >= (medianWaistline - 1);
+                    });
+                    
+                    if (!hasNearMedianSize) {
+                        brandsNotNearMedian.push(brandName);
+                    }
+                }
+            });
+
+            return brandsNotNearMedian;
+        }
+        
+        return null;
+    }
+
     // Group brands and filter by current display settings
     function processData() {
         const groupedByBrand = d3.group(sizeCharts, d => d.brand);
         const processed = [];
         
+        const currentStageConfig = copy.sizeCharts && copy.sizeCharts[value] ? copy.sizeCharts[value] : {};
+        const brandsToShow = getBrandsToDisplay(currentStageConfig);
+        
         groupedByBrand.forEach((brandData, brandName) => {
-            // Parse displayedBrands if it's a string, otherwise use as-is
-            let brandsToShow = displayedBrands;
-            if (typeof displayedBrands === 'string' && displayedBrands !== 'null') {
-                brandsToShow = displayedBrands.split(',').map(brand => brand.trim());
-            }
-            
-            // Skip brands not in displayedBrands filter (if filter exists)
-            if (brandsToShow && brandsToShow !== 'null' && Array.isArray(brandsToShow)) {
-                // Use case-insensitive matching to handle any potential issues
+            if (brandsToShow && Array.isArray(brandsToShow)) {
                 const brandMatch = brandsToShow.some(targetBrand => 
                     targetBrand.toLowerCase().trim() === brandName.toLowerCase().trim()
                 );
@@ -90,24 +117,19 @@
                 }
             }
             
-            // Filter for apparel garment type - separate Regular and Plus
             const regularData = displayRegular ? brandData.filter(d => 
-                d.garmentType && d.garmentType.toLowerCase().includes('apparel') && 
                 d.sizeRange && d.sizeRange.toLowerCase() === 'regular' &&
                 d.waistMin !== null && 
                 d.waistMin !== undefined
             ) : [];
             
             const plusData = displayPlus ? brandData.filter(d => 
-                d.garmentType && d.garmentType.toLowerCase().includes('apparel') && 
                 d.sizeRange && d.sizeRange.toLowerCase() === 'plus' &&
                 d.waistMin !== null && 
                 d.waistMin !== undefined
             ) : [];
             
-            // Only include brand if it has data for at least one of the requested display types
             if (regularData.length > 0 || plusData.length > 0) {
-                // Calculate Regular size range
                 let regularRange = null;
                 if (regularData.length > 0) {
                     const regularWaistMinValues = regularData.map(d => d.waistMin).filter(v => v !== null && v !== undefined);
@@ -119,7 +141,6 @@
                     };
                 }
                 
-                // Calculate Plus size range
                 let plusRange = null;
                 if (plusData.length > 0) {
                     const plusWaistMinValues = plusData.map(d => d.waistMin).filter(v => v !== null && v !== undefined);
@@ -131,7 +152,6 @@
                     };
                 }
                 
-                // Determine the max waist value for sorting (prioritize regular, then plus)
                 const maxWaistValue = regularRange?.max || plusRange?.max;
                 
                 processed.push({
@@ -145,59 +165,17 @@
             }
         });
         
-        // Sort brands by their maximum waist value (smallest to largest)
         processed.sort((a, b) => a.maxWaistValue - b.maxWaistValue);
-        
         return processed;
-    }
-
-    function showTooltip(event, data) {
-        const chartContainer = document.querySelector('.chart-container');
-        const rect = chartContainer.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        // Format tooltip content
-        let content = '';
-        
-        // Handle numeric size range
-        if (data.numericSizeMax !== null && data.numericSizeMax !== undefined && 
-            data.numericSizeMax !== data.numericSizeMin) {
-            content += `<strong>Size:</strong> ${data.numericSizeMin} - ${data.numericSizeMax}<br>`;
-        } else if (data.numericSizeMin !== null && data.numericSizeMin !== undefined) {
-            content += `<strong>Size:</strong> ${data.numericSizeMin}<br>`;
-        } else {
-            content += `<strong>Size:</strong> N/A<br>`;
-        }
-        
-        // Handle waist range
-        if (data.waistMax !== null && data.waistMax !== undefined && data.waistMax !== data.waistMin) {
-            content += `<strong>Waist:</strong> ${data.waistMin}" - ${data.waistMax}"`;
-        } else {
-            content += `<strong>Waist:</strong> ${data.waistMin}"`;
-        }
-        
-        tooltip = {
-            visible: true,
-            x: x + 10,
-            y: y - 10,
-            content: content
-        };
-    }
-
-    function hideTooltip() {
-        tooltip = { visible: false, x: 0, y: 0, content: '' };
     }
 
     function renderChart() {
         if (!processedData.length || !containerWidth || !containerHeight) return;
         
-        // Set fixed scale from 20 to 65 inches
         const xScale = d3.scaleLinear()
             .domain([20, 65])
             .range([0, width]);
 
-        // Calculate spacing for brands (including ASTM if present)
         const totalItems = processedData.length + (astmData ? 1 : 0);
         const brandSpacing = height / (totalItems + 1);
 
@@ -210,11 +188,10 @@
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        // Render ASTM standard sizes if data exists (at the top)
+        // Render ASTM standard sizes if data exists
         if (astmData) {
-            const astmYPosition = brandSpacing; // First position
+            const astmYPosition = brandSpacing;
             
-            // ASTM label
             g.append('text')
                 .attr('x', xScale(astmData.range.min))
                 .attr('y', astmYPosition - 10)
@@ -224,7 +201,6 @@
                 .style('font-weight', '600')
                 .text('ASTM Standard Sizes');
             
-            // ASTM horizontal line
             g.append('line')
                 .attr('x1', xScale(astmData.range.min))
                 .attr('x2', xScale(astmData.range.max))
@@ -234,7 +210,6 @@
                 .style('stroke-width', 3)
                 .style('opacity', 0.8);
             
-            // ASTM data points
             astmData.data.forEach((d, dataIndex) => {
                 g.append('circle')
                     .attr('cx', xScale(d.waistMin))
@@ -243,19 +218,14 @@
                     .style('fill', '#C2D932')
                     .style('stroke', 'white')
                     .style('stroke-width', 2)
-                    .style('opacity', 0.9)
-                    .style('cursor', 'pointer')
-                    .on('mouseover', (event) => showTooltip(event, d))
-                    .on('mouseout', hideTooltip)
-                    .on('mousemove', (event) => showTooltip(event, d));
+                    .style('opacity', 0.9);
             });
         }
 
-        // Render each brand (shifted down if ASTM exists)
+        // Render each brand
         processedData.forEach((brand, index) => {
-            const yPosition = (index + 1 + (astmData ? 1 : 0)) * brandSpacing; // Offset by 1 if ASTM exists
+            const yPosition = (index + 1 + (astmData ? 1 : 0)) * brandSpacing;
             
-            // Find the leftmost starting point (minimum of all visible ranges)
             const allStartPoints = [];
             if (displayRegular && brand.regularRange) {
                 allStartPoints.push(brand.regularRange.min);
@@ -265,7 +235,6 @@
             }
             const brandStartPoint = Math.min(...allStartPoints);
             
-            // Brand label - positioned directly above the starting point
             g.append('text')
                 .attr('x', xScale(brandStartPoint))
                 .attr('y', yPosition - 10)
@@ -274,7 +243,6 @@
                 .style('fill', '#333')
                 .text(brand.brand);
             
-            // Regular size horizontal line
             if (displayRegular && brand.regularRange) {
                 g.append('line')
                     .attr('x1', xScale(brand.regularRange.min))
@@ -286,7 +254,6 @@
                     .style('opacity', 0.7);
             }
             
-            // Plus size horizontal line
             if (displayPlus && brand.plusRange) {
                 g.append('line')
                     .attr('x1', xScale(brand.plusRange.min))
@@ -298,31 +265,16 @@
                     .style('opacity', 0.7);
             }
             
-            // Function to render plot points for a given dataset and color
             function renderSizePoints(data, color, sizeType) {
                 data.forEach((d, dataIndex) => {
                     const hasRange = d.waistMax !== null && d.waistMax !== undefined && d.waistMax !== d.waistMin;
                     
                     if (hasRange) {
-                        // Create pill shape for range data
                         const minX = xScale(d.waistMin);
                         const maxX = xScale(d.waistMax);
                         const pillGroup = g.append('g')
-                            .attr('class', `pill-${index}-${dataIndex}-${sizeType}`)
-                            .style('cursor', 'pointer');
+                            .attr('class', `pill-${index}-${dataIndex}-${sizeType}`);
                         
-                        // Invisible hover area for the entire pill
-                        pillGroup.append('rect')
-                            .attr('x', minX - 8)
-                            .attr('y', yPosition - 8)
-                            .attr('width', maxX - minX + 16)
-                            .attr('height', 16)
-                            .style('fill', 'transparent')
-                            .on('mouseover', (event) => showTooltip(event, d))
-                            .on('mouseout', hideTooltip)
-                            .on('mousemove', (event) => showTooltip(event, d));
-                        
-                        // Connecting line between min and max with round caps
                         pillGroup.append('line')
                             .attr('x1', minX)
                             .attr('x2', maxX)
@@ -331,58 +283,45 @@
                             .style('stroke', color)
                             .style('stroke-width', 8)
                             .style('stroke-linecap', 'round')
-                            .style('opacity', 0.2)
-                            .style('pointer-events', 'none');
+                            .style('opacity', 0.2);
                         
-                        // Min circle
                         pillGroup.append('circle')
                             .attr('cx', minX)
                             .attr('cy', yPosition)
                             .attr('r', 4)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.4)
-                            .style('pointer-events', 'none');
+                            .style('opacity', 0.4);
                         
-                        // Max circle
                         pillGroup.append('circle')
                             .attr('cx', maxX)
                             .attr('cy', yPosition)
                             .attr('r', 4)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.4)
-                            .style('pointer-events', 'none');
+                            .style('opacity', 0.4);
                             
                     } else {
-                        // Single point for data without range
                         g.append('circle')
                             .attr('cx', xScale(d.waistMin))
                             .attr('cy', yPosition)
                             .attr('r', 4)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.8)
-                            .style('cursor', 'pointer')
-                            .on('mouseover', (event) => showTooltip(event, d))
-                            .on('mouseout', hideTooltip)
-                            .on('mousemove', (event) => showTooltip(event, d));
+                            .style('opacity', 0.8);
                     }
                 });
             }
             
-            // Render Regular size points (purple)
             if (displayRegular && brand.regularData.length > 0) {
                 renderSizePoints(brand.regularData, '#B57BDC', 'regular');
             }
             
-            // Render Plus size points (orange)
             if (displayPlus && brand.plusData.length > 0) {
                 renderSizePoints(brand.plusData, '#D96F32', 'plus');
             }
         });
 
-        // X-axis
         g.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${height})`)
@@ -393,7 +332,6 @@
             )
             .style('opacity', 0.1);
 
-        // X-axis with labels
         const xAxisLabels = g.append('g')
             .attr('class', 'x-axis-labels')
             .attr('transform', `translate(0, ${height})`)
@@ -404,7 +342,6 @@
             .style('font-size', Math.max(containerWidth * 0.01, 10) + 'px')
             .attr('dy', '1.2em');
 
-        // X-axis label
         g.append('text')
             .attr('x', width / 2)
             .attr('y', height + 40)
@@ -413,11 +350,10 @@
             .style('fill', '#666')
             .text('Waist Measurement (inches)');
 
-        // Add median waistline vertical line if data exists
+        // Add median waistline vertical line
         if (medianWaistline !== null) {
             const medianX = xScale(medianWaistline);
             
-            // Vertical line
             g.append('line')
                 .attr('x1', medianX)
                 .attr('x2', medianX)
@@ -428,7 +364,6 @@
                 .style('stroke-dasharray', '5,5')
                 .style('opacity', 0.8);
             
-            // Label
             g.append('text')
                 .attr('x', medianX)
                 .attr('y', -10)
@@ -440,67 +375,53 @@
         }
     }
 
-    // Watch for changes in display settings and update data
     $effect(() => {
         processedData = processData();
     });
 
-    // Watch for changes in processed data or container dimensions and render chart
     $effect(() => {
         if (containerWidth > 0 && containerHeight > 0) {
             renderChart();
         }
     });
 
-    // Update display settings based on scroll value
     $effect(() => {
-        if (copy.scrolly4 && copy.scrolly4[value]) {
-            const currentStage = copy.scrolly4[value];
+        if (copy.sizeCharts && copy.sizeCharts[value]) {
+            const currentStage = copy.sizeCharts[value];
             
-            // Parse boolean strings to actual booleans
-            const newDisplayRegular = currentStage.displayRegular === 'true';
-            const newDisplayPlus = currentStage.displayPlus === 'true';
-            const newDisplayedBrands = currentStage.displayedBrands === 'null' ? null : currentStage.displayedBrands;
+            const newDisplayRegular = currentStage.displayRegular === 'true' || currentStage.displayRegular === true;
+            const newDisplayPlus = currentStage.displayPlus === 'true' || currentStage.displayPlus === true;
             
-            // Only update if values actually changed
             if (displayRegular !== newDisplayRegular || 
-                displayPlus !== newDisplayPlus || 
-                displayedBrands !== newDisplayedBrands) {
+                displayPlus !== newDisplayPlus) {
                 
                 displayRegular = newDisplayRegular;
                 displayPlus = newDisplayPlus;
-                displayedBrands = newDisplayedBrands;
             }
         }
     });
 
     onMount(() => {
-        return () => {
-            // No cleanup needed
-        };
+        processedData = processData();
     });
 </script>
-
+<div>
+    <h3>TK size Chart section</h3>
+    <p>TKTKTKTKTK</p>
+</div>
 <div class="outer-container">
+    
     <div class="sticky-container">
         <div class="visual-container">
             <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                 <svg bind:this={svg}></svg>
-                {#if tooltip.visible}
-                    <div 
-                        class="tooltip" 
-                        style="left: {tooltip.x}px; top: {tooltip.y}px;"
-                    >
-                        {@html tooltip.content}
-                    </div>
-                {/if}
             </div>
         </div>
     </div>
     
     <div class="scrolly-outer">
         <Scrolly bind:value>
-            {#each copy.scrolly4 as stage, i}
+            {#each copy.sizeCharts as stage, i}
                 <div class="step">
                     <div class="text">
                         <p>{@html stage.text}</p>
@@ -571,24 +492,5 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         margin: 0;
-    }
-
-    .tooltip {
-        position: fixed;
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        line-height: 1.4;
-        pointer-events: none;
-        z-index: 1000;
-        white-space: nowrap;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .tooltip :global(strong) {
-        color: #fff;
-        font-weight: 600;
     }
 </style>

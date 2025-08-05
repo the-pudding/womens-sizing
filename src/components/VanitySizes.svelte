@@ -63,6 +63,8 @@
     }
 
     function applyHighlightEffects(targetSize) {
+        if (!svg) return;
+        
         const svgSelection = d3.select(svg);
         const g = svgSelection.select('g');
         
@@ -144,13 +146,19 @@
                     .attr('stop-color', '#B57BDC')
                     .attr('stop-opacity', maxOpacity);
                 
-                // Draw gradient band FIRST (behind everything else)
+                const topRowY = height * 0.25; // 1995 row
+                const bottomRowY = height * 0.75; // 2021 row
+                const bandTop = topRowY - iconHeight/2;
+                const bandBottom = bottomRowY + iconHeight/2;
+                const fullBandHeight = bandBottom - bandTop;
+
+                // Draw gradient band FIRST (behind everything else) - FULL HEIGHT
                 g.insert('rect', ':first-child')
                     .attr('class', 'comparison-band')
                     .attr('x', Math.min(x1, x2))
-                    .attr('y', y1)
+                    .attr('y', bandTop)  // Start at top of first row
                     .attr('width', Math.abs(x2 - x1))
-                    .attr('height', Math.abs(y2 - y1))
+                    .attr('height', fullBandHeight)  // Extend to bottom of second row
                     .attr('fill', `url(#${gradientId})`)
                     .style('opacity', 0)
                     .transition()
@@ -239,6 +247,8 @@
     }
 
     function clearHighlightEffects() {
+        if (!svg) return;
+        
         const svgSelection = d3.select(svg);
         const g = svgSelection.select('g');
         
@@ -267,6 +277,8 @@
     }
 
     function renderChart() {
+        if (!svg) return;
+        
         const xScale = d3.scaleLinear()
             .domain([22, 42])
             .range([0, width]);
@@ -340,7 +352,7 @@
 
         // Create small orange circles for waistlines data
         // Determine visibility based on scroll stage
-        const waistlineOpacity = (value >= 3) ? 0.8 : 0; // Only visible at stage 3 and beyond
+        const waistlineOpacity = (value >= 2) ? 0.8 : 0; // Only visible at stage 2 and beyond
         
         const waistlineCircles = g.selectAll('circle.waistline')
             .data(plotData.filter(d => d.type === 'waistlines'))
@@ -612,31 +624,30 @@
                 .text(year);
         }
 
-        // Apply highlight effects if we're at stage 2 and currentHighlightedSize is set
-        if (value === 2 && currentHighlightedSize) {
-            // Small delay to ensure the chart is fully rendered first
-            setTimeout(() => {
+        // Apply highlight effects if needed - with proper timing
+        setTimeout(() => {
+            if (currentHighlightedSize && (value === 1 || value === 3)) {
                 applyHighlightEffects(currentHighlightedSize);
-            }, 100);
-        }
+            }
+        }, 100);
     }
 
     // Update data and chart when stage changes
     $effect(() => {
-        const stage = copy?.scrollyvanity2?.[value];
+        const stage = copy?.vanitySizing?.[value];
         if (!stage) return;
         
-        // Clear any existing highlights first
-        if (svg) {
-            clearHighlightEffects();
-        }
-        
-        if (value === 2) {
+        // Set the highlighted size based on the current stage
+        if (value === 1) {
             currentHighlightedSize = '8';
+        } else if (value === 3) {
+            currentHighlightedSize = '18';
         } else {
             currentHighlightedSize = null;
         }
         
+        // Update data and render chart
+        updatePlotData();
         renderChart();
     });
 
@@ -652,16 +663,16 @@
 </script>
 
 <div class="outer-container">
-    <div class="scrolly-outer">
-        <Scrolly bind:value>
-            {#each copy.scrollyvanity as stage, i}
-                <div class="step">
-                    <div class="text">
-                        <p>{@html stage.text}</p>
-                    </div>
-                </div>
-            {/each}
-        </Scrolly>
+    <div class="spot-image">TK spot art?</div>
+    <div class="text-block">
+        {#each copy.section2 as block}
+        <div>
+            {#if block.subhed}
+                <h3>{block.subhed}</h3>
+            {/if}
+            <p>{@html block.text}</p>
+        </div>
+    {/each}
     </div>
     <div class="sticky-container">
         <div class="visual-container">
@@ -674,7 +685,7 @@
     </div>
     <div class="scrolly-outer">
             <Scrolly bind:value>
-                {#each copy.scrollyvanity2 as stage, i}
+                {#each copy.vanitySizing as stage, i}
                     <div class="step">
                         <div class="text">
                             <p>{@html stage.text}</p>
@@ -740,5 +751,17 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
+    }
+    .spot-image {
+        margin: 20vh 40vh 10vh 40vh;
+        height: 30vh;
+        background-color: aliceblue;
+        text-align: center;
+    }    
+    .text-block {
+        width: min(90%, 550px);
+        margin: 0 auto;
+        margin-bottom: 60px;
+        margin-top: 60px;
     }
 </style>

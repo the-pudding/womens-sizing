@@ -8,18 +8,21 @@
 	import SizeChart from "./SizeChart.svelte";
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizes.svelte";
+	import Proportions from "./Proportions.svelte";
+	import TitlePage from "./TitlePage.svelte";
 
 
-
-	// const copy = getContext("copy");
-	// const data = getContext("data");
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<!-- <Intro /> -->
-	<Waistlines />
+	<Intro startStage={0} endStage={6} />
+	<TitlePage />
+	<Intro startStage={7} />
+
 	<VanitySizes />
-	<!-- <History /> -->
-	<!-- <SizeChart />	 -->
+	<!-- <Waistlines /> -->
+	<Proportions />
+	<History />
+	<SizeChart />	
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
