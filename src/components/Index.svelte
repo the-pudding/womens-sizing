@@ -9,21 +9,24 @@
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizes.svelte";
 	import Ransom from "$components/Ransom.svelte";
+	import Proportions from "./Proportions.svelte";
+	import TitlePage from "./TitlePage.svelte";
 
 
-
-	// const copy = getContext("copy");
-	// const data = getContext("data");
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	<!-- <Intro /> -->
 	 <Ransom string="tween" />
 	 <div class="grid-bg"></div>
-	<!-- <Waistlines />
-	<VanitySizes /> -->
-	<!-- <History /> -->
-	<!-- <SizeChart />	 -->
+	<Intro startStage={0} endStage={6} />
+	<TitlePage />
+	<Intro startStage={7} />
+
+	<VanitySizes />
+	<!-- <Waistlines /> -->
+	<Proportions />
+	<History />
+	<SizeChart />	
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
 
