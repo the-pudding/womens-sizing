@@ -8,6 +8,7 @@
 	import SizeChart from "./SizeChart.svelte";
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizes.svelte";
+	import Ransom from "$components/Ransom.svelte";
 	import Proportions from "./Proportions.svelte";
 	import TitlePage from "./TitlePage.svelte";
 
@@ -15,6 +16,8 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
+	 <Ransom string="tween" />
+	 <div class="grid-bg"></div>
 	<Intro startStage={0} endStage={6} />
 	<TitlePage />
 	<Intro startStage={7} />
@@ -26,3 +29,18 @@
 	<SizeChart />	
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
+
+<style>
+	.grid-bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url("./assets/grid.png");
+		background-size: 150px 150px;
+		background-repeat: repeat;
+		z-index: -1;
+		opacity: 0.2;
+	}	
+</style>
