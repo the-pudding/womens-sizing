@@ -107,9 +107,9 @@
     /* span.ransom-letter:nth-of-type(1) {
         animation: rock 1s infinite linear;
         transform-origin: center center;
-    } */
+    } 
 
-    /* @keyframes rock {
+    @keyframes rock {
         0% { transform: rotate(0deg); }
         25% { transform: rotate(2deg); }
         50% { transform: rotate(0deg); }

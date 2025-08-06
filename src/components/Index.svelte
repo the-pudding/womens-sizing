@@ -16,17 +16,16 @@
 </script>
 
 <svelte:boundary onerror={(e) => console.error(e)}>
-	 <Ransom string="tween" />
 	 <div class="grid-bg"></div>
 	<Intro startStage={0} endStage={6} />
-	<TitlePage />
-	<Intro startStage={7} />
+	<!-- <TitlePage />
+	<Intro startStage={7} /> -->
 
 	<VanitySizes />
 	<!-- <Waistlines /> -->
-	<Proportions />
+	<!-- <Proportions />
 	<History />
-	<SizeChart />	
+	<SizeChart />	 -->
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
 
