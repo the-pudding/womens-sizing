@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/yjh5xgk.css">
 </svelte:head>
 
-<Header />
+<!-- <Header /> -->
 <main id="content">
 	{@render children?.()}
 </main>

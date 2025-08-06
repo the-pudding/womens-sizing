@@ -11,16 +11,15 @@
     }
 </script>
 
-<p>
-    {#each letters as letter, i}
-        {@const isVowel = checkChar(letter)}
-        <span 
-            class="leet-letter"
-            style="text-transform: {isVowel & i % 2 === 0 ? 'lowercase' : 'uppercase'};"
-        >
-            {letter}</span>
-    {/each}
-</p>
+
+{#each letters as letter, i}
+    {@const isVowel = checkChar(letter)}
+    <span 
+        class="leet-letter"
+        style="text-transform: {isVowel & i % 2 === 0 ? 'lowercase' : 'uppercase'};"
+    >
+        {letter}</span>
+{/each}
 
 <style>
     p {

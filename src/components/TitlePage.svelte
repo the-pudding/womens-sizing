@@ -1,5 +1,7 @@
 <!-- TitlePage.svelte -->
 <script>
+    import Ransom from "$components/Ransom.svelte";
+    import Leet from "$components/Leet.svelte";
     import copy from "../data/copy.json";
    
     const titlePageData = copy.titlePage?.[0];
@@ -8,12 +10,14 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <h1 class="title-page-title">
+        <!-- <h1 class="title-page-title">
             {titlePageData?.title || "Default Title"}
-        </h1>
+        </h1> -->
+        <Ransom string="shrinking" />
+        <Ransom string="options" />
         {#if titlePageData?.subtitle}
             <h2 class="title-page-subtitle">
-                {titlePageData.subtitle}
+                <Leet string={titlePageData.subtitle} />
             </h2>
         {/if}
         <div class="title-page-body">
@@ -35,7 +39,7 @@
     .title-page-container {
         width: 100%;
         min-height: 100vh;
-        background: linear-gradient(135deg, #FBFFE9 0%, #f8fdf0 100%);
+        /* background: linear-gradient(135deg, #FBFFE9 0%, #f8fdf0 100%); */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -59,21 +63,24 @@
     
     .title-page-subtitle {
         font-size: 1.5rem;
-        color: #4a5568;
+        color: var(--color-fg);
+        font-family: var(--mono);
         margin-bottom: 2rem;
-        font-weight: 300;
+        font-weight: 700;
+        line-height: 1;
     }
     
     .title-page-body {
         font-size: 1.1rem;
         line-height: 1.6;
-        color: #2d3748;
         text-align: left;
         margin-bottom: 2rem;
+        font-family: var(--sans);
     }
     
     .title-page-body p {
         margin-bottom: 1.5rem;
+        font-size: var(--20px);
     }
     
     .title-page-art {

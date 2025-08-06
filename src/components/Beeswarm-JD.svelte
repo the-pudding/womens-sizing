@@ -85,6 +85,8 @@
         console.log("🔥 positionedAvatars recomputing");
 
         const avatars = avatarData;
+        
+        console.log(avatars)
         if (!avatars || !xScale || !width || !height || avatars.length === 0) return [];
 
         const data = avatars.map(d => ({ ...d }));
@@ -238,7 +240,7 @@
 <style>
     .chart-container {
       width: 100%;
-      height: 80vh;
+      height: 100svh;
       margin: 0 auto;
       padding: 5px;
       position: relative;
