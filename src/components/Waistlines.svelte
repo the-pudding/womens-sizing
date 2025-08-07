@@ -251,16 +251,6 @@
     });
 </script>
 
-<div class="text-block">
-    {#each copy.scrollywaistlines as block}
-    <div>
-        {#if block.subhed}
-            <h3>{block.subhed}</h3>
-        {/if}
-        <p>{@html block.text}</p>
-    </div>
-{/each}
-</div>
 
 
 <div class="visual-container">
@@ -269,13 +259,6 @@
             <svg bind:this={svg}></svg>
         {/if}
     </div>
-</div>
-<div class="text-block">
-    {#each copy.scrollyvanity as block}
-        <div>
-            <p>{@html block.text}</p>
-        </div>
-    {/each}
 </div>
 
 <style>
