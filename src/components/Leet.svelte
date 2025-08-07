@@ -22,7 +22,7 @@
 {/each}
 
 <style>
-    p {
+    span {
         font-family: var(--mono);
         font-weight: 700;
         font-size: var(--24px);

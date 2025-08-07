@@ -82,9 +82,9 @@
         }
     });
 
-    $effect(() => {
-        console.log({inViewTrigger})
-    })
+    // $effect(() => {
+    //     console.log({inViewTrigger})
+    // })
 </script>
 
 <p class="ransom" class:animate-in={inViewTrigger}

@@ -207,18 +207,22 @@
   "vanitySizing": [
     {
       "id": "0",
-      "text": "<p>Here is what standard sizes looked like in 1995 compared to the latest update in 2021.</p><p>There are more “straight” sizes today than there were 30 years ago, with the introduction of sizes 00 and 0 in the early 2000s, but that’s not the only thing that has changed. </p>"
+      "text": "<p>Here is what standard sizes looked like in 1995.</p><p>There was 12.5” separating the smallest size 2 (24”) and the largest size 20 (36.5”).</p>"
     },
     {
       "id": "1",
-      "text": "<p>Sizes today are notably larger.</p><p>Notice how in 1995, a 27-inch waist was considered a <span data-underline=\"#C2D932\">size 8</span>; in 2021 it was between <span data-underline=\"#C2D932\">sizes 2 and 4</span></p>"
+      "text": "<p>Today, that gap is 15.2” between the smallest size 00 (25.38”) and the largest size (40”). While additional sizes for 00 and 0 were added in the early 2000s, all waistline measurements were larger regardless of size."
     },
     {
       "id": "2",
-      "text": "<p>Waistlines in the U.S. have also increased since the mid-90s.</p>\r\n<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2018, it was <span data-underline=\"#C2D932\">38.74 inches</span></p>"
+      "text": "<p>Notice how in 1995 a 27-inch waist was considered a <span data-underline=\"#C2D932\">size 8</span> — in 2021 it was between <span data-underline=\"#C2D932\">sizes 2 and 4</span> — and today’s size 8 is 2.5 inches bigger.</p>"
     },
     {
       "id": "3",
+      "text": "<p>Waistlines in the U.S. have also increased since the mid-90s.</p>\r\n<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2018, it was <span data-underline=\"#C2D932\">38.74 inches</span></p>"
+    },
+    {
+      "id": "4",
       "text": "<p>In both cases, both 30 years ago and today, the median waistline roughly lined up with the size 18 that was available at that time (if at all).</p>"
     }
   ],
