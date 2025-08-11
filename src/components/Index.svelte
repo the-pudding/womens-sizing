@@ -5,7 +5,7 @@
 
 	import History from "./History.svelte";
 	import MeasurementDrawings from "./archived/MeasurementDrawings.svelte";
-	import SizeChart from "./SizeChart.svelte";
+	import SizeChart from "./SizeChartJD.svelte";
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizesJD.svelte";
 	import Ransom from "$components/Ransom.svelte";
@@ -20,8 +20,8 @@
 	<!-- <Intro startStage={0} endStage={6} introScroll={true} />
 	<TitlePage />
 	 <Intro startStage={7} introScroll={false} /> -->
-
-	<VanitySizes />
+	<SizeChart />
+	<!-- <VanitySizes /> -->
 	<!-- <Waistlines />
 	<Proportions />
 	<History />
