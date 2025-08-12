@@ -277,21 +277,21 @@
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "excludeNearMedian",
-      "text": "Many prominent (particularly high-end) brands do not carry sizes higher than a size 14 or 16"
+      "text": "Many prominent (particularly high-end) brands do not carry sizes higher than a size 14 or 16. Smaller than both the <span class=orange-span> average woman’s waistline of 37.68”</span> and <span class=green-span>ASTM guides.</span>"
     },
     {
       "id": "1",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
-      "text": "Some brands carry extended options within their “Regular” or “Straight” size ranges"
+      "text": "Some brands carry extended options within their <span class=blue-span>“Regular” or “Straight”</span> size ranges that extend beyond the median."
     },
     {
       "id": "2",
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "While others have a “Plus” size range that is kept separate, often with simpler styles that differ from other straight size collections"
+      "text": "While others have a <span class=purple-span>“Plus”</span> size range that is kept separate, often with simpler styles that differ from other straight size collections."
     },
     {
       "id": "3",
