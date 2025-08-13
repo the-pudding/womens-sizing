@@ -20,8 +20,8 @@
 	<!-- <Intro startStage={0} endStage={6} introScroll={true} />
 	<TitlePage />
 	 <Intro startStage={7} introScroll={false} /> -->
-	<SizeChart />
-	<!-- <VanitySizes /> -->
+	<!-- <SizeChart /> -->
+	<VanitySizes />
 	<!-- <Waistlines />
 	<Proportions />
 	<History />

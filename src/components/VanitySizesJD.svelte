@@ -1,10 +1,6 @@
 <script>
     // TO-DO
-    // un hard code all measurements
-    // add in mouse events
-    // fix barbell vs avg circles
-    // finesse transitions
-    import { onMount } from 'svelte';
+    // Mobile
     import * as d3 from 'd3';
     import ASTMsizes from '../data/ASTMsizes.json';
     import copy from '../data/copy.json';
@@ -12,13 +8,52 @@
     import Ransom from "$components/Ransom.svelte";
     import Leet from "$components/Leet.svelte";
 
+    // DIMENSIONS
     let containerHeight = $state(0);
     let containerWidth = $state(0);
     let imageWidth = $state(0);
-    let value = $state(0);
+
+    // TOOLTIP
+    let tooltipVisible = $state(false);
+    let tooltipX = $state();
+    let tooltipY = $state();
+    let tooltipSize = $state();
+
+        function showTooltip(size, e) {
+        tooltipVisible = true;
+        tooltipSize = +size.size;
+
+        const waist1995Data = formData[0][1].filter(d => d.size == tooltipSize)[0];
+        const waist2021Data = formData[1][1].filter(d => d.size == tooltipSize)[0];
+
+        const waist1995 = waist1995Data ? waist1995Data.waist : null;
+        const waist2021 = waist2021Data ? waist2021Data.waist : null;
+
+        if (waist1995 && waist2021) {
+             barbellData = {
+                startCircle: xScale(waist1995),
+                endCircle: xScale(waist2021),
+                diff: waist2021-waist1995
+            }
+        } else {
+            barbellData = null;
+        }
+    }
+
+    function hideTooltip() {
+        tooltipVisible = false;
+        barbellData = null;
+    }
+
+    // DATA
     let move1995 = $state(false);
     let move2021 = $state(false);
     let barbellData = $state({});
+    const boxStart = $derived((barbellData?.startCircle ?? 0) + 148);
+    const boxEnd = $derived((barbellData?.endCircle ?? 0) + 148);
+    const boxWidth = $derived((barbellData?.endCircle ?? 0) - (barbellData?.startCircle ?? 0));
+    const avgStart = $derived(xScale(34.88));
+    const avgEnd = $derived(xScale(38.74));
 
     const formData = d3.groups(
         ASTMsizes.map(d => ({ ...d, waist: +d.waist }))
@@ -26,19 +61,15 @@
         d => d.year
     ).sort((a, b) => a[0] - b[0]);
 
+    // SCALE
     const xScale = $derived(
         d3.scaleLinear()
             .domain([22, 42])
             .range([0, containerWidth - 32])
     );
-
-    const boxStart = $derived((barbellData?.startCircle ?? 0) + 148);
-    const boxEnd = $derived((barbellData?.endCircle ?? 0) + 148);
-    const boxWidth = $derived((barbellData?.endCircle ?? 0) - (barbellData?.startCircle ?? 0));
-    const avgStart = xScale(34.88);
-    const avgEnd = xScale(38.74);
-
-    console.log(formData)
+    
+    // SCROLLY
+    let value = $state(0);
 
     function updateChart(value) {
         if (value == undefined){
@@ -55,6 +86,7 @@
                 diff: 36.5-24
             }
         } else if (value == 1) {
+            move1995 = true;
             setTimeout(() => {
                 move2021 = true;
             },500);
@@ -64,6 +96,7 @@
                 diff: 40.5-25.38
             }
         } else if (value == 2) {
+            move1995 = true;
             move2021 = true;
             barbellData = {
                 startCircle: xScale(27),
@@ -71,9 +104,15 @@
                 diff: 29.5-27
             }
         } else if (value == 3) {
+            move1995 = true;
             move2021 = true;
-            barbellData = null;
+            barbellData = {
+                startCircle: xScale(34.5),
+                endCircle: xScale(38.25),
+                diff: 38.25-34.5
+            }
         } else if (value >= 4) {
+            move1995 = true;
             move2021 = true;
             barbellData = {
                 startCircle: xScale(34.5),
@@ -83,12 +122,8 @@
         }
     }
 
-    onMount(() => {
-        // mounted = true;
-    });
-
+    // REACTIVE 
     $effect(() => {
-        console.log(value, move1995);
         updateChart(value);
 
         if (containerWidth > 0) {
@@ -104,7 +139,7 @@
         <div>
             {#if block.subhed}
                 <h3>
-                    <Leet string="This has been a problem" />
+                    <Leet string="This has been a" />
                     <Ransom string="problem" />
                     <Leet string="for a very, very long time" />
                 </h3>
@@ -123,9 +158,15 @@
                         </div>
                         <div class="form-wrapper" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                             {#each year[1] as size, i}
-                                <div class="size" 
-                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;"
-                                    class:scaled={value == 2 && size.size == "8"}>
+                                <div onmouseenter={(e) => showTooltip(size, e)} 
+                                    onmouseleave={hideTooltip} 
+                                    role="tooltip"
+                                    class="size" 
+                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;
+                                    pointer-events: {move1995 && move2021 && value >= 4 ? "auto" : "none"};"
+                                    class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
+                                        || (value == 4 && size.size == "18" && !tooltipVisible)
+                                        || (tooltipVisible && size.size == tooltipSize)}>
                                     <p>{size.size}</p>
                                     <img 
                                         src="assets/blue-dress-form.png" 
@@ -144,24 +185,31 @@
                 </div>
                     <div 
                         class="highlight-box"
-                        class:visible={value >= 2 && barbellData}
+                        class:visible={(value >= 2 && value !== 3 && barbellData) || tooltipVisible}
                         style="left: {boxStart}px;
                         width: {boxWidth}px"
                     >   
-                    {#if barbellData}
-                        <p class="diff">{barbellData.diff}"</p>
-                    {/if}
+                        {#if barbellData}
+                            <p class="diff">{Math.round(barbellData.diff * 10) / 10}"</p>
+                        {/if}
                     </div>
-                    <div class="barbell" class:visible={barbellData && move1995}>
+                    <div class="averages" class:visible={value >= 3}>
+                        <div class="avg-start" class:visible={value >= 3} style="left: {xScale(34.88)+ 148}px;"></div>
+                        <div class="avg-end" class:visible={value >= 3} style="left: {xScale(38.74)+ 148}px;"></div>
+                    </div>
+                    <div class="barbell" class:visible={barbellData && move1995 && value !== 3}>
                         <div class="line" style="left: {boxStart}px; width: {boxWidth}px"></div>
                         <div class="circle-start" style="left: {boxStart}px;"></div>
                         <div class="circle-end" style="left: {boxEnd}px;"></div>
-                        <div class="avg-start" class:visible={value >= 3} style="left: {boxStart}px;"></div>
-                        <div class="avg-end" class:visible={value >= 3} style="left: {boxEnd}px;"></div>
                     </div>
             </div>
         </div>
     </div>
+    <!-- Tooltip -->
+    <div id="tooltip" class:visible={tooltipVisible} style="left: {tooltipX}px; top: {tooltipY}px">
+        
+    </div>
+
     <div class="scrolly-outer">
             <Scrolly bind:value>
                 {#each copy.vanitySizing as stage, i}
@@ -176,6 +224,28 @@
 </div>
 
 <style>
+    #tooltip {
+        position: fixed;
+        opacity: 0;
+        background: var(--color-bg);
+        border-radius: 8px;
+        padding: 1rem;
+        z-index: 1000;
+        font-family: var(--mono);
+        font-size: var(--12px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: opacity 100ms linear;
+        pointer-events: none;
+    }
+
+    #tooltip.visible {
+        opacity: 1;
+    }
+
+    #tooltip p {
+        margin: 0;
+    }
+
     .outer-container {
         position: relative;
         width: 100%;
@@ -240,7 +310,7 @@
         height: 50px;
         margin: 0;
         padding: 0 2rem;
-        z-index: 1000;
+        z-index: 900;
     }
 
     .x-axis svg {
@@ -263,12 +333,22 @@
     }
 
     .barbell {
-        z-index: 1000;
+        z-index: 998;
         opacity: 0;
-        transition: opacity 500ms linear;
+        transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
     }
 
     .barbell.visible {
+        opacity: 1;
+    }
+
+    .averages {
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
+    }
+
+    .averages.visible {
         opacity: 1;
     }
 
@@ -280,7 +360,7 @@
         position: absolute;
         bottom: calc(50% + 36px);
         transform: translate(-50%, 0);
-        transition: all 500ms linear;
+        transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
     }
 
     .avg-start, .avg-end {
@@ -293,15 +373,37 @@
         transform: translate(-50%, 0);
         transition: all 500ms linear;
         opacity: 0;
+        z-index: 1000;
     }
 
     .avg-start.visible, .avg-end.visible {
         opacity: 1;
     }
 
+    .avg-start::before, .avg-end::before  {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 100px;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--14px);
+        color: var(--ws-orange);
+        text-align: center;
+    }
+
+    .avg-start::before {
+        content: "'88-'94";
+    }
+
+    .avg-end::before {
+        content: "'21-'23";
+    }
+
     .barbell .line {
         border-top: 3px solid var(--color-fg);
-        transition: all 500ms linear;
+        transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
         position: absolute;
         bottom: calc(50% + 39px);
         transform: translate(0, 0);
@@ -314,7 +416,7 @@
         top: 0%;
         z-index: 1;
         opacity: 0;
-        transition: all 500ms linear;
+        transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
     }
 
     .highlight-box.visible {
@@ -334,6 +436,7 @@
         background-color: var(--color-bg);
         border: 2px solid var(--color-fg);
         border-radius: 4px;
+        z-index: 1000;
     }
 
     .size {

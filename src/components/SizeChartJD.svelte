@@ -1,4 +1,6 @@
 <script>
+    // TODO
+    // Mobile
     import * as d3 from 'd3';
     import sizeCharts from "../data/sizeCharts.json";
     import ASTMsizes from "../data/ASTMsizes.json";
@@ -131,7 +133,7 @@
                     {@const largestPlusSize = plusSizes.find(d => d.waistMin === maxWaistMinPlus)}
                     {@const brandMaxWaistPlus = largestPlusSize ? (largestPlusSize.waistMax ?? largestPlusSize.waistMin) : null}
 
-                    <div id={brand.brandName} class="brand-row" animate:flip>
+                    <div id={brand.brandName} class="brand-row" style="padding: {(containerHeight-100)/brandData.length*0.5}px;" animate:flip>
                         <!-- Line for regular sizes -->
                         {#if brandMinWaistReg && brandMaxWaistReg}
                             <div
@@ -320,7 +322,6 @@
 
     .brand-row {
         width: 100%;
-        padding: 1.5rem;
         position: relative;
     }
 
