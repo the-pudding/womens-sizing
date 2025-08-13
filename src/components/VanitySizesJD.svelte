@@ -19,7 +19,7 @@
     let tooltipY = $state();
     let tooltipSize = $state();
 
-        function showTooltip(size, e) {
+    function showTooltip(size, e) {
         tooltipVisible = true;
         tooltipSize = +size.size;
 

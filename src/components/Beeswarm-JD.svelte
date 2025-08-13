@@ -79,7 +79,7 @@
         d3.scaleLinear().domain(xRange).range([0, width])
     );
     const tickVals = Array.from({ length: 31 }, (_, i) => i);
-
+    console.log(tickVals);
     // Running simulation to position avatars
     let positionedAvatars = $derived(() => {
         console.log("🔥 positionedAvatars recomputing");
