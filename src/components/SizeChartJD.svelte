@@ -107,7 +107,7 @@
     // REACTIVE 
     $effect(() => {
         if (containerWidth > 0) {
-            d3.select(".x-axis g")
+            d3.select("#size-chart .x-axis g")
                 .call(d3.axisBottom(xScale));
         }
     })
@@ -450,6 +450,7 @@
         padding: 0.25rem 0.5rem;
         font-weight: 700;
         font-family: var(--mono);
+        box-decoration-break: clone;
     }
 
     :global(.blue-span) {
@@ -457,6 +458,7 @@
         padding: 0.25rem 0.5rem;
         font-weight: 700;
         font-family: var(--mono);
+        box-decoration-break: clone;
     }
 
     :global(.green-span) {
@@ -464,6 +466,7 @@
         padding: 0.25rem 0.5rem;
         font-weight: 700;
         font-family: var(--mono);
+        box-decoration-break: clone;
     }
 
     :global(.purple-span) {
@@ -471,5 +474,6 @@
         padding: 0.25rem 0.5rem;
         font-weight: 700;
         font-family: var(--mono);
+        box-decoration-break: clone;
     }
 </style>

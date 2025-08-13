@@ -127,7 +127,7 @@
         updateChart(value);
 
         if (containerWidth > 0) {
-            d3.select(".x-axis g")
+            d3.select("#vanity-sizes .x-axis g")
                 .call(d3.axisBottom(xScale));
         }
     })
@@ -150,7 +150,7 @@
     </div>
     <div class="sticky-container">
         <div class="visual-container">
-            <div class="chart-container">
+            <div class="chart-container" id="vanity-sizes">
                 {#each formData as year, i}
                     <div class="year-wrapper" class:visible={(year[0] == 1995 && value >= 0) || (year[0] == 2021 && value >= 1)}>
                         <div class="year-label">

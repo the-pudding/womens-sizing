@@ -1,7 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import Footer from "$components/Footer.svelte";
-	import Intro from "./IntroJD.svelte";
+	import Intro from "./Intro.svelte";
 
 	import History from "./History.svelte";
 	import MeasurementDrawings from "./archived/MeasurementDrawings.svelte";
@@ -18,14 +18,14 @@
 <svelte:boundary onerror={(e) => console.error(e)}>
 	 <div class="grid-bg"></div>
 	<Intro startStage={0} endStage={6} introScroll={true} />
-	<!-- <TitlePage />
-	 <Intro startStage={7} introScroll={false} /> -->
-	<!-- <SizeChart /> -->
-	<!-- <VanitySizes /> -->
+	<TitlePage />
+	<Intro startStage={7} introScroll={false} />
+	<VanitySizes />
 	<!-- <Waistlines />
 	<Proportions />
 	<History />
 	<SizeChart />	 -->
+	<SizeChart />
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>
 
