@@ -141,9 +141,7 @@ import * as d3 from 'd3';
     
     // Filter and style ranges
     const alphaSizeRanges = ranges;
-    const currentSizeRanges = alphaSizeRanges.filter(range => 
-      !omittedSizes.includes(range.size)
-    );
+    const currentSizeRanges = alphaSizeRanges;
     
     // Apply color gradient
     if (currentSizeRanges.length > 0) {
@@ -174,23 +172,42 @@ import * as d3 from 'd3';
    * @returns {Object} Points and x-axis range
    */
   export function generateDataPoints(data, currentSizeRanges) {
-    const highlightPercentiles = [5, 25, 50, 75, 95];
+
+    const highlightPercentiles = [50];
     const allPercentiles = [5, 10, 25, 50, 75, 90, 95];
     const percentiles = {};
     
-    allPercentiles.forEach(p => {
-      percentiles[p] = parseFloat(data[`percent${p}`]);
-    });
+    // Add safeguards when parsing percentile data
+    if (data && data.percent5 !== undefined) {
+        allPercentiles.forEach(p => {
+            const value = data[`percent${p}`];
+            if (typeof value === 'number' || (typeof value === 'string' && !isNaN(parseFloat(value)))) {
+                percentiles[p] = parseFloat(value);
+            } else {
+                percentiles[p] = null;
+            }
+        });
+    } else {
+        // If data is null/undefined, or percent5 is missing, 
+        // return an empty set of data points.
+        return {
+            points: [],
+            xRange: [24, 65]
+        };
+    }
+    
+    // Filter out any invalid percentiles before proceeding
+    const validPercentiles = Object.keys(percentiles).filter(p => percentiles[p] !== null);
     
     const points = [];
     
     // Generate percentile points
-    allPercentiles.forEach(p => {
+    validPercentiles.forEach(p => {
       points.push({
         id: `p${p}`,
         value: percentiles[p],
-        percentile: p,
-        type: highlightPercentiles.includes(p) ? 'percentile' : 'standard'
+        percentile: parseInt(p),
+        type: highlightPercentiles.includes(parseInt(p)) ? 'percentile' : 'standard'
       });
     });
     
@@ -215,58 +232,64 @@ import * as d3 from 'd3';
     }));
     
     // Add points to the left of 5th percentile
+    // Ensure p5Value is a number before calculation
     const p5Value = percentiles[5];
     const p10Value = percentiles[10];
-    const firstSegmentWidth = p10Value - p5Value;
-    
-    for (let i = 0; i < 4; i++) {
-      const leftShift = (i + 1) * (firstSegmentWidth * 0.25);
-      points.push({
-        id: `low-${i}`,
-        value: p5Value - leftShift,
-        percentile: i + 1,
-        type: 'standard'
-      });
+    if (typeof p5Value === 'number' && typeof p10Value === 'number') {
+      const firstSegmentWidth = p10Value - p5Value;
+      for (let i = 0; i < 4; i++) {
+        const leftShift = (i + 1) * (firstSegmentWidth * 0.25);
+        points.push({
+          id: `low-${i}`,
+          value: p5Value - leftShift,
+          percentile: i + 1,
+          type: 'standard'
+        });
+      }
     }
     
     // Add points to the right of 95th percentile
+    // Ensure p95Value is a number before calculation
     const p95Value = percentiles[95];
     const p90Value = percentiles[90];
-    const lastSegmentWidth = p95Value - p90Value;
-    
-    for (let i = 0; i < 4; i++) {
-      const rightShift = (i + 1) * (lastSegmentWidth * 0.25);
-      points.push({
-        id: `high-${i}`,
-        value: p95Value + rightShift,
-        percentile: 96 + i,
-        type: 'standard'
-      });
+    if (typeof p95Value === 'number' && typeof p90Value === 'number') {
+      const lastSegmentWidth = p95Value - p90Value;
+      for (let i = 0; i < 4; i++) {
+        const rightShift = (i + 1) * (lastSegmentWidth * 0.25);
+        points.push({
+          id: `high-${i}`,
+          value: p95Value + rightShift,
+          percentile: 96 + i,
+          type: 'standard'
+        });
+      }
     }
     
     // Fill in points between percentiles
     segments.forEach(segment => {
       const startValue = percentiles[segment.start];
       const endValue = percentiles[segment.end];
-      const step = (endValue - startValue) / (segment.count + 1);
-      
-      for (let i = 0; i < segment.count; i++) {
-        const value = startValue + step * (i + 1);
-        const percentile = segment.start + (segment.end - segment.start) * (i + 1) / (segment.count + 1);
-        
-        points.push({
-          id: `segment-${segment.start}-${segment.end}-${i}`,
-          value: value,
-          percentile: Math.round(percentile),
-          type: 'standard'
-        });
+      // Ensure startValue and endValue are valid numbers before calculation
+      if (typeof startValue === 'number' && typeof endValue === 'number') {
+        const step = (endValue - startValue) / (segment.count + 1);
+        for (let i = 0; i < segment.count; i++) {
+          const value = startValue + step * (i + 1);
+          const percentile = segment.start + (segment.end - segment.start) * (i + 1) / (segment.count + 1);
+          
+          points.push({
+            id: `segment-${segment.start}-${segment.end}-${i}`,
+            value: value,
+            percentile: Math.round(percentile),
+            type: 'standard'
+          });
+        }
       }
     });
     
     // Calculate axis range
-    const allValues = points.map(p => p.value);
-    const min = Math.min(Math.min(...allValues), 24);
-    const max = Math.max(...allValues);
+    const allValues = points.map(p => p.value).filter(v => typeof v === 'number'); // Filter out nulls
+    const min = allValues.length > 0 ? Math.min(Math.min(...allValues), 24) : 24;
+    const max = allValues.length > 0 ? Math.max(...allValues) : 65;
     const padding = (max - min) * 0.05;
     
     // Make sure range encompasses all size ranges
@@ -274,13 +297,14 @@ import * as d3 from 'd3';
     let xMax = max;
     
     if (currentSizeRanges.length > 0) {
-      xMin = Math.min(xMin, Math.min(...currentSizeRanges.map(d => d.min)));
-      xMax = Math.max(xMax, Math.max(...currentSizeRanges.map(d => d.max)));
+      const currentMin = Math.min(...currentSizeRanges.map(d => d.min).filter(v => typeof v === 'number'));
+      const currentMax = Math.max(...currentSizeRanges.map(d => d.max).filter(v => typeof v === 'number'));
+      xMin = Math.min(xMin, currentMin);
+      xMax = Math.max(xMax, currentMax);
     }
     
     return {
-      points,
-      xRange: [xMin - padding, xMax + padding]
+      points
     };
   }
   

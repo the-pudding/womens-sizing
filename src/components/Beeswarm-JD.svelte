@@ -14,6 +14,7 @@
 
     // Variables
     let svg;
+    let value = $state(0);
 
     // Dimensions: grabs the container width and height, adds margins, and calulates chart width and height
     let containerHeight = $state(0);
@@ -161,80 +162,97 @@
     });
 </script>
 
-<!-- chart-container now has containerWidth and containerHeight binded, which is used to calculate the svg width and height -->
-<div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-    <!-- svg contructed in DOM without d3 -->
-    <svg bind:this={svg} width={width} height={height}>
-        <!-- group for size color bands -->
-        <g class="size-backgrounds">
-            <!-- for each of the ranges, add a g element with a rect and text inside -->
-            {#each currentSizeRanges as sizeRange, i}
-                {@const x = xScale(sizeRange.min)}
-                {@const rectWidth = xScale(sizeRange.max) - x}
-                <g class="size-band-group">
-                    <!-- assign data and styles inline -->
-                    <rect
-                        x={x}
-                        y={0}
-                        width={rectWidth}
-                        height={height}
-                        fill={sizeRange.color}
-                        opacity={sizeRange.opacity}
-                        class="size-band"
-                    />
-                    <text
-                        x={x + rectWidth / 2}
-                        y={height}
-                    >  {sizeRange.size} </text>
-                </g>
+<div class="outer-container">
+    <div class="sticky-container">
+        <div class="visual-container">
+            <div id="beeswarm" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+                <svg bind:this={svg} width={width} height={height}>
+                    <!-- group for size color bands -->
+                    <g class="size-backgrounds">
+                        <!-- for each of the ranges, add a g element with a rect and text inside -->
+                        {#each currentSizeRanges as sizeRange, i}
+                            {@const x = xScale(sizeRange.min)}
+                            {@const rectWidth = xScale(sizeRange.max) - x}
+                            <g class="size-band-group">
+                                <!-- assign data and styles inline -->
+                                <rect
+                                    x={x}
+                                    y={0}
+                                    width={rectWidth}
+                                    height={height}
+                                    fill={sizeRange.color}
+                                    opacity={sizeRange.opacity}
+                                    class="size-band"
+                                />
+                                <text
+                                    x={x + rectWidth / 2}
+                                    y={height}
+                                >  {sizeRange.size} </text>
+                            </g>
+                        {/each}
+                    </g>
+                    <!-- group for x-axis -->
+                    <g class="axis x-axis">
+                        <!-- for each tick, add a g element with a line and a tick -->
+                        {#each tickVals as tick, i}
+                            {@const x = xScale(tick)}
+                            <g
+                                class="tick tick-{i}"
+                                transform="translate({x},0)"
+                            >
+                                <line class="gridline" y1={height} y2="0" x1="0" x2="0" />
+                                <text x={0} y={20} dx="" dy="" text-anchor={"middle"}
+                                    >{tick}</text
+                                >
+                            </g>
+                        {/each}
+                    </g>
+                    <!-- group avatars (only if data is ready) -->
+                    {#if positionedAvatars()?.length > 0}
+                        <g class="avatars">
+                            <!-- for each avatar, add a g element -->
+                            {#each positionedAvatars() as avatar}
+                            <!-- hover events placed here -->
+                            <g
+                                class="avatar-group"
+                                role="group"
+                                onmouseenter={() => handleMouseEnter(avatar)}
+                                onmouseleave={() => handleMouseLeave(avatar)}
+                            >
+                                <!-- for each avatar layer, add an image -->
+                                {#each avatar.avatar.layers as imgPath}
+                                    <!-- assign data and styles inline -->
+                                    <image
+                                        x={avatar.x}
+                                        y={avatar.y}
+                                        width={avatarWidth}
+                                        height={avatarHeight}
+                                        href={imgPath.path}
+                                        class="avatar"
+                                        class:grayscale={avatar.type !== 'percentile'}
+                                    />
+                                {/each}
+                            </g>
+                            {/each}
+                        </g>
+                        {/if}
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scrolly -->
+    <div class="scrolly-outer">
+        <Scrolly bind:value>
+            {#each copy.sizeCharts as stage, i}
+                <div class="step">
+                    <div class="text">
+                        <p>{@html stage.text}</p>
+                    </div>
+                </div>
             {/each}
-        </g>
-        <!-- group for x-axis -->
-        <g class="axis x-axis">
-            <!-- for each tick, add a g element with a line and a tick -->
-            {#each tickVals as tick, i}
-                {@const x = xScale(tick)}
-                <g
-                    class="tick tick-{i}"
-                    transform="translate({x},0)"
-                >
-                    <line class="gridline" y1={height} y2="0" x1="0" x2="0" />
-                    <text x={0} y={20} dx="" dy="" text-anchor={"middle"}
-                        >{tick}</text
-                    >
-                </g>
-            {/each}
-        </g>
-        <!-- group avatars (only if data is ready) -->
-        {#if positionedAvatars()?.length > 0}
-            <g class="avatars">
-                <!-- for each avatar, add a g element -->
-                {#each positionedAvatars() as avatar}
-                <!-- hover events placed here -->
-                <g
-                    class="avatar-group"
-                    role="group"
-                    onmouseenter={() => handleMouseEnter(avatar)}
-                    onmouseleave={() => handleMouseLeave(avatar)}
-                >
-                    <!-- for each avatar layer, add an image -->
-                    {#each avatar.avatar.layers as imgPath}
-                        <!-- assign data and styles inline -->
-                        <image
-                            x={avatar.x}
-                            y={avatar.y}
-                            width={avatarWidth}
-                            height={avatarHeight}
-                            href={imgPath.path}
-                            class="avatar"
-                            class:grayscale={avatar.type !== 'percentile'}
-                        />
-                    {/each}
-                </g>
-                {/each}
-            </g>
-            {/if}
-    </svg>
+        </Scrolly>
+    </div>
 </div>
 
 <style>

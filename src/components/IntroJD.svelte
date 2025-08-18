@@ -1,302 +1,267 @@
-<!-- Intro.svelte -->
 <script>
-    import { onMount } from 'svelte';
-    import * as d3 from 'd3';
-    import generatedPercentiles from '../data/generatedPercentiles.json';
-    import ASTMsizes from "../data/ASTMsizes.json";
-    import copy from "../data/copy.json";
-    import { annotate } from 'rough-notation';
-    import { fade } from 'svelte/transition';
-    
-    import { generateRandomAvatar } from './utils/avatar-generator.js';
-    import Scrolly from './helpers/Scrolly.svelte';
-    import Ransom from "$components/Ransom.svelte";
-    import Leet from "$components/Leet.svelte";
-  
-    let containerHeight = $state(0);
-	let containerWidth = $state(0);
-    let margin = { top: 20, right: 20, bottom: 40, left: 20 };
-    let width = $derived(containerWidth - margin.left - margin.right);
-    let height = $derived(containerHeight - margin.top - margin.bottom);
-    let avatarWidth = $derived(width / 15);
-    let avatarHeight = $derived(avatarWidth * 1.4);
+  import { onMount } from 'svelte';
+  import * as d3 from 'd3';
+  import { tweened } from 'svelte/motion';
+  import { cubicOut } from 'svelte/easing';
+  import Scrolly from './helpers/Scrolly.svelte';
+  import copy from '../data/copy.json';
+  import waistlinesData from '../data/waistlines.json';
+  import ASTMsizes from "../data/ASTMsizes.json";
+  import { 
+    filterASTMData, processASTMSizeData, findSizesForMeasurement, generateDataPoints 
+  } from './utils/chart-utilities.js';
+  import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
 
-    let value = $state(0);
-    let svg;
-    let { startStage = 0, endStage = null, introScroll = true } = $props();
-    let filteredStages = $derived(copy.intro ? copy.intro.slice(
-        startStage, 
-        endStage !== null ? endStage + 1 : undefined
-    ) : []);
+  /*** STATE VARIABLES ***/
+  let value = $state(0);
+  let didUpdateWaistline = false;
 
-    // SCALE
-    const xScale = $derived(
-        d3.scaleLinear()
-            .domain([20, 65])
-            .range([0, width])
-    );
+  let containerWidth = $state(0);
+  let containerHeight = $state(0);
+  let margin = { top: 20, right: 20, bottom: 40, left: 20 };
 
-    // DATA
-    //cdc waistline data
-    let yearRange = $state();
-    let race = $state();
+  let width = $derived(containerWidth - margin.left - margin.right);
+  let height = $derived(containerHeight - margin.top - margin.bottom);
 
-    //ASTM standard sizing
-    let ASTMfilter = null;
-    let currentSizeRanges = [];
-    let age = $state();
-    let ASTMyear = $state("2021");
-    let ASTMrange = $state("straight");
+  let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
+  let avatarWidth = $derived(width / 15);
+  let avatarHeight = $derived(avatarWidth * 1.4);
 
-    let filteredData = $derived(ASTMsizes.filter(d => d.year == ASTMyear && d.sizeRange == ASTMrange));
-    let bandData = $derived(d3.groups(filteredData, (d) => d.alphaSize));
-    let cleanBandData = $derived(
-        bandData.map((d,i) => ({ 
-            ...d, 
-            waistMin: d[1].length == 1 ? +d[1][0].waist : +d[1][0].waist,
-            waistMax: d[1].length == 1 && i == 0 ? d3.min(bandData[i+1][1], d => +d.waist) 
-                : d[1].length == 1 && i == bandData.length - 1 ? d3.max(bandData[i-1][1], d => +d.waist)
-                : +d[1][1].waist
-        }))
-    );
+  /*** FILTERS ***/
+  let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
+  let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
 
-    onMount(() => {
+  let omittedSizeFilters = $derived(value >= 1 ? [] : ["XXL", "XL", "XS", "XXS"]);
 
+  /*** DATA PROCESSING ***/
+  let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
+  let filteredData = $derived(waistlinesData.find(item =>
+    item.yearRange === waistlineFilters.yearRange &&
+    item.race === waistlineFilters.race &&
+    item.age === waistlineFilters.age
+  ));
+
+  let processedASTMData = $derived(processASTMSizeData(filteredASTM, omittedSizeFilters));
+  let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
+  let allSizeData = $derived(processedASTMData.allSizeData);
+
+  let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
+
+  /*** AVATARS ***/
+  let avatars = $state([]);          // fixed images
+  let avatarTweens = new Map();      // for position animation
+
+  // Generate avatar images once
+  $effect(() => {
+    if (points.length > 0 && avatars.length === 0) {
+      avatars = points.map(point => {
+        const avatarSizeType = determineAvatarSize(point, allSizeData, v => findSizesForMeasurement(allSizeData, v));
+        return {
+          ...point,
+          avatarSizeType,
+          avatar: generateRandomAvatar(avatarSizeType)  // image layers never change
+        };
+      });
+    }
+  });
+
+  /*** SCALES ***/
+  const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([0, width]));
+
+  /*** POSITIONING AVATARS ***/
+  let positionedAvatars = $derived(() => {
+    if (!avatars || avatars.length === 0) return [];
+
+    const data = avatars.map(d => ({ ...d }));
+    const avatarW = width / 15;
+    const avatarH = avatarW * 1.4;
+
+    const sim = d3.forceSimulation(data)
+      .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
+      .force('y', d3.forceY(d => d.type === 'percentile' ? height / 2 : height * 0.4).strength(0.05))
+      .force('collide', d3.forceCollide(avatarH / 4))
+      .stop();
+
+    const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
+    for (let i = 0; i < ticks; ++i) sim.tick();
+
+    data.forEach(d => {
+      d.x = Math.max(0, Math.min(width - avatarW, d.x));
+      d.y = d.type === 'percentile'
+        ? (height - avatarH) / 2
+        : Math.max(0, Math.min(height - avatarH, d.y));
     });
 
-    $effect(() => {
-        console.log(cleanBandData);
+    return avatars.map((avatar, i) => ({ ...avatar, x: data[i]?.x, y: data[i]?.y }));
+  });
 
-        if (containerWidth > 0) {
-            d3.select(".x-axis")
-                .call(d3.axisBottom(xScale));
-        }
-    })
+  /*** CHART UPDATES ***/
+  function updateChart(value) {
+    if (value == 4 && !didUpdateWaistline) {
+      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
+    }
+  }
+
+  $effect(() => {
+    updateChart(value);
+
+    if (containerWidth > 0) {
+      d3.select("#beeswarm .x-axis").call(d3.axisBottom(xScale));
+    }
+
+    const targetY = value <= 1 || value == undefined ? height / 4 : 0;
+    const targetHeight = value <= 1 || value == undefined ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+
+    animatedBand.set({ y: targetY, height: targetHeight });
+
+    // Animate positions
+    positionedAvatars().forEach((pos, id) => {
+      if (!avatarTweens.has(id)) {
+        avatarTweens.set(id, tweened({ x: pos.x, y: pos.y }, { duration: 600, easing: cubicOut }));
+      } else {
+        avatarTweens.get(id).set({ x: pos.x, y: pos.y });
+      }
+    });
+  });
 </script>
-  
+
 <div class="outer-container">
-    <div class="sticky-container">
-        <div class="visual-container">
-            {#if introScroll && (value == undefined || value == 0)}
-                <div transition:fade={{duration: 500}} class="intro-title">
-                    <p class="mono"><Leet string="meet your typical" /></p>
-                    <Ransom string="tween" />
-                    <p class="title-text">{@html copy.introText}</p>
-                </div>
-            {/if}
-            <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-                <svg bind:this={svg} width={width} height={height}>
-                    <g class="size-backgrounds">
-                        <!-- for each of the ranges, add a g element with a rect and text inside -->
-                        {#each cleanBandData as sizeRange, i}
-                            {@const x = xScale(sizeRange.waistMin)}
-                            {@const rectWidth = xScale(sizeRange.waistMax) - x}
-                            <g class="size-band-group">
-                                <!-- assign data and styles inline -->
-                                <rect
-                                    x={x}
-                                    y={0}
-                                    width={rectWidth}
-                                    height={height}
-                                    class="size-band"
-                                />
-                                <text
-                                    x={x + rectWidth / 2}
-                                    y={height}
-                                >  {sizeRange[1][0].alphaSize} </text>
-                            </g>
-                        {/each}
-                    </g>
-                    <!-- group for x-axis -->
-                    <g class="axis x-axis" transform="translate(0, {height})"></g>
-                </svg>
-            </div>
+  <div class="sticky-container">
+    <div class="visual-container">
+      <div id="beeswarm" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+        <svg width={width} height={height}>
+          {#if currentSizeRanges}
+            <g class="size-backgrounds">
+              {#each currentSizeRanges as sizeRange, i}
+                {@const x = xScale(sizeRange.min)}
+                {@const rectWidth = xScale(sizeRange.max) - x}
+                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size)}>
+                  <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
+                  <text x={x + rectWidth / 2} y={height - margin.bottom - margin.top - 20}>{sizeRange.size}</text>
+                </g>
+              {/each}
+            </g>
+          {/if}
+
+          <g class="axis x-axis" transform="translate(0, {height - margin.top - margin.bottom})"></g>
+
+          {#if positionedAvatars().length > 0}
+            <g class="avatars">
+              {#each avatars as avatar, i}
+                {@const positionedAvatar = positionedAvatars()[i]}
+                <g class="avatar-group" transform={`translate(${positionedAvatar.x}, ${positionedAvatar.y})`}>
+                  {#each avatar.avatar.layers as imgPath}
+                    <image
+                      x={0} y={0} width={avatarWidth} height={avatarHeight}
+                      href={imgPath.path} class="avatar"
+                      class:grayscale={avatar.type !== 'percentile'}
+                    />
+                  {/each}
+                </g>
+              {/each}
+            </g>
+          {/if}
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolly-outer">
+    <Scrolly bind:value>
+      {#each copy.intro as stage}
+        <div class="step">
+          <div class="text"><p>{@html stage.text}</p></div>
         </div>
-        {#if (introScroll && value !== undefined && value >= 1) || (!introScroll && value !== undefined)}
-            <div transition:fade={{duration: 500}} class="age-container">
-                <p>Ages
-                {#key filteredStages[value].age}
-                    {filteredStages[value].age}
-                {/key}
-                </p>
-            </div>
-        {/if}
-    </div>
-    
-    <div class="scrolly-outer">
-        <Scrolly bind:value>
-            {#each filteredStages as stage, i}
-                <div class="step" 
-                     class:centered={stage.stepPosition === "center"} 
-                     class:centered-vertical={stage.stepPosition === "center-vertical"} 
-                     class:right-aligned={!stage.stepPosition || stage.stepPosition === "right"}
-                     class:left-aligned={!stage.stepPosition || stage.stepPosition === "left"}>
-                    {#if stage.text}
-                        <div class="text">
-                            <p>{@html stage.text}</p>
-                        </div>
-                    {/if}
-                </div>
-            {/each}
-        </Scrolly>
-    </div>
+      {/each}
+    </Scrolly>
+  </div>
 </div>
-  
+
 <style>
     .outer-container {
         position: relative;
         width: 100%;
     }
-    
     .sticky-container {
         position: sticky;
         top: 0;
-        height: 100vh;
+        height: 100svh;
         width: 100%;
         z-index: 1;
-        padding: 2rem;
     }
-
-    .age-container {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: var(--16px);
-        text-transform: uppercase;
-        gap: 0.5rem;
-    }
-
-    .age-num {
-        width: 120px;
-    }
-
-    .intro-title {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 60%;
-        padding: 0 10% 0 0;
-        height: 100svh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .mono {
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: var(--24px);
-    }
-
-    .title-text {
-        font-family: var(--sans);
-        font-size: var(--20px);
-        max-width: 500px;
-    }
-  
     .visual-container {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
-    
+
     .chart-container {
         width: 100%;
+        padding: 2rem;
         height: 100%;
+        /* max-height: 600px; */
         margin: 0 auto;
-        padding: 5px;
         position: relative;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-around;
         align-items: center;
     }
-  
-    svg {
-        display: block;
-        width: 100%;
-        height: 100%;
+
+    .grayscale {
+        filter: grayscale(100%);
     }
 
-    :global(.x-axis-labels .tick text) {
-        font-family: var(--mono);
-        font-size: var(--14px);
-        font-weight: 700;
-
+    .size-band-group {
+       transition: opacity 0.3s ease-in-out; 
     }
-    
+
+    .omit {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    :global(#M-band rect) {
+        opacity: 0.95;
+    }
+
+    :global(#S-band rect, #L-band rect) {
+        opacity: 0.65;
+    }
+
+    :global(#XS-band rect, #XL-band rect) {
+        opacity: 0.45;
+    }
+
+    :global(#XXS-band rect, #XXL-band rect) {
+        opacity: 0.25;
+    }
+
     .scrolly-outer {
         position: relative;
         z-index: 2;
+        pointer-events: none;
     }
-    
+
     .step {
         height: 100vh;
         display: flex;
+        justify-content: center;
         align-items: center;
-        padding: 0 2rem;
+        padding-right: 2rem;
         font-family: var(--sans);
         font-size: var(--20px);
     }
-    
-    .step.right-aligned {
-        justify-content: flex-end;
-        padding-right: 10rem;
-    }
-    .step.left-aligned {
-        justify-content: flex-start;
-        padding-left: 2rem;
-    }
-    
-    .step.centered {
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .step.centered-vertical {
-        justify-content: center;
-        align-items: center;
-    }
-    
     .step .text {
         max-width: 500px;
         width: 90%;
         padding: 20px;
         background: white;
         border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
-    }
-    
-    :global(.avatar-group) {
-        transition: transform 0.75s ease, opacity 0.5s ease;
-    }
-    
-    :global(.size-band) {
-        transition: opacity 0.5s ease, fill 0.5s ease;
-    }
-
-    :global(.size-band-highlight) {
-        transition: opacity 0.5s ease, stroke 0.5s ease;
-    }
-
-    :global(.size-band-text) {
-        fill: var(--color-fg);
-        font-family: var(--mono);
-        font-size: 16px;
-        font-weight: 700;
-    }
-
-    :global(.bold) {
-        font-family: var(--mono);
-        font-weight: 700;
-        text-transform: uppercase;
     }
 </style>
