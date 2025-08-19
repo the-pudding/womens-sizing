@@ -6,10 +6,10 @@
   import copy from '../data/copy.json';
   import waistlinesData from '../data/waistlines.json';
   import ASTMsizes from "../data/ASTMsizes.json";
-  import { 
-    filterASTMData, processASTMSizeData, findSizesForMeasurement, generateDataPoints 
-  } from './utils/chart-utilities.js';
-  import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
+  // import { 
+  //   filterASTMData, processASTMSizeData, findSizesForMeasurement, generateDataPoints 
+  // } from './utils/chart-utilities.js';
+  // import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
 	import { onMount } from 'svelte';
 
   /*** SCROLLY ***/
@@ -38,87 +38,77 @@
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
+  function filterASTMData(ASTMsizes, ASTMFilters) {
+    return ASTMsizes.filter(item => 
+      item.year === ASTMFilters.year &&
+      item.sizeRange === ASTMFilters.sizeRange
+    );
+  }
+
   let filteredData = $derived(waistlinesData.find(item =>
     item.yearRange === waistlineFilters.yearRange &&
     item.race === waistlineFilters.race &&
     item.age === waistlineFilters.age
   ));
+
   let processedASTMData = $derived(processASTMSizeData(filteredASTM, omittedSizeFilters));
   let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
-  let allSizeData = $derived(processedASTMData.allSizeData);
   let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
 
-  /*** AVATARS ***/
-  const avatarCache = new Map();       
-  
-  function generateAvatars(points) {
-    if (!points) return [];
+  function processASTMSizeData(filteredASTM) {
+    const sizeGroups = d3.groups(filteredASTM, d => d.alphaSize);
 
-    return points.map(point => {
-      const id = point.id ?? `${point.type}-${point.value}`; // <-- pick a stable unique key
-
-      if (!avatarCache.has(id)) {
-        const avatarSizeType = determineAvatarSize(
-          point,
-          allSizeData,
-          v => findSizesForMeasurement(allSizeData, v)
-        );
-
-        avatarCache.set(id, {
-          avatarSizeType,
-          avatar: generateRandomAvatar(avatarSizeType),
-        });
+    const mappedSizes = sizeGroups.map((d, i) => {
+      let min;
+      let max;
+      if (d[1].length == 1 && i == 0) {
+        min = +d[1][0].waist - 1;
+        max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+      } else if (d[1].length == 1 && i == sizeGroups.length - 1) {
+        min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+        max = +d[1][0].waist + 1;
+      } else {
+        min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+        max = (+d[1][1].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
       }
 
-      const cached = avatarCache.get(id);
-
       return {
-        ...point,
-        avatarSizeType: cached.avatarSizeType,
-        avatar: cached.avatar,
-      };
-    });
-  }
-
-  let avatars = $derived(generateAvatars(points));
-
-  // Position avatars
-  let positionedAvatars = $derived(() => {
-    if (!avatars || avatars.length === 0) return [];
-
-    const data = avatars.map(d => ({ ...d }));
-
-    const sim = d3.forceSimulation(data)
-      .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
-      .force('y', d3.forceY(d => d.type === 'percentile' ? height / 2 : height * 0.4).strength(0.05))
-      .force('collide', d3.forceCollide(avatarHeight / 4))
-      .stop();
-
-    const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
-    for (let i = 0; i < ticks; ++i) sim.tick();
-
-    data.forEach(d => {
-      d.x = Math.max(0, Math.min(width - avatarWidth, d.x));
-      d.y = d.type === 'percentile'
-        ? (height - avatarHeight) / 2
-        : Math.max(0, Math.min(height - avatarHeight, d.y));
+        ...d,
+        size: d[0],
+        min,
+        max
+      }
     });
 
-    return avatars.map((avatar, i) => ({ ...avatar, x: data[i]?.x, y: data[i]?.y }));
-  });
+    return {
+      currentSizeRanges: mappedSizes
+    }
+  } 
 
-  /*** CHART UPDATES ***/
-  function updateChart(value) {
-    if (value <= 2 || value == undefined) {
-      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
-    } else {
-      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
+  function generateDataPoints(filteredData, currentSizeRanges) {
+    console.log({filteredData, currentSizeRanges});
+
+    return {
+      filteredData,
+      currentSizeRanges
     }
   }
 
+  console.log(points)
+
+  // console.log(processedASTMData)
+  /*** CHART UPDATES ***/
+  // function updateChart(value) {
+  //   if (value <= 2 || value == undefined) {
+  //     waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
+  //   } else {
+  //     waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
+  //   }
+  // }
+
   $effect(() => {
     //Updates chart based on scroll value
-    updateChart(value);
+    // updateChart(value);
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -133,7 +123,6 @@
 
   onMount(() => {
     // Initial setup for avatars
-    console.log(avatars)
   });
 </script>
 
@@ -157,7 +146,7 @@
 
           <g class="axis x-axis" transform="translate(0, {height - margin.top - margin.bottom})"></g>
 
-          {#if positionedAvatars()}
+          <!-- {#if positionedAvatars()}
             <g class="avatars">
               {#each positionedAvatars() as position, i}
                 <g class="avatar-group" transform={`translate(${position.x}, ${position.y})`}>
@@ -171,7 +160,7 @@
                 </g>
               {/each}
             </g>
-          {/if}
+          {/if} -->
         </svg>
       </div>
     </div>
