@@ -13,8 +13,8 @@
         <!-- <h1 class="title-page-title">
             {titlePageData?.title || "Default Title"}
         </h1> -->
-        <Ransom string="shrinking" />
-        <Ransom string="options" />
+        <Ransom string="sized" />
+        <Ransom string=" out " />
         {#if titlePageData?.subtitle}
             <h2 class="title-page-subtitle">
                 <Leet string={titlePageData.subtitle} />

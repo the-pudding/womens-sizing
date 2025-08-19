@@ -26,19 +26,42 @@
 	let nodes = [];
 	let intersectionObservers = [];
 	let container = undefined;
+	let previousRatios = new Array(steps.length).fill(0);
 
-	function mostInView () {
+	const mostInView = () => {
 		let maxRatio = 0;
-		let maxIndex = 0;
+		let maxIndex = -1;
+		let hasExitedLastStep = false;
 		for (let i = 0; i < steps.length; i++) {
 			if (steps[i] > maxRatio) {
 				maxRatio = steps[i];
 				maxIndex = i;
 			}
+
+			// Check if the step has exited (was in view, now not in view)
+			if (previousRatios[i] > 0 && steps[i] === 0) {
+				// Step has exited
+				if (i === steps.length - 1) {
+					// Handle exiting the last step
+					hasExitedLastStep = true;
+				}
+			}
+
+			// Update the previousRatios for the next tick
+			previousRatios[i] = steps[i];
 		}
 
-		if (maxRatio > 0) value = maxIndex;
-		else value = undefined;
+
+		if (maxRatio > 0) {
+			// Set value to the most visible step
+			value = maxIndex;
+		} else if (hasExitedLastStep) {
+			// Only set to exitStep if the last step has been scrolled past
+			value = "exit";
+		} else {
+			// If no steps are in view and we haven't passed the last step, it might mean we're above the first step
+			value = undefined;
+		}
 	};
 
 	function createObserver(node, index) {

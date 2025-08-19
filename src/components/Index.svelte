@@ -17,14 +17,12 @@
 
 <svelte:boundary onerror={(e) => console.error(e)}>
 	 <div class="grid-bg"></div>
-	<Intro />
-	<!-- <TitlePage /> -->
-	<!-- <Intro startStage={7} introScroll={false} /> -->
-	<!-- <VanitySizes /> -->
-	<!-- <Waistlines />
+	<Intro startStage={0} endStage={6}/>
+	<TitlePage />
+	<Intro startStage={7}/>
+	<VanitySizes />
 	<Proportions />
-	<History />
-	<SizeChart />	 -->
+	<!-- <History /> -->
 	<SizeChart />
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

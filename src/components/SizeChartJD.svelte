@@ -8,6 +8,8 @@
     import Scrolly from './helpers/Scrolly.svelte';
     import copy from '../data/copy.json';
     import { flip } from 'svelte/animate';
+    import Ransom from "$components/Ransom.svelte";
+    import Leet from "$components/Leet.svelte";
 
     // DIMENSIONS
     let containerHeight = $state(0);
@@ -114,6 +116,20 @@
 </script>
 
 <div class="outer-container">
+    <div class="text-block">
+        {#each copy.ASTMtransition as block}
+            <div>
+                {#if block.subhed}
+                    <h3>
+                        <Leet string="What good is a" />
+                        <Ransom string="universal" />
+                        <Leet string="size if brands don't use it?" />
+                    </h3>
+                {/if}
+                <p>{@html block.text}</p>
+            </div>
+        {/each}
+    </div>
     <div class="sticky-container">
         <div class="visual-container">
             <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
@@ -267,6 +283,19 @@
         position: relative;
         width: 100%;
     }
+
+    .text-block h3 {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .text-block p {
+        width: min(100%, 550px);
+        margin: 0 auto;
+        margin-bottom: 60px;
+        margin-top: 60px;
+    }
+
     .sticky-container {
         position: sticky;
         top: 0;

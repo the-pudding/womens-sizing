@@ -253,7 +253,7 @@
     .sticky-container {
         position: sticky;
         top: 0;
-        height: 70vh;
+        height: 100vh;
         width: 100%;
         z-index: 1;
     }

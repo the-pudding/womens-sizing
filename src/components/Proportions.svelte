@@ -2,6 +2,8 @@
     import { onMount } from 'svelte';
     import copy from "../data/copy.json";
     import Scrolly from './helpers/Scrolly.svelte';
+    import Ransom from "$components/Ransom.svelte";
+    import Leet from "$components/Leet.svelte";
 
     let containerHeight = $state(0);
     let containerWidth = $state(0);
@@ -40,16 +42,19 @@
 </script>
 <!-- Transition to show caveats with fit and introduce mismatched proportions -->
 <div class="outer-container">
-    <div class="spot-image">TK spot art?</div>
     <div class="text-block">
         {#each copy.ASTMtransition as block}
-        <div>
-            {#if block.subhed}
-                <h3>{block.subhed}</h3>
-            {/if}
-            <p>{@html block.text}</p>
-        </div>
-    {/each}
+            <div>
+                {#if block.subhed}
+                    <h3>
+                        <Leet string="Mass produced clothes" />
+                        <Ransom string="do not fit" />
+                        <Leet string="every body" />
+                    </h3>
+                {/if}
+                <p>{@html block.text}</p>
+            </div>
+        {/each}
     </div>
     <div class="sticky-container">
         <div class="visual-container">
@@ -124,8 +129,13 @@
         justify-content: center;
         align-items: flex-end;
     }
-    .text-block {
-        width: min(90%, 550px);
+    .text-block h3 {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .text-block p {
+        width: min(100%, 550px);
         margin: 0 auto;
         margin-bottom: 60px;
         margin-top: 60px;

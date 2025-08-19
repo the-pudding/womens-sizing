@@ -12,6 +12,13 @@
 
   /*** SCROLLY ***/
   let value = $state(0);
+  let { startStage = 0, endStage = null } = $props();
+   let filteredStages = $derived(copy.intro ? copy.intro.slice(
+        startStage, 
+        endStage !== null ? endStage + 1 : undefined
+    ) : []);
+  let currentStage = $derived(filteredStages?.[value]);
+  let currentId = $derived(+currentStage?.id);
 
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
@@ -31,7 +38,7 @@
   /*** FILTERS ***/
   let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
   let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(value >= 2 ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let omittedSizeFilters = $derived(currentId >= 2 ? [] : ["XXL", "XL", "XS", "XXS"]);
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
@@ -229,8 +236,8 @@
   });
 
   /*** CHART UPDATES ***/
-  function updateChart(value) {
-    if (value <= 2 || value == undefined) {
+  function updateChart(currentId) {
+    if (currentId <= 2 || isNaN(currentId)) {
       waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
     } else {
       waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
@@ -239,18 +246,18 @@
 
   $effect(() => {
     //Updates chart based on scroll value
-    updateChart(value);
+    updateChart(currentId);
 
-    console.log(value)
+    console.log(value, currentId)
 
     // Sets up axis
     if (containerWidth > 0) {
-      d3.select("#beeswarm .x-axis").call(d3.axisBottom(xScale));
+      d3.selectAll("#beeswarm .x-axis").call(d3.axisBottom(xScale));
     }
 
     // Background band tweens
-    const targetY = value <= 1 || value == undefined ? height / 4 : 0;
-    const targetHeight = value <= 1 || value == undefined ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+    const targetY = currentId <= 1 || isNaN(currentId) ? height / 4 : 0;
+    const targetHeight = currentId <= 1 || isNaN(currentId) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
 </script>
@@ -258,7 +265,7 @@
 <div class="outer-container">
   <div class="sticky-container">
     <div class="visual-container">
-      {#if value == undefined || value == 0}
+      {#if isNaN(currentId) || currentId == 0}
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
@@ -272,9 +279,9 @@
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
                 {@const rectWidth = xScale(sizeRange.max) - x}
-                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size) || value < 1 || value == undefined}>
+                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId) }>
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
-                  <text x={x + rectWidth / 2} y={value <= 1 || value == undefined ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
+                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
                 </g>
               {/each}
             </g>
@@ -282,14 +289,14 @@
 
           <g class="axis x-axis" 
               transform="translate(0, {height - margin.top - margin.bottom})"
-              opacity={value >= 2 ? 1 : 0}></g>
+              opacity={currentId >= 2 ? 1 : 0}></g>
 
           {#if positionedAvatars()}
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point[i].type == 'percentile' && (value <= 1 || value == undefined)) ? 2 : 1})`}
-                  opacity={(point[i].type == 'percentile' && (value <= 1 || value == undefined)) || value > 1 ? 1 : 0}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point[i].type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
+                  opacity={(point[i].type == 'percentile' && (currentId <= 1 || isNaN(currentId))) || currentId > 1 ? 1 : 0}
                   >
                   {#if avatarImages && avatarImages.length > i}
                     {@const currentAvatar = avatarImages[i]} 
@@ -313,7 +320,7 @@
 
   <div class="scrolly-outer">
     <Scrolly bind:value>
-      {#each copy.intro as stage}
+      {#each filteredStages as stage}
         <div class="step">
           {#if stage.text}
             <div class="text"><p>{@html stage.text}</p></div>
