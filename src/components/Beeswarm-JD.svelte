@@ -14,7 +14,7 @@
 
     // Variables
     let svg;
-    let value = $state(0);
+    let value 
 
     // Dimensions: grabs the container width and height, adds margins, and calulates chart width and height
     let containerHeight = $state(0);
@@ -39,7 +39,7 @@
       waistlineFilters = {
         yearRange: "2015-2018",
         race: "all",
-        age: "20 and over"
+        age: "10–11"
       },
     
       ASTMFilters = {

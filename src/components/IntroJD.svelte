@@ -10,6 +10,7 @@
     filterASTMData, processASTMSizeData, findSizesForMeasurement, generateDataPoints 
   } from './utils/chart-utilities.js';
   import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
+	import { onMount } from 'svelte';
 
   /*** SCROLLY ***/
   let value = $state(0);
@@ -28,6 +29,7 @@
 
   /*** TWEENS ***/
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
+  const positionTweens = new Map();
 
   /*** FILTERS ***/
   let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
@@ -47,22 +49,38 @@
   let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
 
   /*** AVATARS ***/
-  let avatars = $state([]);          
-  let avatarTweens = new Map();      
+  const avatarCache = new Map();       
+  
+  function generateAvatars(points) {
+    if (!points) return [];
 
-  // Generate avatar images once
-  $effect(() => {
-    if (points.length > 0 && avatars.length === 0) {
-      avatars = points.map(point => {
-        const avatarSizeType = determineAvatarSize(point, allSizeData, v => findSizesForMeasurement(allSizeData, v));
-        return {
-          ...point,
+    return points.map(point => {
+      const id = point.id ?? `${point.type}-${point.value}`; // <-- pick a stable unique key
+
+      if (!avatarCache.has(id)) {
+        const avatarSizeType = determineAvatarSize(
+          point,
+          allSizeData,
+          v => findSizesForMeasurement(allSizeData, v)
+        );
+
+        avatarCache.set(id, {
           avatarSizeType,
-          avatar: generateRandomAvatar(avatarSizeType)
-        };
-      });
-    }
-  });
+          avatar: generateRandomAvatar(avatarSizeType),
+        });
+      }
+
+      const cached = avatarCache.get(id);
+
+      return {
+        ...point,
+        avatarSizeType: cached.avatarSizeType,
+        avatar: cached.avatar,
+      };
+    });
+  }
+
+  let avatars = $derived(generateAvatars(points));
 
   // Position avatars
   let positionedAvatars = $derived(() => {
@@ -91,7 +109,9 @@
 
   /*** CHART UPDATES ***/
   function updateChart(value) {
-    if (value == 4) {
+    if (value <= 2 || value == undefined) {
+      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
+    } else {
       waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
     }
   }
@@ -110,6 +130,11 @@
     const targetHeight = value <= 1 || value == undefined ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
+
+  onMount(() => {
+    // Initial setup for avatars
+    console.log(avatars)
+  });
 </script>
 
 <div class="outer-container">
@@ -124,7 +149,7 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size)}>
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
-                  <text x={x + rectWidth / 2} y={height - margin.bottom - margin.top - 20}>{sizeRange.size}</text>
+                  <text x={x + rectWidth / 2} y={value <= 1 || value == undefined ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
                 </g>
               {/each}
             </g>
@@ -132,16 +157,15 @@
 
           <g class="axis x-axis" transform="translate(0, {height - margin.top - margin.bottom})"></g>
 
-          {#if positionedAvatars().length > 0}
+          {#if positionedAvatars()}
             <g class="avatars">
-              {#each avatars as avatar, i}
-                {@const positionedAvatar = positionedAvatars()[i]}
-                <g class="avatar-group" transform={`translate(${positionedAvatar.x}, ${positionedAvatar.y})`}>
-                  {#each avatar.avatar.layers as imgPath}
+              {#each positionedAvatars() as position, i}
+                <g class="avatar-group" transform={`translate(${position.x}, ${position.y})`}>
+                  {#each position.avatar.layers as imgPath}
                     <image
                       x={0} y={0} width={avatarWidth} height={avatarHeight}
                       href={imgPath.path} class="avatar"
-                      class:grayscale={avatar.type !== 'percentile'}
+                      class:grayscale={position.type !== 'percentile'}
                     />
                   {/each}
                 </g>
@@ -203,12 +227,17 @@
     }
 
     .size-band-group {
-       transition: opacity 0.3s ease-in-out; 
+       transition: opacity 0.5s ease-in-out; 
     }
 
     .omit {
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .size-band-group text {
+      font-family: var(--mono);
+      font-weight: 700;
     }
 
     :global(#M-band rect) {

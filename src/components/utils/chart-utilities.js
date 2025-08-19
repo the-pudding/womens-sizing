@@ -192,7 +192,7 @@ import * as d3 from 'd3';
         // return an empty set of data points.
         return {
             points: [],
-            xRange: [24, 65]
+            xRange: [20, 65]
         };
     }
     
@@ -288,7 +288,7 @@ import * as d3 from 'd3';
     
     // Calculate axis range
     const allValues = points.map(p => p.value).filter(v => typeof v === 'number'); // Filter out nulls
-    const min = allValues.length > 0 ? Math.min(Math.min(...allValues), 24) : 24;
+    const min = allValues.length > 0 ? Math.min(Math.min(...allValues), 20) : 20;
     const max = allValues.length > 0 ? Math.max(...allValues) : 65;
     const padding = (max - min) * 0.05;
     
