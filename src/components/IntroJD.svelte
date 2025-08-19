@@ -1,16 +1,14 @@
 <script>
   import * as d3 from 'd3';
   import { tweened } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
   import Scrolly from './helpers/Scrolly.svelte';
   import copy from '../data/copy.json';
   import waistlinesData from '../data/waistlines.json';
   import ASTMsizes from "../data/ASTMsizes.json";
-  // import { 
-  //   filterASTMData, processASTMSizeData, findSizesForMeasurement, generateDataPoints 
-  // } from './utils/chart-utilities.js';
-  // import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
-	import { onMount } from 'svelte';
+  import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
+	import { fade } from 'svelte/transition';
+  import Ransom from "$components/Ransom.svelte";
+    import Leet from "$components/Leet.svelte";
 
   /*** SCROLLY ***/
   let value = $state(0);
@@ -29,12 +27,11 @@
 
   /*** TWEENS ***/
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
-  const positionTweens = new Map();
 
   /*** FILTERS ***/
   let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
   let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(value >= 1 ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let omittedSizeFilters = $derived(value >= 2 ? [] : ["XXL", "XL", "XS", "XXS"]);
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
@@ -52,9 +49,6 @@
   ));
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM, omittedSizeFilters));
-  let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
-  let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
-
   function processASTMSizeData(filteredASTM) {
     const sizeGroups = d3.groups(filteredASTM, d => d.alphaSize);
 
@@ -85,30 +79,169 @@
     }
   } 
 
-  function generateDataPoints(filteredData, currentSizeRanges) {
-    console.log({filteredData, currentSizeRanges});
+  let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
 
+  let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
+  function generateDataPoints(data) {
+    // Return an empty array early if data is invalid.
+    // if (!data || typeof data.percent5 !== 'number') {
+    //   return { points: [] };
+    // }
+
+    const allPercentiles = [5, 10, 25, 50, 75, 90, 95];
+    const highlightPercentile = 50;
+
+    // Parse all percentiles and filter out invalid data.
+    const percentilePoints = allPercentiles
+      .map(p => {
+        const value = data[`percent${p}`];
+        const parsedValue = typeof value === 'number' || (typeof value === 'string' && !isNaN(parseFloat(value)))
+          ? parseFloat(value)
+          : null;
+        return { p, value: parsedValue };
+      })
+      .filter(d => d.value !== null)
+      .map(d => ({
+        id: `p${d.p}`,
+        value: d.value,
+        percentile: d.p,
+        type: highlightPercentile == d.p ? 'percentile' : 'standard'
+      }));
+
+    const percentiles = Object.fromEntries(percentilePoints.map(d => [d.percentile, d.value]));
+
+    const percentileRanges = [
+      { start: 5, end: 10, range: 5 },
+      { start: 10, end: 25, range: 15 },
+      { start: 25, end: 50, range: 25 },
+      { start: 50, end: 75, range: 25 },
+      { start: 75, end: 90, range: 15 },
+      { start: 90, end: 95, range: 5 }
+    ];
+    
+    const totalRange = percentileRanges.reduce((sum, s) => sum + s.range, 0);
+    const totalPointsToDistribute = 85;
+
+    // Generate points between percentiles and for the tails.
+    const pointsInRanges = percentileRanges.flatMap(segment => {
+      const count = Math.round((segment.range / totalRange) * totalPointsToDistribute);
+      const startValue = percentiles[segment.start];
+      const endValue = percentiles[segment.end];
+
+      if (typeof startValue !== 'number' || typeof endValue !== 'number') return [];
+
+      const points = [];
+      const step = (endValue - startValue) / (count + 1);
+      for (let i = 0; i < count; i++) {
+        const value = startValue + step * (i + 1);
+        const percentile = segment.start + (segment.end - segment.start) * (i + 1) / (count + 1);
+        points.push({
+          id: `segment-${segment.start}-${segment.end}-${i}`,
+          value: value,
+          percentile: Math.round(percentile),
+          type: 'standard'
+        });
+      }
+      return points;
+    });
+
+    // Handle the tails separately for clarity.
+    const tailPoints = [];
+    const createTailPoints = (p1, p2, isLeftTail) => {
+      const p1Value = percentiles[p1];
+      const p2Value = percentiles[p2];
+      if (typeof p1Value === 'number' && typeof p2Value === 'number') {
+        const segmentWidth = Math.abs(p2Value - p1Value);
+        const shift = segmentWidth * 0.25;
+        for (let i = 0; i < 4; i++) {
+          const value = isLeftTail ? p1Value - (i + 1) * shift : p1Value + (i + 1) * shift;
+          const percentile = isLeftTail ? i + 1 : 96 + i;
+          tailPoints.push({
+            id: `${isLeftTail ? 'low' : 'high'}-${i}`,
+            value,
+            percentile,
+            type: 'standard'
+          });
+        }
+      }
+    };
+
+    createTailPoints(5, 10, true);
+    createTailPoints(95, 90, false);
+
+    const allPoints = [...percentilePoints, ...pointsInRanges, ...tailPoints];
+
+    allPoints.sort((a, b) => {
+      // If 'a' is a percentile and 'b' is not, 'a' should come after 'b'
+      if (a.type === 'percentile' && b.type !== 'percentile') {
+          return 1;
+      }
+      // If 'b' is a percentile and 'a' is not, 'b' should come after 'a'
+      if (a.type !== 'percentile' && b.type === 'percentile') {
+          return -1;
+      }
+      // Otherwise, maintain the relative order
+      return 0;
+  });
+    
     return {
-      filteredData,
-      currentSizeRanges
+      points: allPoints
+    };
+  }
+
+  let avatarImages = generateAvatarImgs(points);
+  function generateAvatarImgs(points) { // Added 'points' as an argument
+    // Ensure points is not empty before mapping
+    if (!points || points.length === 0) return [];
+
+    let avatars = points.map(point => {
+      return {
+        ...point,
+        // The avatar object is already generated here
+        avatar: generateRandomAvatar("mid")
+      };
+    });
+    return avatars
+  }
+
+  let positionedAvatars = $derived(() => {
+    if (!points || points.length === 0) return [];
+
+    const data = points.map(d => ({ ...d }));
+
+    const sim = d3.forceSimulation(data)
+      .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
+      .force('y', d3.forceY(d => d.type === 'percentile' ? height / 2 : height * 0.4).strength(0.05))
+      .force('collide', d3.forceCollide(avatarHeight / 4))
+      .stop();
+
+    const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
+    for (let i = 0; i < ticks; ++i) sim.tick();
+
+    data.forEach(d => {
+      d.x = Math.max(0, Math.min(width - avatarWidth, d.x));
+      d.y = d.type === 'percentile'
+        ? (height - avatarHeight) / 2
+        : Math.max(0, Math.min(height - avatarHeight, d.y));
+    });
+
+    return points.map((point, i) => ({ ...points, x: data[i]?.x, y: data[i]?.y }));
+  });
+
+  /*** CHART UPDATES ***/
+  function updateChart(value) {
+    if (value <= 2 || value == undefined) {
+      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
+    } else {
+      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
     }
   }
 
-  console.log(points)
-
-  // console.log(processedASTMData)
-  /*** CHART UPDATES ***/
-  // function updateChart(value) {
-  //   if (value <= 2 || value == undefined) {
-  //     waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
-  //   } else {
-  //     waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
-  //   }
-  // }
-
   $effect(() => {
     //Updates chart based on scroll value
-    // updateChart(value);
+    updateChart(value);
+
+    console.log(value)
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -120,15 +253,18 @@
     const targetHeight = value <= 1 || value == undefined ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
-
-  onMount(() => {
-    // Initial setup for avatars
-  });
 </script>
 
 <div class="outer-container">
   <div class="sticky-container">
     <div class="visual-container">
+      {#if value == undefined || value == 0}
+          <div transition:fade={{duration: 500}} class="intro-title">
+              <p class="mono"><Leet string="meet your typical" /></p>
+              <Ransom string="tween" />
+              <p class="title-text">{@html copy.introText}</p>
+          </div>
+      {/if}
       <div id="beeswarm" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
         <svg width={width} height={height}>
           {#if currentSizeRanges}
@@ -136,7 +272,7 @@
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
                 {@const rectWidth = xScale(sizeRange.max) - x}
-                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size)}>
+                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size) || value < 1 || value == undefined}>
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
                   <text x={x + rectWidth / 2} y={value <= 1 || value == undefined ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
                 </g>
@@ -144,23 +280,32 @@
             </g>
           {/if}
 
-          <g class="axis x-axis" transform="translate(0, {height - margin.top - margin.bottom})"></g>
+          <g class="axis x-axis" 
+              transform="translate(0, {height - margin.top - margin.bottom})"
+              opacity={value >= 2 ? 1 : 0}></g>
 
-          <!-- {#if positionedAvatars()}
+          {#if positionedAvatars()}
             <g class="avatars">
-              {#each positionedAvatars() as position, i}
-                <g class="avatar-group" transform={`translate(${position.x}, ${position.y})`}>
-                  {#each position.avatar.layers as imgPath}
-                    <image
-                      x={0} y={0} width={avatarWidth} height={avatarHeight}
-                      href={imgPath.path} class="avatar"
-                      class:grayscale={position.type !== 'percentile'}
-                    />
-                  {/each}
+              {#each positionedAvatars() as point, i}
+                <g class="avatar-group" 
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point[i].type == 'percentile' && (value <= 1 || value == undefined)) ? 2 : 1})`}
+                  opacity={(point[i].type == 'percentile' && (value <= 1 || value == undefined)) || value > 1 ? 1 : 0}
+                  >
+                  {#if avatarImages && avatarImages.length > i}
+                    {@const currentAvatar = avatarImages[i]} 
+                    {#each currentAvatar.avatar.layers as layer}
+                        <image
+                            x={0} y={0} width={avatarWidth} height={avatarHeight}
+                            href={layer.path}
+                            class="avatar"
+                            class:grayscale={point[i].type !== 'percentile'}
+                        />
+                    {/each}
+                  {/if}
                 </g>
               {/each}
             </g>
-          {/if} -->
+          {/if}
         </svg>
       </div>
     </div>
@@ -170,7 +315,9 @@
     <Scrolly bind:value>
       {#each copy.intro as stage}
         <div class="step">
-          <div class="text"><p>{@html stage.text}</p></div>
+          {#if stage.text}
+            <div class="text"><p>{@html stage.text}</p></div>
+          {/if}
         </div>
       {/each}
     </Scrolly>
@@ -196,6 +343,25 @@
         justify-content: center;
         align-items: center;
         position: relative;
+    }
+
+    .intro-title {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%;
+        padding: 0 10% 0 0;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title-text {
+        font-family: var(--sans);
+        font-size: var(--20px);
+        max-width: 500px;
     }
 
     .chart-container {
@@ -227,6 +393,10 @@
     .size-band-group text {
       font-family: var(--mono);
       font-weight: 700;
+    }
+
+    :global(.avatar-group) {
+        transition: all 0.5s ease-in-out;
     }
 
     :global(#M-band rect) {
