@@ -12,11 +12,12 @@
   import Ransom from "$components/Ransom.svelte";
   import Leet from "$components/Leet.svelte";
   import checkScrollDir from "$utils/checkScrollDir.js";
+	import { on } from 'svelte/events';
 
 
   /*** SCROLLY ***/
   let value = $state(0);
-  let { startStage = 0, endStage = null } = $props();
+  let { startStage = 0, endStage = null, introScroll = true } = $props();
    let filteredStages = $derived(copy.intro ? copy.intro.slice(
         startStage, 
         endStage !== null ? endStage + 1 : undefined
@@ -32,7 +33,7 @@
   let margin = { top: 20, right: 20, bottom: 40, left: 20 };
   let width = $derived(containerWidth - margin.left - margin.right);
   let height = $derived(containerHeight - margin.top - margin.bottom);
-  let avatarWidth = $derived(width / 15);
+  let avatarWidth = $derived(width / 14);
   let avatarHeight = $derived(avatarWidth * 1.4);
 
   /*** SCALES ***/
@@ -89,10 +90,7 @@
 
   let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
 
-  let { points } = pointsData;
-  console.log({points, pointsData})
-
-  let avatarImages = generateAvatarImgs(pointsData);
+  let avatarImages;
   function generateAvatarImgs(pointsData) { // Added 'points' as an argument
     // Ensure points is not empty before mapping
     if (!pointsData || pointsData.length === 0) return [];
@@ -101,7 +99,7 @@
       return {
         ...point,
         // The avatar object is already generated here
-        avatar: generateRandomAvatar("mid")
+        avatar: generateRandomAvatar("mid", point)
       };
     });
     return avatars
@@ -176,13 +174,16 @@
     return delay
   }
 
+  onMount(() => {
+    // Generate avatar images
+    avatarImages = generateAvatarImgs(pointsData);
+  });
+
   $effect(() => {
     //Updates chart based on scroll value
     updateChart(currentId);
 
-    // console.log(value, currentId)
-    // console.log("scrollDir", scrollDir);
-    console.log(positionedAvatars())
+    console.log({value, currentId});
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -190,8 +191,8 @@
     }
 
     // Background band tweens
-    const targetY = currentId <= 1 || isNaN(currentId) ? height / 4 : 0;
-    const targetHeight = currentId <= 1 || isNaN(currentId) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+    const targetY = introScroll && (currentId <= 1 || isNaN(currentId)) ? height / 4 : 0;
+    const targetHeight = introScroll && (currentId <= 1 || isNaN(currentId)) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
 </script>
@@ -201,7 +202,7 @@
 <div class="outer-container">
   <div class="sticky-container">
     <div class="visual-container">
-      {#if isNaN(currentId) || currentId == 0}
+      {#if introScroll && (isNaN(currentId) || currentId == 0)}
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
@@ -217,7 +218,7 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="{sizeRange.size}-band" 
-                  class:omit={omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId) }
+                  class:omit={introScroll && (omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId))}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
                   <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
@@ -230,23 +231,28 @@
               transform="translate(0, {height - margin.top - margin.bottom})"
               opacity={currentId >= 2 ? 1 : 0}></g>
 
-          {#if positionedAvatars()}
+          {#if positionedAvatars() && avatarImages}
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
+                  id={point.id}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(introScroll && point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
                   opacity={(point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) || currentId > 1 ? 1 : 0}
-                  >
-                  {#if avatarImages && avatarImages.length > i}
-                    {@const currentAvatar = avatarImages[i]} 
-                    {#each currentAvatar.avatar.layers as layer}
+                >
+                  {#if avatarImages}
+                    {@const avatar = avatarImages.find(a => a.id === point.id)}
+                      {#each avatar.avatar.layers as layer}
                         <image
-                            x={0} y={0} width={avatarWidth} height={avatarHeight}
+                            x={0}
+                            y={0}
+                            width={avatarWidth}
+                            height={avatarHeight}
                             href={layer.path}
+                            xlink:href={layer.path}
                             class="avatar"
                             class:grayscale={point.type !== 'percentile'}
-                        />
-                    {/each}
+                          />
+                      {/each}
                   {/if}
                 </g>
               {/each}
@@ -343,27 +349,28 @@
 
     :global(.avatar-group) {
         transition: all 0.5s ease-in-out;
-    }
-
-    :global(#M-band rect) {
-        opacity: 0.95;
+        transform-box: fill-box;
+        transform-origin: center;
     }
 
     :global(#S-band, #L-band) {
         transition-delay: 0.5s;
     }
 
+    :global(#M-band rect) {
+        opacity: 0.90;
+    }
 
     :global(#S-band rect, #L-band rect) {
-        opacity: 0.65;
+        opacity: 0.60;
     }
 
     :global(#XS-band rect, #XL-band rect) {
-        opacity: 0.45;
+        opacity: 0.30;
     }
 
     :global(#XXS-band rect, #XXL-band rect) {
-        opacity: 0.25;
+        opacity: 0.10;
     }
 
     .scrolly-outer {
