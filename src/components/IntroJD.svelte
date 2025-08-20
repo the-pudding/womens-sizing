@@ -1,15 +1,18 @@
 <script>
+  import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import { tweened } from 'svelte/motion';
   import Scrolly from './helpers/Scrolly.svelte';
   import copy from '../data/copy.json';
   import waistlinesData from '../data/waistlines.json';
   import ASTMsizes from "../data/ASTMsizes.json";
+  import pointsData from '$data/pointsData.csv';
   import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
 	import { fade } from 'svelte/transition';
   import Ransom from "$components/Ransom.svelte";
   import Leet from "$components/Leet.svelte";
   import checkScrollDir from "$utils/checkScrollDir.js";
+
 
   /*** SCROLLY ***/
   let value = $state(0);
@@ -42,6 +45,7 @@
   let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
   let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
   let omittedSizeFilters = $derived(currentId >= 2 ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let valueKey = $state("value10_11");
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
@@ -52,13 +56,7 @@
     );
   }
 
-  let filteredData = $derived(waistlinesData.find(item =>
-    item.yearRange === waistlineFilters.yearRange &&
-    item.race === waistlineFilters.race &&
-    item.age === waistlineFilters.age
-  ));
-
-  let processedASTMData = $derived(processASTMSizeData(filteredASTM, omittedSizeFilters));
+  let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
     const sizeGroups = d3.groups(filteredASTM, d => d.alphaSize);
 
@@ -91,120 +89,15 @@
 
   let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
 
-  let { points } = $derived(generateDataPoints(filteredData, currentSizeRanges));
-  function generateDataPoints(data) {
-    // Return an empty array early if data is invalid.
-    // if (!data || typeof data.percent5 !== 'number') {
-    //   return { points: [] };
-    // }
+  let { points } = pointsData;
+  console.log({points, pointsData})
 
-    const allPercentiles = [5, 10, 25, 50, 75, 90, 95];
-    const highlightPercentile = 50;
-
-    // Parse all percentiles and filter out invalid data.
-    const percentilePoints = allPercentiles
-      .map(p => {
-        const value = data[`percent${p}`];
-        const parsedValue = typeof value === 'number' || (typeof value === 'string' && !isNaN(parseFloat(value)))
-          ? parseFloat(value)
-          : null;
-        return { p, value: parsedValue };
-      })
-      .filter(d => d.value !== null)
-      .map(d => ({
-        id: `p${d.p}`,
-        value: d.value,
-        percentile: d.p,
-        type: highlightPercentile == d.p ? 'percentile' : 'standard'
-      }));
-
-    const percentiles = Object.fromEntries(percentilePoints.map(d => [d.percentile, d.value]));
-
-    const percentileRanges = [
-      { start: 5, end: 10, range: 5 },
-      { start: 10, end: 25, range: 15 },
-      { start: 25, end: 50, range: 25 },
-      { start: 50, end: 75, range: 25 },
-      { start: 75, end: 90, range: 15 },
-      { start: 90, end: 95, range: 5 }
-    ];
-    
-    const totalRange = percentileRanges.reduce((sum, s) => sum + s.range, 0);
-    const totalPointsToDistribute = 85;
-
-    // Generate points between percentiles and for the tails.
-    const pointsInRanges = percentileRanges.flatMap(segment => {
-      const count = Math.round((segment.range / totalRange) * totalPointsToDistribute);
-      const startValue = percentiles[segment.start];
-      const endValue = percentiles[segment.end];
-
-      if (typeof startValue !== 'number' || typeof endValue !== 'number') return [];
-
-      const points = [];
-      const step = (endValue - startValue) / (count + 1);
-      for (let i = 0; i < count; i++) {
-        const value = startValue + step * (i + 1);
-        const percentile = segment.start + (segment.end - segment.start) * (i + 1) / (count + 1);
-        points.push({
-          id: `segment-${segment.start}-${segment.end}-${i}`,
-          value: value,
-          percentile: Math.round(percentile),
-          type: 'standard'
-        });
-      }
-      return points;
-    });
-
-    // Handle the tails separately for clarity.
-    const tailPoints = [];
-    const createTailPoints = (p1, p2, isLeftTail) => {
-      const p1Value = percentiles[p1];
-      const p2Value = percentiles[p2];
-      if (typeof p1Value === 'number' && typeof p2Value === 'number') {
-        const segmentWidth = Math.abs(p2Value - p1Value);
-        const shift = segmentWidth * 0.25;
-        for (let i = 0; i < 4; i++) {
-          const value = isLeftTail ? p1Value - (i + 1) * shift : p1Value + (i + 1) * shift;
-          const percentile = isLeftTail ? i + 1 : 96 + i;
-          tailPoints.push({
-            id: `${isLeftTail ? 'low' : 'high'}-${i}`,
-            value,
-            percentile,
-            type: 'standard'
-          });
-        }
-      }
-    };
-
-    createTailPoints(5, 10, true);
-    createTailPoints(95, 90, false);
-
-    const allPoints = [...percentilePoints, ...pointsInRanges, ...tailPoints];
-
-    allPoints.sort((a, b) => {
-      // If 'a' is a percentile and 'b' is not, 'a' should come after 'b'
-      if (a.type === 'percentile' && b.type !== 'percentile') {
-          return 1;
-      }
-      // If 'b' is a percentile and 'a' is not, 'b' should come after 'a'
-      if (a.type !== 'percentile' && b.type === 'percentile') {
-          return -1;
-      }
-      // Otherwise, maintain the relative order
-      return 0;
-  });
-    
-    return {
-      points: allPoints
-    };
-  }
-
-  let avatarImages = generateAvatarImgs(points);
-  function generateAvatarImgs(points) { // Added 'points' as an argument
+  let avatarImages = generateAvatarImgs(pointsData);
+  function generateAvatarImgs(pointsData) { // Added 'points' as an argument
     // Ensure points is not empty before mapping
-    if (!points || points.length === 0) return [];
+    if (!pointsData || pointsData.length === 0) return [];
 
-    let avatars = points.map(point => {
+    let avatars = pointsData.map(point => {
       return {
         ...point,
         // The avatar object is already generated here
@@ -215,9 +108,19 @@
   }
 
   let positionedAvatars = $derived(() => {
-    if (!points || points.length === 0) return [];
+    if (!pointsData || pointsData.length === 0) return [];
 
-    const data = points.map(d => ({ ...d }));
+    // Clean and copy data
+    const data = pointsData.map(d => {
+      const value = d[valueKey] === "" ? null : +d[valueKey];
+      return {
+        ...d,
+        value: value
+      };
+    }).filter(d => d.value!== null && !isNaN(d.value)); // drop rows with no x value
+
+    // Bail if no valid rows
+    if (data.length === 0) return [];
 
     const sim = d3.forceSimulation(data)
       .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
@@ -235,15 +138,22 @@
         : Math.max(0, Math.min(height - avatarHeight, d.y));
     });
 
-    return points.map((point, i) => ({ ...points, x: data[i]?.x, y: data[i]?.y }));
+    // Important: spread the single row, not the whole array
+    return data.map((d, i) => ({
+      ...d,
+      x: d.x,
+      y: d.y
+    }));
   });
 
   /*** CHART UPDATES ***/
   function updateChart(currentId) {
     if (currentId <= 2 || isNaN(currentId)) {
-      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "10-11" };
-    } else {
-      waistlineFilters = { yearRange: "2021-2023", race: "all", age: "14-15" };
+      valueKey = "value10_11";
+    } else if (currentId >= 3) {
+      valueKey = "value14_15";
+    } else if  (currentId >= 8) {
+      valueKey = "value20_29";
     }
   }
 
@@ -270,8 +180,9 @@
     //Updates chart based on scroll value
     updateChart(currentId);
 
-    console.log(value, currentId)
-    console.log("scrollDir", scrollDir);
+    // console.log(value, currentId)
+    // console.log("scrollDir", scrollDir);
+    console.log(positionedAvatars())
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -323,8 +234,8 @@
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point[i].type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
-                  opacity={(point[i].type == 'percentile' && (currentId <= 1 || isNaN(currentId))) || currentId > 1 ? 1 : 0}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
+                  opacity={(point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) || currentId > 1 ? 1 : 0}
                   >
                   {#if avatarImages && avatarImages.length > i}
                     {@const currentAvatar = avatarImages[i]} 
@@ -333,7 +244,7 @@
                             x={0} y={0} width={avatarWidth} height={avatarHeight}
                             href={layer.path}
                             class="avatar"
-                            class:grayscale={point[i].type !== 'percentile'}
+                            class:grayscale={point.type !== 'percentile'}
                         />
                     {/each}
                   {/if}

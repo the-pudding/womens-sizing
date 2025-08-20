@@ -2,6 +2,7 @@
 	"name": "svelte-starter",
 	"version": "6.9.2",
 	"scripts": {
+		"percent": "node tasks/generate-percentile-data.js",
 		"gdoc": "node tasks/fetch-google.js",
 		"style": "node tasks/style-dictionary.js",
 		"dev": "vite dev",
@@ -41,6 +42,7 @@
 		"@sveltejs/adapter-static": "^3.0.9",
 		"@sveltejs/kit": "^2.31.1",
 		"csvtojson": "^2.0.10",
+		"d3-dsv": "^3.0.1",
 		"rough-notation": "^0.5.1",
 		"three": "^0.174.0"
 	}
