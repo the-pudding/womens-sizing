@@ -19,7 +19,7 @@
 	 <div class="grid-bg"></div>
 	<Intro startStage={0} endStage={6} introScroll={true}/>
 	<TitlePage />
-	<Intro startStage={7} introScroll={false}/>
+	<Intro startStage={7}/>
 	<VanitySizes />
 	<Proportions />
 	<!-- <History /> -->

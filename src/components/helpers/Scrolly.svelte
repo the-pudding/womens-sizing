@@ -60,7 +60,7 @@
 			value = "exit";
 		} else {
 			// If no steps are in view and we haven't passed the last step, it might mean we're above the first step
-			value = undefined;
+			value = "to-enter";
 		}
 	};
 

@@ -17,13 +17,13 @@
 
   /*** SCROLLY ***/
   let value = $state(0);
-  let { startStage = 0, endStage = null, introScroll = true } = $props();
+  let { startStage = 0, endStage = null, introScroll = null } = $props();
    let filteredStages = $derived(copy.intro ? copy.intro.slice(
         startStage, 
         endStage !== null ? endStage + 1 : undefined
     ) : []);
   let currentStage = $derived(filteredStages?.[value]);
-  let currentId = $derived(+currentStage?.id);
+  let currentId = $derived(isNaN(value) ? value : +currentStage?.id);
   let scrollY = $state(0)
   let scrollDir = $derived(checkScrollDir(scrollY));
 
@@ -146,13 +146,13 @@
 
   /*** CHART UPDATES ***/
   function updateChart(currentId) {
-    if (currentId <= 2 || isNaN(currentId)) {
-      valueKey = "value10_11";
-    } else if (currentId >= 3) {
-      valueKey = "value14_15";
-    } else if  (currentId >= 8) {
-      valueKey = "value20_29";
-    }
+      if (currentId <= 2 || isNaN(currentId)) {
+        valueKey = "value10_11";
+      } else if (currentId >= 3 || currentId == "exit" || (currentId == "to-enter" && !introScroll)) {
+        valueKey = "value14_15"
+      } else if  (currentId >= 7) {
+        valueKey = "value20_29";
+      }
   }
 
   function setDelay(i, scrollDir) {
@@ -183,7 +183,7 @@
     //Updates chart based on scroll value
     updateChart(currentId);
 
-    console.log({value, currentId});
+    console.log({introScroll, value, currentId});
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -191,8 +191,8 @@
     }
 
     // Background band tweens
-    const targetY = introScroll && (currentId <= 1 || isNaN(currentId)) ? height / 4 : 0;
-    const targetHeight = introScroll && (currentId <= 1 || isNaN(currentId)) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+    const targetY = (currentId <= 1 || isNaN(currentId)) ? height / 4 : 0;
+    const targetHeight = (currentId <= 1 || isNaN(currentId)) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
 </script>
@@ -202,14 +202,18 @@
 <div class="outer-container">
   <div class="sticky-container">
     <div class="visual-container">
-      {#if introScroll && (isNaN(currentId) || currentId == 0)}
+      {#if (isNaN(currentId) || currentId == 0) && introScroll}
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
               <p class="title-text">{@html copy.introText}</p>
           </div>
       {/if}
-      <div id="beeswarm" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+      <div id="beeswarm" 
+        class="chart-container" 
+        bind:clientHeight={containerHeight} 
+        bind:clientWidth={containerWidth}
+        style="opacity: {currentId == 6 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             <g class="size-backgrounds">
@@ -218,7 +222,7 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="{sizeRange.size}-band" 
-                  class:omit={introScroll && (omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId))}
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId))}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
                   <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
@@ -236,8 +240,8 @@
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(introScroll && point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) ? 2 : 1})`}
-                  opacity={(point.type == 'percentile' && (currentId <= 1 || isNaN(currentId))) || currentId > 1 ? 1 : 0}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  opacity={(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
                 >
                   {#if avatarImages}
                     {@const avatar = avatarImages.find(a => a.id === point.id)}
@@ -327,6 +331,7 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        transition: opacity 1s ease-in-out; 
     }
 
     .grayscale {
