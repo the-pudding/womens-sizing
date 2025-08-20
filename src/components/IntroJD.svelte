@@ -8,7 +8,8 @@
   import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
 	import { fade } from 'svelte/transition';
   import Ransom from "$components/Ransom.svelte";
-    import Leet from "$components/Leet.svelte";
+  import Leet from "$components/Leet.svelte";
+  import checkScrollDir from "$utils/checkScrollDir.js";
 
   /*** SCROLLY ***/
   let value = $state(0);
@@ -19,6 +20,8 @@
     ) : []);
   let currentStage = $derived(filteredStages?.[value]);
   let currentId = $derived(+currentStage?.id);
+  let scrollY = $state(0)
+  let scrollDir = $derived(checkScrollDir(scrollY));
 
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
@@ -244,11 +247,31 @@
     }
   }
 
+  function setDelay(i, scrollDir) {
+    let delay;
+    if (scrollDir == "down") {
+      if (i == 2 || i == 4) {
+        delay = 0.25
+      } else if (i == 1 || i == 5) {
+        delay = 0.5
+      } else if (i == 0 || i == 6) {
+        delay = 0.75
+      } else {
+        delay = 0;
+      }
+    } else {
+      delay = 0;
+    }
+
+    return delay
+  }
+
   $effect(() => {
     //Updates chart based on scroll value
     updateChart(currentId);
 
     console.log(value, currentId)
+    console.log("scrollDir", scrollDir);
 
     // Sets up axis
     if (containerWidth > 0) {
@@ -261,6 +284,8 @@
     animatedBand.set({ y: targetY, height: targetHeight });
   });
 </script>
+
+<svelte:window bind:scrollY={scrollY} />
 
 <div class="outer-container">
   <div class="sticky-container">
@@ -279,7 +304,10 @@
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
                 {@const rectWidth = xScale(sizeRange.max) - x}
-                <g class="size-band-group" id="{sizeRange.size}-band" class:omit={omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId) }>
+                <g class="size-band-group" 
+                  id="{sizeRange.size}-band" 
+                  class:omit={omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId) }
+                  style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
                   <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
                 </g>
@@ -410,6 +438,11 @@
         opacity: 0.95;
     }
 
+    :global(#S-band, #L-band) {
+        transition-delay: 0.5s;
+    }
+
+
     :global(#S-band rect, #L-band rect) {
         opacity: 0.65;
     }
@@ -429,7 +462,7 @@
     }
 
     .step {
-        height: 100vh;
+        height: 100svh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -437,6 +470,11 @@
         font-family: var(--sans);
         font-size: var(--20px);
     }
+
+    .step:first-of-type {
+        height: 10svh;
+    }
+
     .step .text {
         max-width: 500px;
         width: 90%;
