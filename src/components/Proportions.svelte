@@ -44,7 +44,7 @@
 <div class="outer-container">
     <div class="text-block">
         {#each copy.ASTMtransition as block}
-            <div>
+            <div class="subtitle">
                 {#if block.subhed}
                     <h3>
                         <Leet string="Mass produced clothes" />
@@ -129,14 +129,28 @@
         justify-content: center;
         align-items: flex-end;
     }
+    .text-block {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 2rem;
+        margin-top: 8rem;
+    }
+
+    .subtitle {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
     .text-block h3 {
         max-width: 800px;
-        margin: 0 auto;
         text-align: center;
     }
     .text-block p {
         width: min(100%, 550px);
-        margin: 0 auto;
         margin-bottom: 60px;
         margin-top: 60px;
     }

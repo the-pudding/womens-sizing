@@ -72,7 +72,7 @@
     let value = $state(0);
 
     function updateChart(value) {
-        if (value == undefined){
+        if (value == "to-enter"){
             move1995 = false;
             move2021 = false;
         } else if (value == 0) {
@@ -126,6 +126,8 @@
     $effect(() => {
         updateChart(value);
 
+        console.log({move1995, move2021, value});
+
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
                 .call(d3.axisBottom(xScale));
@@ -136,7 +138,7 @@
 <div class="outer-container">
     <div class="text-block">
         {#each copy.section2 as block}
-        <div>
+        <div class="subtitle">
             {#if block.subhed}
                 <h3>
                     <Leet string="This has been a" />
@@ -496,14 +498,28 @@
         margin: 0;
     }
 
+    .text-block {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 2rem;
+        margin-top: 8rem;
+    }
+
+    .subtitle {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
     .text-block h3 {
         max-width: 800px;
-        margin: 0 auto;
         text-align: center;
     }
     .text-block p {
         width: min(100%, 550px);
-        margin: 0 auto;
         margin-bottom: 60px;
         margin-top: 60px;
     }
