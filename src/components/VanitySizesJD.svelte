@@ -126,8 +126,6 @@
     $effect(() => {
         updateChart(value);
 
-        console.log({move1995, move2021, value});
-
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
                 .call(d3.axisBottom(xScale));

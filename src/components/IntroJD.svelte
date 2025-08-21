@@ -26,6 +26,11 @@
   let currentId = $derived(isNaN(value) ? value : +currentStage?.id);
   let scrollY = $state(0)
   let scrollDir = $derived(checkScrollDir(scrollY));
+  let stateEnter = $derived(currentId == 0 || (currentId == "to-enter" && introScroll));
+  let stateIntro = $derived(currentId >= 1 && currentId < 6);
+  let stateTransition = $derived(currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll));
+  let stateSecond = $derived(currentId >= 8);
+  let stateExit = $derived((currentId == "exit" && !introScroll));
 
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
@@ -38,15 +43,28 @@
 
   /*** SCALES ***/
   const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([0, width]));
+  const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
 
   /*** FILTERS ***/
-  let ASTMFilters = $state({ year: "2021", sizeRange: "straight" });
+  let ASTMFilters = $derived(
+    currentId >= 4 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      ? { year: "2021", sizeRange: "straight" }
+      : { year: "2015", sizeRange: "juniors" }
+  );
   let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(currentId >= 2 ? [] : ["XXL", "XL", "XS", "XXS"]);
-  let valueKey = $state("value10_11");
+  let omittedSizeFilters = $derived(currentId >= 2 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let valueKey = $derived(
+    currentId <= 2 || (currentId == "to-enter" && introScroll)
+      ? "value10_11"
+      : (currentId > 2 && currentId < 8) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      ? "value14_15"
+      : currentId < 9
+      ? "value20_29"
+      : "value20over"
+  );
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
@@ -59,17 +77,25 @@
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
-    const sizeGroups = d3.groups(filteredASTM, d => d.alphaSize);
+    let sizeType = currentId < 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
+    const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
+
+    console.log(sizeType)
 
     const mappedSizes = sizeGroups.map((d, i) => {
       let min;
       let max;
-      if (d[1].length == 1 && i == 0) {
-        min = +d[1][0].waist - 1;
-        max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
-      } else if (d[1].length == 1 && i == sizeGroups.length - 1) {
-        min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
-        max = +d[1][0].waist + 1;
+      if (d[1].length == 1) {
+        if (i == sizeGroups.length - 1) {
+          min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+          max = +d[1][0].waist + 1;
+        } else if (i == 0) {
+          min = +d[1][0].waist - 1;
+          max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+        } else {
+          min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+          max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+        }
       } else {
         min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
         max = (+d[1][1].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
@@ -77,7 +103,8 @@
 
       return {
         ...d,
-        size: d[0],
+        alphaSize: currentId < 8 ? d[1][0].alphaSize : d[0],
+        size: currentId < 8 ? d[0] : d[1][0].size,
         min,
         max
       }
@@ -121,43 +148,36 @@
     if (data.length === 0) return [];
 
     const sim = d3.forceSimulation(data)
-      .force('x', d3.forceX(d => xScale(d.value)).strength(0.95))
-      .force('y', d3.forceY(d => d.type === 'percentile' ? height / 2 : height * 0.4).strength(0.05))
-      .force('collide', d3.forceCollide(avatarHeight / 4))
+      .force('x', d3.forceX(d => (xScale(d.value) - avatarWidth )).strength(0.95))
+      // Use a single, conditional y-force
+      .force('y', d3.forceY(d => height / 2 - avatarHeight/2).strength(d => d.id === "p50" ? 1.0 : 0.25))
+      // Increase the collision radius for the highlighted avatar to create a larger, symmetrical gap
+      .force('collide', d3.forceCollide(d => d.id === "p50" ? (avatarHeight / 3) : (avatarHeight / 5)))
       .stop();
 
     const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
     for (let i = 0; i < ticks; ++i) sim.tick();
 
     data.forEach(d => {
-      d.x = Math.max(0, Math.min(width - avatarWidth, d.x));
-      d.y = d.type === 'percentile'
-        ? (height - avatarHeight) / 2
-        : Math.max(0, Math.min(height - avatarHeight, d.y));
+      // Clamp x to stay within boundaries
+      d.x = Math.max(0, Math.min(width - avatarWidth/2, d.x));
+      
+      // Clamp y to stay within boundaries, considering the avatar's height
+      d.y = Math.max(0, Math.min(height - avatarHeight/2, d.y));
     });
 
     // Important: spread the single row, not the whole array
     return data.map((d, i) => ({
       ...d,
+      // Add half the avatar's height to the y-position to center it vertically
       x: d.x,
       y: d.y
     }));
   });
 
-  /*** CHART UPDATES ***/
-  function updateChart(currentId) {
-      if (currentId <= 2 || isNaN(currentId)) {
-        valueKey = "value10_11";
-      } else if (currentId >= 3 || currentId == "exit" || (currentId == "to-enter" && !introScroll)) {
-        valueKey = "value14_15"
-      } else if  (currentId >= 7) {
-        valueKey = "value20_29";
-      }
-  }
-
   function setDelay(i, scrollDir) {
     let delay;
-    if (scrollDir == "down") {
+    if (scrollDir == "down" || scrollDir == undefined) {
       if (i == 2 || i == 4) {
         delay = 0.25
       } else if (i == 1 || i == 5) {
@@ -180,19 +200,18 @@
   });
 
   $effect(() => {
-    //Updates chart based on scroll value
-    updateChart(currentId);
-
-    console.log({introScroll, value, currentId});
-
+    console.log({currentId, valueKey})
     // Sets up axis
     if (containerWidth > 0) {
-      d3.selectAll("#beeswarm .x-axis").call(d3.axisBottom(xScale));
-    }
+      d3.selectAll("#beeswarm .x-axis")
+        .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
+          return d % 5 === 0 ? d : "";
+        }));
+      }
 
     // Background band tweens
-    const targetY = (currentId <= 1 || isNaN(currentId)) ? height / 4 : 0;
-    const targetHeight = (currentId <= 1 || isNaN(currentId)) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 0;
+    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
   });
 </script>
@@ -216,18 +235,25 @@
         style="opacity: {currentId == 6 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
+            {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
+            {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
+            {@const highlightStart = currentId >= 8 ? xScale(minWaist) : xScale(minWaist)}
+            {@const highlightWidth = Math.max(0, xScale(maxWaist) - xScale(minWaist))}
             <g class="size-backgrounds">
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
-                  id="{sizeRange.size}-band" 
-                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || isNaN(currentId))}
+                  id="band-{sizeRange.alphaSize}" 
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 )}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
-                  <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#C2D932"/>
-                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{sizeRange.size}</text>
+                  <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
+                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
+            </g>
+            <g class="highlight-band" class:visible={currentId == 5 || (currentId == "exit" && introScroll) || currentId >= 8}>
+              <rect x={highlightStart} y={0} width={highlightWidth} height={Math.max(0, height - margin.top - margin.bottom)}/>
             </g>
           {/if}
 
@@ -337,9 +363,22 @@
     .grayscale {
         filter: grayscale(100%);
     }
+    
+    .highlight-band {
+        fill: none;
+        stroke: var(--ws-orange);
+        stroke-width: 3;
+         opacity: 0;
+         transition: all 0.5s ease-in-out; 
+        /* stroke-dasharray: 2, 2; */
+    }
+
+    .highlight-band.visible {
+        opacity: 1;
+    }
 
     .size-band-group {
-       transition: opacity 0.5s ease-in-out; 
+       transition: all 0.5s ease-in-out; 
     }
 
     .omit {
@@ -347,9 +386,14 @@
         transition: opacity 0.5s ease-in-out;
     }
 
+    .size-band-group rect {
+      transition: all 0.5s ease-in-out;
+    }
+
     .size-band-group text {
       font-family: var(--mono);
       font-weight: 700;
+      transition: all 0.5s ease-in-out;
     }
 
     :global(.avatar-group) {
@@ -358,24 +402,52 @@
         transform-origin: center;
     }
 
-    :global(#S-band, #L-band) {
+    :global(#band-S, #band-L, #band-12, #band-16) {
         transition-delay: 0.5s;
     }
 
-    :global(#M-band rect) {
-        opacity: 0.90;
+    :global(#band-XS, #band-XL) {
+        transition-delay: 1s;
     }
 
-    :global(#S-band rect, #L-band rect) {
-        opacity: 0.60;
+    :global(#band-XXS, #band-XXL) {
+        transition-delay: 1.5s;
     }
 
-    :global(#XS-band rect, #XL-band rect) {
-        opacity: 0.30;
+    :global(#band-M rect, #band-14 rect) {
+        opacity: 1;
     }
 
-    :global(#XXS-band rect, #XXL-band rect) {
-        opacity: 0.10;
+    :global(#band-S rect, #band-L rect, #band-12 rect, #band-16 rect) {
+        opacity: 0.85;
+    }
+
+    :global(#band-XS rect, #band-XL rect, #band-10 rect, #band-18 rect) {
+        opacity: 0.75;
+    }
+
+    :global(#band-XXS rect, #band-XXL rect, #band-8 rect, #band-20 rect) {
+        opacity: 0.65;
+    }
+
+    :global(#band-6 rect) {
+        opacity: 0.55;
+    }
+
+    :global(#band-4 rect) {
+        opacity: 0.45;
+    }
+
+    :global(#band-2 rect) {
+        opacity: 0.35;
+    }
+
+    :global(#band-0 rect) {
+        opacity: 0.25;
+    }
+
+    :global(#band-00 rect) {
+        opacity: 0.15;
     }
 
     .scrolly-outer {

@@ -25,7 +25,7 @@ export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point) {
   // Random variants (1-4)
   const baseVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
   const hairVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
-  const bottomVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 4;
+  const bottomVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
   const topVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
   
   // Use different folder path based on avatar size
