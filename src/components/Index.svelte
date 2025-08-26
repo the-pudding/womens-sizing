@@ -9,7 +9,7 @@
 	import Waistlines from "./Waistlines.svelte";
 	import VanitySizes from "./VanitySizesJD.svelte";
 	import Ransom from "$components/Ransom.svelte";
-	import Proportions from "./Proportions.svelte";
+	import Proportions from "./ProportionsJD.svelte";
 	import TitlePage from "./TitlePage.svelte";
 
 
