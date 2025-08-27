@@ -428,6 +428,11 @@
         width: min(100%, 550px);
         margin-bottom: 60px;
         margin-top: 60px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-align: left;
+        font-family: var(--sans);
+        font-size: var(--20px);
     }
     
     .scrolly-outer {
@@ -439,10 +444,11 @@
     .step {
         height: 100vh;
         display: flex;
-        justify-content: flex-start; 
+        justify-content: center;
         align-items: center;
-        padding-left: 4rem;
-        pointer-events: none;
+        padding-right: 2rem;
+        font-family: var(--sans);
+        font-size: var(--20px);
     }
     
     .step .text {
