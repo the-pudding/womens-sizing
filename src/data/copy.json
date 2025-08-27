@@ -244,19 +244,19 @@
       "id": "1",
       "baseImage": "assets/proportions-base.png",
       "overlayImage": "assets/jcrew-size18.png",
-      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span data-underline=\"#C2D932\">size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span data-underline=\"#C2D932\"> 6 inches larger </span> than hers.</p>"
+      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span class=green-span>size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span class=bold> 6 inches larger </span> than hers.</p>"
     },
     {
       "id": "2",
       "baseImage": "assets/proportions-base.png",
       "overlayImage": "assets/jcrew-size12.png",
-      "text": "<p>If the median American woman were to prioritize finding pants that are fitted around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span data-underline=\"#C2D932\">size 12</span> would fit her hips best, but then the waist would be too small by more than <span data-underline=\"#C2D932\">6 inches</span>."
+      "text": "<p>If the median American woman were to prioritize finding pants that are fitted around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>6 inches</span>."
     },
     {
       "id": "3",
       "baseImage": "assets/polo-ralph-lauren.png",
       "overlayImage": "assets/proportions-000-22.png",
-      "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>The foundation for most — if not all — mainstream fashion brands is based on an hourglass silhouette.</p>\r\n\r\n\r\n<p>For brands like J.Crew, Anthropologie, Ralph Lauren, Aritizia, and more, that means a <span data-underline=\"#C2D932\">10-inch</span> difference between the waist and hip.</p>"
+      "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>The foundation for most — if not all — mainstream fashion brands is based on an hourglass silhouette.</p>\r\n\r\n\r\n<p>For brands like J.Crew, Anthropologie, Ralph Lauren, Aritizia, and more, that means a <span class=bold>10-inch</span> difference between the waist and hip from the <span class=orange-span>biggest size</span> to the <span class=purple-span>smallest size.</span></p>"
     },
     {
       "id": "4",

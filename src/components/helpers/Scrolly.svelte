@@ -108,3 +108,9 @@
 <div bind:this={container}>
 	{@render children?.()}
 </div>
+
+<style>
+	div {
+		pointer-events: none;
+	}
+</style>
