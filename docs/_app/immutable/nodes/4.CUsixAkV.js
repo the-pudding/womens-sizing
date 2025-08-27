@@ -1,32 +1,4 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
-		<link href="../../_app/immutable/assets/0.Bt1AIkzB.css" rel="stylesheet">
-		<link href="../../_app/immutable/assets/4.BosP74pi.css" rel="stylesheet">
-		<link rel="modulepreload" href="../../_app/immutable/entry/start.BpZpp87U.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/Dc_TswJn.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BxLXj-ic.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/Dzm_WEGj.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/ZgVi19R2.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BIhypZ3Q.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/CZMYpBLD.js">
-		<link rel="modulepreload" href="../../_app/immutable/entry/app.DFurZFTC.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/Bzak7iHL.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/C0w0nz2X.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/DH1QYJyw.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/ihUrmXYw.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/CFXHgCQT.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/0.C6On_78U.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/4.CUsixAkV.js"><!--[--><link rel="stylesheet" href="https://use.typekit.net/yjh5xgk.css"/><!--]-->
-</head>
-
-<body>
-	<div><!--[--><!--[--><!----><main id="content"><!----><div class="wrapper svelte-p95kjz"><h1>Default Element Styles</h1> <section id="text"><article id="text--headings" class="svelte-p95kjz"><h2 class="svelte-p95kjz">Headings</h2> <div><h1>Heading 1</h1> <h2>Heading 2</h2> <h3>Heading 3</h3> <h4>Heading 4</h4> <h5>Heading 5</h5> <h6>Heading 6</h6></div></article> <article id="text--paragraphs" class="svelte-p95kjz"><h2 class="svelte-p95kjz">Paragraphs</h2> <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra
+import"../chunks/Bzak7iHL.js";import{V as i,X as l}from"../chunks/Dzm_WEGj.js";var a=i(`<div class="wrapper svelte-p95kjz"><h1>Default Element Styles</h1> <section id="text"><article id="text--headings" class="svelte-p95kjz"><h2 class="svelte-p95kjz">Headings</h2> <div><h1>Heading 1</h1> <h2>Heading 2</h2> <h3>Heading 3</h3> <h4>Heading 4</h4> <h5>Heading 5</h5> <h6>Heading 6</h6></div></article> <article id="text--paragraphs" class="svelte-p95kjz"><h2 class="svelte-p95kjz">Paragraphs</h2> <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra
 					viverra nisl, vel maximus turpis ornare a. Ut scelerisque lectus sed
 					odio dictum scelerisque vitae quis nisi. Nulla facilisi. Phasellus
 					vehicula convallis nisl, id suscipit dui semper at. In eu iaculis
@@ -50,30 +22,4 @@
 				without any special importance.<br/> The <i>i element</i> is text that is offset from the normal text.<br/> The <u>u element</u> is text with an unarticulated, though explicitly
 				rendered, non-textual annotation.<br/> <del>This text is deleted</del> and <ins>This text is inserted</ins>.<br/> <s>This text has a strikethrough</s>.<br/> Superscript<sup>®</sup>.<br/> Subscript for things like H<sub>2</sub>O.<br/> <small>This small text is small for for fine print, etc.</small><br/> Abbreviation: <abbr title="HyperText Markup Language">HTML</abbr><br/> <q cite="https://developer.mozilla.org/en-US/docs/HTML/Element/q">This text is a short inline quotation.</q><br/> <cite>This is a citation.</cite><br/> The <dfn>dfn element</dfn> indicates a definition.<br/> The <mark>mark element</mark> indicates a highlight.<br/> The <var>variable element</var>, such as <var>x</var> = <var>y</var>.<br/> The time element: <time datetime="2013-04-06T12:32+00:00">2 weeks ago</time><br/></div></article></section> <section id="forms"><h2>Form elements</h2> <form><fieldset id="forms--input"><legend>Input fields</legend> <p><label for="input--text">Text Input</label> <input id="input--text" type="text" placeholder="Text Input"/></p> <p><label for="input--password">Password</label> <input id="input--password" type="password" placeholder="Type your Password"/></p> <p><label for="input--webaddress">Web Address</label> <input id="input--webaddress" type="url" placeholder="http://yoursite.com"/></p> <p><label for="input--emailaddress">Email Address</label> <input id="input--emailaddress" type="email" placeholder="name@email.com"/></p> <p><label for="input--phone">Phone Number</label> <input id="input--phone" type="tel" placeholder="(999) 999-9999"/></p> <p><label for="input--search">Search</label> <input id="input--search" type="search" placeholder="Enter Search Term"/></p> <p><label for="input--text2">Number Input</label> <input id="input--text2" type="number" placeholder="Enter a Number"/></p> <p><label for="input--text3" class="error">Error</label> <input id="input--text3" class="is-error" type="text" placeholder="Text Input"/></p> <p><label for="input--text4" class="valid">Valid</label> <input id="input--text4" class="is-valid" type="text" placeholder="Text Input"/></p></fieldset> <fieldset id="forms--select"><legend>Select menus</legend> <p><label for="select">Select</label> <select id="select"><optgroup label="Option Group"><option>Option One</option> <option>Option Two</option> <option>Option Three</option></optgroup></select></p></fieldset> <fieldset id="forms--checkbox"><legend>Checkboxes</legend> <ul class="list list--bare"><li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox" checked="checked"/> Choice A</label></li> <li><label for="checkbox2"><input id="checkbox2" name="checkbox" type="checkbox"/> Choice B</label></li> <li><label for="checkbox3"><input id="checkbox3" name="checkbox" type="checkbox"/> Choice C</label></li></ul></fieldset> <fieldset id="forms--radio"><legend>Radio buttons</legend> <ul class="list list--bare"><li><label for="radio1"><input id="radio1" name="radio" type="radio" class="radio" checked="checked"/> Option 1</label></li> <li><label for="radio2"><input id="radio2" name="radio" type="radio" class="radio"/> Option
 							2</label></li> <li><label for="radio3"><input id="radio3" name="radio" type="radio" class="radio"/> Option
-							3</label></li></ul></fieldset> <fieldset id="forms--textareas"><legend>Textareas</legend> <p><label for="textarea">Textarea</label> <textarea id="textarea" rows="8" cols="48" placeholder="Enter your message here"></textarea></p></fieldset> <fieldset id="forms--html5"><legend>HTML5 inputs</legend> <p><label for="ic">Color input</label> <input type="color" id="ic" value="#000000"/></p> <p><label for="in">Number input</label> <input type="number" id="in" min="0" max="10" value="5"/></p> <p><label for="ir">Range input</label> <input type="range" id="ir" value="10"/></p> <p><label for="idd">Date input</label> <input type="date" id="idd" value="1970-01-01"/></p> <p><label for="idm">Month input</label> <input type="month" id="idm" value="1970-01"/></p> <p><label for="idw">Week input</label> <input type="week" id="idw" value="1970-W01"/></p> <p><label for="idt">Datetime input</label> <input type="datetime" id="idt" value="1970-01-01T00:00:00Z"/></p> <p><label for="idtl">Datetime-local input</label> <input type="datetime-local" id="idtl" value="1970-01-01T00:00"/></p></fieldset> <fieldset id="forms--action"><legend>Action buttons</legend> <p><input type="submit" value="&lt;input type=submit>"/> <input type="button" value="&lt;input type=button>"/> <input type="reset" value="&lt;input type=reset>"/> <input type="submit" value="&lt;input disabled>" disabled="true"/></p> <p><button type="submit">&lt;button type=submit></button> <button type="button">&lt;button type=button></button> <button type="reset">&lt;button type=reset></button> <button type="button" disabled="true">&lt;button disabled></button></p></fieldset></form></section></div><!----><!----></main><!----><!--]--> <!--[!--><!--]--><!--]-->
-			
-			<script>
-				{
-					__sveltekit_1p9krkt = {
-						base: new URL("../..", location).pathname.slice(0, -1)
-					};
-
-					const element = document.currentScript.parentElement;
-
-					Promise.all([
-						import("../../_app/immutable/entry/start.BpZpp87U.js"),
-						import("../../_app/immutable/entry/app.DFurZFTC.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element, {
-							node_ids: [0, 4],
-							data: [null,null],
-							form: null,
-							error: null
-						});
-					});
-				}
-			</script>
-		</div>
-</body>
-
-</html>
+							3</label></li></ul></fieldset> <fieldset id="forms--textareas"><legend>Textareas</legend> <p><label for="textarea">Textarea</label> <textarea id="textarea" rows="8" cols="48" placeholder="Enter your message here"></textarea></p></fieldset> <fieldset id="forms--html5"><legend>HTML5 inputs</legend> <p><label for="ic">Color input</label> <input type="color" id="ic" value="#000000"/></p> <p><label for="in">Number input</label> <input type="number" id="in" min="0" max="10" value="5"/></p> <p><label for="ir">Range input</label> <input type="range" id="ir" value="10"/></p> <p><label for="idd">Date input</label> <input type="date" id="idd" value="1970-01-01"/></p> <p><label for="idm">Month input</label> <input type="month" id="idm" value="1970-01"/></p> <p><label for="idw">Week input</label> <input type="week" id="idw" value="1970-W01"/></p> <p><label for="idt">Datetime input</label> <input type="datetime" id="idt" value="1970-01-01T00:00:00Z"/></p> <p><label for="idtl">Datetime-local input</label> <input type="datetime-local" id="idtl" value="1970-01-01T00:00"/></p></fieldset> <fieldset id="forms--action"><legend>Action buttons</legend> <p><input type="submit" value="&lt;input type=submit>"/> <input type="button" value="&lt;input type=button>"/> <input type="reset" value="&lt;input type=reset>"/> <input type="submit" value="&lt;input disabled>" disabled="true"/></p> <p><button type="submit">&lt;button type=submit&gt;</button> <button type="button">&lt;button type=button&gt;</button> <button type="reset">&lt;button type=reset&gt;</button> <button type="button" disabled="true">&lt;button disabled&gt;</button></p></fieldset></form></section></div>`);function s(e){var t=a();l(e,t)}function n(e){s(e)}export{n as component};
