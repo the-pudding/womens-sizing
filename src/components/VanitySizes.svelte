@@ -5,6 +5,7 @@
     import waistlines from '../data/waistlines.json';
     import copy from '../data/copy.json';
     import Scrolly from './helpers/Scrolly.svelte';
+    import Ransom from "$components/Ransom.svelte";
 
    
     let containerWidth = $state(0);
@@ -138,14 +139,14 @@
                 
                 gradient.append('stop')
                     .attr('offset', '0%')
-                    .attr('stop-color', '#B57BDC')
+                    .attr('stop-color', '#C2D932')
                     .attr('stop-opacity', 0.2);
                 
                 gradient.append('stop')
                     .attr('offset', '100%')
-                    .attr('stop-color', '#B57BDC')
+                    .attr('stop-color', '#C2D932')
                     .attr('stop-opacity', maxOpacity);
-                
+        
                 const topRowY = height * 0.25; // 1995 row
                 const bottomRowY = height * 0.75; // 2021 row
                 const bandTop = topRowY - iconHeight/2;
@@ -173,8 +174,7 @@
                     .attr('y1', midY)
                     .attr('y2', midY)
                     .attr('stroke', '#333')
-                    .attr('stroke-width', 2)
-                    .attr('stroke-dasharray', '5,5')
+                    .attr('stroke-width', 3)
                     .style('opacity', 0)
                     .transition()
                     .duration(200)
@@ -185,23 +185,22 @@
                     .attr('class', 'comparison-marker')
                     .attr('cx', x1)
                     .attr('cy', midY)
-                    .attr('r', 4)
-                    .attr('fill', '#333')
+                    .attr('r', 5)
                     .style('opacity', 0)
                     .transition()
                     .duration(200)
-                    .style('opacity', 0.8);
+                    .style('opacity', 1);
                 
                 g.append('circle')
                     .attr('class', 'comparison-marker')
                     .attr('cx', x2)
                     .attr('cy', midY)
-                    .attr('r', 4)
+                    .attr('r', 5)
                     .attr('fill', '#333')
                     .style('opacity', 0)
                     .transition()
                     .duration(200)
-                    .style('opacity', 0.8);
+                    .style('opacity', 1);
                 
                 // Add label with difference
                 const labelX = (x1 + x2) / 2;
@@ -226,7 +225,6 @@
                     .attr('y', midY - 10)
                     .attr('text-anchor', 'middle')
                     .attr('font-size', Math.max(containerWidth * 0.015, 12) + 'px')
-                    .attr('font-weight', 'bold')
                     .attr('fill', '#333')
                     .text(labelText)
                     .style('opacity', 0);
@@ -296,18 +294,8 @@
         g.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${height / 2})`)
-            .call(d3.axisBottom(xScale).tickSize(15).ticks(15).tickFormat(''))
-            .style('opacity', 0.1);
-
-        const xAxisLabels = g.append('g')
-            .attr('class', 'x-axis-labels')
-            .attr('transform', `translate(0, ${height / 2})`)
-            .call(d3.axisBottom(xScale).tickSize(20).ticks(10))
-            .style('opacity', 0.3);
-
-        xAxisLabels.selectAll('text')
-            .style('font-size', Math.max(containerWidth * 0.01, 10) + 'px')
-            .attr('dy', '1.2em');
+            .call(d3.axisBottom(xScale).tickSize(15).ticks(15))
+            .style('opacity', 1);
 
         // Only render data if we have any
         if (plotData.length === 0) return;
@@ -361,9 +349,9 @@
             .attr('class', 'waistline')
             .attr('cx', d => xScale(d.waist))
             .attr('cy', d => d.y)
-            .attr('r', 5)
+            .attr('r', 10)
             .attr('fill', '#FF8C42')
-            .style('opacity', waistlineOpacity);
+            .style('opacity', 1);
 
         // Labels for ASTM data - positioned above icons, always visible
         const labels = g.selectAll('text.label')
@@ -374,8 +362,6 @@
             .attr('x', d => xScale(d.waist))
             .attr('y', d => d.y - (iconHeight * 0.19))
             .attr('text-anchor', 'middle')
-            .attr('font-size', Math.max(iconWidth * 0.18, 8) + 'px')
-            .attr('fill', '#313326')
             .text(d => d.size)
             .style('cursor', 'pointer')
             .style('pointer-events', 'all');
@@ -389,9 +375,6 @@
             .attr('x', d => xScale(d.waist))
             .attr('y', d => d.y - 15)
             .attr('text-anchor', 'middle')
-            .attr('font-size', Math.max(containerWidth * 0.012, 10) + 'px')
-            .attr('fill', '#FF8C42')
-            .attr('font-weight', 'bold')
             .text(d => {
                 // Convert "2015-2018" to "'15-'18" format
                 const years = d.year.split('-');
@@ -464,21 +447,27 @@
                     
                     gradient.append('stop')
                         .attr('offset', '0%')
-                        .attr('stop-color', '#B57BDC')
+                        .attr('stop-color', '#C2D932')
                         .attr('stop-opacity', 0.2);
                     
                     gradient.append('stop')
                         .attr('offset', '100%')
-                        .attr('stop-color', '#B57BDC')
+                        .attr('stop-color', '#C2D932')
                         .attr('stop-opacity', maxOpacity);
+
+                    const topRowY = height * 0.25; // 1995 row
+                    const bottomRowY = height * 0.75; // 2021 row
+                    const bandTop = topRowY - iconHeight/2;
+                    const bandBottom = bottomRowY + iconHeight/2;
+                    const fullBandHeight = bandBottom - bandTop;
                     
                     // Draw gradient band FIRST (behind everything else)
                     g.insert('rect', ':first-child')
                         .attr('class', 'comparison-band')
                         .attr('x', Math.min(x1, x2))
-                        .attr('y', y1)
+                        .attr('y', bandTop)
                         .attr('width', Math.abs(x2 - x1))
-                        .attr('height', Math.abs(y2 - y1))
+                        .attr('height', fullBandHeight)
                         .attr('fill', `url(#${gradientId})`)
                         .style('opacity', 0)
                         .transition()
@@ -493,35 +482,34 @@
                         .attr('y1', midY)
                         .attr('y2', midY)
                         .attr('stroke', '#333')
-                        .attr('stroke-width', 2)
-                        .attr('stroke-dasharray', '5,5')
+                        .attr('stroke-width', 3)
                         .style('opacity', 0)
                         .transition()
                         .duration(200)
-                        .style('opacity', 0.8);
+                        .style('opacity', 1);
                     
                     // Add end markers
                     g.append('circle')
                         .attr('class', 'comparison-marker')
                         .attr('cx', x1)
                         .attr('cy', midY)
-                        .attr('r', 4)
+                        .attr('r', 5)
                         .attr('fill', '#333')
                         .style('opacity', 0)
                         .transition()
                         .duration(200)
-                        .style('opacity', 0.8);
+                        .style('opacity', 1);
                     
                     g.append('circle')
                         .attr('class', 'comparison-marker')
                         .attr('cx', x2)
                         .attr('cy', midY)
-                        .attr('r', 4)
+                        .attr('r', 5)
                         .attr('fill', '#333')
                         .style('opacity', 0)
                         .transition()
                         .duration(200)
-                        .style('opacity', 0.8);
+                        .style('opacity', 1);
                     
                     // Add label with difference
                     const labelX = (x1 + x2) / 2;
@@ -606,23 +594,23 @@
         labels.style('pointer-events', 'none');
 
         // Group Labels - year labels (only for ASTM data)
-        const astmGrouped = d3.group(plotData.filter(d => d.type === 'astm'), d => d.year);
-        for (const [year, points] of astmGrouped.entries()) {
-            const avgY = d3.mean(points, d => d.y);
-            const color = points[0].color;
-            g.append('text')
-                .attr('x', 30)
-                .attr('y', avgY - iconHeight/2 - 15)
-                .attr('text-anchor', 'start')
-                .attr('font-size', Math.max(containerWidth * 0.025, 12) + 'px')
-                .attr('font-weight', 'bold')
-                .attr('fill', () => {
-                    if (color === 'purple') return '#B57BDC';
-                    if (color === 'blue') return '#9ABBD9';
-                    return color;
-                })
-                .text(year);
-        }
+        // const astmGrouped = d3.group(plotData.filter(d => d.type === 'astm'), d => d.year);
+        // for (const [year, points] of astmGrouped.entries()) {
+        //     const avgY = d3.mean(points, d => d.y);
+        //     const color = points[0].color;
+        //     g.append('text')
+        //         .attr('x', 30)
+        //         .attr('y', avgY - iconHeight/2 - 15)
+        //         .attr('text-anchor', 'start')
+        //         .attr('font-size', Math.max(containerWidth * 0.025, 12) + 'px')
+        //         .attr('font-weight', 'bold')
+        //         .attr('fill', () => {
+        //             if (color === 'purple') return '#B57BDC';
+        //             if (color === 'blue') return '#9ABBD9';
+        //             return color;
+        //         })
+        //         .text(year);
+        // }
 
         // Apply highlight effects if needed - with proper timing
         setTimeout(() => {
@@ -668,7 +656,9 @@
         {#each copy.section2 as block}
         <div>
             {#if block.subhed}
-                <h3>{block.subhed}</h3>
+                <h3>This has been a problem for a
+                <Ransom string="very, very" />
+                long time</h3>
             {/if}
             <p>{@html block.text}</p>
         </div>
@@ -676,6 +666,12 @@
     </div>
     <div class="sticky-container">
         <div class="visual-container">
+            <div class="top-year-label year-label">
+                <Ransom string="1995" />
+            </div>
+            <div class="bottom-year-label year-label">
+                <Ransom string="2021" />
+            </div>
                 <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                     {#if mounted}
                         <svg bind:this={svg}></svg>
@@ -714,13 +710,27 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
+    .year-label {
+        position: absolute;
+        left: 2rem;
+        width: 200px;
+    }
+
+    .top-year-label {
+        top: 5%;
+    }
+
+    .bottom-year-label {
+        top: 55%;
+    }
+
     .chart-container {
-        width: calc(100%);
-        height: 70vh;
+        width: 100%;
+        padding: 2rem;
+        height: 70svh;
         margin: 0 auto;
-        padding: 5px;
-        background-color: white;
         position: relative;
         display: flex;
         justify-content: center;
@@ -742,6 +752,8 @@
         justify-content: center;
         align-items: center;
         padding-right: 2rem;
+        font-family: var(--sans);
+        font-size: var(--20px);
     }
     .step .text {
         max-width: 500px;
@@ -758,10 +770,37 @@
         background-color: aliceblue;
         text-align: center;
     }    
-    .text-block {
-        width: min(90%, 550px);
+
+    .text-block h3 {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .text-block p {
+        width: min(100%, 550px);
         margin: 0 auto;
         margin-bottom: 60px;
         margin-top: 60px;
+    }
+
+    :global(.tick text) {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--14px);
+    }
+
+    :global(.label) {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--14px);
+    }
+
+    :global(.comparison-label, .waistline-label) {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--24px);
+    }
+
+    :global(.comparison-marker) {
+        fill: var(--color-fg);
     }
 </style>

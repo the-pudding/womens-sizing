@@ -6,9 +6,12 @@
     import ASTMsizes from "../data/ASTMsizes.json";
     import copy from "../data/copy.json";
     import { annotate } from 'rough-notation';
+    import { fade } from 'svelte/transition';
     
     import { generateRandomAvatar } from './utils/avatar-generator.js';
     import Scrolly from './helpers/Scrolly.svelte';
+    import Ransom from "$components/Ransom.svelte";
+    import Leet from "$components/Leet.svelte";
   
     let containerHeight = $state(0);
     let containerWidth = $state(0);
@@ -16,7 +19,7 @@
     let width = $derived(containerWidth - margin.left - margin.right);
     let height = $derived(containerHeight - margin.top - margin.bottom);
     
-    let { startStage = 0, endStage = null } = $props()
+    let { startStage = 0, endStage = null, introScroll = true } = $props()
     let filteredStages = $derived(copy.intro ? copy.intro.slice(
         startStage, 
         endStage !== null ? endStage + 1 : undefined
@@ -107,7 +110,7 @@
             const annotation = annotate(el, {
                 type: 'underline',
                 color: color,
-                strokeWidth: 2,
+                strokeWidth: 1,
                 padding: 2,
                 animationDuration: 600,
                 multiline: true,
@@ -123,7 +126,7 @@
             const annotation = annotate(el, {
                 type: 'box',
                 color: color,
-                strokeWidth: .5,
+                strokeWidth: 1,
                 padding: 1.5,
                 animationDuration: 800,
                 opacity: .2,
@@ -407,7 +410,7 @@
     
     //renders chart background size band
     function renderSizeBands(selection, xScale, innerHeight, avatarHeight) {
-        const shouldShowBands = sizeBands && sizeBands.trim() !== "" && currentSizeRanges && currentSizeRanges.length > 0;
+        const shouldShowBands = sizeBands && sizeBands.trim() !== "" && currentSizeRanges && currentSizeRanges.length > 0 && value > 0;
         
         if (!shouldShowBands) {
             selection.selectAll('.size-band').remove();
@@ -468,7 +471,7 @@
             .attr('y', bandY)
             .attr('height', bandHeight)
             .attr('fill', getMainColor)
-            .attr('opacity', d => d.opacity);
+            .attr('opacity', d => d.opacity-0.1);
         
         // For existing bands, update colors immediately for greyscale
         if (currentStage?.bandStyle === "greyscale") {
@@ -527,9 +530,6 @@
             .append('text')
             .attr('class', d => `size-band-text size-${d.size}`)
             .attr('text-anchor', 'middle')
-            .attr('font-size', '16px')
-            .attr('font-weight', 'bold')
-            .attr('fill', 'rgba(0,0,0,0.3)')
             .attr('opacity', 0);
         
         // Position text based on data-driven bandHeight
@@ -566,10 +566,6 @@
                 .attr('class', 'x-axis-labels')
                 .attr('transform', `translate(0, ${innerHeight})`)
                 .call(d3.axisBottom(xScale).tickSize(30).ticks(10));
-            
-            xAxisLabels.selectAll('text')
-                .style('font-size', '12px')
-                .attr('dy', '1.2em');
         }
         
         // Show or hide axes based on stage
@@ -585,7 +581,19 @@
         }
         
         // Sort points for proper z-order (higher y values in front)
-        const sortedPoints = [...points].sort((a, b) => a.y - b.y);
+        const sortedPoints = [...points].sort((a, b) => {
+            const aIsHighlighted = a.percentile === highlightedPercentile;
+            const bIsHighlighted = b.percentile === highlightedPercentile;
+
+            if (aIsHighlighted && !bIsHighlighted) {
+                return 1; // Put 'a' after 'b'
+            }
+            if (!aIsHighlighted && bIsHighlighted) {
+                return -1; // Put 'a' before 'b'
+            }
+            // If neither or both are highlighted, fall back to y-sorting
+            return a.y - b.y;
+        });
   
         const getTargetOpacity = (point) => {
             // If avatarDisplay is "percentile-only", only show the highlighted percentile
@@ -624,6 +632,7 @@
                     group.selectAll('image')
                         .style('filter', getImageFilter(point));
                         
+
                     group.transition()
                         .duration(300)
                         .attr('opacity', getTargetOpacity(point));
@@ -637,7 +646,17 @@
                 const avatarGroup = selection.append('g')
                     .attr('class', 'avatar-group')
                     .attr('data-id', point.id || `${point.x},${point.y}`)
-                    .attr('transform', `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2})`)
+                    .attr('transform', d => {
+                        const isHighlightedAndInitial = point.percentile === highlightedPercentile && introScroll && (value === 0 || value === undefined);
+                        if (isHighlightedAndInitial) {
+                            const scaleFactor = 2;
+                            const scaledX = point.x - (avatarWidth * scaleFactor / 2);
+                            const scaledY = point.y - (avatarHeight * scaleFactor / 2);
+                            return `translate(${scaledX}, ${scaledY}) scale(${scaleFactor})`
+                        } else {
+                            return `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2}) scale(1)`
+                        }
+                    })
                     .attr('opacity', getTargetOpacity(point));
                 
                 point.avatar.layers.forEach(layer => {
@@ -674,7 +693,17 @@
                         .transition()
                         .duration(500)
                         .ease(d3.easeLinear)
-                        .attr('transform', `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2})`)
+                        .attr('transform', d => {
+                            const isHighlightedAndInitial = point.percentile === highlightedPercentile && introScroll && (value === 0 || value === undefined);
+                            if (isHighlightedAndInitial) {
+                                const scaleFactor = 2;
+                                const scaledX = point.x - (avatarWidth * scaleFactor / 2);
+                                const scaledY = point.y - (avatarHeight * scaleFactor / 2);
+                                return `translate(${scaledX}, ${scaledY}) scale(${scaleFactor})`
+                            } else {
+                                return `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2}) scale(1)`
+                            }
+                        })
                         .attr('opacity', targetOpacity);
                     });
                 } else {
@@ -682,7 +711,17 @@
                     const avatarGroup = selection.append('g')
                     .attr('class', 'avatar-group')
                     .attr('data-id', pointId)
-                    .attr('transform', `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2})`)
+                    .attr('transform', d => {
+                        const isHighlightedAndInitial = point.percentile === highlightedPercentile && introScroll && (value === 0 || value === undefined);
+                        if (isHighlightedAndInitial) {
+                            const scaleFactor = 2;
+                            const scaledX = point.x - (avatarWidth * scaleFactor / 2);
+                            const scaledY = point.y - (avatarHeight * scaleFactor / 2);
+                            return `translate(${scaledX}, ${scaledY}) scale(${scaleFactor})`
+                        } else {
+                            return `translate(${point.x - avatarWidth/2}, ${point.y - avatarHeight/2}) scale(1)`
+                        }
+                    })
                     .attr('opacity', 0);
                     
                     point.avatar.layers.forEach(layer => {
@@ -843,15 +882,35 @@
         
         renderAvatars(avatarsGroup, points, avatarWidth, avatarHeight);
     }
+
+    $effect(() => {
+        console.log({value})
+    })
 </script>
   
 <div class="outer-container">
     <div class="sticky-container">
         <div class="visual-container">
+            {#if introScroll && (value == undefined || value == 0)}
+                <div transition:fade={{duration: 500}} class="intro-title">
+                    <p class="mono"><Leet string="meet your typical" /></p>
+                    <Ransom string="tween" />
+                    <p class="title-text">{@html copy.introText}</p>
+                </div>
+            {/if}
             <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                 <svg bind:this={svg}></svg>
             </div>
         </div>
+        {#if (introScroll && value !== undefined && value >= 1) || (!introScroll && value !== undefined)}
+            <div transition:fade={{duration: 500}} class="age-container">
+                <p>Ages
+                {#key filteredStages[value].age}
+                    {filteredStages[value].age}
+                {/key}
+                </p>
+            </div>
+        {/if}
     </div>
     
     <div class="scrolly-outer">
@@ -885,6 +944,50 @@
         height: 100vh;
         width: 100%;
         z-index: 1;
+        padding: 2rem;
+    }
+
+    .age-container {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--16px);
+        text-transform: uppercase;
+        gap: 0.5rem;
+    }
+
+    .age-num {
+        width: 120px;
+    }
+
+    .intro-title {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%;
+        padding: 0 10% 0 0;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mono {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--24px);
+    }
+
+    .title-text {
+        font-family: var(--sans);
+        font-size: var(--20px);
+        max-width: 500px;
     }
   
     .visual-container {
@@ -896,8 +999,8 @@
     }
     
     .chart-container {
-        width: calc(100% - 4rem);
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         margin: 0 auto;
         padding: 5px;
         position: relative;
@@ -911,6 +1014,13 @@
         width: 100%;
         height: 100%;
     }
+
+    :global(.x-axis-labels .tick text) {
+        font-family: var(--mono);
+        font-size: var(--14px);
+        font-weight: 700;
+
+    }
     
     .scrolly-outer {
         position: relative;
@@ -922,6 +1032,8 @@
         display: flex;
         align-items: center;
         padding: 0 2rem;
+        font-family: var(--sans);
+        font-size: var(--20px);
     }
     
     .step.right-aligned {
@@ -963,5 +1075,18 @@
 
     :global(.size-band-highlight) {
         transition: opacity 0.5s ease, stroke 0.5s ease;
+    }
+
+    :global(.size-band-text) {
+        fill: var(--color-fg);
+        font-family: var(--mono);
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    :global(.bold) {
+        font-family: var(--mono);
+        font-weight: 700;
+        text-transform: uppercase;
     }
 </style>

@@ -1,4 +1,17 @@
 <script>
+    import inView from "$actions/inView.js";
+    import { fade } from 'svelte/transition';
+
+    let inViewTrigger = $state(false);
+
+    function inViewFly() { 
+        inViewTrigger = true; 
+    }
+
+    function exitViewFly() { 
+        inViewTrigger = false;
+    }
+
     // Takes a string (word) and a maxWidth (in pixels) to size the letters
     const { string } = $props();
 
@@ -68,14 +81,23 @@
             };
         }
     });
+
+    // $effect(() => {
+    //     console.log({inViewTrigger})
+    // })
 </script>
 
-<p class="ransom">
-    {#each randomizedImagePaths as { letter, src, isSpace}}
+<p class="ransom" class:animate-in={inViewTrigger}
+    use:inView
+    onenter={inViewFly}
+    onexit={exitViewFly}>
+    {#each randomizedImagePaths as { letter, src, isSpace }, i (letter + i)}
         <span 
             class="ransom-letter" 
             style="width: {100/randomizedImagePaths.length}%;
-            transform: rotate({rotations[getRandomIndex(rotations.length - 1)]}deg);">
+            transform: rotate({rotations[getRandomIndex(rotations.length - 1)]}deg);
+            animation-delay: {i * 200}ms;">
+            
             {#if !isSpace}
                 <img src={src} alt={letter} />
             {/if}
@@ -93,7 +115,27 @@
     }
 
     span.ransom-letter {
+        opacity: 0;
         display: inline-block;
+        transition: opacity 200ms ease-in-out;
+        animation-name: fade-in;
+        animation-duration: 100ms;
+        animation-timing-function: ease-in-out;
+        animation-play-state: paused;
+        animation-fill-mode: forwards;
+    }
+
+    p.animate-in span.ransom-letter {
+        animation-play-state: running;
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
     }
 
     img {
@@ -107,9 +149,9 @@
     /* span.ransom-letter:nth-of-type(1) {
         animation: rock 1s infinite linear;
         transform-origin: center center;
-    } */
+    } 
 
-    /* @keyframes rock {
+    @keyframes rock {
         0% { transform: rotate(0deg); }
         25% { transform: rotate(2deg); }
         50% { transform: rotate(0deg); }

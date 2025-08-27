@@ -291,7 +291,6 @@
         height: 60vh;
         margin: 0 auto;
         padding: 5px;
-        background-color: white;
         position: relative;
         display: flex;
         justify-content: center;
