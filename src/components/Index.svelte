@@ -40,4 +40,50 @@
 		z-index: -1;
 		opacity: 0.2;
 	}	
+
+	    :global(.orange-span) {
+        background: rgba(217, 111, 50, 0.75);
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        box-decoration-break: clone;
+    }
+
+    :global(.blue-span) {
+        background: rgba(154, 187, 217, 0.75);
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        box-decoration-break: clone;
+    }
+
+    :global(.green-span) {
+        background: rgba(194, 217, 50, 0.75);
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        box-decoration-break: clone;
+    }
+
+    :global(.purple-span) {
+        background: rgba(181, 123, 220, 0.75);
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        box-decoration-break: clone;
+    }
+
+	:global(.orange-outline) {
+        background: none;
+		border: 3px solid rgba(217, 111, 50, 1);
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        box-decoration-break: clone;
+    }
+
+	:global(span.bold) {
+		font-weight: 700;
+        font-family: var(--mono);
+	}
 </style>

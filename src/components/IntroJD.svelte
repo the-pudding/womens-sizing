@@ -37,7 +37,7 @@
   let avatarHeight = $derived(avatarWidth * 1.4);
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([0, width]));
+  const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -191,7 +191,7 @@
   }
 
   $effect(() => {
-    console.log({currentId})
+    console.log({currentId, currentSizeRanges})
     // Sets up axis
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
@@ -201,8 +201,8 @@
       }
 
     // Background band tweens
-    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 0;
-    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
+    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
+    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
 
     console.log({targetHeight})
@@ -214,6 +214,9 @@
         if (currentId == 1) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
+        } else if (currentId == 7 || (currentId == "to-enter" && !introScroll)) {
+          highlightStart = xScale(currentSizeRanges[3].min);
+          highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
         } else if (currentId === 8) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
@@ -222,7 +225,7 @@
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
         } else if (currentId >= 10) {
             highlightStart = xScale(currentSizeRanges[9].min);
-            highlightWidth = Math.max(0, xScale(63.9) - xScale(currentSizeRanges[9].min));
+            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[9].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
             const maxWaist = d3.max(currentSizeRanges, d => d.max);
@@ -283,7 +286,7 @@
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 1 || currentId == 5 || (currentId == "exit" && introScroll) || currentId >= 8}>
+            <g class="highlight-band" class:visible={currentId == 1 || currentId == 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
@@ -486,7 +489,6 @@
     .scrolly-outer {
         position: relative;
         z-index: 2;
-        pointer-events: none;
     }
 
     .step {
