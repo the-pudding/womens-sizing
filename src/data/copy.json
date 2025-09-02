@@ -182,6 +182,22 @@
       "sizeType": "numeric",
       "bandColor": "green",
       "text": "<p>Only a small portion of brands carry sizes larger than a size 16.</p>\r\n<p>That leaves nearly three-quarters of all women without sizing options at all</p>"
+    },
+    {
+      "id": "11",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "20+",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green",
+      "text": ""
     }
   ],
   "introText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.",
@@ -236,32 +252,22 @@
   "proportions": [
     {
       "id": "0",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "null",
       "text": "<p>If we were to take the waist and hip measurements of the median woman in the U.S., here’s a broad look at what those proportions would look like.<p>\r\n\r\n\r\n<p>Notice there’s just over a 4” difference between her waist and hip measurements.</p>"
     },
     {
       "id": "1",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "assets/jcrew-size18.png",
       "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span class=green-span>size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span class=bold> 6 inches larger </span> than hers.</p>"
     },
     {
       "id": "2",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "assets/jcrew-size12.png",
       "text": "<p>If the median American woman were to prioritize finding pants that are fitted around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>6 inches</span>."
     },
     {
       "id": "3",
-      "baseImage": "assets/polo-ralph-lauren.png",
-      "overlayImage": "assets/proportions-000-22.png",
       "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>The foundation for most — if not all — mainstream fashion brands is based on an hourglass silhouette.</p>\r\n\r\n\r\n<p>For brands like J.Crew, Anthropologie, Ralph Lauren, Aritizia, and more, that means a <span class=bold>10-inch</span> difference between the waist and hip from the <span class=orange-span>biggest size</span> to the <span class=purple-span>smallest size.</span></p>"
     },
     {
       "id": "4",
-      "baseImage": "assets/polo-ralph-lauren.png",
-      "overlayImage": "assets/proportions-000-22.png",
       "text": "<p>Surprisingly, it’s not uncommon for all sizes to have the exact same hourglass proportions.</p>"
     }
   ],

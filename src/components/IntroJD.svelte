@@ -26,11 +26,6 @@
   let currentId = $derived(isNaN(value) ? value : +currentStage?.id);
   let scrollY = $state(0)
   let scrollDir = $derived(checkScrollDir(scrollY));
-  let stateEnter = $derived(currentId == 0 || (currentId == "to-enter" && introScroll));
-  let stateIntro = $derived(currentId >= 1 && currentId < 6);
-  let stateTransition = $derived(currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll));
-  let stateSecond = $derived(currentId >= 8);
-  let stateExit = $derived((currentId == "exit" && !introScroll));
 
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
@@ -47,6 +42,7 @@
 
   /*** TWEENS ***/
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
+  let animatedHighlight = tweened({ x: 0, y: 0, width: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
 
   /*** FILTERS ***/
   let ASTMFilters = $derived(
@@ -117,7 +113,7 @@
 
   let currentSizeRanges = $derived(processedASTMData.currentSizeRanges);
 
-  let avatarImages;
+  let avatarImages = $derived(generateAvatarImgs(pointsData));
   function generateAvatarImgs(pointsData) { // Added 'points' as an argument
     // Ensure points is not empty before mapping
     if (!pointsData || pointsData.length === 0) return [];
@@ -194,13 +190,8 @@
     return delay
   }
 
-  onMount(() => {
-    // Generate avatar images
-    avatarImages = generateAvatarImgs(pointsData);
-  });
-
   $effect(() => {
-    console.log({currentId, valueKey})
+    console.log({currentId})
     // Sets up axis
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
@@ -213,6 +204,34 @@
     const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 0;
     const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom;
     animatedBand.set({ y: targetY, height: targetHeight });
+
+    console.log({targetHeight})
+
+    if (currentSizeRanges) {
+        let highlightStart;
+        let highlightWidth;
+
+        if (currentId == 1) {
+          highlightStart = xScale(currentSizeRanges[3].min);
+          highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
+        } else if (currentId === 8) {
+            highlightStart = xScale(currentSizeRanges[8].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
+        } else if (currentId === 9) {
+            highlightStart = xScale(currentSizeRanges[10].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
+        } else if (currentId >= 10) {
+            highlightStart = xScale(currentSizeRanges[9].min);
+            highlightWidth = Math.max(0, xScale(63.9) - xScale(currentSizeRanges[9].min));
+        } else {
+            const minWaist = d3.min(currentSizeRanges, d => d.min);
+            const maxWaist = d3.max(currentSizeRanges, d => d.max);
+            highlightStart = xScale(minWaist);
+            highlightWidth = Math.max(0, xScale(maxWaist) - xScale(minWaist));
+        }
+
+        animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
+    }
   });
 </script>
 
@@ -232,28 +251,40 @@
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 6 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 6 || currentId == 11 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
             {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
-            {@const highlightStart = currentId >= 8 ? xScale(minWaist) : xScale(minWaist)}
-            {@const highlightWidth = Math.max(0, xScale(maxWaist) - xScale(minWaist))}
+            {@const highlightStart = currentId == 8 
+              ? xScale(currentSizeRanges[8].min) 
+              : currentId == 9
+              ? xScale(currentSizeRanges[10].min) 
+              : currentId == 10
+              ? xScale(currentSizeRanges[9].min) 
+              : xScale(minWaist)}
+            {@const highlightWidth = currentId == 8 
+              ? Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min))
+              : currentId == 9
+              ? Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min))
+              : currentId == 10
+              ? Math.max(0, xScale(63.9) - xScale(currentSizeRanges[9].min))
+              : Math.max(0, xScale(maxWaist) - xScale(minWaist))}
             <g class="size-backgrounds">
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
-                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 )}
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
                   <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 5 || (currentId == "exit" && introScroll) || currentId >= 8}>
-              <rect x={highlightStart} y={0} width={highlightWidth} height={Math.max(0, height - margin.top - margin.bottom)}/>
+            <g class="highlight-band" class:visible={currentId == 1 || currentId == 5 || (currentId == "exit" && introScroll) || currentId >= 8}>
+              <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
@@ -268,6 +299,7 @@
                   id={point.id}
                   transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
                   opacity={(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  style="transition: {currentId == "to-enter" ? "none" : "all 0.5s ease-in-out" };"
                 >
                   {#if avatarImages}
                     {@const avatar = avatarImages.find(a => a.id === point.id)}
@@ -368,13 +400,14 @@
         fill: none;
         stroke: var(--ws-orange);
         stroke-width: 3;
-         opacity: 0;
-         transition: all 0.5s ease-in-out; 
+        opacity: 0;
+        transition: transform 0.5s ease-in-out;
         /* stroke-dasharray: 2, 2; */
     }
 
     .highlight-band.visible {
         opacity: 1;
+        transition: opacity 0.5s ease-in-out; 
     }
 
     .size-band-group {
@@ -397,7 +430,7 @@
     }
 
     :global(.avatar-group) {
-        transition: all 0.5s ease-in-out;
+        /* transition: all 0.5s ease-in-out; */
         transform-box: fill-box;
         transform-origin: center;
     }
@@ -419,35 +452,35 @@
     }
 
     :global(#band-S rect, #band-L rect, #band-12 rect, #band-16 rect) {
-        opacity: 0.85;
-    }
-
-    :global(#band-XS rect, #band-XL rect, #band-10 rect, #band-18 rect) {
         opacity: 0.75;
     }
 
-    :global(#band-XXS rect, #band-XXL rect, #band-8 rect, #band-20 rect) {
+    :global(#band-XS rect, #band-XL rect, #band-10 rect, #band-18 rect) {
         opacity: 0.65;
     }
 
-    :global(#band-6 rect) {
+    :global(#band-XXS rect, #band-XXL rect, #band-8 rect, #band-20 rect) {
         opacity: 0.55;
     }
 
-    :global(#band-4 rect) {
+    :global(#band-6 rect) {
         opacity: 0.45;
     }
 
-    :global(#band-2 rect) {
+    :global(#band-4 rect) {
         opacity: 0.35;
     }
 
-    :global(#band-0 rect) {
+    :global(#band-2 rect) {
         opacity: 0.25;
     }
 
-    :global(#band-00 rect) {
+    :global(#band-0 rect) {
         opacity: 0.15;
+    }
+
+    :global(#band-00 rect) {
+        opacity: 0.05;
     }
 
     .scrolly-outer {
