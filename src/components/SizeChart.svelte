@@ -11,7 +11,7 @@
 
     let containerHeight = $state(0);
     let containerWidth = $state(0);
-    let margin = { top: 60, right: 40, bottom: 60, left: 120 };
+    let margin = { top: 60, right: 40, bottom: 120, left: 120 };
     let width = $derived(containerWidth - margin.left - margin.right);
     let height = $derived(containerHeight - margin.top - margin.bottom);
     
@@ -195,10 +195,8 @@
             g.append('text')
                 .attr('x', xScale(astmData.range.min))
                 .attr('y', astmYPosition - 10)
+                .attr("class", "brand-label")
                 .attr('text-anchor', 'start')
-                .style('font-size', Math.max(containerWidth * 0.008, 10) + 'px')
-                .style('fill', '#333')
-                .style('font-weight', '600')
                 .text('ASTM Standard Sizes');
             
             g.append('line')
@@ -214,11 +212,9 @@
                 g.append('circle')
                     .attr('cx', xScale(d.waistMin))
                     .attr('cy', astmYPosition)
-                    .attr('r', 5)
+                    .attr('r', 6)
                     .style('fill', '#C2D932')
-                    .style('stroke', 'white')
-                    .style('stroke-width', 2)
-                    .style('opacity', 0.9);
+                    .style('opacity', 1);
             });
         }
 
@@ -238,9 +234,8 @@
             g.append('text')
                 .attr('x', xScale(brandStartPoint))
                 .attr('y', yPosition - 10)
+                .attr("class", "brand-label")
                 .attr('text-anchor', 'start')
-                .style('font-size', Math.max(containerWidth * 0.008, 10) + 'px')
-                .style('fill', '#333')
                 .text(brand.brand);
             
             if (displayRegular && brand.regularRange) {
@@ -281,34 +276,34 @@
                             .attr('y1', yPosition)
                             .attr('y2', yPosition)
                             .style('stroke', color)
-                            .style('stroke-width', 8)
+                            .style('stroke-width', 10)
                             .style('stroke-linecap', 'round')
                             .style('opacity', 0.2);
                         
                         pillGroup.append('circle')
                             .attr('cx', minX)
                             .attr('cy', yPosition)
-                            .attr('r', 4)
+                            .attr('r', 6)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.4);
+                            .style('opacity', 1);
                         
                         pillGroup.append('circle')
                             .attr('cx', maxX)
                             .attr('cy', yPosition)
-                            .attr('r', 4)
+                            .attr('r', 6)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.4);
+                            .style('opacity', 1);
                             
                     } else {
                         g.append('circle')
                             .attr('cx', xScale(d.waistMin))
                             .attr('cy', yPosition)
-                            .attr('r', 4)
+                            .attr('r', 6)
                             .style('fill', color)
                             .style('stroke', 'none')
-                            .style('opacity', 0.8);
+                            .style('opacity', 1);
                     }
                 });
             }
@@ -322,25 +317,14 @@
             }
         });
 
-        g.append('g')
+        const xAxis = g.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${height})`)
             .call(d3.axisBottom(xScale)
                 .tickSize(-height)
                 .ticks(10)
-                .tickFormat('')
             )
-            .style('opacity', 0.1);
-
-        const xAxisLabels = g.append('g')
-            .attr('class', 'x-axis-labels')
-            .attr('transform', `translate(0, ${height})`)
-            .call(d3.axisBottom(xScale).ticks(10))
-            .style('opacity', 0.7);
-
-        xAxisLabels.selectAll('text')
-            .style('font-size', Math.max(containerWidth * 0.01, 10) + 'px')
-            .attr('dy', '1.2em');
+            .style('opacity', 1);
 
         g.append('text')
             .attr('x', width / 2)
@@ -413,7 +397,7 @@
     
     <div class="sticky-container">
         <div class="visual-container">
-            <div class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+            <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                 <svg bind:this={svg}></svg>
             </div>
         </div>
@@ -455,10 +439,10 @@
     }
     
     .chart-container {
-        width: calc(100% - 4rem);
-        height: 100vh;
+        width: 100%;
+        height: 100svh;
         margin: 0 auto;
-        padding: 5px;
+        padding: 2rem;
         position: relative;
         display: flex;
         justify-content: center;
@@ -482,6 +466,8 @@
         justify-content: flex-end; 
         align-items: center;
         padding-right: 2rem;
+        font-family: var(--sans);
+        font-size: var(--20px);
     }
     
     .step .text {
@@ -492,5 +478,16 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         margin: 0;
+    }
+
+    :global(#size-chart .x-axis .domain) {
+        display: none;
+    }
+
+    :global(.brand-label) {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--14px);
+        text-transform: uppercase;
     }
 </style>

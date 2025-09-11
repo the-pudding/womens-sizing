@@ -174,7 +174,7 @@
     function renderChart() {
       if (!chartElement || !filteredData || !ready) return;
       
-      console.log("Rendering chart with D3...");
+      // console.log("Rendering chart with D3...");
       
       try {
         // Generate data points using utility function
@@ -186,7 +186,7 @@
           avatar: generateRandomAvatar()
         }));
         
-        console.log(`Generated ${avatarData.length} avatars`);
+        // console.log(`Generated ${avatarData.length} avatars`);
         
         // Clear any existing content
         d3.select(svg).selectAll('*').remove();
@@ -321,7 +321,7 @@
           .style('font-size', '12px')
           .attr('dy', '1em');
           
-        console.log("Chart rendering complete");
+        // console.log("Chart rendering complete");
         
       } catch (err) {
         console.error("Error rendering chart:", err);

@@ -21,25 +21,25 @@ export const AVATAR_SIZE = {
  * Generate a random avatar with layers
  * @param {string} sizeType - Size type (SMALL, MID, or LARGE)
  */
-export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL) {
+export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point) {
   // Random variants (1-4)
-  const baseVariant = getRandomInt(1, 4);
-  const hairVariant = getRandomInt(1, 4);
-  const bottomVariant = getRandomInt(1, 4);
-  const topVariant = getRandomInt(1, 4);
+  const baseVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
+  const hairVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
+  const bottomVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
+  const topVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
   
   // Use different folder path based on avatar size
   let folderPath;
   switch(sizeType) {
     case AVATAR_SIZE.LARGE:
-      folderPath = '/assets/avatars/24';
+      folderPath = 'assets/avatars/24';
       break;
     case AVATAR_SIZE.MID:
-      folderPath = '/assets/avatars/12';
+      folderPath = 'assets/avatars/12';
       break;
     case AVATAR_SIZE.SMALL:
     default:
-      folderPath = '/assets/avatars/2';
+      folderPath = 'assets/avatars/2';
       break;
   }
   
