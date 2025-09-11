@@ -20,9 +20,9 @@
 	<Intro startStage={0} endStage={6} introScroll={true}/>
 	<TitlePage />
 	<Intro startStage={7}/>
-	<VanitySizes />
+	<History />
 	<Proportions />
-	<!-- <History /> -->
+	<VanitySizes />
 	<SizeChart />
 	<!-- <Footer recirc={true} /> -->
 </svelte:boundary>

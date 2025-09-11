@@ -125,6 +125,7 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
+        console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
@@ -149,7 +150,10 @@
     {/each}
     </div>
     <div class="sticky-container">
-        <div class="visual-container">
+        <div 
+            class="visual-container"
+            style="opacity: {value == 3 ? 0 : 1}"
+        >
             <div class="chart-container" id="vanity-sizes">
                 {#each formData as year, i}
                     <div class="year-wrapper" class:visible={(year[0] == 1995 && value >= 0) || (year[0] == 2021 && value >= 1)}>
@@ -213,12 +217,28 @@
     <div class="scrolly-outer">
             <Scrolly bind:value>
                 {#each copy.vanitySizing as stage, i}
-                    <div class="step">
+                    <div id="step-{i}" class="step">
                         <div class="text">
                             <p>{@html stage.text}</p>
                         </div>
                     </div>
                 {/each}
+                <!-- {#each copy.vanitySizing as stage, i}
+                    {#if i !== 3}
+                    <div class="step">
+                        <div class="text">
+                            <p>{@html stage.text}</p>
+                        </div>
+                    </div>
+                    {:else}
+                        <div id="step-{i}" class="step">
+                            <img src="" />
+                            <div class="text">
+                                <p>{@html stage.text}</p>
+                            </div>
+                        </div>
+                    {/if}
+                {/each} -->
             </Scrolly>
     </div>
 </div>
@@ -264,6 +284,7 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        transition: opacity 1s ease-in-out; 
     }
 
     .chart-container {
@@ -486,6 +507,12 @@
         font-family: var(--sans);
         font-size: var(--20px);
     }
+
+    #step-3 p {
+        background: black;
+        color: white;
+    }
+
     .step .text {
         max-width: 500px;
         width: 90%;

@@ -235,10 +235,14 @@
     },
     {
       "id": "3",
-      "text": "<p>Waistlines in the U.S. have also increased since the mid-90s.</p>\r\n<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2018, it was <span data-underline=\"#C2D932\">38.74 inches</span></p>"
+      "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a dictum ligula. Nullam elementum bibendum risus, non ultricies turpis luctus ac. Maecenas eleifend sem pharetra arcu dapibus, a dignissim libero lobortis. Praesent ac lorem orci. Fusce purus eros, fringilla id mi nec, suscipit lacinia nulla. Mauris sit amet sem tincidunt, venenatis ante vel, mollis lorem. In nulla nisi, fringilla sit amet odio eu, convallis fermentum erat. Maecenas non nisl sit amet purus tempus dictum eu ac eros. Proin turpis tortor, maximus in bibendum id, sagittis at sapien. Nullam a dui semper, fringilla tellus vitae, aliquet turpis. Vivamus placerat lectus non tempus venenatis. Nam vulputate, magna nec convallis euismod, felis enim pharetra risus, quis euismod nibh neque at est. Nulla lobortis cursus lectus ultrices dictum. Vestibulum ornare, tellus elementum ornare scelerisque, dolor mi maximus tellus, id fringilla turpis dui sit amet urna.</p>"
     },
     {
       "id": "4",
+      "text": "<p>Waistlines in the U.S. have also increased since the mid-90s.</p>\r\n<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2018, it was <span data-underline=\"#C2D932\">38.74 inches</span></p>"
+    },
+    {
+      "id": "5",
       "text": "<p>In both cases, both 30 years ago and today, the median waistline roughly lined up with the size 18 that was available at that time (if at all).</p>"
     }
   ],
@@ -274,7 +278,42 @@
   "history": [
     {
       "id": "0",
-      "text": "<p>The underlying foundation of the modern sizing system is inherently skewed by age and race as well. </p>\r\n\r\n\r\n<p>It’s based on a 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states.</p>\r\n\r\n\r\n<p>Since the sizing chart’s inception, measurements have been tailored to young, white bodies while promoting conventional beauty standards like the hourglass silhouette. \r\n\r\n\r\nThis matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nThe result has meant that middle aged black and hispanic women have had a particularly difficult time accessing sizes that fit </p>"
+      "text": "<p>In 1941, the U.S. government set out to standardize clothing sizes for women. The garment- and pattern-making industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted. They found wide variations in garment sizes made by different manufacturers. Clothing alterations often cost an additional 25% on top of the original sale price. Clothes that didn’t fit or couldn’t be altered were frequently returned to the store, at a high cost to all parties involved. \r\n\r\n\r\n“This means a loss of money and good will to the retailer and annoyance and waste of time to the woman purchaser,” wrote the report’s chief researcher, Ruth O’Brien. \r\n\r\n\r\nSound familiar?\r\n\r\n\r\nOver 85 years later, and many of those same problems and annoyances are just as true, if not worse today. \r\n\r\n\r\nThe landmark study set in motion the foundation of our modern sizing system that is inherently skewed by age and race. The 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states. And while it was likely the first to even attempt to gather a broad dataset of body measurements, it created a system that perpetuated the conventional beauty standards of young, white bodies. This matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nBecause of these biases, the blueprint for nearly every piece of women’s clothing is based on an hourglass silhouette. </p>"
+    }
+  ],
+  "jdHistory": [
+    {
+      "id": "0",
+      "title": "History",
+      "subtitle": "subtitle",
+      "textA": [
+        {
+          "type": "text",
+          "value": "In 1941, the U.S. government set out to standardize clothing sizes for women. The garment- and pattern-making industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted. They found wide variations in garment sizes made by different manufacturers. Clothing alterations often cost an additional 25% on top of the original sale price. Clothes that didn’t fit or couldn’t be altered were frequently returned to the store, at a high cost to all parties involved."
+        },
+        {
+          "type": "text",
+          "value": "“This means a loss of money and good will to the retailer and annoyance and waste of time to the woman purchaser,” wrote the report’s chief researcher, Ruth O’Brien."
+        },
+        {
+          "type": "text",
+          "value": "Sound familiar?"
+        }
+      ],
+      "textB": [
+        {
+          "type": "text",
+          "value": "Over 85 years later, and many of those same problems and annoyances are just as true, if not worse today."
+        },
+        {
+          "type": "text",
+          "value": "The landmark study set in motion the foundation of our modern sizing system that is inherently skewed by age and race. The 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states. And while it was likely the first to even attempt to gather a broad dataset of body measurements, it created a system that perpetuated the conventional beauty standards of young, white bodies. This matters because we know that age and genetics factor quite a bit into our shape and body proportions."
+        },
+        {
+          "type": "text",
+          "value": "Because of these biases, the blueprint for nearly every piece of women’s clothing is based on an hourglass silhouette."
+        }
+      ]
     }
   ],
   "sizeCharts": [

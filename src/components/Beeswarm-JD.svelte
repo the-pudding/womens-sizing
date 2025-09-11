@@ -80,10 +80,10 @@
         d3.scaleLinear().domain(xRange).range([0, width])
     );
     const tickVals = Array.from({ length: 31 }, (_, i) => i);
-    console.log(tickVals);
+    // console.log(tickVals);
     // Running simulation to position avatars
     let positionedAvatars = $derived(() => {
-        console.log("🔥 positionedAvatars recomputing");
+        // console.log("🔥 positionedAvatars recomputing");
 
         const avatars = avatarData;
         
@@ -139,7 +139,7 @@
 
     // Event handlers
     function handleMouseEnter(d) {
-        console.log(d)
+        // console.log(d)
     }
 
     function handleMouseLeave(d) {
@@ -148,11 +148,11 @@
 
     function updateChart(scrollIndex) {
         if (scrollIndex == 0) {
-            console.log("step0")
+            // console.log("step0")
         } else if (scrollIndex == 1) {
-            console.log("step1")
+            // console.log("step1")
         } else {
-            console.log("other steps")
+            // console.log("other steps")
         }
     }
 
