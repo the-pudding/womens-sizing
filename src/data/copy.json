@@ -25,7 +25,7 @@
       "bandColor": "green",
       "stepPosition": "center",
       "bandHeight": "avatar-centered",
-      "text": "<p>“Junior” clothing lines often channel this interest with youthful styles that fit tweens and teens as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold data-underline=\"#C2D932\">11-year-old</span> can typically wear a size <span class=bold data-underline=\"#C2D932\">Medium</span> in the Juniors section.</p>"
+      "text": "<p>“Junior” clothing lines often channel this interest with youthful styles that fit tweens and teens as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold>11-year-old</span> can typically wear a size <span class=orange-outline>Medium</span> in the Juniors section.</p>"
     },
     {
       "id": "2",
@@ -42,7 +42,7 @@
       "bandColor": "green",
       "stepPosition": "right",
       "bandHeight": "full",
-      "text": "<p>But not all tweens wear the same size.</p>\r\n\r\n\r\n<p>If we were to look at a sample of all <span class=bold data-underline=\"#C2D932\">10- and 11-year-old girls</span> in the U.S., here are the Juniors sizes that match up with their body measurements.</p>\r\n\r\n\r\n<p>Notice that there are sizes available for most girls in this age group.</p>"
+      "text": "<p>But not all tweens wear the same size.</p>\r\n\r\n\r\n<p>If we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S., here are the Juniors sizes that match up with their body measurements.</p>\r\n\r\n\r\n<p>Notice that there are sizes available for most girls in this age group.</p>"
     },
     {
       "id": "3",
@@ -60,7 +60,7 @@
       "bandColor": "green",
       "stepPosition": "right",
       "bandHeight": "full",
-      "text": "<p>By <span class=bold data-underline=\"#C2D932\">age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior size section.</p>"
+      "text": "<p>By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior size section.</p>"
     },
     {
       "id": "4",
@@ -77,7 +77,7 @@
       "sizeType": "alpha",
       "bandColor": "green",
       "stepPosition": "right",
-      "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold data-underline=\"#C2D932\">14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely that each size will fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
+      "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely that each size will fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
     },
     {
       "id": "5",
@@ -95,7 +95,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>This will be the first time that nearly every girl their age will have women’s sizes available that are within an inch of their waistline measurements…</p>"
+      "text": "<p>This will be the first time that nearly every girl their age will have women’s sizes available that are <span class=orange-outline>within an inch of their waistline</span> measurements…</p>"
     },
     {
       "id": "6",
@@ -113,7 +113,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>...this will also likely be <span class=bold data-underline=\"#C2D932\"> the last time this ever happens in their lifetimes.</span></p>"
+      "text": "<p>...this will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
     },
     {
       "id": "7",
@@ -131,7 +131,7 @@
       "bandColor": "green",
       "highlightBand": "M",
       "highlightBandColor": "orange",
-      "text": "By their 20s, a size Medium will no longer reflect the median or average woman’s waistline."
+      "text": "By their 20s, a <span class=orange-outline>size Medium</span> will no longer reflect the median or average woman’s waistline."
     },
     {
       "id": "8",
@@ -147,7 +147,7 @@
       "sizeBands": "12, 14, 16",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>Instead, <span class=bold data-underline=\"#C2D932\"> the median 20-something fits a size 14</span>.</p>\r\n\r\n\r\n<p>This places them in the middle of what’s sometimes called the “mid-size gap” — a murky space that varies from brand to brand in determining where “regular-” or “straight-size” clothing lines end, and separate “plus-size” ranges begin.</p>"
+      "text": "<p>Instead, <span class=bold> the median 20-something</span> fits a <span class=orange-outline>size 14</span>.</p>\r\n\r\n\r\n<p>This places them in the middle of what’s sometimes called the “mid-size gap” — a murky space that varies from brand to brand in determining where “regular-” or “straight-size” clothing lines end, and separate “plus-size” ranges begin.</p>"
     },
     {
       "id": "9",
@@ -165,7 +165,7 @@
       "bandColor": "green",
       "highlightBand": "18",
       "highlightBandColor": "orange",
-      "text": "<p>Sizing options are even worse when you look at all adult women over the age of 20.</p>\r\n\r\n\r\n<p>The median woman in the U.S. fits around a <span class=bold data-underline=\"#C2D932\">size 18</span> based on their waistline measurement.</p>"
+      "text": "<p>Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span></p>\r\n\r\n\r\n<p>The median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement.</p>"
     },
     {
       "id": "10",
@@ -181,7 +181,23 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>Only a small portion of brands carry sizes larger than a size 16.</p>\r\n<p>That leaves nearly three-quarters of all women without sizing options at all</p>"
+      "text": "<p>Only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span></p>\r\n<p>That leaves nearly <span class=bold>three-quarters of all women</span> without sizing options at all</p>"
+    },
+    {
+      "id": "11",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "20+",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green",
+      "text": ""
     }
   ],
   "introText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.",
@@ -236,32 +252,22 @@
   "proportions": [
     {
       "id": "0",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "null",
-      "text": "<p>If we were to take the waist and hip measurements of the median woman in the U.S., here’s a broad look at what those proportions would look like.<p>\r\n\r\n\r\n<p>Notice there’s just over a 4” difference between her waist and hip measurements.</p>"
+      "text": "<p>If we were to take the waist and hip measurements of the <span class=blue-span>median woman</span> in the U.S., here’s a broad look at what those proportions would look like.<p>\r\n\r\n\r\n<p>Notice there’s just over a 4” difference between her waist and hip measurements.</p>"
     },
     {
       "id": "1",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "assets/jcrew-size18.png",
-      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span class=green-span>size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span class=bold> 6 inches larger </span> than hers.</p>"
+      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span class=green-span>size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span class=bold> 6 inches larger</span> than hers.</p>"
     },
     {
       "id": "2",
-      "baseImage": "assets/proportions-base.png",
-      "overlayImage": "assets/jcrew-size12.png",
       "text": "<p>If the median American woman were to prioritize finding pants that are fitted around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>6 inches</span>."
     },
     {
       "id": "3",
-      "baseImage": "assets/polo-ralph-lauren.png",
-      "overlayImage": "assets/proportions-000-22.png",
       "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>The foundation for most — if not all — mainstream fashion brands is based on an hourglass silhouette.</p>\r\n\r\n\r\n<p>For brands like J.Crew, Anthropologie, Ralph Lauren, Aritizia, and more, that means a <span class=bold>10-inch</span> difference between the waist and hip from the <span class=orange-span>biggest size</span> to the <span class=purple-span>smallest size.</span></p>"
     },
     {
       "id": "4",
-      "baseImage": "assets/polo-ralph-lauren.png",
-      "overlayImage": "assets/proportions-000-22.png",
       "text": "<p>Surprisingly, it’s not uncommon for all sizes to have the exact same hourglass proportions.</p>"
     }
   ],

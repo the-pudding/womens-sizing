@@ -32,14 +32,14 @@ export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point) {
   let folderPath;
   switch(sizeType) {
     case AVATAR_SIZE.LARGE:
-      folderPath = '/assets/avatars/24';
+      folderPath = 'assets/avatars/24';
       break;
     case AVATAR_SIZE.MID:
-      folderPath = '/assets/avatars/12';
+      folderPath = 'assets/avatars/12';
       break;
     case AVATAR_SIZE.SMALL:
     default:
-      folderPath = '/assets/avatars/2';
+      folderPath = 'assets/avatars/2';
       break;
   }
   
