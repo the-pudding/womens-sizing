@@ -34,7 +34,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url("./assets/grid.png");
+		background-image: url("assets/grid.png");
 		background-size: 150px 150px;
 		background-repeat: repeat;
 		z-index: -1;
