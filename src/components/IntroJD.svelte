@@ -201,8 +201,8 @@
       }
 
     // Background band tweens
-    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
-    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
+    const targetY = currentId <= 2 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
+    const targetHeight = currentId <= 2 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
 
     // console.log({targetHeight})
@@ -211,7 +211,7 @@
         let highlightStart;
         let highlightWidth;
 
-        if (currentId == 1) {
+        if (currentId == 2) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
         } else if (currentId == 7 || (currentId == "to-enter" && !introScroll)) {
@@ -236,6 +236,10 @@
         animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
     }
   });
+
+  $effect(() => {
+    console.log({currentId})
+  })
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -247,7 +251,7 @@
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
-              <p class="title-text">{@html copy.introText}</p>
+              <!-- <p class="title-text">{@html copy.introText}</p> -->
           </div>
       {/if}
       <div id="beeswarm" 
@@ -279,29 +283,29 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
-                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 2 || currentId == "to-enter" )}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
-                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
+                  <text x={x + rectWidth / 2} y={currentId <= 2 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 1 || currentId == 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
+            <g class="highlight-band" class:visible={currentId == 2 || currentId == 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
           <g class="axis x-axis" 
               transform="translate(0, {height - margin.top - margin.bottom})"
-              opacity={currentId >= 2 ? 1 : 0}></g>
+              opacity={currentId >= 3 ? 1 : 0}></g>
 
           {#if positionedAvatars() && avatarImages}
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
-                  opacity={(point.type == 'percentile' && currentId <= 1 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  opacity={(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 2 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
                   style="transition: {currentId == "to-enter" ? "none" : "all 0.5s ease-in-out" };"
                 >
                   {#if avatarImages}

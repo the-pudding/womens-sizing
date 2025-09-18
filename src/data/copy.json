@@ -20,12 +20,9 @@
       "sizeRange": "juniors",
       "avatarDisplay": "percentile-only",
       "highlightedPercentile": "50",
-      "sizeBands": "S, M, L",
-      "sizeType": "alpha",
-      "bandColor": "green",
       "stepPosition": "center",
       "bandHeight": "avatar-centered",
-      "text": "<p>“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold>11-year-old</span> typically wears a size <span class=orange-outline>Medium</span> in the Junior’s section.</p>"
+      "text": "<p>Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.</p>"
     },
     {
       "id": "2",
@@ -34,10 +31,26 @@
       "age": "10-11",
       "year": "2015",
       "sizeRange": "juniors",
+      "avatarDisplay": "percentile-only",
+      "highlightedPercentile": "50",
+      "sizeBands": "S, M, L",
+      "sizeType": "alpha",
+      "bandColor": "green",
+      "stepPosition": "center",
+      "bandHeight": "avatar-centered",
+      "text": "<p>“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold>11-year-old</span> typically wears a size <span class=orange-outline>Medium</span> in the Junior’s section.</p>"
+    },
+    {
+      "id": "3",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "10-11",
+      "year": "2015",
+      "sizeRange": "juniors",
       "avatarStyle": "greyscale",
       "avatarDisplay": "all",
       "highlightedPercentile": "50",
-      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeBands": "S, M, L",
       "sizeType": "alpha",
       "bandColor": "green",
       "stepPosition": "right",
@@ -45,7 +58,7 @@
       "text": "<p>But not all tweens wear the same size.</p>\r\n\r\n\r\n<p>If we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S., here are the Junior’s sizes that match up with their body measurements.</p>\r\n\r\n\r\n<p>Notice that there are sizes available for most girls in this age group.</p>"
     },
     {
-      "id": "3",
+      "id": "4",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "14-15",
@@ -63,7 +76,7 @@
       "text": "<p>By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior’s size section.</p>"
     },
     {
-      "id": "4",
+      "id": "5",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "14-15",
@@ -78,24 +91,6 @@
       "bandColor": "green",
       "stepPosition": "right",
       "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely for sizes to fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
-    },
-    {
-      "id": "5",
-      "yearRange": "2021-2023",
-      "race": "all",
-      "age": "14-15",
-      "year": "2021",
-      "sizeRange": "straight",
-      "avatarStyle": "greyscale",
-      "avatarDisplay": "all",
-      "percentileStyle": "color",
-      "highlightedPercentile": "50",
-      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
-      "sizeType": "alpha",
-      "bandColor": "green",
-      "stepPosition": "center-vertical",
-      "bandHeight": "full",
-      "text": "<p>This will be the first time that most girls their age can find a size in women’s clothing that is <span class=orange-outline>within an inch of their waistline</span> measurement.</p>"
     },
     {
       "id": "6",
@@ -113,10 +108,28 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>This will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
+      "text": "<p>This will be the first time that most girls their age can find a size in women’s clothing that is <span class=orange-outline>within an inch of their waistline</span> measurement.</p>"
     },
     {
       "id": "7",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "14-15",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "XXS, XS, S, M, L, XL, XXL",
+      "sizeType": "alpha",
+      "bandColor": "green",
+      "stepPosition": "center-vertical",
+      "bandHeight": "full",
+      "text": "<p>This will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
+    },
+    {
+      "id": "8",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "20-29",
@@ -134,7 +147,7 @@
       "text": "By their 20s, a <span class=orange-outline>size Medium</span> will no longer reflect the median or average woman’s waistline."
     },
     {
-      "id": "8",
+      "id": "9",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "20-29",
@@ -148,24 +161,6 @@
       "sizeType": "numeric",
       "bandColor": "green",
       "text": "<p>Instead, <span class=bold> the median 20-something</span> fits a <span class=orange-outline>size 14</span>.</p>\r\n\r\n\r\n<p>This places them in the middle of what’s informally called the “mid-size gap” — the murky space where <span class=bold> straight</span> clothing lines end and larger <span class=bold>plus-size </span> ranges typically begin.</p>"
-    },
-    {
-      "id": "9",
-      "yearRange": "2021-2023",
-      "race": "all",
-      "age": "20 and over",
-      "year": "2021",
-      "sizeRange": "straight",
-      "avatarStyle": "greyscale",
-      "avatarDisplay": "all",
-      "percentileStyle": "color",
-      "highlightedPercentile": "50",
-      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
-      "sizeType": "numeric",
-      "bandColor": "green",
-      "highlightBand": "18",
-      "highlightBandColor": "orange",
-      "text": "<p>Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span></p>\r\n\r\n\r\n<p>The median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement.</p>"
     },
     {
       "id": "10",
@@ -183,10 +178,28 @@
       "bandColor": "green",
       "highlightBand": "18",
       "highlightBandColor": "orange",
-      "text": "<p>It’s not guaranteed that a size 18 garment would actually fit her though. A woman’s waistline circumference is just one of many important measurements. Other factors like the cut of the garment or the amount of stretch in the fabrics will heavily influence the fit.</p>\r\n\r\n\r\n<p>Still size charts are typically meant to reflect the baseline body measurements for any style of clothing.</p>\r\n\r\n\r\n<p>What we’re seeing is that those <span class=blue-span> baseline measurements are largely out of sync </span> with the true proportions of American women today.</p>"
+      "text": "<p>Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span></p>\r\n\r\n\r\n<p>The median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement.</p>"
     },
     {
       "id": "11",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "20 and over",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green",
+      "highlightBand": "18",
+      "highlightBandColor": "orange",
+      "text": "<p>It’s not guaranteed that a size 18 garment would actually fit her though. A woman’s waistline circumference is just one of many important measurements. Other factors like the cut of the garment or the amount of stretch in the fabrics will heavily influence the fit.</p>\r\n\r\n\r\n<p>Still size charts are typically meant to reflect the baseline body measurements for any style of clothing.</p>\r\n\r\n\r\n<p>What we’re seeing is that those <span class=blue-span> baseline measurements are largely out of sync </span> with the true proportions of American women today.</p>"
+    },
+    {
+      "id": "12",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "20+",
@@ -202,7 +215,7 @@
       "text": "<p>The bulk of sizes are concentrated on a small sliver of the female population.</p>"
     },
     {
-      "id": "12",
+      "id": "13",
       "yearRange": "2021-2023",
       "race": "all",
       "age": "20+",
