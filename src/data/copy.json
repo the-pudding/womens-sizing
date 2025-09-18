@@ -229,7 +229,7 @@
       "text": [
         {
           "type": "text",
-          "value": "Junior-specific clothing lines were initially developed to reflect the differences between growing adolescents and adult women whose proportions are typically fuller in the hips and bust. The idea was that once a girl matured, she could easily transition out of the Junior’s section (where size labels are odd numbers: 1, 3, 5 etc.) and find her corresponding size made for adults (which are even-numbered: 2, 4, 6 etc.)."
+          "value": "Junior-specific clothing lines were meant to reflect the differences between growing adolescents and adult women whose proportions are typically fuller in the hips and bust. The idea was that once a girl matured, she could easily transition out of the Junior’s section (where size labels are odd numbers: 1, 3, 5 etc.) and find her corresponding size made for adults (which are even-numbered: 2, 4, 6 etc.)."
         },
         {
           "type": "text",
@@ -237,7 +237,7 @@
         },
         {
           "type": "text",
-          "value": "But most modern adults do not look like teenagers — nor probably should they. This means that as women progress through life, the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
+          "value": "But most modern adults do not look like teenagers — nor probably should they. This means that as women progress through life — as they launch careers, start families, or grow within their communities — the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
         },
         {
           "type": "text",
@@ -347,7 +347,7 @@
   "vanitySizing": [
     {
       "id": "0",
-      "text": "<p>Thirty- years ago, there was a 12.5-inch spread of waistline measurements separating the smallest size 2 (24 inches) and the largest size 20 (36.5 inches).</p>"
+      "text": "<p>About 30 years ago, there was a 12.5-inch spread of waistline measurements separating the smallest size 2 (24 inches) and the largest size 20 (36.5 inches).</p>"
     },
     {
       "id": "1",
