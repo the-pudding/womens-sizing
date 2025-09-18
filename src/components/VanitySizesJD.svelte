@@ -136,13 +136,13 @@
 
 <div class="outer-container">
     <div class="text-block">
-        {#each copy.section2 as block}
+        {#each copy.vanityIntro as block}
         <div class="subtitle">
             {#if block.subhed}
                 <h3>
-                    <Leet string="This has been a" />
-                    <Ransom string="problem" />
-                    <Leet string="for a very, very long time" />
+                    <Leet string="There's more to" />
+                    <Ransom string="vanity sizing" />
+                    <Leet string="than you may think" />
                 </h3>
             {/if}
             <p>{@html block.text}</p>
@@ -505,12 +505,11 @@
         align-items: center;
         padding-right: 2rem;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
 
     #step-3 p {
-        background: black;
-        color: white;
+        max-width: 600px;
     }
 
     .step .text {

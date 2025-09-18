@@ -25,7 +25,7 @@
       "bandColor": "green",
       "stepPosition": "center",
       "bandHeight": "avatar-centered",
-      "text": "<p>“Junior” clothing lines often channel this interest with youthful styles that fit tweens and teens as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold>11-year-old</span> can typically wear a size <span class=orange-outline>Medium</span> in the Juniors section.</p>"
+      "text": "<p>“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.</p>\r\n\r\n\r\n<p>The median <span class=bold>11-year-old</span> typically wears a size <span class=orange-outline>Medium</span> in the Junior’s section.</p>"
     },
     {
       "id": "2",
@@ -42,7 +42,7 @@
       "bandColor": "green",
       "stepPosition": "right",
       "bandHeight": "full",
-      "text": "<p>But not all tweens wear the same size.</p>\r\n\r\n\r\n<p>If we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S., here are the Juniors sizes that match up with their body measurements.</p>\r\n\r\n\r\n<p>Notice that there are sizes available for most girls in this age group.</p>"
+      "text": "<p>But not all tweens wear the same size.</p>\r\n\r\n\r\n<p>If we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S., here are the Junior’s sizes that match up with their body measurements.</p>\r\n\r\n\r\n<p>Notice that there are sizes available for most girls in this age group.</p>"
     },
     {
       "id": "3",
@@ -60,7 +60,7 @@
       "bandColor": "green",
       "stepPosition": "right",
       "bandHeight": "full",
-      "text": "<p>By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior size section.</p>"
+      "text": "<p>By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior’s size section.</p>"
     },
     {
       "id": "4",
@@ -77,7 +77,7 @@
       "sizeType": "alpha",
       "bandColor": "green",
       "stepPosition": "right",
-      "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely that each size will fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
+      "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely for sizes to fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
     },
     {
       "id": "5",
@@ -95,7 +95,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>This will be the first time that nearly every girl their age will have women’s sizes available that are <span class=orange-outline>within an inch of their waistline</span> measurements…</p>"
+      "text": "<p>This will be the first time that most girls their age can find a size in women’s clothing that is <span class=orange-outline>within an inch of their waistline</span> measurement.</p>"
     },
     {
       "id": "6",
@@ -113,7 +113,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>...this will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
+      "text": "<p>This will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
     },
     {
       "id": "7",
@@ -147,7 +147,7 @@
       "sizeBands": "12, 14, 16",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>Instead, <span class=bold> the median 20-something</span> fits a <span class=orange-outline>size 14</span>.</p>\r\n\r\n\r\n<p>This places them in the middle of what’s sometimes called the “mid-size gap” — a murky space that varies from brand to brand in determining where “regular-” or “straight-size” clothing lines end, and separate “plus-size” ranges begin.</p>"
+      "text": "<p>Instead, <span class=bold> the median 20-something</span> fits a <span class=orange-outline>size 14</span>.</p>\r\n\r\n\r\n<p>This places them in the middle of what’s informally called the “mid-size gap” — the murky space where <span class=bold> straight</span> clothing lines end and larger <span class=bold>plus-size </span> ranges typically begin.</p>"
     },
     {
       "id": "9",
@@ -171,7 +171,7 @@
       "id": "10",
       "yearRange": "2021-2023",
       "race": "all",
-      "age": "20+",
+      "age": "20 and over",
       "year": "2021",
       "sizeRange": "straight",
       "avatarStyle": "greyscale",
@@ -181,7 +181,9 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>Only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span></p>\r\n<p>That leaves nearly <span class=bold>three-quarters of all women</span> without sizing options at all</p>"
+      "highlightBand": "18",
+      "highlightBandColor": "orange",
+      "text": "<p>It’s not guaranteed that a size 18 garment would actually fit her though. A woman’s waistline circumference is just one of many important measurements. Other factors like the cut of the garment or the amount of stretch in the fabrics will heavily influence the fit.</p>\r\n\r\n\r\n<p>Still size charts are typically meant to reflect the baseline body measurements for any style of clothing.</p>\r\n\r\n\r\n<p>What we’re seeing is that those <span class=blue-span> baseline measurements are largely out of sync </span> with the true proportions of American women today.</p>"
     },
     {
       "id": "11",
@@ -197,99 +199,63 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": ""
+      "text": "<p>The bulk of sizes are concentrated on a small sliver of the female population.</p>"
+    },
+    {
+      "id": "12",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "20+",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green",
+      "text": "<p>On top of it all, only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span></p>\r\n<p>That leaves nearly <span class=bold>three-quarters of all women</span> without sizing options at all</p>"
     }
   ],
   "introText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.",
   "titlePage": [
     {
       "id": "0",
-      "title": "Sized Out",
-      "subtitle": "What happens when women’s clothing sizes fit more teens than adults",
-      "paragraphs": {
-        "0": "Most adult women do not look like teen girls — nor should they.",
-        "1": "As they age and reach major life milestones in adulthood — perhaps graduation, marriage, having kids, or advancing in their career — their bodies continue to develop and change.",
-        "2": "But for most women as they progress through life, the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
-      }
-    }
-  ],
-  "section2": [
-    {
-      "id": "0",
-      "subhed": "This has been a problem for a very, very long time",
-      "text": "<p>Many people are likely all-too familiar with the ego-deflating experience of trying on a pair of pants that they expected to fit — but they don’t.</p><p>TKMany factors determine “good” fit</p><ul><li>Waistline is one of several important measurements</li><li>Personal preferences vary on tight-vs loose-fitting clothes</li><li>Boxy styles & stretch fabrics give more wiggle room to squeeze into smaller sizes</li></ul><p>For years, many have blamed sizing inconsistencies on so-called “vanity sizing,” a practice that assumes women are more likely to buy clothes labeled as sizes that are smaller than they actually are.</p><p> Indeed, vanity sizing has undoubtedly shifted how we label each size. But there’s more to the story. </p>"
-    }
-  ],
-  "vanitySizing": [
-    {
-      "id": "0",
-      "text": "<p>Here is what standard sizes looked like in 1995.</p><p>There was 12.5” separating the smallest size 2 (24”) and the largest size 20 (36.5”).</p>"
-    },
-    {
-      "id": "1",
-      "text": "<p>Today, that gap is 15.2” between the smallest size 00 (25.38”) and the largest size (40”). While additional sizes for 00 and 0 were added in the early 2000s, all waistline measurements were larger regardless of size."
-    },
-    {
-      "id": "2",
-      "text": "<p>Notice how in 1995 a 27-inch waist was considered a <span data-underline=\"#C2D932\">size 8</span> — in 2021 it was between <span data-underline=\"#C2D932\">sizes 2 and 4</span> — and today’s size 8 is 2.5 inches bigger.</p>"
-    },
-    {
-      "id": "3",
-      "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a dictum ligula. Nullam elementum bibendum risus, non ultricies turpis luctus ac. Maecenas eleifend sem pharetra arcu dapibus, a dignissim libero lobortis. Praesent ac lorem orci. Fusce purus eros, fringilla id mi nec, suscipit lacinia nulla. Mauris sit amet sem tincidunt, venenatis ante vel, mollis lorem. In nulla nisi, fringilla sit amet odio eu, convallis fermentum erat. Maecenas non nisl sit amet purus tempus dictum eu ac eros. Proin turpis tortor, maximus in bibendum id, sagittis at sapien. Nullam a dui semper, fringilla tellus vitae, aliquet turpis. Vivamus placerat lectus non tempus venenatis. Nam vulputate, magna nec convallis euismod, felis enim pharetra risus, quis euismod nibh neque at est. Nulla lobortis cursus lectus ultrices dictum. Vestibulum ornare, tellus elementum ornare scelerisque, dolor mi maximus tellus, id fringilla turpis dui sit amet urna.</p>"
-    },
-    {
-      "id": "4",
-      "text": "<p>Waistlines in the U.S. have also increased since the mid-90s.</p>\r\n<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2018, it was <span data-underline=\"#C2D932\">38.74 inches</span></p>"
-    },
-    {
-      "id": "5",
-      "text": "<p>In both cases, both 30 years ago and today, the median waistline roughly lined up with the size 18 that was available at that time (if at all).</p>"
-    }
-  ],
-  "ASTMtransition": [
-    {
-      "id": "0",
-      "subhed": "Mass-produced clothes don’t fit every body",
-      "text": "<p>Just because one particular size may fit at a person’s waistline, that doesn’t mean the overall garment will fit.</p><p>An organization called ASTM International has tried to standardize apparel with a universal size chart that is updated every decade or so. Brands and manufacturers are meant to use this sizing system as a template to develop their unique size ranges.</p><p>With each update, however, the ASTM sizes have continued to skew toward the smallest women, leaving out nearly half of the population </p><p>In many ways, this has been intentional.</p><p>ASTM has said itself that it’s not trying to develop a system that accurately reflects modern demographics in America.</p><p>Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p>"
-    }
-  ],
-  "proportions": [
-    {
-      "id": "0",
-      "text": "<p>If we were to take the waist and hip measurements of the <span class=blue-span>median woman</span> in the U.S., here’s a broad look at what those proportions would look like.<p>\r\n\r\n\r\n<p>Notice there’s just over a 4” difference between her waist and hip measurements.</p>"
-    },
-    {
-      "id": "1",
-      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she could try and squeeze into a <span class=green-span>size 18</span>, which is within ¾” of her measurements.</p>\r\n\r\n\r\n<p>Doing so, however, would mean the pants were made for someone with hips that are roughly <span class=bold> 6 inches larger</span> than hers.</p>"
-    },
-    {
-      "id": "2",
-      "text": "<p>If the median American woman were to prioritize finding pants that are fitted around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>6 inches</span>."
-    },
-    {
-      "id": "3",
-      "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>The foundation for most — if not all — mainstream fashion brands is based on an hourglass silhouette.</p>\r\n\r\n\r\n<p>For brands like J.Crew, Anthropologie, Ralph Lauren, Aritizia, and more, that means a <span class=bold>10-inch</span> difference between the waist and hip from the <span class=orange-span>biggest size</span> to the <span class=purple-span>smallest size.</span></p>"
-    },
-    {
-      "id": "4",
-      "text": "<p>Surprisingly, it’s not uncommon for all sizes to have the exact same hourglass proportions.</p>"
+      "eyebrow": "fit",
+      "subtitle": "for a",
+      "title": "Teen",
+      "subtitle2": "Women’s clothing sizes often fit 15-year-olds better than adults",
+      "text": [
+        {
+          "type": "text",
+          "value": "Junior-specific clothing lines were initially developed to reflect the differences between growing adolescents and adult women whose proportions are typically fuller in the hips and bust. The idea was that once a girl matured, she could easily transition out of the Junior’s section (where size labels are odd numbers: 1, 3, 5 etc.) and find her corresponding size made for adults (which are even-numbered: 2, 4, 6 etc.)."
+        },
+        {
+          "type": "text",
+          "value": "For that sizing system to work, one thing needed to be true: Adult women must have roughly the same body proportions as teenage girls, but with slightly more curves."
+        },
+        {
+          "type": "text",
+          "value": "But most modern adults do not look like teenagers — nor probably should they. This means that as women progress through life, the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
+        },
+        {
+          "type": "text",
+          "value": "For a lot of women, that cycle starts as early as age 16."
+        }
+      ]
     }
   ],
   "history": [
     {
       "id": "0",
-      "text": "<p>In 1941, the U.S. government set out to standardize clothing sizes for women. The garment- and pattern-making industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted. They found wide variations in garment sizes made by different manufacturers. Clothing alterations often cost an additional 25% on top of the original sale price. Clothes that didn’t fit or couldn’t be altered were frequently returned to the store, at a high cost to all parties involved. \r\n\r\n\r\n“This means a loss of money and good will to the retailer and annoyance and waste of time to the woman purchaser,” wrote the report’s chief researcher, Ruth O’Brien. \r\n\r\n\r\nSound familiar?\r\n\r\n\r\nOver 85 years later, and many of those same problems and annoyances are just as true, if not worse today. \r\n\r\n\r\nThe landmark study set in motion the foundation of our modern sizing system that is inherently skewed by age and race. The 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states. And while it was likely the first to even attempt to gather a broad dataset of body measurements, it created a system that perpetuated the conventional beauty standards of young, white bodies. This matters because we know that age and genetics factor quite a bit into our shape and body proportions. \r\n\r\n\r\nBecause of these biases, the blueprint for nearly every piece of women’s clothing is based on an hourglass silhouette. </p>"
-    }
-  ],
-  "jdHistory": [
-    {
-      "id": "0",
-      "title": "History",
-      "subtitle": "subtitle",
+      "eyebrow": "this has been a problem for a",
+      "title": "very, very",
+      "subtitle": "long time",
       "textA": [
         {
           "type": "text",
-          "value": "In 1941, the U.S. government set out to standardize clothing sizes for women. The garment- and pattern-making industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted. They found wide variations in garment sizes made by different manufacturers. Clothing alterations often cost an additional 25% on top of the original sale price. Clothes that didn’t fit or couldn’t be altered were frequently returned to the store, at a high cost to all parties involved."
+          "value": "In 1941, the U.S. government set out to standardize clothing sizes based on the body measurements of thousands of women. The garment industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted at the time. They found huge variations in garment sizes across different manufacturers. Alterations were also prohibitively expensive. When garments couldn’t be tailored or simply didn’t fit, a large number of women had to return items to the store, ratcheting up costs for all parties involved."
         },
         {
           "type": "text",
@@ -298,22 +264,117 @@
         {
           "type": "text",
           "value": "Sound familiar?"
+        },
+        {
+          "type": "text",
+          "value": "Over 85 years later, and many of those same problems and annoyances are just as true — if not worse today. Inconsistent sizing, costly alterations, and high rates of item returns are considered norms by modern shopping standards. More often than not, ill-fitting clothes pile up in our closets and in landfills, fueling a vicious cycle that treats garments as disposable."
+        },
+        {
+          "type": "text",
+          "value": "If generation after generation of women have faced the same, persistent struggles, one must ask: Is it even possible to mass-produce clothes that fit all types of bodies?"
         }
       ],
       "textB": [
         {
           "type": "text",
-          "value": "Over 85 years later, and many of those same problems and annoyances are just as true, if not worse today."
+          "value": "One of the chief problems is that our modern sizing system is based on the body proportions of a single group: White women."
         },
         {
           "type": "text",
-          "value": "The landmark study set in motion the foundation of our modern sizing system that is inherently skewed by age and race. The 1941 study that only captured the body measurements of white, mostly young, middle class women from urban areas within just a handful of states. And while it was likely the first to even attempt to gather a broad dataset of body measurements, it created a system that perpetuated the conventional beauty standards of young, white bodies. This matters because we know that age and genetics factor quite a bit into our shape and body proportions."
+          "value": "O’Brien, a trained scientist and head of the Clothing and Textiles Division within the U.S. Bureau of Home Economics, broke new ground with her 1941 study by using a scientific approach to sizing. For likely the first time ever, the garment industry had hard data to use as a foundation for all garments through the body measurements of the roughly 14,700 women who participated in the study."
         },
         {
           "type": "text",
-          "value": "Because of these biases, the blueprint for nearly every piece of women’s clothing is based on an hourglass silhouette."
+          "value": "The study’s sample size, however, was in no way representative of the broader population. Participants were mostly young, middle class white women from urban areas within just a handful of states. No women of color were included."
+        },
+        {
+          "type": "text",
+          "value": "This matters because today we know that age and race factor heavily into how our bodies are shaped. Genetics can play a huge role in determining each person’s proportions, their bone structure, how they build muscle mass, and where they tend to store fat on their bodies. Scholars have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to the countless women told over the years to “dress for their body type.”"
+        },
+        {
+          "type": "text",
+          "value": "*small graphic of nine body types*"
+        },
+        {
+          "type": "text",
+          "value": "Only one body type, however, serves as the underlying blueprint for nearly every piece of women’s clothing: The hourglass silhouette."
         }
       ]
+    }
+  ],
+  "proportionsIntro": [
+    {
+      "eyebrow": "Mass-produced clothes",
+      "title": "do not fit",
+      "subhed": "every body",
+      "text": "<p>The hourglass silhouette is often characterized as an idealized version of western beauty standards. It emphasizes fullness in both the bust and hips, with a waistline that is exactly 10 inches smaller than those two measurements.</p><p>The problem is that women are rarely born with those precise proportions. One study found that only 30% of American women actually have a true hourglass figure.</p><p>Here’s how that impacts the type of clothes that most adults are able to wear. </p>"
+    }
+  ],
+  "proportions": [
+    {
+      "id": "0",
+      "text": "If we were to take the waist and hip measurements of the <span class=blue-span>median woman</span> in the U.S., here’s how those proportions around the torso would look like."
+    },
+    {
+      "id": "1",
+      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she would likely fit a <span class=green-span>size 18.</span></p>\r\n\r\n\r\n<p>Doing so, however, would mean that the pants are too big in the hips by <span class=bold> six inches</span>.</p>"
+    },
+    {
+      "id": "2",
+      "text": "<p>If she instead picked out pants that fit around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>six inches</span>."
+    },
+    {
+      "id": "3",
+      "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>Most — if not all — mainstream fashion brands use the hourglass silhouette as the foundation for every size.</p>\r\n\r\n\r\n<p>From Anthropologie to Ralph Lauren to Aritizia and beyond, brands expect there to be a <span class=bold>10-inch</span> difference between a woman’s waist and hip measurements.</p>\r\n\r\n\r\n<p>Compare that to the median woman in the U.S., who has just over a <span class=bold>four-inch</span> difference between her waist and hip.</p>"
+    },
+    {
+      "id": "4",
+      "text": "<p>Surprisingly, these exaggerated proportions are fixed across entire size ranges.</p><p>If you compared the smallest size to the largest size in a range, both would have the <span class=blue-span>same 10-inch difference</span> between the waistline and their corresponding hip measurements. </p>"
+    },
+    {
+      "id": "5",
+      "text": "<p>Put another way: Clothing sizes expect all women, large or small, to share the exact same body shape.</p><p>No matter whether a woman gains or loses weight, the sizing formula dictates that her waistline will always be precisely 10 inches smaller than her hips. </p><p>But that’s not how women’s bodies work</p>"
+    }
+  ],
+  "vanityIntro": [
+    {
+      "eyebrow": "There’s more to",
+      "title": "vanity sizing",
+      "subhed": "than you may think",
+      "text": "<p>Many things have changed since the WWII-era efforts to create standardized sizing, chief among them: Americans are larger today than they were in the past. </p><p>Over the past three decades alone, the median American woman’s waistline has increased by nearly four inches. And as waistlines have gotten larger, so too have clothing sizes.</p><p>Though the U.S. government has long-abandoned its attempts to make universal clothing sizes for women, an organization called ASTM International has filled this role by releasing technical standards for size ranges every few years </p><p>To see that change, take a look at ASTM’s standard sizes from 1995.</p>"
+    }
+  ],
+  "vanitySizing": [
+    {
+      "id": "0",
+      "text": "<p>Thirty- years ago, there was a 12.5-inch spread of waistline measurements separating the smallest size 2 (24 inches) and the largest size 20 (36.5 inches).</p>"
+    },
+    {
+      "id": "1",
+      "text": "<p>Today, that gap is 15.2-inch between the smallest size 00 (25.38 inches) and the largest size (40 inches)</p><p>While additional sizes for 00 and 0 were added in the early 2000s, all waistline measurements today are larger regardless of size. </p>"
+    },
+    {
+      "id": "2",
+      "text": "<p>Notice how in 1995, a 27-inch waist was considered a <span data-underline=\"#C2D932\">size 8</span>.</p><p>But in 2021 it was between <span data-underline=\"#C2D932\">sizes 2 and 4</span>.</p><p>By comparison, today’s size 8 is <span class=”bold”>2.5 inches bigger</span> in the waist than it was 30 years ago.</p>"
+    },
+    {
+      "id": "3",
+      "text": "<p>This is vanity sizing in action.</p>\r\n\r\n\r\n<p>Vanity sizing is a frequent villain within the consumer mindset for its role in driving sizing inconsistencies across the fashion industry.</p><p> Over the decades, a behavioral trend started to emerge where women seemed more likely to buy clothes if the labels were marked as sizes smaller than they actually were. Researchers have found that many women often ascribe an identity around clothing sizes (“I am a size 4” versus “I wear a size 4”). Any deviation from that specific size may then pose a threat to not just their ego, but who they are as a person. Rather than size up, consumers would prefer to either go home empty-handed or purchase other items that enhance aesthetics, but aren’t tied to sizes, like beauty products.</p> \r\n\r\n\r\n<p>Brands, and the apparel industry at large, responded by slowly inflating sizes. What was once a size 6 is now labeled a size 4, and so on and so on.</p><p>That’s left us with a sizing system that’s all over the place. But then without vanity sizing, average Americans would have even fewer sizing options than they do now. .</p>"
+    },
+    {
+      "id": "4",
+      "text": "<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2023, it was <span data-underline=\"#C2D932\">37.68 inches</span></p>"
+    },
+    {
+      "id": "5",
+      "text": "<p>In both cases — 30 years ago on to today —the median waistline roughly lined up with the size 18 that was available at that time (if at all).</p>"
+    }
+  ],
+  "ASTMtransition": [
+    {
+      "id": "0",
+      "subhed": "Mass-produced clothes don’t fit every body",
+      "text": "<p>While vanity sizing and broader industry trends have translated into sizes that are now larger than before, the changes still continue to skew toward serving the smallest women. Today, just as we saw 30 years ago, nearly half of the population is shut out of buying clothes from some of the most popular or well known brands.</p><p>In many ways, this has been intentional.</p><p>ASTM has said itself that it’s not trying to develop sizing standards that accurately reflect the full scope of modern demographics in America. Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p><p>“It is important to note that the body measurements herein have been derived from designer experience and market observations and cross checked with available databases in the attempt to identify current customer characteristics and changing proportions and not from new nationwide anthropometric research. —ASTM’s 1995 standardized sizing chart</p><p>Fashion and clothing brands aren’t required to align with universal sizing standards.</p><p>If they so choose, a brand can tailor its size charts to include more historically underrepresented populations — and some do, to a degree. Many do not.</p><p>The result — as many women have likely experienced — has meant that sizes are all over the map.</p>"
     }
   ],
   "sizeCharts": [
@@ -322,14 +383,14 @@
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "excludeNearMedian",
-      "text": "Many prominent (particularly high-end) brands do not carry sizes higher than a size 14 or 16. Smaller than both the <span class=orange-span> average woman’s waistline of 37.68”</span> and <span class=green-span>ASTM guides.</span>"
+      "text": "<p>Many prominent (particularly high-end) brands do not carry sizes higher than a size 14 or 16.</p><p> These size ranges are often smaller than both the <span class=orange-span> average woman’s waistline of 37.68 inches</span> and <span class=green-span>ASTM guides.</span></p>"
     },
     {
       "id": "1",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
-      "text": "Some brands carry extended options within their <span class=blue-span>“Regular” or “Straight”</span> size ranges that extend beyond the median."
+      "text": "Some brands carry extended options within their <span class=blue-span>“Regular” or “Straight”</span> size ranges."
     },
     {
       "id": "2",

@@ -3,29 +3,23 @@
     import Ransom from "$components/Ransom.svelte";
     import Leet from "$components/Leet.svelte";
     import copy from "../data/copy.json";
-   
+    import { annotate } from 'rough-notation';
     const titlePageData = copy.titlePage?.[0];
-    
+
 </script>
+
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <!-- <h1 class="title-page-title">
-            {titlePageData?.title || "Default Title"}
-        </h1> -->
-        <Ransom string="sized" />
-        <Ransom string=" out " />
-        {#if titlePageData?.subtitle}
-            <h2 class="title-page-subtitle">
-                <Leet string={titlePageData.subtitle} />
-            </h2>
-        {/if}
+        <Ransom class="title-page-title" string={copy.titlePage[0].eyebrow} /> 
+        <p class="mono"><Leet string={copy.titlePage[0].subtitle} /></p>
+        <Ransom class="title-page-title" string={copy.titlePage[0].title} /> 
+        <p class="mono"><Leet string={copy.titlePage[0].subtitle2} /></p>
+
         <div class="title-page-body">
-            {#if titlePageData?.paragraphs}
-                {#each Object.values(titlePageData.paragraphs) as paragraph}
-                    <p>{@html paragraph}</p>
-                {/each}
-            {/if}
+            {#each copy.titlePage[0].text as graf, i}
+                <p>{graf.value}</p>
+            {/each}
         </div>
         
         <!-- placeholder for possible image -->
@@ -54,7 +48,7 @@
     }
     
     .title-page-title {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
         font-weight: bold;
         color: #2d3748;
         margin-bottom: 1rem;
@@ -80,7 +74,7 @@
     
     .title-page-body p {
         margin-bottom: 1.5rem;
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     
     .title-page-art {
@@ -104,7 +98,7 @@
         }
         
         .title-page-title {
-            font-size: 2.5rem;
+            font-size: 1rem;
         }
         
         .title-page-subtitle {

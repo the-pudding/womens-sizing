@@ -148,7 +148,7 @@
 
 <div class="outer-container" id="proportions">
     <div class="text-block">
-        {#each copy.ASTMtransition as block}
+        {#each copy.proportionsIntro as block}
             <div class="subtitle">
                 {#if block.subhed}
                     <h3>
@@ -432,7 +432,7 @@
         line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     
     .scrolly-outer {
@@ -444,9 +444,10 @@
     .step {
         height: 100vh;
         display: flex;
-        justify-content: center;
+        justify-content: left;
         align-items: center;
         padding-right: 2rem;
+        padding-left: 2rem;
         font-family: var(--sans);
         font-size: var(--20px);
     }

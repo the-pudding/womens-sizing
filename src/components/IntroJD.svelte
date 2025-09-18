@@ -492,11 +492,11 @@
     }
 
     .step {
-        height: 100svh;
+        height: 100vh;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
-        padding-right: 2rem;
+        padding-right: 10%;
         font-family: var(--sans);
         font-size: var(--20px);
     }
