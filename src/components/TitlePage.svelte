@@ -12,13 +12,18 @@
 <div class="title-page-container">
     <div class="title-page-content">
         <div class="wrapper">
-            <Ransom class="title-page-title" string={copy.titlePage[0].eyebrow} /> 
+            <Ransom class="title-page-title" string={"fit"} />  
+        </div>
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"for"} />  
+        </div>
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"a"} />  
+        </div>
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"teen"} />  
         </div>
         <p class="mono"><Leet string={copy.titlePage[0].subtitle} /></p>
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={copy.titlePage[0].title} /> 
-        </div>
-        <p class="mono"><Leet string={copy.titlePage[0].subtitle2} /></p>
 
         <div class="title-page-body">
             {#each copy.titlePage[0].text as graf, i}
@@ -35,9 +40,9 @@
 
 <style>
     .wrapper {
-        max-width: 400px;
-        margin: 0 auto;
+        margin: 3rem auto;
     }
+
     .title-page-container {
         width: 100%;
         min-height: 100vh;
@@ -49,7 +54,7 @@
     }
     
     .title-page-content {
-        max-width: 800px;
+        max-width: 720px;
         padding: 3rem;
         text-align: center;
         animation: slideUp 1s ease-out both;
@@ -73,10 +78,10 @@
     }
     
     .title-page-body {
-        font-size: 1.1rem;
+        font-size: var(--18px);
         line-height: 1.6;
         text-align: left;
-        margin-bottom: 2rem;
+        margin: 2rem 0;
         font-family: var(--sans);
     }
     

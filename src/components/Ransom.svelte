@@ -88,6 +88,7 @@
 </script>
 
 <p class="ransom" class:animate-in={inViewTrigger}
+    style="max-width: {string.length * 100}px;"
     use:inView
     onenter={inViewFly}
     onexit={exitViewFly}>
@@ -112,6 +113,7 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        margin: 0 auto;
     }
 
     span.ransom-letter {

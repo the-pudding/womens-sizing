@@ -121,9 +121,9 @@
             <div class="subtitle">
                 {#if block.subhed}
                     <h3>
-                        <Leet string="What good is a" />
+                        <Leet string="Brands don't even use the" />
                         <Ransom string="universal" />
-                        <Leet string="size if brands don't use it?" />
+                        <Ransom string="size" />
                     </h3>
                 {/if}
                 <p>{@html block.text}</p>

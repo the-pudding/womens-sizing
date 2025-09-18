@@ -152,9 +152,9 @@
             <div class="subtitle">
                 {#if block.subhed}
                     <h3>
-                        <Leet string="Mass produced clothes" />
-                        <Ransom string="do not fit" />
-                        <Leet string="every body" />
+                        <Leet string="Mass produced clothes do not fit" />
+                        <Ransom string="every" />
+                        <Ransom string="body" />
                     </h3>
                 {/if}
                 <p>{@html block.text}</p>

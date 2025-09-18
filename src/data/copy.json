@@ -202,7 +202,7 @@
       "id": "12",
       "yearRange": "2021-2023",
       "race": "all",
-      "age": "20+",
+      "age": "20 and over",
       "year": "2021",
       "sizeRange": "straight",
       "avatarStyle": "greyscale",
@@ -212,13 +212,13 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>The bulk of sizes are concentrated on a small sliver of the female population.</p>"
+      "text": "<p>The bulk of sizes are concentrated on a small sliver of the female population.</p>\r\n<p>Only the <span class=orange-outline> smallest 10 percent</span> of adult women in the U.S. are a <span class=bold>size Medium </span> or below.</p>"
     },
     {
       "id": "13",
       "yearRange": "2021-2023",
       "race": "all",
-      "age": "20+",
+      "age": "20 and over",
       "year": "2021",
       "sizeRange": "straight",
       "avatarStyle": "greyscale",
@@ -229,16 +229,30 @@
       "sizeType": "numeric",
       "bandColor": "green",
       "text": "<p>On top of it all, only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span></p>\r\n<p>That leaves nearly <span class=bold>three-quarters of all women</span> without sizing options at all</p>"
+    },
+    {
+      "id": "14",
+      "yearRange": "2021-2023",
+      "race": "all",
+      "age": "20 and over",
+      "year": "2021",
+      "sizeRange": "straight",
+      "avatarStyle": "greyscale",
+      "avatarDisplay": "all",
+      "percentileStyle": "color",
+      "highlightedPercentile": "50",
+      "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
+      "sizeType": "numeric",
+      "bandColor": "green"
     }
   ],
   "introText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.",
   "titlePage": [
     {
       "id": "0",
-      "eyebrow": "fit",
-      "subtitle": "for a",
-      "title": "Teen",
-      "subtitle2": "Women’s clothing sizes often fit 15-year-olds better than adults",
+      "title1": "fit for",
+      "title2": "a teen",
+      "subtitle": "Women’s clothing sizes often fit 15-year-olds better than adults",
       "text": [
         {
           "type": "text",

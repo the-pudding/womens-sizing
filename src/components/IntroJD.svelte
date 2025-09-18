@@ -46,21 +46,26 @@
 
   /*** FILTERS ***/
   let ASTMFilters = $derived(
-    currentId >= 4 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+    currentId >= 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? { year: "2021", sizeRange: "straight" }
       : { year: "2015", sizeRange: "juniors" }
   );
   let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(currentId >= 2 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let omittedSizeFilters = $derived(currentId >= 3 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
   let valueKey = $derived(
-    currentId <= 2 || (currentId == "to-enter" && introScroll)
+    currentId <= 3 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 2 && currentId < 8) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 3 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
-      : currentId < 9
+      : currentId < 10
       ? "value20_29"
       : "value20over"
   );
+  let sizeLabel = $derived(
+    valueKey == "value10_11" ? "Ages 10-11" :
+    valueKey == "value14_15" ? "Ages 14-15" :
+    valueKey == "value20_29" ? "Ages 20-29" : "Ages 20+"
+  )
 
   /*** DATA PROCESSING ***/
   let filteredASTM = $derived(filterASTMData(ASTMsizes, ASTMFilters));
@@ -73,7 +78,7 @@
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
-    let sizeType = currentId < 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
+    let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
     const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
 
     // console.log(sizeType)
@@ -99,8 +104,8 @@
 
       return {
         ...d,
-        alphaSize: currentId < 8 ? d[1][0].alphaSize : d[0],
-        size: currentId < 8 ? d[0] : d[1][0].size,
+        alphaSize: currentId < 9 ? d[1][0].alphaSize : d[0],
+        size: currentId < 9 ? d[0] : d[1][0].size,
         min,
         max
       }
@@ -214,16 +219,19 @@
         if (currentId == 2) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId == 7 || (currentId == "to-enter" && !introScroll)) {
+        } else if (currentId == 8 || (currentId == "to-enter" && !introScroll)) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId === 8) {
+        } else if (currentId === 9) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
-        } else if (currentId === 9) {
+        } else if (currentId === 10 || currentId === 11) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
-        } else if (currentId >= 10) {
+        } else if (currentId === 12) {
+            highlightStart = xScale(currentSizeRanges[0].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[5].max) - xScale(currentSizeRanges[0].min));
+        }  else if (currentId >= 13) {
             highlightStart = xScale(currentSizeRanges[9].min);
             highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[9].min));
         } else {
@@ -254,29 +262,18 @@
               <!-- <p class="title-text">{@html copy.introText}</p> -->
           </div>
       {/if}
+      {#if (currentId >= 3 && currentId < 7) || (currentId >= 8)}
+        <p transition:fade={{duration: 500}} class="size-key">{sizeLabel}</p>
+      {/if}
       <div id="beeswarm" 
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 6 || currentId == 11 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
             {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
-            {@const highlightStart = currentId == 8 
-              ? xScale(currentSizeRanges[8].min) 
-              : currentId == 9
-              ? xScale(currentSizeRanges[10].min) 
-              : currentId == 10
-              ? xScale(currentSizeRanges[9].min) 
-              : xScale(minWaist)}
-            {@const highlightWidth = currentId == 8 
-              ? Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min))
-              : currentId == 9
-              ? Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min))
-              : currentId == 10
-              ? Math.max(0, xScale(63.9) - xScale(currentSizeRanges[9].min))
-              : Math.max(0, xScale(maxWaist) - xScale(minWaist))}
             <g class="size-backgrounds">
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}
@@ -290,7 +287,7 @@
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 2 || currentId == 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
+            <g class="highlight-band" class:visible={currentId == 2 || currentId == 6 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
@@ -364,6 +361,15 @@
         justify-content: center;
         align-items: center;
         position: relative;
+    }
+
+    .size-key {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-family: var(--mono);
+      font-weight: 700;
+      margin: 0;
     }
 
     .intro-title {

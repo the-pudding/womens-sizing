@@ -7,11 +7,10 @@
 
 <section class="history-container">
     <div class="history-content">
-        <div>
+        <div class="hed-wrapper">
             <p class="mono history-subtitle"><Leet string="Sizing issues have"/></p>
             <Ransom class="history-title" string="always" />
-            <p class="mono history-subtitle"><Leet string="been a problem"/></p>
-            
+            <p class="mono history-subtitle"><Leet string="been a problem"/></p> 
         </div>
         <div class="img-wrapper">
             <img src="/assets/history-waist-measurement.jpg" />
@@ -46,8 +45,12 @@
         /* margin-top: 40vh; */
     }
     
+    .hed-wrapper {
+        margin: 0 0 4rem 0;
+    }
+    
     .history-content {
-        max-width: 800px;
+        max-width: 720px;
         padding: 3rem;
         text-align: center;
         animation: slideUp 1s ease-out both;
@@ -83,6 +86,7 @@
         font-size: var(--18px);
     }
     .img-wrapper {
+        width: 100%;
         margin: 2rem 0;
         text-align: center;
     }
@@ -102,11 +106,11 @@
     }
     
     .image-caption {
-        font-size: 0.8rem;
-        color: #666;
-        font-style: italic;
+        font-size: var(--12px);
+        font-family: var(--mono);
+        font-weight: 700;
         margin-top: 0.5rem;
-        line-height: 1.4;
         text-align: left;
+        line-height: 1.2;
     }
 </style>
