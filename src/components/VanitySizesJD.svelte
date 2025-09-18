@@ -140,9 +140,9 @@
         <div class="subtitle">
             {#if block.subhed}
                 <h3>
-                    <Leet string="There's more to" />
-                    <Ransom string="vanity sizing" />
-                    <Leet string="than you may think" />
+                    <Ransom string="vanity" />
+                    <Ransom string="sizing" />
+                    <Leet string="There's more to it than you may think" />
                 </h3>
             {/if}
             <p>{@html block.text}</p>

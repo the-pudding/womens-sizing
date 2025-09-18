@@ -17,9 +17,9 @@
 
 <svelte:boundary onerror={(e) => console.error(e)}>
 	 <div class="grid-bg"></div>
-	<Intro startStage={0} endStage={6} introScroll={true}/>
+	<Intro startStage={0} endStage={7} introScroll={true}/>
 	<TitlePage />
-	<Intro startStage={7}/>
+	<Intro startStage={8}/>
 	<History />
 	<Proportions />
 	<VanitySizes />
@@ -34,7 +34,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url("assets/grid.png");
+		background-image: url("/assets/grid.png");
 		background-size: 150px 150px;
 		background-repeat: repeat;
 		z-index: -1;
