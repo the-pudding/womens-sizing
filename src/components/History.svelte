@@ -19,7 +19,7 @@
         </div>
         <div class="history-body">
             {#each copy.history[0].textA as graf, i}
-            <p>{graf.value}</p>
+            <p>{@html graf.value}</p>
         {/each}
         <div class="img-wrapper-float">
             <!-- <img src="/assets/history-shoulder-markings.jpg" /> -->
@@ -27,7 +27,7 @@
             <p class="image-caption" style="font-size: 0.8rem">The study gathered as many as 58 individual body measurements from each participant. Source: U.S. Library of Congress</p>
         </div>
         {#each copy.history[0].textB as graf, i}
-            <p>{graf.value}</p>
+            <p>{@html graf.value}</p>
         {/each}
         </div>
     </div>

@@ -11,9 +11,13 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <Ransom class="title-page-title" string={copy.titlePage[0].eyebrow} /> 
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={copy.titlePage[0].eyebrow} /> 
+        </div>
         <p class="mono"><Leet string={copy.titlePage[0].subtitle} /></p>
-        <Ransom class="title-page-title" string={copy.titlePage[0].title} /> 
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={copy.titlePage[0].title} /> 
+        </div>
         <p class="mono"><Leet string={copy.titlePage[0].subtitle2} /></p>
 
         <div class="title-page-body">
@@ -30,6 +34,10 @@
 </div>
 
 <style>
+    .wrapper {
+        max-width: 400px;
+        margin: 0 auto;
+    }
     .title-page-container {
         width: 100%;
         min-height: 100vh;
