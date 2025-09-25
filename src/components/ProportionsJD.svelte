@@ -357,6 +357,10 @@
         stroke: transparent;
         stroke-width: 12;
         cursor: pointer;
+        pointer-events: none;
+    }
+
+    .brand-group.visible .hidden-path {
         pointer-events: auto;
     }
 
@@ -449,7 +453,7 @@
         padding-right: 2rem;
         padding-left: 2rem;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     
     .step .text {

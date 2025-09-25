@@ -312,7 +312,7 @@
         line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
 
     .sticky-container {
@@ -480,7 +480,7 @@
         align-items: center;
         padding-right: 2rem;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     .step .text {
         max-width: 500px;

@@ -460,6 +460,10 @@
         z-index: 1000;
     }
 
+    .body-text {
+        font-size: var(--18px);
+    }
+
     .size {
         position: absolute;
         height: 120px;
@@ -550,7 +554,7 @@
         line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
 
     :global(.tick text) {

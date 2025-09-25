@@ -508,7 +508,7 @@
         align-items: center;
         padding-right: 10%;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
 
     .step:first-of-type {
