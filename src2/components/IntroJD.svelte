@@ -4,7 +4,7 @@
   import { tweened } from 'svelte/motion';
   import Scrolly from './helpers/Scrolly.svelte';
   import copy from '../data/copy.json';
-  import waistlinesData from '../data/waistlines.json';
+  // import waistlinesData from '../data/waistlines.json';
   import ASTMsizes from "../data/ASTMsizes.json";
   import pointsData from '$data/pointsData.csv';
   import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
@@ -33,7 +33,7 @@
   let margin = { top: 20, right: 20, bottom: 40, left: 20 };
   let width = $derived(containerWidth - margin.left - margin.right);
   let height = $derived(containerHeight - margin.top - margin.bottom);
-  let avatarWidth = $derived(width / 14);
+  let avatarWidth = $derived(width / 16);
   let avatarHeight = $derived(avatarWidth * 1.4);
 
   /*** SCALES ***/
@@ -50,7 +50,7 @@
       ? { year: "2021", sizeRange: "straight" }
       : { year: "2015", sizeRange: "juniors" }
   );
-  let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
+  // let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
   let omittedSizeFilters = $derived(currentId >= 3 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
   let valueKey = $derived(
     currentId <= 3 || (currentId == "to-enter" && introScroll)
@@ -172,9 +172,10 @@
       ...d,
       // Add half the avatar's height to the y-position to center it vertically
       x: d.x,
-      y: d.y
+      y: d.y,
     }));
   });
+
 
   function setDelay(i, scrollDir) {
     let delay;

@@ -12,6 +12,7 @@
  * Avatar size types
  */
 export const AVATAR_SIZE = {
+  JUNIOR: 'junior',
   SMALL: 'small',   // For sizes 00 and below, 0, 2, 4, 6, 8
   MID: 'mid',       // For sizes 10, 12, 14, 16, 18
   LARGE: 'large'    // For sizes 20 and above
@@ -21,7 +22,21 @@ export const AVATAR_SIZE = {
  * Generate a random avatar with layers
  * @param {string} sizeType - Size type (SMALL, MID, or LARGE)
  */
-export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point) {
+export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point, valueKey) {
+
+  if (point.id === 'p50' && valueKey === 'value10_11') {
+    return {
+      layers: [
+        { path: 'assets/avatars/tween-avatar.png' }
+      ]
+    };
+  } else if (point.id === 'p50' && valueKey === 'value14_15') {
+    return {
+      layers: [
+        { path: 'assets/avatars/teen-avatar.png' }
+      ]
+    };
+  }
   // Random variants (1-4)
   const baseVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
   const hairVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
@@ -41,6 +56,9 @@ export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point) {
     default:
       folderPath = 'assets/avatars/2';
       break;
+    case AVATAR_SIZE.JUNIOR:
+        folderPath = 'assets/avatars/junior';
+        break;
   }
   
   // Create layers in order from bottom to top

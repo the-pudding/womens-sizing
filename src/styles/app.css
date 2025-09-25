@@ -6,7 +6,9 @@
 /* colors defined in variables.css */
 :root {
 	/* font */
-	--sans: "Atlas Grotesk", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+	--sans:
+		"Atlas Grotesk", -apple-system, BlinkMacSystemFont, Helvetica, Arial,
+		sans-serif;
 	--serif: "Tiempos Text", Iowan Old Style, Times New Roman, Times, serif;
 	--mono: Menlo, Consolas, Monaco, monospace;
 	--marker: "duper", sans-serif;
@@ -44,7 +46,7 @@
 /* dark theme */
 /* @media screen and (prefers-color-scheme:dark) {
 	:root {
-		
+
 	}
 } */
 
@@ -82,4 +84,63 @@ svg {
 	display: block;
 	width: 100%;
 	height: auto;
+}
+
+.grid-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("/assets/grid.png");
+	background-size: 150px 150px;
+	background-repeat: repeat;
+	z-index: -1;
+	opacity: 0.2;
+}
+
+.orange-span {
+	background: rgba(217, 111, 50, 0.75);
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-family: var(--mono);
+	box-decoration-break: clone;
+}
+
+.blue-span {
+	background: rgba(154, 187, 217, 0.75);
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-family: var(--mono);
+	box-decoration-break: clone;
+}
+
+.green-span {
+	background: rgba(194, 217, 50, 0.75);
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-family: var(--mono);
+	box-decoration-break: clone;
+}
+
+.purple-span {
+	background: rgba(181, 123, 220, 0.75);
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-family: var(--mono);
+	box-decoration-break: clone;
+}
+
+.orange-outline {
+	background: none;
+	border: 3px solid rgba(217, 111, 50, 1);
+	padding: 0.25rem 0.5rem;
+	font-weight: 700;
+	font-family: var(--mono);
+	box-decoration-break: clone;
+}
+
+span.bold {
+	font-weight: 700;
+	font-family: var(--mono);
 }
