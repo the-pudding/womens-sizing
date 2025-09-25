@@ -73,7 +73,7 @@
       "bandColor": "green",
       "stepPosition": "right",
       "bandHeight": "full",
-      "text": "<p>By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. Many have started to outgrow the Junior’s size section.</p>"
+      "text": "By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. \r\n\r\n\r\nMany have started to outgrow the Junior’s size section."
     },
     {
       "id": "5",
@@ -90,7 +90,7 @@
       "sizeType": "alpha",
       "bandColor": "green",
       "stepPosition": "right",
-      "text": "<p>If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span></p> \r\n\r\n\r\n<p>It’s unlikely for sizes to fit every teen perfectly (more on that later), however this marks an important turning point.</p>"
+      "text": "If they tried wearing clothes made for adult women, here are the sizes that would generally fit most <span class=bold>14- and 15-year-olds.</span>\r\n\r\n\r\nIt’s unlikely for sizes to fit every teen perfectly (more on that later), however this marks an important turning point."
     },
     {
       "id": "6",
@@ -108,7 +108,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>This will be the first time that most girls their age can find a size in women’s clothing that is <span class=orange-outline>within an inch of their waistline</span> measurement.</p>"
+      "text": "This will be the first time that most girls their age can find a size in women’s clothing that is <span class=orange-outline>within an inch of their waistline</span> measurement."
     },
     {
       "id": "7",
@@ -126,7 +126,7 @@
       "bandColor": "green",
       "stepPosition": "center-vertical",
       "bandHeight": "full",
-      "text": "<p>This will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span></p>"
+      "text": "This will also likely be <span class=bold> the last time this ever happens in their lifetimes.</span>"
     },
     {
       "id": "8",
@@ -160,7 +160,7 @@
       "sizeBands": "12, 14, 16",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>Instead, <span class=bold> the median 20-something</span> fits a <span class=bold>Large</span>. In women’s numeric sizing, that translates to about a <span class=orange-outline>size 14</span>.</p>"
+      "text": "Instead, <span class=bold> the median 20-something</span> fits a <span class=bold>Large</span>. In women’s numeric sizing, that translates to about a <span class=orange-outline>size 14</span>."
     },
     {
       "id": "10",
@@ -178,7 +178,7 @@
       "bandColor": "green",
       "highlightBand": "18",
       "highlightBandColor": "orange",
-      "text": "<p>Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span></p>\r\n\r\n\r\n<p>The median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement.</p>"
+      "text": "Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span>\r\n\r\n\r\nThe median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement."
     },
     {
       "id": "11",
@@ -212,7 +212,7 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>The bulk of sizes are concentrated on a small sliver of the female population.</p>\r\n<p>Only the <span class=orange-outline> smallest 10 percent</span> of adult women in the U.S. are a <span class=bold>size Medium </span> or below.</p>"
+      "text": "The bulk of sizes are concentrated on a sliver of the female population.\r\n\r\n\r\nOnly the <span class=orange-outline> smallest 10 percent</span> of adult women in the U.S. are a <span class=bold> size 8</span> or below."
     },
     {
       "id": "13",
@@ -228,7 +228,7 @@
       "sizeBands": "00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20",
       "sizeType": "numeric",
       "bandColor": "green",
-      "text": "<p>On top of it all, only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span></p>\r\n<p>That leaves nearly <span class=bold>three-quarters of all women</span> without sizing options at all</p>"
+      "text": "On top of it all, only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span>\r\n\r\n\r\nThat leaves over <span class=bold>half of all women</span> without sizing options at all."
     },
     {
       "id": "14",
@@ -260,7 +260,7 @@
         },
         {
           "type": "text",
-          "value": "For that sizing system to work, one thing needed to be true: Adult women must have roughly the same body proportions as teenage girls, but with slightly more curves."
+          "value": "For that sizing system to work, one thing needed to be true: <span class=blue-span>Adult women must have roughly the same body proportions as teenage girls, but with slightly more curves</span>."
         },
         {
           "type": "text",

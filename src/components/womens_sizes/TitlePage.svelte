@@ -14,12 +14,14 @@
         <div class="wrapper">
             <Ransom class="title-page-title" string={"fit"} />  
         </div>
+        <p class="mono"><Leet string="for a" /></p>
+<!--                 
         <div class="wrapper">
             <Ransom class="title-page-title" string={"for"} />  
         </div>
         <div class="wrapper">
             <Ransom class="title-page-title" string={"a"} />  
-        </div>
+        </div> -->
         <div class="wrapper">
             <Ransom class="title-page-title" string={"teen"} />  
         </div>

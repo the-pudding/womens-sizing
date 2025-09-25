@@ -256,7 +256,7 @@
             highlightStart = xScale(currentSizeRanges[0].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[5].max) - xScale(currentSizeRanges[0].min));
         }  else if (currentId >= 13) {
-            highlightStart = xScale(currentSizeRanges[8].min);
+            highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[9].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
@@ -564,7 +564,8 @@
 
     }
     .step.step1, .step2, .step7, .step11 {
-      padding-right: 30%;
+      /* padding-right: 30%; */
+      justify-content: center;
     }
 
      @media (max-width: 900px) {
