@@ -5,7 +5,7 @@
   import Scrolly from '../helpers/Scrolly.svelte';
   import copy from '$data/copy.json';
   import ASTMsizes from "$data/ASTMsizes.json";
-  import pointsData from '$data/pointsData_AS.csv';
+  import pointsData from '$data/pointsData_JD.csv';
   import { generateRandomAvatar, determineAvatarSize } from '../utils/avatar-generator.js';
 	import { fade } from 'svelte/transition';
   import Ransom from "$components/womens_sizes/Ransom.svelte";
@@ -61,16 +61,19 @@
   let valueKey = $derived(
     currentId <= 3 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 3 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 3 && currentId < 10) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
-      : currentId < 10
+      : currentId < 11
       ? "value20_29"
+      : currentId < 12
+      ? "value30_39"
       : "value20over"
   );
   let sizeLabel = $derived(
     valueKey == "value10_11" ? "Age: 10-11" :
     valueKey == "value14_15" ? "Age: 14-15" :
-    valueKey == "value20_29" ? "Age: 20-29" : "Age: 20+"
+    valueKey == "value20_29" ? "Age: 20-29" : 
+    valueKey == "value30_39" ? "Age: 30-39" : "Age: 20+"
   )
     function getAvatarSizeForValueKey(valueKey) {
     switch(valueKey) {
@@ -98,7 +101,7 @@
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
-    let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
+    let sizeType = currentId < 10 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
     const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
 
 
@@ -123,8 +126,8 @@
 
       return {
         ...d,
-        alphaSize: currentId < 9 ? d[1][0].alphaSize : d[0],
-        size: currentId < 9 ? d[0] : d[1][0].size,
+        alphaSize: currentId < 10 ? d[1][0].alphaSize : d[0],
+        size: currentId < 10 ? d[0] : d[1][0].size,
         min,
         max
       }
@@ -200,16 +203,18 @@
             return 1;  // 'a' (which is 'p') comes after 'b'
         } else if (!aIsP && bIsP) {
             return -1; // 'a' (which is not 'p') comes before 'b'
-        } else {
-            // Either both are 'p' or neither are, so sort by y
+        } else if (aIsP && bIsP) {
+            // Both are 'p', sort them by y to control their relative stacking
             return a.y - b.y;
+        } else {
+            // Neither are 'p', so preserve their existing order
+            return 0;
         }
       }).map((d, i) => ({
           ...d,
           x: d.x,
           y: d.y,
-          // --- ADD THIS LINE ---
-          // Creates a random delay between 0s and 0.4s
+          // Creates a random delay between 0s and 1s
           randomDelay: Math.random() * 1
   }));
 });
@@ -258,21 +263,27 @@
         if (currentId == 2) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId == "to-enter" && !introScroll) {
+        } else if (currentId == 9 || (currentId == "to-enter" && !introScroll)) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId === 9) {
+        } else if (currentId === 10) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
-        } else if (currentId === 10 || currentId === 11) {
+        } else if (currentId === 10) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
-        } else if (currentId === 12) {
-            highlightStart = xScale(currentSizeRanges[0].min);
-            highlightWidth = Math.max(0, xScale(currentSizeRanges[5].max) - xScale(currentSizeRanges[0].min));
-        }  else if (currentId >= 13) {
+        } else if (currentId === 11) {
+            highlightStart = xScale(currentSizeRanges[9].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[9].min));
+          } else if (currentId === 12) {
             highlightStart = xScale(currentSizeRanges[10].min);
-            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[9].min));
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
+        } else if (currentId === 13) {
+            highlightStart = xScale(currentSizeRanges[0].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
+        }  else if (currentId >= 14) {
+            highlightStart = xScale(currentSizeRanges[10].min);
+            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[10].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
             const maxWaist = d3.max(currentSizeRanges, d => d.max);
@@ -311,7 +322,7 @@
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 8 || currentId == 11 ||currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 8 || currentId == 15 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
@@ -380,7 +391,7 @@
   <div class="scrolly-outer">
     <Scrolly bind:value>
       {#each filteredStages as stage}
-        <div class="step step{stage.id} ">
+        <div class="step step{stage.id}">
           {#if stage.text}
             <div class="text">
               <Text copy={stage.text} />
@@ -430,7 +441,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 90%;
+        width: 60%;
         padding: 0 10% 0 0;
         height: 100svh;
         display: flex;
@@ -568,7 +579,7 @@
 
     .step {
         height: auto;
-        padding: 40vh 10% 70vh;
+        padding: 40vh 5% 70vh;
         display: flex;
         align-items: center;
         font-family: var(--sans);

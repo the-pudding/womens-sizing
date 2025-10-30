@@ -18,9 +18,9 @@
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<div class="grid-bg"></div>
 	<Intro startStage={0} endStage={8} introScroll={true}/>
-	<!-- <TitlePage />
-	<Intro startStage={8}/>
-	<History />
+	<TitlePage />
+	<Intro startStage={9}/>
+	<!--  <History />
 	<Proportions />
 	<VanitySizes />
 	<SizeChart /> -->

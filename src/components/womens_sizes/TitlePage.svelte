@@ -1,31 +1,19 @@
-<!-- TitlePage.svelte -->
 <script>
     import Ransom from "$components/womens_sizes/Ransom.svelte";
-    import Leet from "$components/womens_sizes/Leet.svelte";
     import copy from "$data/copy.json";
-    import { annotate } from 'rough-notation';
-    const titlePageData = copy.titlePage?.[0];
 
+    console.log(copy.titlePage)
 </script>
 
 
 <div class="title-page-container">
     <div class="title-page-content">
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"fit"} />  
-        </div>
-        <p class="mono"><Leet string="for a" /></p>
-<!--                 
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"for"} />  
+            <Ransom class="title-page-title" string={"fit 4"} />  
         </div>
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"a"} />  
-        </div> -->
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"teen"} />  
+            <Ransom class="title-page-title" string={"a teen"} />  
         </div>
-        <!-- <p class="mono"><Leet string={copy.titlePage[0].subtitle} /></p> -->
 
         <div class="title-page-body">
             {#each copy.titlePage[0].text as graf, i}

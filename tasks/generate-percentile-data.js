@@ -19,7 +19,7 @@ const waistlines = JSON.parse(fileContentWaistlines);
 console.log(waistlines.slice(0,20))
 
 let ASTMFilters = { year: "2021", sizeRange: "straight" };
-let waistlineFilters = { yearRange: "2021-2023", race: "all", age: "20 and over" };
+let waistlineFilters = { yearRange: "2021-2023", race: "all", age: "30–39" };
 
 let filteredASTM = filterASTMData(ASTMsizes, ASTMFilters);
 function filterASTMData(ASTMsizes, ASTMFilters) {
@@ -183,7 +183,7 @@ function generateDataPoints(data) {
     };
   }
 
-// console.log({points})
+console.log({points})
 
 const csvString = d3.csvFormat(points);
 const csvFilePath = path.join(__dirname, "../src/data/generated-points.csv");

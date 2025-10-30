@@ -99,17 +99,6 @@
       "hideBeeswarm": "1",
       "zoom": "1",
       "text": "This will also likely be the  <span class=bold>last time this ever happens in their lives.</span>"
-    }
-  ],
-  "intro2": [
-    {
-      "id": "8",
-      "yearRange": "2021-2023",
-      "age": "20_29",
-      "year": "2021",
-      "sizeRange": "Women's",
-      "sizeType": "size",
-      "text": "By their 20s, a <span class=orange-outline>size Medium</span> will no longer reflect the median or average woman’s waistline."
     },
     {
       "id": "9",
@@ -118,16 +107,16 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "Instead, <span class=bold> the median 20-something</span> fits a <span class=bold>Large</span>. In women’s numeric sizing, that translates to about a <span class=orange-outline>size 14</span>."
+      "text": "By their 20s, a <span class=orange-outline>size Medium</span> will no longer reflect the median or average woman’s waistline."
     },
     {
       "id": "10",
       "yearRange": "2021-2023",
-      "age": "20over",
+      "age": "20_29",
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "Sizing options are even worse when you look at all <span class=bold>adult women over the age of 20.</span>\r\n\r\n\r\nThe median woman in the U.S. fits around a <span class=orange-outline>size 18</span> based on their waistline measurement."
+      "text": "Instead, <span class=bold> the median 20-something</span> fits a <span class=bold>Large</span>, which translates to a size 14 in women’s clothing."
     },
     {
       "id": "11",
@@ -136,7 +125,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "It’s not guaranteed that a size 18 garment would actually fit her though. \r\n\r\n\r\nOther factors like the cut of the garment or the amount of stretch in the fabrics will heavily influence the fit. \r\n\r\n\r\nBut what we’re seeing is that the <span class=blue-span> baseline measurements for size charts are largely out of sync </span> with the true proportions of American women today."
+      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a size 16 or Extra Large."
     },
     {
       "id": "12",
@@ -145,7 +134,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "The bulk of sizes are concentrated on a sliver of the female population.\r\n\r\n\r\nOnly the <span class=orange-outline> smallest 10 percent</span> of adult women in the U.S. are a <span class=bold> size 8</span> or below."
+      "text": "This trend will continue again, and again. \r\n\r\n\r\nAltogether, the median adult woman over the age of 20 fits a size 18."
     },
     {
       "id": "13",
@@ -154,7 +143,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "On top of it all, only a small portion of brands carry sizes <span class=orange-outline>larger than a size 16.</span>\r\n\r\n\r\nThat leaves over <span class=bold>half of all women</span> without sizing options at all."
+      "text": "The problem is that most “Standard” or “Regular” size ranges only go up to a size 16."
     },
     {
       "id": "14",
@@ -162,32 +151,35 @@
       "age": "20over",
       "year": "2021",
       "sizeRange": "Women's",
+      "sizeType": "size",
+      "text": "That leaves millions of people — over half of all adult women — without sizing options at all."
+    },
+    {
+      "id": "15",
+      "yearRange": "2021-2023",
+      "age": "20over",
+      "year": "2021",
+      "sizeRange": "Women's",
       "sizeType": "size"
     }
   ],
-  "introText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself.",
   "titlePage": [
     {
-      "id": "0",
-      "title1": "fit for",
-      "title2": "a teen",
-      "subtitle": "Women’s clothing sizes often fit 15-year-olds better than adults",
+      "visual": "title + text block + static graphic",
+      "animation": "title animation",
+      "title": "Fit for a Teen",
       "text": [
         {
           "type": "text",
-          "value": "Junior-specific clothing lines were meant to reflect the differences between growing adolescents and adult women whose proportions are typically fuller in the hips and bust. The idea was that once a girl matured, she could easily transition out of the Junior’s section (where size labels are odd numbers: 1, 3, 5 etc.) and find her corresponding size made for adults (which are even-numbered: 2, 4, 6 etc.)."
+          "value": "Children’s clothing is often tied to a kid’s age or stage of development. The idea is that as a young person grows older, her clothes will evolve with her. Youth styles tend to be boxy and oversized to allow room for young kids to move and grow, but by early adolescence, a shift starts to take shape. Girl’s clothing starts to become more fitted. Junior’s styles have higher waistlines and less-pronounced curves through the bust and hips compared to adult clothing lines. In short: tweens’ clothes are made for tween bodies."
         },
         {
           "type": "text",
-          "value": "For that sizing system to work, one thing needed to be true: <span class=blue-span>Adult women must have roughly the same body proportions as teenage girls, but with slightly more curves</span>."
+          "value": "By the time that most teen girls can wear women’s clothes — around age 15 — their options are seemingly endless. The women’s apparel market, worth an estimated $963 billion worldwide, places a premium on grooming young girls into becoming dedicated, life-long customers. But the evolution in clothing sizes that followed girls throughout childhood abruptly stops there."
         },
         {
           "type": "text",
-          "value": "But most modern adults do not look like teenagers — nor probably should they. This means that as women progress through life — as they launch careers, start families, or grow within their communities — the range of accessible clothing options will become smaller and smaller. Many, if not most, will have no available sizing options at all."
-        },
-        {
-          "type": "text",
-          "value": "For a lot of women, that cycle starts as early as age 16."
+          "value": "As a woman ages, she will sift through sizes that fit a greater proportion of teens than the adults they were made for in the first place."
         }
       ]
     }
