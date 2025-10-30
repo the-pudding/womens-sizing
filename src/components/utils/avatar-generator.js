@@ -24,52 +24,71 @@ export const AVATAR_SIZE = {
  */
 export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point, valueKey) {
 
-  if (point.id === 'p50' && valueKey === 'value10_11') {
-    return {
-      layers: [
-        { path: 'assets/avatars/tween-avatar.png' }
-      ]
-    };
-  } else if (point.id === 'p50' && valueKey === 'value14_15') {
-    return {
-      layers: [
-        { path: 'assets/avatars/teen-avatar.png' }
-      ]
-    };
-  }
-  // Random variants (1-4)
-  const baseVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
-  const hairVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 1;
-  const bottomVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
-  const topVariant = point.type !== 'percentile' ? getRandomInt(1, 4) : 3;
+  // --- REMOVED CACHE RESET ---
+
+  // 1. Handle 'p50' - this is the most specific rule
+  if (point.id === 'p50') {
+    if (valueKey === 'value10_11') {
+      return {
+        layers: [
+          { path: 'assets/avatars/tween-avatar.png' }
+        ]
+      };
+    } else if (valueKey === 'value14_15') {
+      return {
+        layers: [
+          { path: 'assets/avatars/teen-avatar.png' }
+        ]
+      };
+    } else {
+      // Default for p50 for any other valueKey
+      return {
+        layers: [
+          { path: 'assets/avatars/teen-avatar.png' }
+        ]
+      };
+    }
+  } 
   
-  // Use different folder path based on avatar size
-  let folderPath;
-  switch(sizeType) {
-    case AVATAR_SIZE.LARGE:
-      folderPath = 'assets/avatars/24';
-      break;
-    case AVATAR_SIZE.MID:
-      folderPath = 'assets/avatars/12';
-      break;
-    case AVATAR_SIZE.SMALL:
-    default:
-      folderPath = 'assets/avatars/2';
-      break;
-    case AVATAR_SIZE.JUNIOR:
-        folderPath = 'assets/avatars/junior';
+  // --- REMOVED 'else if (point.id.startsWith('p'))' BLOCK ---
+  
+  // 2. Handle ALL OTHER avatars (non-"p50")
+  // This 'else' catches everything else (p10, p90, and all non-p)
+  // and gives them a unique random avatar.
+  else {
+    const baseVariant = getRandomInt(1, 4);
+    const hairVariant = getRandomInt(1, 4);
+    const bottomVariant = getRandomInt(1, 4);
+    const topVariant = getRandomInt(1, 4);
+    
+    // Use different folder path based on avatar size
+    let folderPath;
+    switch(sizeType) {
+      case AVATAR_SIZE.LARGE:
+        folderPath = 'assets/avatars/24';
         break;
+      case AVATAR_SIZE.MID:
+        folderPath = 'assets/avatars/12';
+        break;
+      case AVATAR_SIZE.SMALL:
+      default:
+        folderPath = 'assets/avatars/2';
+        break;
+      case AVATAR_SIZE.JUNIOR:
+          folderPath = 'assets/avatars/junior';
+          break;
+    }
+    
+    // Create layers in order from bottom to top
+    const layers = [
+      { path: `${folderPath}-base-${baseVariant}.png` },
+      { path: `${folderPath}-hair-${hairVariant}.png` },
+      { path: `${folderPath}-bottom-${bottomVariant}.png` },
+      { path: `${folderPath}-top-${topVariant}.png` }
+    ];
+    
+    return { layers };
   }
-  
-  // Create layers in order from bottom to top
-  const layers = [
-    { path: `${folderPath}-base-${baseVariant}.png` },
-    { path: `${folderPath}-hair-${hairVariant}.png` },
-    { path: `${folderPath}-bottom-${bottomVariant}.png` },
-    { path: `${folderPath}-top-${topVariant}.png` }
-  ];
-  
-  return { layers };
 }
 
 /**

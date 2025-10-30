@@ -40,7 +40,7 @@
   let avatarWidth = $derived(avatarHeight * .4)
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain(introScroll ? [20, 65]: [24,65]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain([15, 65]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -61,7 +61,7 @@
   let valueKey = $derived(
     currentId <= 3 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 3 && currentId < 8) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 3 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
       : currentId < 10
       ? "value20_29"
@@ -175,9 +175,9 @@
     const sim = d3.forceSimulation(data)
         .force('x', d3.forceX(d => (xScale(d.value) - avatarWidth/1.2 )).strength(1))
         // Use a single, conditional y-force
-        .force('y', d3.forceY(d => height / 2 - avatarHeight / 2).strength(d => d.id === "p50" ? 1.0 : 0.15))
+        .force('y', d3.forceY(d => height / 2 - avatarHeight / 2).strength(d => d.id.startsWith("p") ? 1.0 : 0.15))
         // Increase the collision radius for the highlighted avatar to create a larger, symmetrical gap
-        .force('collide', d3.forceCollide(d => d.id === "p50" ? (avatarHeight / 4) : (avatarHeight / 5)))
+        .force('collide', d3.forceCollide(d => d.id.startsWith("p") ? (avatarHeight / 4) : (avatarHeight / 5)))
         .stop();
 
     const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
@@ -192,11 +192,26 @@
     });
 
     // Sort by y-coordinate to control SVG render order (z-index)
-    return data.sort((a, b) => a.y - b.y).map((d, i) => ({
-        ...d,
-        x: d.x,
-        y: d.y
-    }));
+    return data.sort((a, b) => {
+        const aIsP = a.id.startsWith("p");
+        const bIsP = b.id.startsWith("p");
+
+        if (aIsP && !bIsP) {
+            return 1;  // 'a' (which is 'p') comes after 'b'
+        } else if (!aIsP && bIsP) {
+            return -1; // 'a' (which is not 'p') comes before 'b'
+        } else {
+            // Either both are 'p' or neither are, so sort by y
+            return a.y - b.y;
+        }
+      }).map((d, i) => ({
+          ...d,
+          x: d.x,
+          y: d.y,
+          // --- ADD THIS LINE ---
+          // Creates a random delay between 0s and 0.4s
+          randomDelay: Math.random() * 1
+  }));
 });
 
 
@@ -243,7 +258,7 @@
         if (currentId == 2) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId == 8 || (currentId == "to-enter" && !introScroll)) {
+        } else if (currentId == "to-enter" && !introScroll) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
         } else if (currentId === 9) {
@@ -270,8 +285,7 @@
   });
 
   $effect(() => {
-    // console.log({currentId})
-    // console.log(copy.intro[value])
+    console.log(currentId)
   })
 </script>
 
@@ -287,17 +301,17 @@
               <!-- <p class="title-text">{@html copy.introText}</p> -->
           </div>
       {/if}
-      {#if (currentId >= 3 && currentId < 7) || (currentId >= 8)}
+      {#if (currentId >= 3 && currentId < 8) || (currentId >= 9)}
         <div transition:fade={{duration: 500}} class="size-key">
           <p>{sizeLabel}</p>
-          <p>Size Range: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
+          <p>Sizes: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
         </div>
       {/if}
       <div id="beeswarm" 
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 7 || currentId == 11 ||currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 8 || currentId == 11 ||currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
@@ -315,7 +329,7 @@
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 2 || currentId == 6 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
+            <g class="highlight-band" class:visible={currentId == 2 || currentId == 7 || currentId == 8 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
@@ -329,9 +343,12 @@
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
-                  opacity={(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 2 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
-                  style="transition: {currentId == "to-enter" ? "none" : "all 0.5s ease-in-out" };"
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentileMid' && currentId <= 2 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  opacity={(point.type == 'percentileMid' && currentId <= 2 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 2 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  style="transition: {currentId == 'to-enter' 
+                    ? 'none' 
+                    : `transform 0.5s ease-in-out, opacity 0.5s ease-in-out ${point.randomDelay}s`
+                  };"
                 >
                   {#if avatarImages}
                     {@const avatar = avatarImages.find(a => a.id === point.id)}
@@ -344,7 +361,10 @@
                             href={layer.path}
                             xlink:href={layer.path}
                             class="avatar"
-                            class:grayscale={point.type !== 'percentile'}
+                            class:colorized={
+                              point.type == 'percentileMid' ||
+                              (currentId == 6 && (point.id == 'p10' || point.id == 'p90'))
+                            }
                           />
                       {/each}
                   {/if}
@@ -402,6 +422,10 @@
       margin: 0;
     }
 
+    .size-key p {
+      margin: 0;
+    }
+
     .intro-title {
         position: absolute;
         top: 0;
@@ -435,8 +459,8 @@
         transition: opacity 1s ease-in-out; 
     }
 
-    .grayscale {
-        filter: grayscale(100%);
+    .colorized {
+      filter: none;
     }
     
     .highlight-band {
@@ -476,6 +500,10 @@
         /* transition: all 0.5s ease-in-out; */
         transform-box: fill-box;
         transform-origin: center;
+    }
+
+    :global(.avatar) {
+      filter: grayscale(100%);
     }
 
     :global(#band-S, #band-L, #band-12, #band-16) {
@@ -574,4 +602,3 @@
       }
     }
 </style>
-<!-- {currentId <= 2  || currentId == 7 || currentId == 11 ? "center" : "right"} -->
