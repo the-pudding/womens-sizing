@@ -20,6 +20,7 @@
 	<Intro startStage={0} endStage={8} introScroll={true}/>
 	<TitlePage />
 	<Intro startStage={9}/>
+	<SizeChart />
 	<!--  <History />
 	<Proportions />
 	<VanitySizes />

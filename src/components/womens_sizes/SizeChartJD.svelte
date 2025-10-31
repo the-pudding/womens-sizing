@@ -3,13 +3,14 @@
     // Mobile
     import * as d3 from 'd3';
     import sizeCharts from "$data/sizeCharts.json";
-    import ASTMsizes from "$data/ASTMsizes.json";
+    import ASTMsizes from "$data/ASTMsizes.csv";
     import generatedPercentiles from '$data/generatedPercentiles.json';
     import Scrolly from '../helpers/Scrolly.svelte';
     import copy from '$data/copy.json';
     import { flip } from 'svelte/animate';
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
+    import {fly} from 'svelte/transition';
 
     // DIMENSIONS
     let containerHeight = $state(0);
@@ -36,27 +37,62 @@
     // Adds ASTM to other data
     brandData.unshift(["ASTM", ASTM2021]);
 
-        const filteredBrandData = $derived(() => {
+    const filteredBrandData = $derived(() => {
         return brandData
             .map(([brandName, brandSizes]) => {
                 const regularSizes = brandSizes.filter(d => 
                     d.sizeRange && d.sizeRange.toLowerCase() === 'regular' &&
                     d.waistMin !== null && d.waistMin !== undefined
                 );
-                const allSizesAreBelowMedian = regularSizes.every(d => {
-                    const waistMax = d.waistMax ?? d.waistMin;
-                    return waistMax <= medianWaistline;
-                });
-                const shouldDisplayBrand = brandName === "ASTM" || (regularSizes.length > 0 && allSizesAreBelowMedian);
+                
+                // 1. Categorize the brand
+                const isASTM = brandName === "ASTM";
+                const isLuxury = regularSizes.some(d => d.marketType === "luxury");
+                const isNonLuxury = regularSizes.length > 0 && !isASTM && !isLuxury;
+
+                // 2. Find the waist value of the *last* regular size for sorting
+                let lastItemSortValue = Infinity; 
+                if (regularSizes.length > 0) {
+                    const lastItem = regularSizes[regularSizes.length - 1];
+                    const waistValue = lastItem.waistMax ?? lastItem.waistMin;
+                    const numericValue = parseFloat(waistValue);
+
+                    if (!isNaN(numericValue)) {
+                        lastItemSortValue = numericValue;
+                    }
+                }
 
                 return {
                     brandName: brandName,
                     brandSizes: brandSizes,
-                    shouldDisplayBrand: shouldDisplayBrand,
+                    isASTM: isASTM,
+                    isNonLuxury: isNonLuxury,
+                    isLuxury: isLuxury,
+                    lastItemSortValue: lastItemSortValue
                 };
             })
             .filter(brand => {
-                return ((value <= 0 || value === undefined) && brand.shouldDisplayBrand) || value > 0;
+                // 3. Apply your three rules
+                const showASTM = brand.isASTM && value >= 0;
+                const showNonLuxury = brand.isNonLuxury && value >= 1;
+                const showLuxury = brand.isLuxury && value >= 6;
+
+                return showASTM || showNonLuxury || showLuxury;
+            })
+            .sort((a, b) => {
+                // 4. New sorting logic
+                
+                // Rule 1: ASTM brand always comes first
+                if (a.isASTM && !b.isASTM) {
+                    return -1; // a comes before b
+                }
+                if (!a.isASTM && b.isASTM) {
+                    return 1; // b comes before a
+                }
+
+                // Rule 2: For all other cases (both are ASTM or both are not),
+                // sort by the last item's waist value.
+                return a.lastItemSortValue - b.lastItemSortValue;
             });
     });
 
@@ -78,7 +114,7 @@
         tooltipNumericSizeMin = size.numericSizeMin;
         tooltipNumericSizeMax = size.numericSizeMax;
         tooltipWaistMin = size.waistMin;
-        tooltipWaistMax = size.waistMin;
+        tooltipWaistMax = size.waistMax;
         tooltipSizeRange = size.sizeRange.toLowerCase();
         tooltipX = e.x;
         tooltipY = e.y;
@@ -92,7 +128,7 @@
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([20, 65])
+            .domain([15, 65])
             .range([0, containerWidth - margin.left - margin.right])
     );
 
@@ -103,11 +139,47 @@
             d.race === "all" && 
             d.age === "20 and over"
         );
-        return targetData ? targetData.percent50 : null;
+
+        const value = targetData ? targetData.percent50 : null;
+
+        // 1. Convert the value (which could be string, number, or null) to a number
+        const numericValue = parseFloat(value);
+
+        // 2. Check if the conversion was successful (it will be NaN if not)
+        if (!isNaN(numericValue)) {
+            // 3. Round to one decimal place
+            return Math.round(numericValue * 10) / 10;
+        }
+
+        // If no data, or value was null, or it couldn't be converted, return null
+        return null;
+    })();
+
+    const median15Waistline = (() => {
+        const targetData = generatedPercentiles.find(d => 
+            d.yearRange === "2021-2023" && 
+            d.race === "all" && 
+            d.age === "14-15"
+        );
+
+        const value = targetData ? targetData.percent50 : null;
+
+        // 1. Convert the value (which could be string, number, or null) to a number
+        const numericValue = parseFloat(value);
+
+        // 2. Check if the conversion was successful (it will be NaN if not)
+        if (!isNaN(numericValue)) {
+            // 3. Round to one decimal place
+            return Math.round(numericValue * 10) / 10;
+        }
+
+        // If no data, or value was null, or it couldn't be converted, return null
+        return null;
     })();
 
     // REACTIVE 
     $effect(() => {
+        console.log({value})
         if (containerWidth > 0) {
             d3.select("#size-chart .x-axis g")
                 .call(d3.axisBottom(xScale));
@@ -117,17 +189,13 @@
 
 <div class="outer-container">
     <div class="text-block">
-        {#each copy.ASTMtransition as block}
-            <div class="subtitle">
-                {#if block.subhed}
-                    <h3>
-                        <Leet string="Brands don't even use the" />
-                        <Ransom string="universal" />
-                        <Ransom string="size" />
-                    </h3>
-                {/if}
-                <p>{@html block.text}</p>
-            </div>
+        <h3>
+            <Leet string="Pain is" />
+            <Ransom string="universal" />
+            <Leet string="sizing is not" />
+        </h3>
+        {#each copy.sizeIntro as block}
+            <p>{@html block.value}</p>
         {/each}
     </div>
     <div class="sticky-container">
@@ -149,7 +217,12 @@
                     {@const largestPlusSize = plusSizes.find(d => d.waistMin === maxWaistMinPlus)}
                     {@const brandMaxWaistPlus = largestPlusSize ? (largestPlusSize.waistMax ?? largestPlusSize.waistMin) : null}
 
-                    <div id={brand.brandName} class="brand-row" style="padding: {(containerHeight-100)/brandData.length*0.5}px;" animate:flip>
+                    <div 
+                        id={brand.brandName} 
+                        class="brand-row" 
+                        class:visible={(brand.brandName == "ASTM" && value == 0) || value > 0}
+                        style="padding: {(containerHeight-100)/brandData.length*0.5}px;" 
+                        animate:flip>
                         <!-- Line for regular sizes -->
                         {#if brandMinWaistReg && brandMaxWaistReg}
                             <div
@@ -166,13 +239,13 @@
                                 style="
                                     left: {xScale(brandMinWaistPlus)}px;
                                     width: {xScale(brandMaxWaistPlus) - xScale(brandMinWaistPlus)}px;
-                                    opacity: {(value < 2 || value == undefined) ? 0 : 1}"
+                                    opacity: {(value < 7 || value == undefined) ? 0 : 1}"
                             ></div>
                         {/if}
                         <!-- Pills and circles for each specific size point -->
                         {#each brand.brandSizes as size}
                             {@const hasRange = size.waistMax !== null && size.waistMax !== undefined && size.waistMax !== size.waistMin}
-                            <div style="opacity: {size.sizeRange?.toLowerCase() == 'plus' && (value < 2 || value == undefined) ? 0 : 1}">
+                            <div style="opacity: {size.sizeRange?.toLowerCase() == 'plus' && (value < 7 || value == undefined) ? 0 : 1}">
                                 <!-- If there is a range render pills and min/max circles -->
                                 {#if hasRange}
                                     <div class="pill pill-{size.sizeRange?.toLowerCase()}"
@@ -190,6 +263,14 @@
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
                                         style="left: {xScale(size.waistMax)}px;"></div>
+                                    {#if (value == 2 && size.alphaSize == "L")  ||
+                                        (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
+                                        (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
+                                        <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
+                                            <p>{size.alphaSize}</p>
+                                            <p>{size.numericSizeMin}</p>
+                                        </div>
+                                    {/if}
                                 <!-- Else just the min circle -->
                                 {:else}
                                     <div 
@@ -198,6 +279,16 @@
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
                                         style="left: {xScale(size.waistMin)}px;"></div>
+                                    {#if (value == 2 && size.alphaSize == "L")  ||
+                                        (value == 3 && brand.brandName == "ASTM" && size.numericSizeMin == "10") ||
+                                        (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
+                                        (value == 5 && brand.brandName == "ASTM" && size.numericSizeMin == "18") || 
+                                        (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
+                                        <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
+                                            <p>{size.alphaSize}</p>
+                                            <p>{size.numericSizeMin}</p>
+                                        </div>
+                                    {/if}
                                 {/if}
                             </div>
                         {/each}
@@ -208,8 +299,18 @@
                     </div>
                 {/each}
                 <!-- Median markings -->
-                <div class="median" style="left: {xScale(medianWaistline) + margin.left}px">
-                    <div class="median-label">Median waist: {medianWaistline}" </div>
+                <div 
+                    class="median" 
+                    class:visible={value > 2}
+                    style="left: {xScale(median15Waistline) + margin.left}px">
+                    <div class="median-label">15-year-old median: {median15Waistline}" </div>
+                    <div class="median-line" style="left: {xScale(median15Waistline)}px"></div>
+                </div>
+                <div 
+                    class="median" 
+                    class:visible={value > 4}
+                    style="left: {xScale(medianWaistline) + margin.left}px">
+                    <div class="median-label">Adult median: {medianWaistline}" </div>
                     <div class="median-line" style="left: {xScale(medianWaistline)}px"></div>
                 </div>
                 <!-- X Axis -->
@@ -234,7 +335,13 @@
                 {tooltipNumericSizeMin}
             {/if}
         </p>
-        <p><strong>Waist size:</strong> {tooltipWaistMin}–{tooltipWaistMax}"</p>
+        <p><strong>Waist size:</strong> 
+            {#if tooltipWaistMax}
+                {tooltipWaistMin}–{tooltipWaistMax}
+            {:else}
+                {tooltipWaistMin}
+            {/if}
+        </p>
     </div>
     
     <!-- Scrolly -->
@@ -302,12 +409,11 @@
 
     .text-block h3 {
         max-width: 800px;
+        margin: 5rem 0;
         text-align: center;
     }
     .text-block p {
         width: min(100%, 550px);
-        margin-bottom: 60px;
-        margin-top: 60px;
         font-size: 1.1rem;
         line-height: 1.6;
         text-align: left;
@@ -339,7 +445,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-items: center;
     }
 
@@ -352,6 +458,11 @@
         flex-direction: column;
         align-items: center;
         pointer-events: none;
+        opacity: 0;
+    }
+
+    .median.visible {
+        opacity: 1;
     }
 
     .median-line {
@@ -432,6 +543,30 @@
         font-weight: 700;
         font-size: var(--14px);
         pointer-events: none;
+    }
+
+    .size-name {
+        position: absolute;
+        top: calc(50% - 1.5rem); 
+        transform: translate(-25%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: var(--mono);
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 10px;
+        pointer-events: none;
+        background: var(--color-bg);
+        border-radius: 8px;
+        padding: 0.3rem;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: opacity 100ms linear;
+    }
+
+    .size-name p {
+        margin: 0;
     }
 
     .pill {
