@@ -884,7 +884,7 @@
     }
 
     $effect(() => {
-        console.log({value})
+        // console.log({value})
     })
 </script>
   

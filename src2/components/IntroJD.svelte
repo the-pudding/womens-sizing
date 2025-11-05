@@ -247,7 +247,7 @@
   });
 
   $effect(() => {
-    console.log({currentId})
+    // console.log({currentId})
   })
 </script>
 

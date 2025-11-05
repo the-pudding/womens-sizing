@@ -8,8 +8,6 @@
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
 
-    console.log(ASTMsizes)
-
     // DIMENSIONS
     let containerHeight = $state(0);
     let containerWidth = $state(0);
