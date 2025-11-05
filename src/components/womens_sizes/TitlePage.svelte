@@ -2,7 +2,7 @@
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import copy from "$data/copy.json";
 
-    console.log(copy.titlePage)
+    console.log(copy.introBreak)
 </script>
 
 
@@ -16,7 +16,7 @@
         </div>
 
         <div class="title-page-body">
-            {#each copy.titlePage[0].text as graf, i}
+            {#each copy.introBreak as graf, i}
                 <p>{graf.value}</p>
             {/each}
         </div>

@@ -347,7 +347,7 @@
     <!-- Scrolly -->
     <div class="scrolly-outer">
         <Scrolly bind:value>
-            {#each copy.sizeCharts as stage, i}
+            {#each copy.sizeScroll as stage, i}
                 <div class="step">
                     <div class="text">
                         <p>{@html stage.text}</p>
@@ -418,7 +418,7 @@
         line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
 
     .sticky-container {
@@ -615,7 +615,7 @@
         align-items: center;
         padding-right: 2rem;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     .step .text {
         max-width: 500px;

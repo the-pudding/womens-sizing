@@ -19,7 +19,7 @@
   /*** SCROLLY ***/
   let value = $state(0);
   let { startStage = 0, endStage = null, introScroll = null } = $props();
-   let filteredStages = $derived(copy.intro ? copy.intro.slice(
+   let filteredStages = $derived(copy.introScroll ? copy.introScroll.slice(
         startStage, 
         endStage !== null ? endStage + 1 : undefined
     ) : []);
@@ -448,7 +448,7 @@
 
     .title-text {
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
         max-width: 500px;
     }
 
@@ -579,7 +579,7 @@
         display: flex;
         align-items: center;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
         box-sizing: content-box;
         justify-content: flex-end;
     }

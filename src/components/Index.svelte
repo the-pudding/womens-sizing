@@ -21,6 +21,7 @@
 	<TitlePage />
 	<Intro startStage={9}/>
 	<SizeChart />
+	<VanitySizes />
 	<!--  <History />
 	<Proportions />
 	<VanitySizes />

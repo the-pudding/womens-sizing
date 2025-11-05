@@ -1,5 +1,5 @@
 {
-  "intro": [
+  "introScroll": [
     {
       "id": "0",
       "yearRange": "2021-2023",
@@ -163,156 +163,18 @@
       "sizeType": "size"
     }
   ],
-  "titlePage": [
+  "introBreak": [
     {
-      "visual": "title + text block + static graphic",
-      "animation": "title animation",
-      "title": "Fit for a Teen",
-      "text": [
-        {
-          "type": "text",
-          "value": "Children’s clothing is often tied to a kid’s age or stage of development. The idea is that as a young person grows older, her clothes will evolve with her. Youth styles tend to be boxy and oversized to allow room for young kids to move and grow, but by early adolescence, a shift starts to take shape. Girl’s clothing starts to become more fitted. Junior’s styles have higher waistlines and less-pronounced curves through the bust and hips compared to adult clothing lines. In short: tweens’ clothes are made for tween bodies."
-        },
-        {
-          "type": "text",
-          "value": "By the time that most teen girls can wear women’s clothes — around age 15 — their options are seemingly endless. The women’s apparel market, worth an estimated $963 billion worldwide, places a premium on grooming young girls into becoming dedicated, life-long customers. But the evolution in clothing sizes that followed girls throughout childhood abruptly stops there."
-        },
-        {
-          "type": "text",
-          "value": "As a woman ages, she will sift through sizes that fit a greater proportion of teens than the adults they were made for in the first place."
-        }
-      ]
-    }
-  ],
-  "history": [
-    {
-      "id": "0",
-      "eyebrow": "this has been a problem for a",
-      "title": "very, very",
-      "subtitle": "long time",
-      "textA": [
-        {
-          "type": "text",
-          "value": "In 1941, the U.S. government set out to standardize clothing sizes based on the body measurements of thousands of women. The garment industry had exploded following the industrial revolution, but the approach to sizing was less a science and more trial-and-error, researchers noted at the time. They found huge variations in garment sizes across different manufacturers. Alterations were also prohibitively expensive. When garments couldn’t be tailored or simply didn’t fit, a large number of women had to return items to the store, ratcheting up costs for all parties involved."
-        },
-        {
-          "type": "text",
-          "value": "<span class=blue-span>“This means a loss of money and good will to the retailer and annoyance and waste of time to the woman purchaser,” wrote the report’s chief researcher, Ruth O’Brien.</span>"
-        },
-        {
-          "type": "text",
-          "value": "Sound familiar?"
-        },
-        {
-          "type": "text",
-          "value": "Over 85 years later, and many of those same problems and annoyances are just as true — if not worse today. Inconsistent sizing, costly alterations, and high rates of item returns are considered norms by modern shopping standards. More often than not, ill-fitting clothes pile up in our closets and in landfills, fueling a vicious cycle that treats garments as disposable."
-        },
-        {
-          "type": "text",
-          "value": "If generation after generation of women have faced the same, persistent struggles, one must ask: Is it even possible to mass-produce clothes that fit all types of bodies?"
-        }
-      ],
-      "textB": [
-        {
-          "type": "text",
-          "value": "One of the chief problems is that our modern sizing system is based on the body proportions of a single group: White women."
-        },
-        {
-          "type": "text",
-          "value": "O’Brien, a trained scientist and head of the Clothing and Textiles Division within the U.S. Bureau of Home Economics, broke new ground with her 1941 study by using a scientific approach to sizing. For likely the first time ever, the garment industry had hard data to use as a foundation for all garments through the body measurements of the roughly 14,700 women who participated in the study."
-        },
-        {
-          "type": "text",
-          "value": "The study’s sample size, however, was in no way representative of the broader population. Participants were mostly young, middle class white women from urban areas within just a handful of states. No women of color were included."
-        },
-        {
-          "type": "text",
-          "value": "This matters because today we know that age and race factor heavily into how our bodies are shaped. Genetics can play a huge role in determining each person’s proportions, their bone structure, how they build muscle mass, and where they tend to store fat on their bodies. Scholars have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to the countless women told over the years to “dress for their body type.”"
-        },
-        {
-          "type": "text",
-          "value": "*small graphic of nine body types*"
-        },
-        {
-          "type": "text",
-          "value": "Only one body type, however, serves as the underlying blueprint for nearly every piece of women’s clothing: The hourglass silhouette."
-        }
-      ]
-    }
-  ],
-  "proportionsIntro": [
-    {
-      "eyebrow": "Mass-produced clothes",
-      "title": "do not fit",
-      "subhed": "every body",
-      "text": "<p>The hourglass silhouette is often characterized as an idealized version of western beauty standards. It emphasizes fullness in both the bust and hips, with a waistline that is exactly 10 inches smaller than those two measurements.</p><p>The problem is that women are rarely born with those precise proportions. One study found that only 30% of American women actually have a true hourglass figure.</p><p>Here’s how that impacts the type of clothes that most adults are able to wear. </p>"
-    }
-  ],
-  "proportions": [
-    {
-      "id": "0",
-      "text": "If we were to take the waist and hip measurements of the <span class=blue-span>median woman</span> in the U.S., here’s how those proportions around the torso would look like."
+      "type": "text",
+      "value": "Children’s clothing is often tied to a kid’s age or stage of development. The idea is that as a young person grows older, her clothes will evolve with her. Youth styles tend to be boxy and oversized to allow room for young kids to move and grow, but by early adolescence, a shift starts to take shape. Girl’s clothing starts to become more fitted. Junior’s styles have higher waistlines and less-pronounced curves through the bust and hips compared to adult clothing lines. In short: tweens’ clothes are made for tween bodies."
     },
     {
-      "id": "1",
-      "text": "<p>Let’s say that our typical adult woman goes shopping at J.Crew.</p>\r\n\r\n\r\n<p>If she were to try on a pair of pants that fit her waist, she would likely fit a <span class=green-span>size 18.</span></p>\r\n\r\n\r\n<p>Doing so, however, would mean that the pants are too big in the hips by <span class=bold> six inches</span>.</p>"
+      "type": "text",
+      "value": "By the time that most teen girls can wear women’s clothes — around age 15 — their options are seemingly endless. The women’s apparel market, worth an estimated $963 billion worldwide, places a premium on grooming young girls into becoming dedicated, life-long customers. But the evolution in clothing sizes that followed girls throughout childhood abruptly stops there."
     },
     {
-      "id": "2",
-      "text": "<p>If she instead picked out pants that fit around her backside, she would have the opposite problem as before.</p>\r\n\r\n\r\n<p>Here, a <span class=green-span>size 12</span> would fit her hips best, but then the waist would be too small by more than <span class=bold>six inches</span>."
-    },
-    {
-      "id": "3",
-      "text": "<p>J.Crew is hardly an outlier.</p>\r\n\r\n\r\n<p>Many mainstream fashion brands there to be a<span class=bold>10-inch</span> difference between a woman’s waist and hip measurements.</p>\r\n\r\n\r\n<p>Compare that to the median woman in the U.S., who has just over a <span class=bold>four-inch</span> difference between her waist and hip.</p>"
-    },
-    {
-      "id": "4",
-      "text": "<p>Surprisingly, these exaggerated proportions are fixed across entire size ranges.</p><p>If you compared the smallest size to the largest size in a range, both would have the <span class=blue-span>same 10-inch difference</span> between the waistline and their corresponding hip measurements. </p>"
-    },
-    {
-      "id": "5",
-      "text": "<p>Put another way: Clothing sizes expect all women, large or small, to share the exact same body shape.</p><p>But that’s not how women’s bodies work</p>"
-    }
-  ],
-  "vanityIntro": [
-    {
-      "eyebrow": "There’s more to",
-      "title": "vanity sizing",
-      "subhed": "than you may think",
-      "text": "Many things have changed since the WWII-era efforts to create standardized sizing, chief among them: Americans are larger today than they were in the past.Over the past three decades alone, the median American woman’s waistline has increased by nearly four inches. And as waistlines have gotten larger, so too have clothing sizes.</p><p>Though the U.S. government has long-abandoned its attempts to make universal clothing sizes for women, an organization called ASTM International has filled this role by releasing technical standards for size ranges every few years </p><p>To see that change, take a look at ASTM’s standard sizes from 1995.</p>"
-    }
-  ],
-  "vanitySizing": [
-    {
-      "id": "0",
-      "text": "<p>About 30 years ago, there was a 12.5-inch spread of waistline measurements separating the smallest size 2 (24 inches) and the largest size 20 (36.5 inches).</p>"
-    },
-    {
-      "id": "1",
-      "text": "<p>Today, that gap is 15.2 inches between the smallest size 00 (25.38 inches) and the largest size (40 inches)</p><p>While additional sizes for 00 and 0 were added in the early 2000s, all waistline measurements today are larger regardless of size. </p>"
-    },
-    {
-      "id": "2",
-      "text": "<p>Notice how in 1995, a 27-inch waist was considered a <span data-underline=\"#C2D932\">size 8</span>.</p><p>But in 2021 it was between <span data-underline=\"#C2D932\">sizes 2 and 4</span>.</p><p>By comparison, today’s size 8 is <span class=”bold”>2.5 inches bigger</span> in the waist than it was 30 years ago.</p>"
-    },
-    {
-      "id": "3",
-      "text": "<p>This is vanity sizing in action.</p>\r\n\r\n\r\n<p>Vanity sizing is a frequent villain within the consumer mindset for its role in driving sizing inconsistencies across the fashion industry.</p><p> Over the decades, a behavioral trend started to emerge where women seemed more likely to buy clothes if the labels were marked as sizes smaller than they actually were. Researchers have found that many women often ascribe an identity around clothing sizes (“I am a size 4” versus “I wear a size 4”). Any deviation from that specific size may then pose a threat to not just their ego, but who they are as a person. Rather than size up, consumers would prefer to either go home empty-handed or purchase other items that enhance aesthetics, but aren’t tied to sizes, like beauty products.</p> \r\n\r\n\r\n<p>Brands, and the apparel industry at large, responded by slowly inflating sizes. What was once a size 6 is now labeled a size 4, and so on and so on.</p><p>That’s left us with a sizing system that’s all over the place. But then without vanity sizing, average Americans would have even fewer sizing options than they do now. .</p>"
-    },
-    {
-      "id": "4",
-      "text": "<p>Between 1988 and 1994, the average woman’s waistline was <span data-underline=\"#C2D932\">34.88 inches</span>. By 2023, it was <span data-underline=\"#C2D932\">37.68 inches</span></p>"
-    },
-    {
-      "id": "5",
-      "text": "<p>In both cases — 30 years ago on to today —the median waistline roughly lined up with the size 18 that was available at that time (if at all).</p>"
-    }
-  ],
-  "ASTMtransition": [
-    {
-      "id": "0",
-      "subhed": "Mass-produced clothes don’t fit every body",
-      "text": "<p>While vanity sizing and broader industry trends have translated into sizes that are now larger than before, the changes still continue to skew toward serving the smallest women. Today, just as we saw 30 years ago, nearly half of the population is shut out of buying clothes from some of the most popular or well known brands.</p><p>In many ways, this has been intentional.</p><p>ASTM has said itself that it’s not trying to develop sizing standards that accurately reflect the full scope of modern demographics in America. Instead, the system is just as much tailored to conventional beauty standards and what clothing brands consider to be their ideal customer.</p><p>“It is important to note that the body measurements herein have been derived from designer experience and market observations and cross checked with available databases in the attempt to identify current customer characteristics and changing proportions and not from new nationwide anthropometric research. —ASTM’s 1995 standardized sizing chart</p><p>Fashion and clothing brands aren’t required to align with universal sizing standards.</p><p>If they so choose, a brand can tailor its size charts to include more historically underrepresented populations — and some do, to a degree. Many do not.</p><p>The result — as many women have likely experienced — has meant that sizes are all over the map.</p>"
+      "type": "text",
+      "value": "As a woman ages, she will sift through sizes that fit a greater proportion of teens than the adults they were made for in the first place."
     }
   ],
   "sizeIntro": [
@@ -349,7 +211,7 @@
       "value": "If anything, things seem to have gotten worse."
     }
   ],
-  "sizeCharts": [
+  "sizeScroll": [
     {
       "id": "0",
       "displayRegular": "true",
@@ -421,226 +283,58 @@
       "text": "<p>Even the symbols used to describe certain sizes hold a wide range of meanings.</p>  <p>For the average adult woman, there are as many as TK10 different ways to describe the garments that she could conceivably wear from these brands alone.</p>"
     }
   ],
-  "introTween": [
+  "vanityIntro": [
     {
-      "step": "0",
-      "visual": "tween avatar illustration",
-      "animation": "",
-      "text": "Meet your typical tween"
+      "type": "text",
+      "value": "Inconsistent sizing isn’t merely a bug in the system, it’s a feature. And vanity sizing is largely to blame, but for reasons you may not expect."
     },
     {
-      "step": "1",
-      "visual": "tween avatar illustration",
-      "animation": "gif swapping out/changing outfits;",
-      "text": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself."
+      "type": "text",
+      "value": "Vanity sizing first emerged as a marketing strategy to attract loyal customers and get them to spend more. Studies have shown that women feel more positively toward an item of clothing when it is presented as a smaller size; conversely, if a woman finds they need a size larger than expected, they’re less likely to follow through with their purchase, and may even develop negative associations with the brand."
     },
     {
-      "step": "2",
-      "visual": "tween avatar + S/M/L size labels",
-      "animation": "fade transition w/ background size band",
-      "text": "“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.\r\n\r\n\r\nFor now, our typical tween wears a size 9 in the junior’s section, which is also considered a size Medium."
+      "type": "text",
+      "value": "Because clothing sizes are unregulated, manufacturers are free to pursue vanity sizing as they please. In theory, labeling clothes as sizes smaller than reality could serve as a competitive edge over brands that opt against the practice. This creates an arms race toward artificially deflating size labels in order to attract customers who are now conditioned to expect that a certain size will fit."
     },
     {
-      "step": "3",
-      "visual": "beeswarm ages 10-11 + junior’s size bands",
-      "animation": "bring in beeswarm + animate & expand size bands to include full range",
-      "text": ""
+      "type": "text",
+      "value": "Narratives around vanity sizing often shift the blame on women as opposed to the companies that are actively behind the practice. In 2006, Time Magazine called it “self-delusion on a mass scale.”"
     },
     {
-      "step": "4",
-      "visual": "beeswarm ages 14-15 + junior’s size bands",
-      "animation": "slide 10-11 yr-old avatars over to 14-15 yr-old positioning",
-      "text": ""
-    },
-    {
-      "step": "5",
-      "visual": "beeswarm ages 14-15 + women’s size bands",
-      "animation": "slide size bands from junior’s to women’s sizing",
-      "text": "This marks an important turning point as they shift into women’s sizes."
-    },
-    {
-      "step": "6",
-      "visual": "beeswarm ages 14-15 + women’s size bands",
-      "animation": "change avatar styling for 10th & 90th percentiles to full color; add orange border around each individual size highlighted in the text (XS, M, XL)",
-      "text": "Girls who fall along the bottom 10th percentile can now wear an Extra Small in women’s clothing, while girls near the 90th percentile will find that an Extra Large generally fits. \r\n\r\n\r\nThe median 15-year-old wears a Medium, as she has throughout most of her childhood."
-    },
-    {
-      "step": "7",
-      "visual": "beeswarm ages 14-15 + women’s size bands",
-      "animation": "greyscale percentiles; add orange border around full size band range",
-      "text": "That means for the first time ever, most girls in their cohort will be able to find a size in the women’s clothing section."
-    },
-    {
-      "step": "8",
-      "visual": "fade out chart",
-      "animation": "center text",
-      "text": "This will also likely be the last time this ever happens in their lives."
+      "type": "text",
+      "value": "But where would we be today without vanity sizing?"
     }
   ],
-  "introBreak": [
-    {
-      "visual": "title + text block + static graphic",
-      "animation": "title animation",
-      "title": "Fit for a Teen",
-      "text": ""
-    }
-  ],
-  "introAdults": [
-    {
-      "step": "0",
-      "visual": "beeswarm ages 20-29 + women’s size bands now displayed as numeric sizes",
-      "animation": "orange highlight around size 14",
-      "text": "By their 20s, a size Medium will no longer reflect the median or average woman’s waistline.\r\n\r\n\r\nInstead, the median 20-something fits a Large, which translates to a size 14 in women’s clothing."
-    },
-    {
-      "step": "1",
-      "visual": "beeswarm ages 30-39 + women’s size bands",
-      "animation": "slide avatars from 20s to 30s positioning; orange highlight around size 16",
-      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a size 16 or Extra Large."
-    },
-    {
-      "step": "2",
-      "visual": "beeswarm ages 20 and over + women’s size bands",
-      "animation": "slide avatars to 20andOver positioning; orange highlight around size 18",
-      "text": "This trend will continue again, and again. \r\n\r\n\r\nAltogether, the median adult woman over the age of 20 fits a size 18."
-    },
-    {
-      "step": "3",
-      "visual": "beeswarm ages 20 and over + women’s size bands",
-      "animation": "orange highlight around sizes 00-16",
-      "text": "The problem is that most “Standard” or “Regular” size ranges only go up to a size 16."
-    },
-    {
-      "step": "4",
-      "visual": "beeswarm ages 20 and over + women’s size bands",
-      "animation": "orange highlight around size 18 and up",
-      "text": "That leaves millions of people — over half of all adult women — without sizing options at all."
-    }
-  ],
-  "sizeChartIntro": [
-    {
-      "visual": "title + text block",
-      "animation": "title animation",
-      "title": "TK",
-      "text": ""
-    }
-  ],
-  "sizeChart": [
-    {
-      "step": "0",
-      "visual": "display only ASTM sizes",
-      "animation": "",
-      "text": "While there are no universal sizing standards, an organization called ASTM International regularly releases informal guidelines."
-    },
-    {
-      "step": "1",
-      "visual": "add all ‘regular’ fast-fashion, mass-market and premium size charts",
-      "animation": "",
-      "text": "Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer-base."
-    },
-    {
-      "step": "2",
-      "visual": "display all ‘regular’ size charts",
-      "animation": "Something to highlight the chaos",
-      "text": "The result: Nothing is consistent. Consumers are expected to navigate a landscape where size labels are largely stripped of meaning."
-    },
-    {
-      "step": "3",
-      "visual": "display all ‘regular’ size charts",
-      "animation": "add orange horizontal line marking median 15-year-old",
-      "text": "Here is our median 15-year-old girl in the U.S. With a waistline measuring 30.4 inches, she fits around a size 10 according to ASTM standards, which is usually considered a Medium.\r\n\r\n\r\nWhile it’s unlikely that clothing designed for adults will fit a teen’s body perfectly, she has quite a few sizing options."
-    },
-    {
-      "step": "4",
-      "visual": "display all ‘regular’ size charts",
-      "animation": "highlight disparities between sizes",
-      "text": "However as she’ll quickly learn, sizes are not universal across all brands. At Banana Republic, the median teen’s waistline is closer to a size 8. At Uniqlo, she’s considered a size 12."
-    },
-    {
-      "step": "5",
-      "visual": "display all ‘regular’ size charts",
-      "animation": "add orange horizontal line marking median adult",
-      "text": "The median adult woman has a much harder time finding clothes that fit. Her waistline is 37.68 inches, placing her at a size 18."
-    },
-    {
-      "step": "6",
-      "visual": "add “luxury” brands to all ‘regular’ size charts",
-      "animation": "",
-      "text": "Many brands don’t carry her size. This is especially true for high-end, luxury fashion labels."
-    },
-    {
-      "step": "7",
-      "visual": "add ‘plus’ size charts to display all charts together",
-      "animation": "highlight disparities b/t what constitutes ‘plus’ sized",
-      "text": "Sizing issues are amplified even further within “Plus” size ranges. \r\n\r\n\r\nThere are no official boundaries determining where “Regular” sizes ranges end and “Plus” size ranges begin.\r\n\r\n\r\nSome Plus size ranges start at size 12, others at 18. Others still consider any size from 00 to 30 is considered part of its Regular line."
-    },
-    {
-      "step": "8",
-      "visual": "all plus & regular size charts",
-      "animation": "highlight Anthropologie’s mid-size gap",
-      "text": "The median adult woman may also find herself in what’s informally called the “mid-size gap.”\r\n\r\n\r\nHere sizes within the “Regular” size range are too small, yet the next size up in the “plus” range might be too big."
-    },
-    {
-      "step": "9",
-      "visual": "all plus & regular size charts",
-      "animation": "highlight & display every size within ¾ inch of median adult (XL, XXL, 1X, 2XL, 3XL, 14, 16, 16-18, 18, 18W)",
-      "text": "Even the symbols used to describe certain sizes hold a wide range of meanings. \r\n\r\n\r\nFor the average adult woman, there are as many as TK10 different ways to describe the garments that she could conceivably wear from these brands alone."
-    }
-  ],
-  "VanitySizingIntro": [
-    {
-      "visual": "title + text block",
-      "animation": "title animation",
-      "title": "TK",
-      "text": ""
-    }
-  ],
-  "VanitySizing": [
+  "vanityScroll": [
     {
       "step": "0",
       "visual": "display 1995 astm sizes",
       "animation": "",
-      "text": "It’s true: Sizes today are much larger than they were in the past. \r\n\r\n\r\nRoughly 30 years ago, the smallest size available was a size 2, which was based on a 24-inch waistline. \r\n\r\n\r\nASTM had guidelines up to a size 20, however extended sizes at the time were not widely available in stores."
+      "text": "It’s true: Sizes today are much larger than they were in the past. Roughly 30 years ago, ASTM guidelines cover 12.5 inches from 24–36.5 (sizes 2–20). However, extended sizes were not widely available in stores."
     },
     {
       "step": "1",
       "visual": "display 1995 + 2021 astm sizes",
       "animation": "add 2021 sizes; highlight size 2 from 2021 + size 8 from 1995",
-      "text": "Today because of vanity sizing, a size 2 is based on a 26.88-inch waistline, which is close to what was once considered a size 8 in the 1990s.\r\n\r\n\r\nTwo new sizes were added to the bottom of the range in the early 2000s — sizes 00 and 0 — to account for the upward shift in all sizes."
+      "text": "Today because of vanity sizing, we can see an upward shift in all sizes. ASTM guidelines span 15.12 inches from 25.38–40.5 (sizes 00–20). In the early 2000s ASTM added size 00 and 0 to pad out the bottom of the range."
     },
     {
       "step": "2",
       "visual": "display 1995 + 2021 astm sizes",
       "animation": "highlight size 8 from 2021",
-      "text": "By comparison, today’s size 8 is 2.5 inches larger in the waist than it was 30 years ago."
+      "text": "By comparison, today’s <span class=bold>size 8</span> is 2.5 inches larger in the waist than it was 30 years ago."
     },
     {
       "step": "3",
       "visual": "display 1995 + 2021 astm sizes + median waistline markers",
       "animation": "add markers for median waistlines in 1994 & 2023",
-      "text": "But vanity sizing wasn’t just accounting for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown.\r\n\r\n\r\nBetween 1988 and 1994, the median woman’s waistline was 34.88 inches. \r\n\r\n\r\nBy 2023, it was 37.68 inches."
+      "text": "But vanity sizing wasn’t just accounting for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown. Between 1988–1994, the <span class=orange-span>median woman’s waistline</span> was 34.88 inches. By 2023, it was 37.68 inches."
     },
     {
       "step": "4",
       "visual": "display 1995 + 2021 astm sizes + median waistline markers",
       "animation": "highlight sizes 18 for both ranges",
-      "text": "What’s noteworthy is that over this 30-year period, the median adult woman has almost always fit the size 18 that was available to her at the time. \r\n\r\n\r\nVanity sizing has effectively helped manufacturers keep up to pace with demographic shifts in the U.S. But only for the smallest half of all adult women."
+      "text": "What’s noteworthy is that over this 30-year period, the median adult woman has almost always fit the <span class=bold>size 18</span> that was available to her at the time. Vanity sizing has effectively helped manufacturers keep up to pace with demographic shifts in the U.S. But only for the smallest half of all adult women."
     }
-  ],
-  "sewingLessons": [
-    {
-      "visual": "title + text block + static graphics",
-      "animation": "",
-      "title": "TK",
-      "text": "\r\n\r\nTK personal section on how/why i got into sewing"
-    }
-  ],
-  "massProduction": [
-    {
-      "visual": "*change the base dressform to my measurements",
-      "animation": "",
-      "text": ""
-    }
-  ],
-  "Kicker": []
+  ]
 }
