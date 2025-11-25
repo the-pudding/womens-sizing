@@ -294,6 +294,10 @@
         animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
     }
   });
+
+  $effect(() => {
+    console.log(currentId)
+  });
 </script>
 
 <svelte:window bind:scrollY={scrollY} />

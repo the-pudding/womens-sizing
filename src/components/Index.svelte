@@ -10,6 +10,7 @@
 	import VanitySizes from "$components/womens_sizes/VanitySizesJD.svelte";
 	import Ransom from "$components/womens_sizes/Ransom.svelte";
 	import Proportions from "$components/womens_sizes/ProportionsJD.svelte";
+	import ProportionsGrid from "$components/womens_sizes/ProportionsGridJD.svelte";
 	import TitlePage from "$components/womens_sizes/TitlePage.svelte";
 	import Sewing from "$components/womens_sizes/Sewing.svelte";
 
@@ -24,6 +25,7 @@
 	<SizeChart />
 	<VanitySizes />
 	<Sewing />
+	<ProportionsGrid />
 	<!--  <History />
 	<Proportions />
 	<VanitySizes />
