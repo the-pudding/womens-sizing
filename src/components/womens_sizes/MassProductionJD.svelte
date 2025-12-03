@@ -5,9 +5,11 @@
     import * as d3 from 'd3';
     import bodice from "$svg/graded-sizes-full-bodice.svg";
     import { fade } from 'svelte/transition';
+    import ProportionsSVG from "$components/womens_sizes/ProportionsSVG.svelte";
 
     let value = $state(0);
     let containerWidth = $state(0);
+    let containerHeight = $state(0);
     let bodyTypes = ["Inverted Triangle", "Top Hourglass", "Oval", "Rectangle", "Hourglass", "Diamond", "Triangle", "Bottom Hourglass", "Spoon"];
 
     function handleStepChange(value) {
@@ -100,7 +102,7 @@
 
 <div class="outer-container" id="mass-production">
     <div class="sticky-container">
-        <div class="visual-container" id="bodice-svg" bind:clientWidth={containerWidth}>
+        <div class="visual-container" id="bodice-svg" bind:clientWidth={containerWidth} bind:clientHeight={containerHeight}>
             {#if value < 6}
                 <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
                     {@html bodice}
@@ -113,6 +115,11 @@
                             <p>{type}</p>
                         </div>
                     {/each}
+                </div>
+            {/if}
+            {#if value >= 8}
+                <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
+                    <ProportionsSVG {value} {containerWidth} {containerHeight}/>
                 </div>
             {/if}
         </div>
@@ -179,6 +186,7 @@
   
     .visual-container {
         width: 100%;
+        height: 100%;
         display: flex;
         position: relative;
         justify-content: center;
@@ -188,6 +196,7 @@
 
     .svg-wrapper {
         width: 100%;
+        height: 100%;
     }
 
     .body-type-grid {
