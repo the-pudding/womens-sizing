@@ -370,34 +370,30 @@
   "massProductionScroll": [
     {
       "step": "0",
-      "text": "Clothing sizes are optimized for mass production — not women’s bodies. \r\n\r\n\r\nNothing represents this more than a size 8."
+      "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \r\n\r\n\r\n<p>Nothing represents this more than a <span class=bold>size 8.</span></p>"
     },
     {
       "step": "1",
-      "text": "Fashion designers often use a size 8 as a starting point when making new design samples. They may test prototypes on people whose body measurements align with the brand’s size preferences, known as a fit model, and make alterations as needed."
+      "text": "Fashion designers often use size 8 size as a starting point. They may test prototypes on people whose body measurements align with the brand’s size preferences, known as a fit model, and make alterations as needed. Instead of repeating this process for each individual size, brands use a process called grading, which takes a mathematical formula to determine each next size up or down the range."
     },
     {
       "step": "2",
-      "text": "Most brands do not repeat this process for each individual size. Instead they use a process called grading, which takes a mathematical formula to determine each next size up or down the range."
+      "text": "The effect is like a Russian doll. Each size up is incrementally larger than the last, making it easier for factories to construct garments en masse, however it comes with several tradeoffs."
     },
     {
       "step": "3",
-      "text": "The effect is like a Russian doll. Each size up is incrementally larger than the last. \r\n\r\n\r\nThe uniform shapes make it easier for factories to construct garments en masse, however it comes with several tradeoffs."
-    },
-    {
-      "step": "4",
       "text": "For one, it’s hard to scale to a variety of larger sizes. The further and further away you get from a size 8, the more and more the proportions become distorted."
     },
     {
-      "step": "5",
+      "step": "4",
       "text": "It can also be expensive and impractical for manufacturers to produce multiple variations of clothes for diverse body shapes.\r\n\r\n\r\nHigh costs always come to play, particularly for plus-size apparel, which requires separate formulas and expertise to construct properly fitting garments. Even then, clothes aren’t guaranteed to fit because body shapes factor so heavily into what a person is able to wear, not to mention how it looks."
     },
     {
-      "step": "6",
+      "step": "5",
       "text": "Researchers have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to those told over the years to “dress for their body type.”"
     },
     {
-      "step": "7",
+      "step": "6",
       "text": "Age and race factor heavily into how our bodies are shaped. Genetics can influence everything from a person’s proportions to their bone structure, how they build muscle mass, or where their bodies tend to store fat. Only one body type, however, serves as the underlying blueprint for nearly every piece of women’s clothing: The hourglass silhouette."
     },
     {

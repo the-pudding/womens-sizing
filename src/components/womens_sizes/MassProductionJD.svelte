@@ -15,29 +15,16 @@
     function handleStepChange(value) {
         console.log(value)
         const centralSize = 8;
+        const baseSelector = "#bodice-svg svg g";
 
         if (value == "to-enter" || value == 0) {
-            d3.selectAll("#bodice-svg svg g")
-                .filter(function() {
-                    const id = d3.select(this).attr("id");
-                    return id !== "size8";
-                })
-                .transition()
-                .delay(function() {
-                    const id = d3.select(this).attr("id");
-                    const sizeNumber = parseInt(id.replace("size", ""));
-                    const distance = Math.abs(sizeNumber - centralSize);
-                    const inverseDelay = (8 - distance) * 150;
-                    
-                    return inverseDelay;
-                })
-                .duration(400)
-                .style("opacity", 0); 
+            d3.selectAll("#bodice-svg svg g").style("opacity", 0); 
             d3.selectAll("#bodice-svg svg #size8").style("opacity", 1);
-        } else if (value == 1) {
-            d3.selectAll("#bodice-svg svg g")
+        } else if (value == 2) {
+            d3.selectAll(baseSelector)
                 .filter(function() { 
-                    return d3.select(this).attr("id") !== `size${centralSize}`;
+                    const id = d3.select(this).attr("id");
+                    return id && id.startsWith("size") && id !== `size${centralSize}`;
                 })
                 .transition()
                 .delay(function() {
@@ -48,52 +35,23 @@
                 })
                 .duration(400)
                 .style("opacity", 1);
-            d3.selectAll("#bodice-svg svg #size0").attr("transform", `translate(0, 0)`)
-            d3.selectAll("#bodice-svg svg #size16").attr("transform", `translate(0, 0)`)
-        } else if (value == 2) {
-            d3.selectAll("#bodice-svg svg g")
-                .filter(function() {
+        } else if (value == 3) {
+            d3.selectAll(baseSelector)
+                .filter(function() { 
                     const id = d3.select(this).attr("id");
-                    return id !== "size8" && id !== "size0" && id !== "size16";
+                    return id && id.startsWith("mock");
                 })
                 .transition()
                 .delay(function() {
                     const id = d3.select(this).attr("id");
-                    const sizeNumber = parseInt(id.replace("size", ""));
+                    const sizeNumber = parseInt(id.replace("mock", ""));
                     const distance = Math.abs(sizeNumber - centralSize);
-                    const inverseDelay = (8 - distance) * 150;
-                    
-                    return inverseDelay;
+                    return distance * 150; // Apply the same distance-based delay
                 })
                 .duration(400)
-                .style("opacity", 0); 
-            d3.selectAll("#bodice-svg svg #size8, #bodice-svg svg #size0, #bodice-svg svg #size16").style("opacity", 1);
-            
-            d3.selectAll("#bodice-svg svg #size0")
-                .transition()
-                .delay(8*150)
-                .duration(800) 
-                .attr("transform", `translate(${-containerWidth}, 0)`);
-            
-            d3.selectAll("#bodice-svg svg #size16")
-                .transition()
-                .delay(8*150)
-                .duration(800) 
-                .attr("transform", `translate(${containerWidth}, 0)`);
-                
-            d3.selectAll("#bodice-svg svg #size8")
-                .transition()
-                .delay(8*150)
-                .duration(800)
-                .attr("transform", `translate(0, 0)`);
-        } else if (value == 3) {
-            d3.selectAll("#bodice-svg svg #size0, #bodice-svg svg #size8, #bodice-svg svg #size16")
-                .transition()
-                .delay(8*150)
-                .duration(800)
-                .attr("transform", `translate(0, 0)`);
+                .style("opacity", 1);
+            }
         }
-    }
 
     $effect(() => {
         handleStepChange(value)
@@ -103,21 +61,27 @@
 <div class="outer-container" id="mass-production">
     <div class="sticky-container">
         <div class="visual-container" id="bodice-svg" bind:clientWidth={containerWidth} bind:clientHeight={containerHeight}>
-            {#if value < 6}
+            {#if value < 5}
                 <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
+                    {#if value == "to-enter" || value == 0}
+                        <img transition:fade={{ duration: 400 }} src="/assets/graded-sizes-full-bodice.png" alt="flower shirt"/>
+                    {/if}
                     {@html bodice}
                 </div>
             {/if}
-            {#if value >= 6}
-                <div class="body-type-grid" transition:fade={{ duration: 400 }} style="transform: scale({value >= 8 ? 5 : 1});">
+            <div class="body-type-grid" style="transform: scale({value >= 7 ? 7 : 1});">
+                {#if value >= 5}
                     {#each bodyTypes as type, i}
-                        <div class="type">
+                        <div 
+                            transition:fade={{ duration: 400, delay: i * 150 }}
+                            class="type"
+                            class:highlight={value < 6 || (value >= 6 && type == "Hourglass")}>
                             <p>{type}</p>
                         </div>
                     {/each}
-                </div>
-            {/if}
-            {#if value >= 8}
+                {/if}
+            </div>
+            {#if value >= 7}
                 <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
                     <ProportionsSVG {value} {containerWidth} {containerHeight}/>
                 </div>
@@ -177,7 +141,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10%;
         top: 0;
         height: 100vh;
         width: 100%;
@@ -186,7 +149,8 @@
   
     .visual-container {
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1 / 1;
+        max-width: 800px;
         display: flex;
         position: relative;
         justify-content: center;
@@ -197,6 +161,20 @@
     .svg-wrapper {
         width: 100%;
         height: 100%;
+    }
+
+    :global(.svg-wrapper svg) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+    }
+
+    .svg-wrapper img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
     }
 
     .body-type-grid {
@@ -214,10 +192,23 @@
     .body-type-grid .type {
         width: calc(33.33% - 1rem);
         aspect-ratio: 1 / 1;
-        border: 1px solid black;
+        border: 1px solid var(--ws-blue);
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 0.3s ease-in;
+        opacity: 0.5;
+    }
+
+    .body-type-grid .highlight {
+        width: calc(33.33% - 1rem);
+        aspect-ratio: 1 / 1;
+        border: 4px solid var(--ws-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in;
+        opacity: 1;
     }
 
     .select-wrapper {
@@ -236,7 +227,6 @@
     }
     
     svg {
-      width: 100%;
       height: 100%;
     }
 
@@ -356,7 +346,7 @@
         padding-right: 2rem;
         padding-left: 2rem;
         font-family: var(--sans);
-        font-size: var(--20px);
+        font-size: var(--18px);
     }
     
     .step .text {
