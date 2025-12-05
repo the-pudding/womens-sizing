@@ -2,6 +2,7 @@
     import * as d3 from 'd3';
     import sizeCharts from '$data/sizeCharts.json';
     let { value, containerWidth, containerHeight } = $props();
+    import { fade } from 'svelte/transition';
 
     const medianMeasurements = {
         bustMin: 40,
@@ -101,68 +102,80 @@
     }
 </script>
 
-{#if containerWidth && containerHeight}
-    {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
-    <svg>
-        <g class="median-group">
-            <path 
-                d={medianPathData.fullPath} 
-                fill="#9ABBD9" 
-                stroke="none" 
-                opacity=0.3 />
-            <g class="med-bust">
-                <line 
-                    x1={medianPathData.bustLeft} 
-                    y1={medianPathData.yBust+36} 
-                    x2={medianPathData.bustRight} 
-                    y2={medianPathData.yBust+36} 
-                    stroke="black" 
-                    stroke-width="2" 
-                    stroke-dasharray="5,5" />
-                <text x={containerWidth/2} y={medianPathData.yBust+30} text-anchor="middle">Median Bust: NA*</text>
+{#if value >= 3}
+    <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
+    {#if containerWidth && containerHeight}
+        {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
+        <svg>
+            <g class="median-group" class:visible={value >= 4}>
+                <path 
+                    d={medianPathData.fullPath} 
+                    fill="#9ABBD9" 
+                    stroke="none" 
+                    opacity=0.3 />
+                <g class="med-bust">
+                    <line 
+                        x1={medianPathData.bustLeft} 
+                        y1={medianPathData.yBust+36} 
+                        x2={medianPathData.bustRight} 
+                        y2={medianPathData.yBust+36} 
+                        stroke="black" 
+                        stroke-width="2" 
+                        stroke-dasharray="5,5" />
+                    <text x={containerWidth/2} y={medianPathData.yBust+30} text-anchor="middle">Median Bust: NA*</text>
+                </g>
+                <g class="med-waist">
+                    <line 
+                        x1={medianPathData.waistLeft} 
+                        y1={medianPathData.yWaist} 
+                        x2={medianPathData.waistRight} 
+                        y2={medianPathData.yWaist} 
+                        stroke="black" 
+                        stroke-width="2" 
+                        stroke-dasharray="5,5" />
+                    <text x={containerWidth/2} y={containerHeight/2 - 6} text-anchor="middle">Median Waist: {medianMeasurements.waistMin}"</text>
+                </g>
+                <g class="med-hip">
+                    <line 
+                        x1={medianPathData.hipLeft} 
+                        y1={medianPathData.yHip-36} 
+                        x2={medianPathData.hipRight} 
+                        y2={medianPathData.yHip-36} 
+                        stroke="black" 
+                        stroke-width="2" 
+                        stroke-dasharray="5,5" />
+                    <text x={containerWidth/2} y={medianPathData.yHip-42} text-anchor="middle">Median Hip: {medianMeasurements.hipMin}"</text>
+                </g>
             </g>
-            <g class="med-waist">
-                <line 
-                    x1={medianPathData.waistLeft} 
-                    y1={medianPathData.yWaist} 
-                    x2={medianPathData.waistRight} 
-                    y2={medianPathData.yWaist} 
-                    stroke="black" 
-                    stroke-width="2" 
-                    stroke-dasharray="5,5" />
-                <text x={containerWidth/2} y={containerHeight/2 - 6} text-anchor="middle">Median Waist: {medianMeasurements.waistMin}"</text>
-            </g>
-            <g class="med-hip">
-                <line 
-                    x1={medianPathData.hipLeft} 
-                    y1={medianPathData.yHip-36} 
-                    x2={medianPathData.hipRight} 
-                    y2={medianPathData.yHip-36} 
-                    stroke="black" 
-                    stroke-width="2" 
-                    stroke-dasharray="5,5" />
-                <text x={containerWidth/2} y={medianPathData.yHip-42} text-anchor="middle">Median Hip: {medianMeasurements.hipMin}"</text>
-            </g>
-        </g>
-        {#each filteredApparel as dress, i}
-            {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
-            <g 
-                class="brand-group" 
-                id={`size-${dress.numericSizeMin}`}
-                class:visible={value >= 8}
-                role="tooltip"
-                >
-                {#each result.paths as path}
-                    <path class="hidden-path" d={path} />
-                    <path class="main-path" d={path} />
-                {/each}
-                <text class="label" x={result.textPositions.bustX - 10} y={30} text-anchor="end">{dress.bustMin}" </text>
-                <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 - 6} text-anchor="end">{dress.waistMin}"</text>
-                <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-42} text-anchor="end">{dress.hipMin}"</text>
-            </g>
-        {/each}
-    </svg>
-    {/if}
+            {#each filteredApparel as dress, i}
+                {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+                <g 
+                    class="brand-group" 
+                    id={`size-${dress.numericSizeMin}`}
+                    class:visible={value >= 3}
+                    role="tooltip"
+                    >
+                    {#each result.paths as path}
+                        <path class="hidden-path" d={path} />
+                        <path 
+                            class="main-path"
+                            class:highlight={
+                                (value == 3 && dress.numericSizeMin == 8) || 
+                                (value == 5 && dress.numericSizeMin == 18) ||
+                                (value == 6 && dress.numericSizeMin == 12)
+                            }
+                            d={path}
+                        />
+                    {/each}
+                    <text class="label" x={result.textPositions.bustX - 10} y={30} text-anchor="end">{dress.bustMin}" </text>
+                    <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 - 6} text-anchor="end">{dress.waistMin}"</text>
+                    <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-42} text-anchor="end">{dress.hipMin}"</text>
+                </g>
+            {/each}
+        </svg>
+        {/if}
+    </div>
+{/if}
 
 <style>
     svg {
@@ -183,8 +196,8 @@
 
     .brand-group .main-path {
         fill: none;
-        stroke: var(--ws-blue);
-        stroke-width: 1;
+        stroke: var(--ws-purple);
+        stroke-width: 2;
         transition: all 0.3s ease-in-out;
         pointer-events: none;
     }
@@ -207,7 +220,7 @@
         stroke-width: 4;
     }
 
-    .brand-group.highlight .main-path  {
+    .brand-group .main-path.highlight  {
         stroke: var(--ws-green) !important;
         stroke-width: 4 !important;
     }
@@ -233,6 +246,15 @@
     .brand-group.highlight .label {
         opacity: 1 !important;
         fill: var(--ws-green) !important;
+    }
+
+    .median-group {
+        opacity: 0;
+         transition: all 0.3s ease-in-out;
+    }
+
+    .median-group.visible {
+        opacity: 1;
     }
 
     .median-group text {

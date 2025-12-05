@@ -3,89 +3,43 @@
     import copy from "$data/copy.json";
     import Scrolly from '../helpers/Scrolly.svelte';
     import * as d3 from 'd3';
-    import bodice from "$svg/graded-sizes-full-bodice.svg";
     import { fade } from 'svelte/transition';
+    import Bodice from "$components/womens_sizes/Bodice.svelte";
     import ProportionsSVG from "$components/womens_sizes/ProportionsSVG.svelte";
+    import ProportionsGrid from "$components/womens_sizes/ProportionsGridJD.svelte";
+    import BodyTypesGrid from "$components/womens_sizes/BodyTypesGrid.svelte";
 
     let value = $state(0);
     let containerWidth = $state(0);
     let containerHeight = $state(0);
-    let bodyTypes = ["Inverted Triangle", "Top Hourglass", "Oval", "Rectangle", "Hourglass", "Diamond", "Triangle", "Bottom Hourglass", "Spoon"];
-
-    function handleStepChange(value) {
-        console.log(value)
-        const centralSize = 8;
-        const baseSelector = "#bodice-svg svg g";
-
-        if (value == "to-enter" || value == 0) {
-            d3.selectAll("#bodice-svg svg g").style("opacity", 0); 
-            d3.selectAll("#bodice-svg svg #size8").style("opacity", 1);
-        } else if (value == 2) {
-            d3.selectAll(baseSelector)
-                .filter(function() { 
-                    const id = d3.select(this).attr("id");
-                    return id && id.startsWith("size") && id !== `size${centralSize}`;
-                })
-                .transition()
-                .delay(function() {
-                    const id = d3.select(this).attr("id");
-                    const sizeNumber = parseInt(id.replace("size", ""));
-                    const distance = Math.abs(sizeNumber - centralSize);
-                    return distance * 150;
-                })
-                .duration(400)
-                .style("opacity", 1);
-        } else if (value == 3) {
-            d3.selectAll(baseSelector)
-                .filter(function() { 
-                    const id = d3.select(this).attr("id");
-                    return id && id.startsWith("mock");
-                })
-                .transition()
-                .delay(function() {
-                    const id = d3.select(this).attr("id");
-                    const sizeNumber = parseInt(id.replace("mock", ""));
-                    const distance = Math.abs(sizeNumber - centralSize);
-                    return distance * 150; // Apply the same distance-based delay
-                })
-                .duration(400)
-                .style("opacity", 1);
-            }
-        }
-
-    $effect(() => {
-        handleStepChange(value)
-    })
+    let parentWidth = $state(0);
+    let parentHeight = $state(0);
 </script>
 
 <div class="outer-container" id="mass-production">
     <div class="sticky-container">
-        <div class="visual-container" id="bodice-svg" bind:clientWidth={containerWidth} bind:clientHeight={containerHeight}>
-            {#if value < 5}
-                <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
-                    {#if value == "to-enter" || value == 0}
-                        <img transition:fade={{ duration: 400 }} src="/assets/graded-sizes-full-bodice.png" alt="flower shirt"/>
-                    {/if}
-                    {@html bodice}
-                </div>
-            {/if}
-            <div class="body-type-grid" style="transform: scale({value >= 7 ? 7 : 1});">
-                {#if value >= 5}
-                    {#each bodyTypes as type, i}
-                        <div 
-                            transition:fade={{ duration: 400, delay: i * 150 }}
-                            class="type"
-                            class:highlight={value < 6 || (value >= 6 && type == "Hourglass")}>
-                            <p>{type}</p>
-                        </div>
-                    {/each}
-                {/if}
+        <div class="visual-container">
+            <div class="el-wrapper">
+                <Bodice {value} />
             </div>
-            {#if value >= 7}
-                <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
-                    <ProportionsSVG {value} {containerWidth} {containerHeight}/>
-                </div>
-            {/if}
+            <div 
+                class="el-wrapper proportion-grid" 
+                bind:clientWidth={containerWidth} 
+                bind:clientHeight={containerHeight}
+                style="transform: scale({value >= 7 ? 0.2 : 1}) 
+                        translateX({value >= 7 ? '-1000px' : 0});
+                        opacity: {value >=7 ? 0 : 1};"
+            >
+                <ProportionsSVG {value} {containerWidth} {containerHeight}/>
+            </div>
+            <div class="grid-wrapper"
+                bind:clientWidth={parentWidth} 
+                bind:clientHeight={parentHeight}>
+                <ProportionsGrid {value} {parentWidth} {parentHeight}/>
+            </div>
+            <div class="el-wrapper">
+                <BodyTypesGrid {value} />
+            </div>
         </div>
     </div>
 
@@ -149,13 +103,38 @@
   
     .visual-container {
         width: 100%;
-        aspect-ratio: 1 / 1;
-        max-width: 800px;
+        height: 100%;
         display: flex;
         position: relative;
         justify-content: center;
         align-items: center;
         padding-bottom: 0;
+    }
+
+    .el-wrapper {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        max-width: 800px;
+        position: absolute;
+    }
+
+    .proportion-grid {
+        transition: all 0.3s ease-in;
+        transform-origin: center center;
+        max-width: 1000px;
+    }
+
+    .grid-wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
     }
 
     .svg-wrapper {
@@ -329,7 +308,7 @@
         line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--18px);
+        font-size: var(--16px);
     }
     
     .scrolly-outer {
@@ -346,7 +325,7 @@
         padding-right: 2rem;
         padding-left: 2rem;
         font-family: var(--sans);
-        font-size: var(--18px);
+        font-size: var(--16px);
     }
     
     .step .text {

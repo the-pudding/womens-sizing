@@ -1,18 +1,15 @@
 <script>
-    import { onMount } from 'svelte';
-    import copy from "$data/copy.json";
-    import Scrolly from '../helpers/Scrolly.svelte';
-    import Ransom from "$components/womens_sizes/Ransom.svelte";
-    import Leet from "$components/womens_sizes/Leet.svelte";
-    import Select from "$components/helpers/Select.svelte";
     import sizeCharts from '$data/sizeCharts.json';
-	import { on } from 'svelte/events';
     import * as d3 from 'd3';
+    import { fade } from 'svelte/transition';
+
+    let { value, parentWidth, parentHeight } = $props();
 
     let containerHeight = $state(0);
     let containerWidth = $state(0);
     const margin = {top: 0, bottom: 0, left: 32, right: 32}
-    let value = $state(0);
+
+    let brandPositions = $state([]);
     
     let tooltipVisible = $state(false);
     let tooltipX = $state();
@@ -25,22 +22,6 @@
     const brands = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.brand))];
     let selectedBrand = $state("J.Crew");
 
-    console.log(brands)
-
-    function handleBrandChange(event) {
-        selectedBrand = event.detail;
-        // console.log("Selected brand:", selectedBrand);
-    }
-
-    const filteredApparel = $derived(sizeCharts.filter(
-      d => d.brand == selectedBrand 
-        && d.sizeRange == "Regular"
-        && d.garmentType == "Apparel"
-    ));
-
-    const minMeasurement = d3.min(sizeCharts, d => parseFloat(d.waistMin));
-    const maxMeasurement = d3.max(sizeCharts, d => parseFloat(d.hipMin));
-
     const medianMeasurements = {
         bustMin: 40,
         waistMin: 37.68,
@@ -48,8 +29,34 @@
     };
 
     const xScale = $derived(d3.scaleLinear()
-        .domain([20, 65])
+        .domain([20, 60])
         .range([0, containerWidth - margin.left - margin.right]));
+
+    // EVENTS
+    function handleMouseEnter(dress, e) {
+        let group = d3.select(e.currentTarget);
+
+        group.classed("highlight", true);
+        
+        tooltipBrand = dress.brand;
+        tooltipBust = dress.bustMin;
+        tooltipWaist = dress.waistMin;
+        tooltipHip = dress.hipMin;
+        tooltipX = e.x+10;
+        tooltipY = e.y+10;
+        tooltipVisible = true;
+    }
+
+    function handleMouseExit() {
+        tooltipVisible = false;
+
+        d3.selectAll(".brand-group").classed("highlight", false);
+    }
+
+    function handleBrandChange(event) {
+        selectedBrand = event.detail;
+        // console.log("Selected brand:", selectedBrand);
+    }
 
     // draws the paths
     function createPaths(dress, centerX, offsetY, type) {  
@@ -127,64 +134,109 @@
         };
       }
     }
-    function handleMouseEnter(dress, e) {
-        let group = d3.select(e.currentTarget);
 
-        group.classed("highlight", true);
+    // calcs grid positions
+    function calculateGridPositions() {
+        if (!parentWidth || !parentHeight) return;
+
+        const PADDING_PX = 16;
+        const PADDED_WIDTH = parentWidth - PADDING_PX * 2;
+        const PADDED_HEIGHT = parentHeight - PADDING_PX * 2;
+        const GRID_CALC_WIDTH = Math.max(1, PADDED_WIDTH); 
+        const GRID_CALC_HEIGHT = Math.max(1, PADDED_HEIGHT);
+        const totalItems = brands.length;
+        const GRID_GAP = 0;
+
+        let cols;
+        if (GRID_CALC_WIDTH > 900) {
+            cols = 5;
+        } else {
+            cols = 3;
+        }
+
+        let rows = Math.ceil(totalItems / cols);
+
+        const ITEM_WIDTH_PX = (GRID_CALC_WIDTH - (cols - 1) * GRID_GAP) / cols;
+        const VISUAL_CONTAINER_HEIGHT = ITEM_WIDTH_PX * (2 / 3);
+        const HEADER_HEIGHT = 25;
+        const ITEM_HEIGHT_PX = VISUAL_CONTAINER_HEIGHT + HEADER_HEIGHT;
+        const gridHeight = rows * ITEM_HEIGHT_PX + (rows - 1) * GRID_GAP;
+        const startX = 0; 
+        const startY = (GRID_CALC_HEIGHT - gridHeight) / 2;
+        const finalX = GRID_CALC_WIDTH / 2 - ITEM_WIDTH_PX / 2;
+        const finalY = GRID_CALC_HEIGHT / 2 - ITEM_HEIGHT_PX / 2;
+        const newPositions = brands.map((brand, i) => {
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const initialX = startX + col * ITEM_WIDTH_PX + col * GRID_GAP;
+            const initialY = startY + row * ITEM_HEIGHT_PX + row * GRID_GAP;
+            const isCentered = value >= 9;
+            const currentX = isCentered ? finalX : initialX;
+            const currentY = isCentered ? finalY : initialY;
+            const currentOpacity = isCentered ? 0 : 1;
+
+            return {
+                brand,
+                x: currentX,
+                y: currentY,
+                opacity: currentOpacity
+            };
+        });
         
-        tooltipBrand = dress.brand;
-        tooltipBust = dress.bustMin;
-        tooltipWaist = dress.waistMin;
-        tooltipHip = dress.hipMin;
-        tooltipX = e.x+10;
-        tooltipY = e.y+10;
-        tooltipVisible = true;
+        brandPositions = newPositions;
     }
 
-    function handleMouseExit() {
-        tooltipVisible = false;
-
-        d3.selectAll(".brand-group").classed("highlight", false);
-    }
+    $effect(() => {
+        calculateGridPositions();
+        console.log(parentWidth, parentHeight)
+    });
 </script>
 
-<div class="outer-container" id="proportions">
-    {#each brands as brand, i}
-        {@const filteredApparel = sizeCharts.filter(
-            d => d.brand == brand
-                && d.sizeRange == "Regular"
-                && d.garmentType == "Apparel"
-            )
-        }
-        <div class="brand-container">
-            <h3>{brand}</h3>
-            <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-                {#if containerWidth && containerHeight}
-                    {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
-                    <svg>
-                        <g class="median-group">
-                            <path 
-                                d={medianPathData.fullPath} 
-                                fill="#9ABBD9" 
-                                stroke="none" 
-                                opacity=0.3 />
-                            {#each filteredApparel as dress, i}
-                                {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
-                                <g 
-                                    class="brand-group" 
-                                    id={`size-${dress.numericSizeMin}`}
-                                    >
-                                    {#each result.paths as path}
-                                        <path class="main-path" d={path} />
-                                    {/each}
-                                </g>
-                            {/each}
-                    </svg>
-                {/if}
+{#if value >= 7}
+    <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
+        {#each brandPositions as pos (pos.brand)}
+            {@const brand = pos.brand}
+            {@const filteredApparel = sizeCharts.filter(
+                d => d.brand == brand
+                    && d.sizeRange == "Regular"
+                    && d.garmentType == "Apparel"
+                )
+            }
+            <div class="brand-container"
+                style="
+                    transform: translate3d({pos.x}px, {pos.y}px, 0);
+                    opacity: {pos.opacity};
+                ">
+                <h3>{brand}</h3>
+                <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+                    {#if containerWidth && containerHeight}
+                        {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
+                        <svg>
+                            <g class="median-group">
+                                <path 
+                                    d={medianPathData.fullPath} 
+                                    fill="#9ABBD9" 
+                                    stroke="none" 
+                                    opacity=0.3 />
+                                {#each filteredApparel as dress, i}
+                                    {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+                                    <g 
+                                        class="brand-group" 
+                                        id={`size-${dress.numericSizeMin}`}
+                                        >
+                                        {#each result.paths as path}
+                                            <path class="main-path" d={path} />
+                                        {/each}
+                                    </g>
+                                {/each}
+                            </g>
+                        </svg>
+                    {/if}
+                </div>
             </div>
-        </div>
-    {/each}
-</div>
+        {/each}
+    </div>
+{/if}
 
 <style>
     #tooltip {
@@ -215,23 +267,30 @@
     }
 
     .outer-container {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        gap: 2rem;
-        margin-bottom: 2rem;
+        position: relative; 
+        width: 100%;     
+        height: 100vh;      
+        display: block; 
+        margin: 0;
+        padding: 4rem;
     }
 
     .brand-container {
-        width: 100%;
-        max-width: 200px;
+        width: 33.333%;
+        position: absolute; 
+        top: 0; 
+        left: 0; 
         display: flex;
         flex-direction: column;
         align-items: center;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    opacity 0.6s ease-out;
+    }
+
+    @media (min-width: 900px) { 
+        .brand-container {
+            width: 20%; 
+        }
     }
     
     .sticky-container {
@@ -250,8 +309,8 @@
         display: flex;
         position: relative;
         justify-content: center;
-        align-items: flex-end; /* Align to bottom to keep 20% space at top */
-        padding-bottom: 0; /* Images touch bottom of screen */
+        align-items: flex-end;
+        padding-bottom: 0;
     }
 
     h3 {
