@@ -188,11 +188,10 @@
 
     $effect(() => {
         calculateGridPositions();
-        console.log(parentWidth, parentHeight)
     });
 </script>
 
-{#if value >= 7}
+{#if value >= 7 && value !== "exit"}
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
         {#each brandPositions as pos (pos.brand)}
             {@const brand = pos.brand}

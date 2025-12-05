@@ -427,5 +427,19 @@
     "Triangle",
     "Bottom Hourglass",
     "Spoon"
+  ],
+  "outro": [
+    {
+      "type": "text",
+      "value": "In many ways, the fashion industry at large doesn’t even try to serve most women. The modern sizing system is based on the body measurements of a single group: Mostly young, WWII-era white women. No women of color were originally included. And ASTM has said itself that it is not looking to create sizes for every woman in the U.S. Instead size ranges are tailored to conventional, Western beauty standards, as well as what clothing brands consider to be their ideal customer."
+    },
+    {
+      "type": "text",
+      "value": "“It is important to note that the body measurements herein have been derived from designer experience and market observations and cross checked with available databases in the attempt to identify current customer characteristics and changing proportions and not from new nationwide anthropometric research. —ASTM’s 1995 standardized sizing chart"
+    },
+    {
+      "type": "text",
+      "value": "But who gets to be considered a brand’s target demographic?"
+    }
   ]
 }

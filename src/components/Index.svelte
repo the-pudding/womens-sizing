@@ -13,6 +13,7 @@
 	import ProportionsGrid from "$components/womens_sizes/ProportionsGridJD.svelte";
 	import TitlePage from "$components/womens_sizes/TitlePage.svelte";
 	import Sewing from "$components/womens_sizes/Sewing.svelte";
+	import Outro from "$components/womens_sizes/Outro.svelte";
 
 
 </script>
@@ -26,7 +27,7 @@
 	<VanitySizes />
 	<Sewing />
 	<MassProduction />
-	<ProportionsGrid />
+	<Outro />
 	<!--  <History />
 	<Proportions />
 	<VanitySizes />
