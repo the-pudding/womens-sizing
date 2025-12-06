@@ -2,6 +2,7 @@
     import sizeCharts from '$data/sizeCharts.json';
     import * as d3 from 'd3';
     import { fade } from 'svelte/transition';
+    import Select from "$components/helpers/Select.svelte";
 
     let { value, parentWidth, parentHeight } = $props();
 
@@ -21,6 +22,64 @@
 
     const brands = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.brand))];
     let selectedBrand = $state("J.Crew");
+    const sizeListMin = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMin))];
+    const sizeListMax = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMax))];
+    const allUniqueSizes = [...new Set(
+        [...sizeListMin, ...sizeListMax]
+            // Filter out null (js type) and "null" (string type)
+            .filter(d => d !== null && d !== "null")
+            // Convert all remaining values to strings for consistent sorting
+            .map(String)
+    )];
+
+    const zeroStrings = [];
+    const otherSizes = [];
+
+    allUniqueSizes.forEach(size => {
+        // Check if the string consists only of '0's (handles "0", "00", "000")
+        if (/^0+$/.test(size)) {
+            zeroStrings.push(size);
+        } else {
+            otherSizes.push(size);
+        }
+    });
+
+    zeroStrings.sort((a, b) => b.length - a.length);
+
+    otherSizes.sort((a, b) => {
+        const parseSize = (size) => {
+            const s = String(size);
+            const isWide = s.toUpperCase().endsWith('W');
+            // Use parseFloat instead of parseInt to handle cases where the size might be a decimal, 
+            // though parseInt is usually fine for clothing sizes.
+            const numericBase = parseFloat(s); 
+            return { numericBase, isWide };
+        };
+
+        const parsedA = parseSize(a);
+        const parsedB = parseSize(b);
+
+        // Primary sort: Numeric value
+        const numericDiff = parsedA.numericBase - parsedB.numericBase;
+
+        if (numericDiff !== 0) {
+            return numericDiff;
+        }
+
+        // Secondary sort: Handle the 'W' suffix (16 < "16W")
+        if (parsedA.isWide && !parsedB.isWide) {
+            return 1;
+        }
+        if (!parsedA.isWide && parsedB.isWide) {
+            return -1;
+        }
+        
+        return 0;
+    });
+
+    const finalSortedSizeList = ["All sizes", ...zeroStrings, ...otherSizes];
+    
+    console.log(finalSortedSizeList)
 
     const medianMeasurements = {
         bustMin: 40,
@@ -32,7 +91,14 @@
         .domain([20, 60])
         .range([0, containerWidth - margin.left - margin.right]));
 
+    let selectedSize = $state("All sizes");
+
     // EVENTS
+    function handleSizeChange(event) {
+        selectedSize = event.detail;
+        // console.log("Selected brand:", selectedBrand);
+    }
+
     function handleMouseEnter(dress, e) {
         let group = d3.select(e.currentTarget);
 
@@ -51,11 +117,6 @@
         tooltipVisible = false;
 
         d3.selectAll(".brand-group").classed("highlight", false);
-    }
-
-    function handleBrandChange(event) {
-        selectedBrand = event.detail;
-        // console.log("Selected brand:", selectedBrand);
     }
 
     // draws the paths
@@ -192,12 +253,16 @@
 </script>
 
 {#if value >= 7 && value !== "exit"}
+    <div class="select-wrapper" class:visible={value == 7 || value == 8}>
+        <p>Show</p>
+        <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
+    </div>
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
         {#each brandPositions as pos (pos.brand)}
             {@const brand = pos.brand}
             {@const filteredApparel = sizeCharts.filter(
                 d => d.brand == brand
-                    && d.sizeRange == "Regular"
+                    // && d.sizeRange == "Regular"
                     && d.garmentType == "Apparel"
                 )
             }
@@ -220,7 +285,9 @@
                                 {#each filteredApparel as dress, i}
                                     {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
                                     <g 
-                                        class="brand-group" 
+                                        class="brand-group"
+                                        class:selected={selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax} 
+                                        class:faded={selectedSize && !(selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax || selectedSize == "All sizes")}
                                         id={`size-${dress.numericSizeMin}`}
                                         >
                                         {#each result.paths as path}
@@ -277,6 +344,7 @@
     .brand-container {
         width: 33.333%;
         position: absolute; 
+        padding: 1rem;
         top: 0; 
         left: 0; 
         display: flex;
@@ -322,6 +390,13 @@
 
     .select-wrapper {
         position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: var(--14px);
         top: 2rem;
         left: 2rem;
         opacity: 0;
@@ -357,6 +432,14 @@
         stroke-width: 1;
         transition: all 0.3s ease-in-out;
         pointer-events: none;
+    }
+
+    .brand-group.selected .main-path {
+        stroke: var(--ws-green) !important;
+        stroke-width: 3 !important;
+    }
+    .brand-group.faded .main-path {
+        opacity: 0.3;
     }
 
     .brand-group .hidden-path {

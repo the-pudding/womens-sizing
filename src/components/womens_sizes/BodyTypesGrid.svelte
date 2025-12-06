@@ -23,6 +23,13 @@
         {#each copy.bodyTypes as bodyType, i} 
             {@const slugged = bodyType.toLowerCase().replace(/\s+/g, '-')}
             <div class="box" class:visible={(value == 9 && bodyType == "Hourglass") || value >= 10}>
+                <div 
+                    class="bar"
+                    style="transform: translateY({
+                        value == 11 && bodyType == "Hourglass" ? '88%' : 
+                        value == 11 && bodyType == "Rectangle" ? '51%' : '100%' });"
+                >
+                </div>
                 <p>{bodyType}</p>
                 <div class="svg-wrapper">
                     {@html svgArray[i]}
@@ -47,13 +54,15 @@
     .box {
         width: 100%;
         aspect-ratio: 1 / 1;
-        border: 1px solid var(--ws-blue);
+        border: 2px solid var(--ws-blue);
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         opacity: 0;
         transition: all 0.3s ease-in;
+        overflow: hidden;
     }
 
     .box.visible {
@@ -80,5 +89,18 @@
         display: block;
         object-fit: contain;
         position: relative;
+    }
+
+    .bar {
+        width: 100%;
+        height:100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--ws-green);
+        z-index: 1;
+        mix-blend-mode: multiply;
+        opacity: 0.5;
+        transition: transform 0.3s ease-in;
     }
 </style>
