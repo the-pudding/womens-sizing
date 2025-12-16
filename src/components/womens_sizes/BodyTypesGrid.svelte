@@ -16,6 +16,18 @@
     import spoon from "$svg/bodyTypes/spoon.svg";
 
     const svgArray = [invertedTriangle, topHourglass, oval, rectangle, hourglass, diamond, triangle, bottomHourglass, spoon];
+
+    const percentType = {
+        "Inverted Triangle": 0.5,
+        "Top Hourglass": 3,
+        "Oval": 0,
+        "Rectangle": 49,
+        "Hourglass": 11.8,
+        "Diamond": 0,
+        "Triangle": 4.8,
+        "Bottom Hourglass": 9.4,
+        "Spoon": 21.5
+    }
 </script>
 
 {#if value >= 9}
@@ -26,8 +38,7 @@
                 <div 
                     class="bar"
                     style="transform: translateY({
-                        value == 11 && bodyType == "Hourglass" ? '88%' : 
-                        value == 11 && bodyType == "Rectangle" ? '51%' : '100%' });"
+                        value == 11 ? `${100-percentType[bodyType]}%` : '100%' });"
                 >
                 </div>
                 <p>{bodyType}</p>
