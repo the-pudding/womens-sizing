@@ -113,7 +113,7 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        margin: 0 auto;
+        margin: 1rem auto ;
     }
 
     span.ransom-letter {

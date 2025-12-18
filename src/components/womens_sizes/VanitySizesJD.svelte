@@ -69,6 +69,7 @@
             .domain([20, 42])
             .range([0, containerWidth - 32])
     );
+    const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
     
     // SCROLLY
     let value = $state(0);
@@ -131,7 +132,9 @@
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
-                .call(d3.axisBottom(xScale));
+                .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
+                    return d % 2 === 0 ? `${d}"` : "";
+                }));
         }
     })
 </script>
@@ -148,14 +151,12 @@
         {/each}
     </div>
     <div class="sticky-container">
-        <div 
-            class="visual-container"
-        >
+        <div class="visual-container">
             <div class="chart-container" id="vanity-sizes">
                 {#each formData as year, i}
                     <div class="year-wrapper" class:visible={(year[0] == 1995 && value >= 0) || (year[0] == 2021 && value >= 1)}>
                         <div class="year-label">
-                            <p>{year[0]}</p>
+                            <p>{year[0]} sizes</p>
                         </div>
                         <div class="form-wrapper" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                             {#each year[1] as size, i}
@@ -183,6 +184,7 @@
                     <svg>
                         <g class="axis" transform="translate(16, 10)"></g>
                     </svg>
+                    <p class="axis-label">Inches</p>
                 </div>
                     <div 
                         class="highlight-box"
@@ -274,6 +276,19 @@
         position: relative;
     }
 
+    .axis-label {
+      width: 100%;
+      margin: -0.5rem 0 0 0;
+      font-family: var(--mono);
+      font-size: var(--14px);
+      font-weight: 700;
+      text-transform: uppercase;
+      text-anchor: middle;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .chart-container {
         width: 100%;
         padding: 2rem;
@@ -292,7 +307,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        height: 160px;
+        height: 200px;
         opacity: 0;
         transition: opacity 200ms ease-in-out;
     }
@@ -310,6 +325,7 @@
         font-family: var(--mono);
         font-weight: 700;
         font-size: var(--24px);
+        line-height: 1.25;
     }
 
     .form-wrapper {
@@ -426,7 +442,7 @@
 
     .highlight-box {
         background: rgba(154,187,217,0.3);
-        height: 100%;
+        height: 80%;
         position: absolute;
         top: 0%;
         z-index: 1;
@@ -508,8 +524,9 @@
         font-size: var(--18px);
     }
 
-    #step-3 p {
-        max-width: 600px;
+    #step-5  {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .step .text {

@@ -131,6 +131,7 @@
             .domain([15, 65])
             .range([0, containerWidth - margin.left - margin.right])
     );
+    const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
     // MEDIAN
     const medianWaistline = (() => {
@@ -182,7 +183,9 @@
         console.log({value})
         if (containerWidth > 0) {
             d3.select("#size-chart .x-axis g")
-                .call(d3.axisBottom(xScale));
+                .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
+                    return d % 5 === 0 ? `${d}"` : "";
+                }));
         }
     })
 </script>
@@ -200,6 +203,7 @@
     </div>
     <div class="sticky-container">
         <div class="visual-container">
+            <p class="axis-label">Inches</p>
             <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                  {#each filteredBrandData() as brand (brand.brandName)}
                     <!-- Get all sizes for each range -->
@@ -435,6 +439,17 @@
         justify-content: center;
         align-items: center;
         position: relative;
+    }
+
+    .axis-label {
+      position: absolute;
+      bottom: 1rem;
+      margin: 0 0 0 -1rem;
+      font-family: var(--mono);
+      font-size: var(--14px);
+      font-weight: 700;
+      text-transform: uppercase;
+      text-anchor: middle;
     }
 
     .chart-container {

@@ -1,5 +1,6 @@
 <script>
     import Ransom from "$components/womens_sizes/Ransom.svelte";
+    import Leet from "$components/womens_sizes/Leet.svelte";
     import copy from "$data/copy.json";
 
     console.log(copy.introBreak)
@@ -8,11 +9,9 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
+        <p class="mono"><Leet string="fit 4 a" /></p>
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"fit 4"} />  
-        </div>
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"a teen"} />  
+            <Ransom class="title-page-title" string={"teen"} />  
         </div>
 
         <div class="title-page-body">

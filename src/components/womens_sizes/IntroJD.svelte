@@ -31,7 +31,7 @@
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
   let containerHeight = $state(0);
-  let margin = { top: 20, right: 20, bottom: 20, left: 20 };
+  let margin = { top: 20, right: 20, bottom: 36, left: 20 };
   let width = $derived(containerWidth - margin.left - margin.right);
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
@@ -52,20 +52,20 @@
   * Allow script to filter here
   *****/
   let ASTMFilters = $derived(
-    currentId >= 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+    currentId >= 4 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? { year: "2021", sizeRange: "Women's" }
       : { year: "2015", sizeRange: "Junior's" }
   );
   // let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(currentId >= 3 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let omittedSizeFilters = $derived(currentId >= 2 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
   let valueKey = $derived(
-    currentId <= 3 || (currentId == "to-enter" && introScroll)
+    currentId <= 2 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 3 && currentId < 10) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 2 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
-      : currentId < 11
+      : currentId < 10
       ? "value20_29"
-      : currentId < 12
+      : currentId < 11
       ? "value30_39"
       : "value20over"
   );
@@ -101,7 +101,7 @@
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
-    let sizeType = currentId < 10 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
+    let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
     const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
 
 
@@ -126,8 +126,8 @@
 
       return {
         ...d,
-        alphaSize: currentId < 10 ? d[1][0].alphaSize : d[0],
-        size: currentId < 10 ? d[0] : d[1][0].size,
+        alphaSize: currentId < 9 ? d[1][0].alphaSize : d[0],
+        size: currentId < 9 ? d[0] : d[1][0].size,
         min,
         max
       }
@@ -245,13 +245,13 @@
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
         .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
-          return d % 5 === 0 ? d : "";
+          return d % 5 === 0 ? `${d}"` : "";
         }));
       }
 
     // Background band tweens
-    const targetY = currentId <= 2 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
-    const targetHeight = currentId <= 2 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
+    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
+    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
 
     // console.log({targetHeight})
@@ -260,28 +260,25 @@
         let highlightStart;
         let highlightWidth;
 
-        if (currentId == 2) {
+        if (currentId == 1) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId == 9 || (currentId == "to-enter" && !introScroll)) {
+        } else if (currentId == 8 || (currentId == "to-enter" && !introScroll)) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
-        } else if (currentId === 10) {
+        } else if (currentId === 9) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
         } else if (currentId === 10) {
-            highlightStart = xScale(currentSizeRanges[10].min);
-            highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
-        } else if (currentId === 11) {
             highlightStart = xScale(currentSizeRanges[9].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[9].min));
-          } else if (currentId === 12) {
+        } else if (currentId === 11) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
-        } else if (currentId === 13) {
+        } else if (currentId === 12) {
             highlightStart = xScale(currentSizeRanges[0].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
-        }  else if (currentId >= 14) {
+        }  else if (currentId >= 13) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[10].min));
         } else {
@@ -296,7 +293,7 @@
   });
 
   $effect(() => {
-    console.log(currentId)
+    console.log(currentId, currentSizeRanges)
   });
 </script>
 
@@ -309,10 +306,10 @@
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
-              <!-- <p class="title-text">{@html copy.introText}</p> -->
+              <p class="title-text">{@html copy.heroText}</p>
           </div>
       {/if}
-      {#if (currentId >= 3 && currentId < 8) || (currentId >= 9)}
+      {#if (currentId >= 2 && currentId < 7) || (currentId >= 8)}
         <div transition:fade={{duration: 500}} class="size-key">
           <p>{sizeLabel}</p>
           <p>Sizes: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
@@ -322,7 +319,8 @@
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 8 || currentId == 15 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        <p class="axis-label">Inches</p>
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
@@ -333,29 +331,29 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
-                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 2 || currentId == "to-enter" )}
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
-                  <text x={x + rectWidth / 2} y={currentId <= 2 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
+                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 2 || currentId == 7 || currentId == 8 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
+            <g class="highlight-band" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
           <g class="axis x-axis" 
               transform="translate(0, {height - margin.top - margin.bottom})"
-              opacity={currentId >= 3 ? 1 : 0}></g>
+              opacity={currentId >= 2 ? 1 : 0}></g>
 
           {#if positionedAvatars() && avatarImages}
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentileMid' && currentId <= 2 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
-                  opacity={(point.type == 'percentileMid' && currentId <= 2 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 2 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
                   style="transition: {currentId == 'to-enter' 
                     ? 'none' 
                     : `transform 0.5s ease-in-out, opacity 0.5s ease-in-out ${point.randomDelay}s`
@@ -374,7 +372,7 @@
                             class="avatar"
                             class:colorized={
                               point.type == 'percentileMid' ||
-                              (currentId == 6 && (point.id == 'p10' || point.id == 'p90'))
+                              (currentId == 5 && (point.id == 'p10' || point.id == 'p90'))
                             }
                           />
                       {/each}
@@ -391,7 +389,10 @@
   <div class="scrolly-outer">
     <Scrolly bind:value>
       {#each filteredStages as stage}
-        <div class="step step{stage.id}">
+        <div 
+          class="step step{stage.id}"
+          style="justify-content: {stage.id >= 10 ? 'flex-start' : 'flex-end'}"
+        >
           {#if stage.text}
             <div class="text">
               <Text copy={stage.text} />
@@ -577,6 +578,23 @@
       padding-top: 90vh;
     }
 
+    .title-text {
+      font-family: var(--sans);
+      font-size: var(--18px);
+      margin-top: 2rem;
+    }
+
+    .axis-label {
+      position: absolute;
+      bottom: 1rem;
+      margin: 0 0 0 -1rem;
+      font-family: var(--mono);
+      font-size: var(--14px);
+      font-weight: 700;
+      text-transform: uppercase;
+      text-anchor: middle;
+    }
+
     .step {
         height: auto;
         padding: 40vh 5% 70vh;
@@ -604,7 +622,7 @@
     }
     .step.step1, .step2, .step7, .step11 {
       /* padding-right: 30%; */
-      justify-content: center;
+      justify-content: end;
     }
 
      @media (max-width: 900px) {

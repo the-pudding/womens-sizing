@@ -2,7 +2,7 @@
 body {
 	background-color: var(--color-bg, white);
 	color: var(--color-fg, black);
-	line-height: 1.4;
+	line-height: 1.65;
 	font-family: var(--font-body, serif);
 	font-feature-settings: 'kern' 1, 'onum' 0, 'liga' 0, 'tnum' 1;
 	text-rendering: optimizeLegibility;
