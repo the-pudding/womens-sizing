@@ -19,9 +19,6 @@
 <div class="outer-container" id="mass-production">
     <div class="sticky-container">
         <div class="visual-container">
-            <div class="el-wrapper">
-                <Bodice {value} />
-            </div>
             <div 
                 class="el-wrapper proportion-grid" 
                 bind:clientWidth={containerWidth} 

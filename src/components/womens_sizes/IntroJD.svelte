@@ -320,7 +320,9 @@
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
         style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
-        <p class="axis-label">Inches</p>
+        {#if currentId >= 2}
+          <p class="axis-label">Inches</p>
+        {/if}
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}

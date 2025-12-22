@@ -333,17 +333,17 @@
         <p><strong>Size range:</strong> {tooltipSizeRange}</p>
         <p><strong>Alpha size:</strong> {tooltipAlphaSize}</p>
         <p><strong>Numeric size:</strong> 
-            {#if tooltipNumericSizeMax}
+            {#if tooltipNumericSizeMax && tooltipNumericSizeMax !== tooltipNumericSizeMin}
                 {tooltipNumericSizeMin}–{tooltipNumericSizeMax}
             {:else}
                 {tooltipNumericSizeMin}
             {/if}
         </p>
         <p><strong>Waist size:</strong> 
-            {#if tooltipWaistMax}
-                {tooltipWaistMin}–{tooltipWaistMax}
+            {#if tooltipWaistMax && tooltipWaistMax !== tooltipWaistMin}
+                {tooltipWaistMin}–{tooltipWaistMax}"
             {:else}
-                {tooltipWaistMin}
+                {tooltipWaistMin}"
             {/if}
         </p>
     </div>

@@ -73,11 +73,4 @@
         height: 100%;
         z-index: 1;
     }
-
-    :global(#bodice-svg svg) {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-    }
 </style>
