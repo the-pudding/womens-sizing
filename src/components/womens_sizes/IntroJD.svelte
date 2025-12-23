@@ -254,8 +254,6 @@
     const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
 
-    // console.log({targetHeight})
-
     if (currentSizeRanges) {
         let highlightStart;
         let highlightWidth;
@@ -290,10 +288,6 @@
 
         animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
     }
-  });
-
-  $effect(() => {
-    console.log(currentId, currentSizeRanges)
   });
 </script>
 

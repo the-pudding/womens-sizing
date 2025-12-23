@@ -87,7 +87,6 @@
 
         const avatars = avatarData;
         
-        console.log(avatars)
         if (!avatars || !xScale || !width || !height || avatars.length === 0) return [];
 
         const data = avatars.map(d => ({ ...d }));

@@ -2,8 +2,6 @@
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
     import copy from "$data/copy.json";
-
-    console.log(copy.introBreak)
 </script>
 
 

@@ -882,10 +882,6 @@
         
         renderAvatars(avatarsGroup, points, avatarWidth, avatarHeight);
     }
-
-    $effect(() => {
-        console.log({value})
-    })
 </script>
   
 <div class="outer-container">

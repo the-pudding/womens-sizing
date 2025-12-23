@@ -78,8 +78,6 @@
     });
 
     const finalSortedSizeList = ["All sizes", ...zeroStrings, ...otherSizes];
-    
-    console.log(finalSortedSizeList)
 
     const medianMeasurements = {
         bustMin: 40,

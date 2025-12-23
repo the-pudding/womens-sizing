@@ -76,8 +76,6 @@
     let sizeType = currentId < 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
     const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
 
-    // console.log(sizeType)
-
     const mappedSizes = sizeGroups.map((d, i) => {
       let min;
       let max;
@@ -191,7 +189,6 @@
   }
 
   $effect(() => {
-    // console.log({currentId, currentSizeRanges})
     // Sets up axis
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
@@ -204,8 +201,6 @@
     const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
     const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
-
-    // console.log({targetHeight})
 
     if (currentSizeRanges) {
         let highlightStart;

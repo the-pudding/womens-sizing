@@ -180,7 +180,6 @@
 
     // REACTIVE 
     $effect(() => {
-        console.log({value})
         if (containerWidth > 0) {
             d3.select("#size-chart .x-axis g")
                 .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {

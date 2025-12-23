@@ -7,7 +7,6 @@
 
 
     function handleStepChange(value) {
-        console.log(value)
         const centralSize = 8;
         const baseSelector = "#bodice-svg svg g";
 

@@ -61,8 +61,6 @@
         d => d.year
     ).sort((a, b) => a[0] - b[0]);
 
-    console.log({ASTMsizes, formData})
-
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
@@ -128,7 +126,6 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
-        console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")

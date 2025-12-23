@@ -27,7 +27,6 @@
 
     function handleBrandChange(event) {
         selectedBrand = event.detail;
-        // console.log("Selected brand:", selectedBrand);
     }
 
     const filteredApparel = $derived(sizeCharts.filter(
