@@ -552,6 +552,32 @@
         margin: 0;
         pointer-events: auto;
     }
+    
+    :global(.interact) {
+        font-family: var(--mono);
+        font-weight: 700; 
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+    }
+
+    :global(.interact::before) {
+        content: '';
+        background-image: url('$svg/interact.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        margin: -0.5rem 0.25rem 0 0;
+        animation: wiggle 0.75s infinite;
+    }
+
+    @keyframes wiggle {
+        0% { transform: translateX(0px); }
+        50% { transform: translateX(1px); }
+        100% { transform: translateX(0px); }
+    }
 
     @media (max-width: 768px) {
         .step .text {

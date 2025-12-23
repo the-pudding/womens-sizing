@@ -30,7 +30,7 @@
     }
 </script>
 
-{#if value >= 7 && value <= 9 && value !== "exit"}
+{#if value >= 7}
     <div class="body-types-grid" transition:fade={{ duration: 400 }}>
         {#each copy.bodyTypes as bodyType, i} 
             {@const slugged = bodyType.toLowerCase().replace(/\s+/g, '-')}
@@ -38,7 +38,7 @@
                 <div 
                     class="bar"
                     style="transform: translateY({
-                        value == 9 ? `${100-percentType[bodyType]}%` : '100%' });"
+                        value >= 9 ? `${100-percentType[bodyType]}%` : '100%' });"
                 >
                 </div>
                 <p>{bodyType}</p>

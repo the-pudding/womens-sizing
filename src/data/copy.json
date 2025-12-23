@@ -269,6 +269,14 @@
       "displayPlus": "true",
       "brandFilter": "null",
       "text": "<p>Even the symbols used to describe certain sizes hold a wide range of meanings.</p>  <p>For the average adult woman, there are as many as TK10 different ways to describe the garments that she could conceivably wear from these brands alone.</p>"
+    },
+    {
+      "id": "10",
+      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Interact with the dots for more information about each brand and size.</p>"
+    },
+    {
+      "id": "11",
+      "text": ""
     }
   ],
   "vanityIntro": [
@@ -325,7 +333,11 @@
       "text": "What’s noteworthy is that over this 30-year period, the median adult woman has almost always fit the <span class=bold>size 18</span> that was available to her at the time. Vanity sizing has effectively helped manufacturers keep up to pace with demographic shifts in the U.S. But only for the smallest half of all adult women."
     },
     {
-      "step": "4",
+      "step": "5",
+      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Interact with the dress forms to see how sizes changed from 1995 to 2021.</p>"
+    },
+    {
+      "step": "6",
       "visual": "display 1995 + 2021 astm sizes + median waistline markers",
       "animation": "highlight sizes 18 for both ranges",
       "text": ""
@@ -396,7 +408,7 @@
     },
     {
       "step": "6",
-      "text": "Explore more: Use the selector in the top left, to highlight a size."
+      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Use the selector in the top left corner, to highlight a size.</p>"
     },
     {
       "step": "7",

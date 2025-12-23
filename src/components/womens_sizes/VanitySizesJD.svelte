@@ -462,11 +462,10 @@
         padding: 0.25rem 0.5rem;
         font-family: var(--mono);
         font-weight: 700;
-        font-size: var(--16px);
-        color: var(--color-fg);
-        background-color: var(--color-bg);
-        border: 2px solid var(--color-fg);
-        border-radius: 4px;
+        font-size: var(--12px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        background: var(--color-bg);
+        border-radius: 8px;
         z-index: 1000;
         opacity: 0;
         transition: opacity 250ms linear;
@@ -524,7 +523,7 @@
         font-size: var(--18px);
     }
 
-    #step-5  {
+    #step-6  {
         opacity: 0;
         pointer-events: none;
     }

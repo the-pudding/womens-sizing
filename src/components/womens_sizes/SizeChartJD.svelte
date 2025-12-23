@@ -352,7 +352,7 @@
     <div class="scrolly-outer">
         <Scrolly bind:value>
             {#each copy.sizeScroll as stage, i}
-                <div class="step">
+                <div class="step" id="step-{i}">
                     <div class="text">
                         <p>{@html stage.text}</p>
                     </div>
@@ -641,5 +641,10 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
         pointer-events: auto;
+    }
+
+    #step-11 {
+        opacity: 0;
+        pointer-events: none;
     }
 </style>
