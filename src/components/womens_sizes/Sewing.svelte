@@ -101,7 +101,7 @@
                         {/each}
                     </div>
                 {/if}
-                {#if i == 7}
+                {#if i == 6}
                     <div class="block">
                         <div class="block-wrapper" style="transform: {!blockCentered ? 'translate(-90%, -50%)' : 'translate(-50%, -50%)'}">
                             {@html blockStandard}

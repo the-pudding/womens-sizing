@@ -19,13 +19,16 @@
 <div class="outer-container" id="mass-production">
     <div class="sticky-container">
         <div class="visual-container">
+            <!-- <div class="el-wrapper">
+                <Bodice {value} />
+            </div> -->
             <div 
-                class="el-wrapper proportion-grid" 
+                class="el-wrapper proportion-grid visible" 
                 bind:clientWidth={containerWidth} 
                 bind:clientHeight={containerHeight}
-                style="transform: scale({value >= 7 ? 0.2 : 1}) 
-                        translateX({value >= 7 ? '-1000px' : 0});
-                        opacity: {value >=7 ? 0 : 1};"
+                style="transform: scale({value >= 4 ? 0.2 : 1}) 
+                        translateX({value >= 4 ? '-1000px' : 0});
+                        opacity: {value >= 4 ? 0 : 1};"
             >
                 <ProportionsSVG {value} {containerWidth} {containerHeight}/>
             </div>
@@ -44,7 +47,7 @@
     <div class="scrolly-outer">
         <Scrolly bind:value>
             {#each copy.massProductionScroll as stage, i}
-                <div class="step">
+                <div class="step" id="step-{i}">
                     <div class="text">
                         <p>{@html stage.text}</p>
                     </div>
@@ -334,6 +337,11 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         margin: 0;
         pointer-events: auto;
+    }
+
+    #step-10 {
+        opacity: 0;
+        pointer-events: none;
     }
 
     @media (max-width: 768px) {

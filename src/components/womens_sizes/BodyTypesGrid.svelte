@@ -30,15 +30,15 @@
     }
 </script>
 
-{#if value >= 9}
+{#if value >= 7 && value <= 9 && value !== "exit"}
     <div class="body-types-grid" transition:fade={{ duration: 400 }}>
         {#each copy.bodyTypes as bodyType, i} 
             {@const slugged = bodyType.toLowerCase().replace(/\s+/g, '-')}
-            <div class="box" class:visible={(value == 9 && bodyType == "Hourglass") || value >= 10}>
+            <div class="box" class:visible={(value == 7 && bodyType == "Hourglass") || value >= 8}>
                 <div 
                     class="bar"
                     style="transform: translateY({
-                        value == 11 ? `${100-percentType[bodyType]}%` : '100%' });"
+                        value == 9 ? `${100-percentType[bodyType]}%` : '100%' });"
                 >
                 </div>
                 <p>{bodyType}</p>

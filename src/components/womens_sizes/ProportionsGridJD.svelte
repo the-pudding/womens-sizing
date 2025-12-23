@@ -231,7 +231,7 @@
             const row = Math.floor(i / cols);
             const initialX = startX + col * ITEM_WIDTH_PX + col * GRID_GAP;
             const initialY = startY + row * ITEM_HEIGHT_PX + row * GRID_GAP;
-            const isCentered = value >= 9;
+            const isCentered = value >= 7;
             const currentX = isCentered ? finalX : initialX;
             const currentY = isCentered ? finalY : initialY;
             const currentOpacity = isCentered ? 0 : 1;
@@ -252,9 +252,9 @@
     });
 </script>
 
-{#if value >= 7 && value !== "exit"}
-    <div class="select-wrapper" class:visible={value == 7 || value == 8}>
-        <p>Show</p>
+{#if value >= 4 && value !== "exit"}
+    <div class="select-wrapper" class:visible={value == 6}>
+        <p>Highlight</p>
         <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
     </div>
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
@@ -269,7 +269,7 @@
             <div class="brand-container"
                 style="
                     transform: translate3d({pos.x}px, {pos.y}px, 0);
-                    opacity: {pos.opacity};
+                    opacity: {(value == 4 || value >= 6) ? pos.opacity : (value == 5 && brand == "H&M") ? pos.opacity : 0.25};
                 ">
                 <h3>{brand}</h3>
                 <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>

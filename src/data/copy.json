@@ -362,7 +362,7 @@
     },
     {
       "type": "text",
-      "value": "In comparing my bespoke bodice block to commercial patterns and clothes available on the rack in stores, I had a revelation: my base measurements looked nothing like those of ready-to-wear garments. The patterns’ stacked sizing means that the further and further away you get from a size 8, the more and more the proportions become distorted. Plus, bodies just aren’t uniform."
+      "value": "In comparing my bespoke bodice block to commercial patterns and clothes available on the rack in stores, I had a revelation: my base measurements looked nothing like those of ready-to-wear garments."
     },
     {
       "type": "text",
@@ -372,51 +372,47 @@
   "massProductionScroll": [
     {
       "step": "0",
-      "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \r\n\r\n\r\n<p>Nothing represents this more than <span class=bold>an 8,</span> the size many fashion designers use as their starting point.</p>"
+      "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \r\n\r\n\r\n<p>The median woman in the U.S. today has a far less defined waistline. Her waist-to-hip ratio is half that of the traditional hourglass shape, yet this “ideal” still persists in many brands’ sizing charts.</p>"
     },
     {
       "step": "1",
-      "text": "<p>Instead of taking measurements for each individual size, fashion designers use a process called grading, which uses a mathematical formula to determine each next size up or down the range.</p>  \r\n\r\n\r\n<p>The effect is like a Russian doll. Each size up is incrementally larger than the last, making it easier for factories to construct garments en masse.<p>"
+      "text": "For example, here’s J.Crew’s Regular size chart. They use a rigid set of dimensions, with a waist-to-hip ratio that’s exactly 10 inches for all sizes. That means the smallest and largest sizes in a range will have the exact same body shape."
     },
     {
       "step": "2",
-      "text": "<p>But, the further and further away you get from a size 8, the more and more the proportions become distorted.</p>   \r\n\r\n\r\n<p>This becomes especially apparent for plus-size apparel. Many brands don’t even both with extended sizes because there are additional costs and separate formulas to construct properly fitting garments.</p>"
+      "text": "Actual bodies, however, are far less uniform or symmetrical. A <span class=green-span>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by a minimum of 6 inches."
     },
     {
       "step": "3",
-      "text": "<p>We’ve been looking at a pattern for a shirt, but this same grading is mirrored by a lot of brands in their size charts.</p> \r\n\r\n\r\n<p>Here’s what a size 8 looks like in J.Crew’s Regular size chart. They use a rigid set of dimensions, with a waist-to-hip ratio that’s exactly 10 inches for all sizes. That means the smallest and largest sizes in a range will have the exact same body shape.</p>"
+      "text": "Conversely a <span class=green-span>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
     },
     {
       "step": "4",
-      "text": "Actual bodies, however, are far less uniform or symmetrical.\r\n\r\n\r\nThe median woman in the U.S. today has a far less defined waistline. Her waist-to-hip ratio is half that of the traditional hourglass shape. That puts her between multiple sizes at different parts of her body."
+      "text": "Of course, J. Crew isn’t the only brand whose size chart is this distorted. It’s the industry standard."
     },
     {
       "step": "5",
-      "text": "While a size 18 pair of pants from J.Crew might fit her in the waist, they’d likely be too large in the hips by a minimum of 6 inches."
-    },
-    {
-      "step": "6",
-      "text": "Conversely a size 12 would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
-    },
-    {
-      "step": "7",
-      "text": "Of course, J. Crew isn’t the only brand to grade sizes this way, it’s the industry standard."
-    },
-    {
-      "step": "8",
       "text": "The only brand that comes close to the median woman’s shape, especially as sizes get bigger, is H&M."
     },
     {
-      "step": "9",
+      "step": "6",
+      "text": "Explore more: Use the selector in the top left, to highlight a size."
+    },
+    {
+      "step": "7",
       "text": "Age and race factor heavily into how our bodies are shaped. Genetics can influence everything from a person’s proportions to their bone structure, how they build muscle mass, or where their bodies tend to store fat. Only one body type, however, serves as the underlying blueprint for nearly every piece of women’s clothing: The hourglass silhouette."
     },
     {
-      "step": "10",
+      "step": "8",
       "text": "Researchers have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to those told over the years to “dress for their body type.”"
     },
     {
-      "step": "11",
+      "step": "9",
       "text": "In 2007, one study found that only 12% of women in the U.S. actually have a true hourglass figure. Instead half of women (49%) were considered rectangle-shaped."
+    },
+    {
+      "step": "10",
+      "text": ""
     }
   ],
   "bodyTypes": [

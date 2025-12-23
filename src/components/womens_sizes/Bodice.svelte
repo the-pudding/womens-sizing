@@ -54,9 +54,6 @@
 
 {#if value < 3}
     <div id="bodice-svg" transition:fade={{ duration: 400 }}>
-        {#if value == "to-enter" || value == 0}
-            <img transition:fade={{ duration: 400 }} src="./assets/graded-sizes-full-bodice.png" alt="flower shirt"/>
-        {/if}
         {@html bodice}
     </div>
 {/if}
