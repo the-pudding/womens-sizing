@@ -31,20 +31,20 @@ export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point, valueK
     if (valueKey === 'value10_11') {
       return {
         layers: [
-          { path: 'assets/avatars/tween-avatar.png' }
+          { path: 'assets/avatars/tween-avatar-bg.png' }
         ]
       };
     } else if (valueKey === 'value14_15') {
       return {
         layers: [
-          { path: 'assets/avatars/teen-avatar.png' }
+          { path: 'assets/avatars/teen-avatar-bg.png' }
         ]
       };
     } else {
       // Default for p50 for any other valueKey
       return {
         layers: [
-          { path: 'assets/avatars/teen-avatar.png' }
+          { path: 'assets/avatars/teen-avatar-bg.png' }
         ]
       };
     }

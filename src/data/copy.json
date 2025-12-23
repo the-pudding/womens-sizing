@@ -55,7 +55,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "alphaSize",
-      "text": "This marks an important turning point as they shift into women’s sizes."
+      "text": "This marks an important turning point as they shift into <span class=bold>women’s sizes.</span>"
     },
     {
       "id": "5",
@@ -95,7 +95,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline, but from here on medium and median will separate."
+      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline, but from here on medium and median will diverge."
     },
     {
       "id": "9",
@@ -205,17 +205,17 @@
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "excludeNearMedian",
-      "text": "<p>While there are no universal sizing standards, an organization called <span class=green-span>ASTM International</span> regularly releases informal guidelines.</p>"
+      "text": "<p>While there are no universal sizing standards, an organization called <span class=green-span>ASTM International</span> regularly releases informal guidelines. Here, each current ASTM size (00–20) is represented by a <span class=green-dot>dot.</span></p>"
     },
     {
       "id": "1",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
-      "text": "Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer-base. Here are the size charts of 14 popular brands."
+      "text": "Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer-base. These <span class=blue-dot>dots</span> represent the size charts of 17 popular brands. Dots connected by a <span class=shade-bg>shaded background,</span> represent ranges instead of discreet sizes."
     },
     {
-      "id": "1",
+      "id": "2",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
@@ -226,7 +226,7 @@
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>Here is our median 15-year-old girl in the U.S. With a waistline measuring 30.4 inches, she fits around a size 10 according to ASTM standards, which is usually considered a Medium.</p> <p>While it’s unlikely that clothing designed for adults will fit a teen’s body perfectly, she has quite a few sizing options.</p>"
+      "text": "<p>Here is our <span class=orange-outline-dash>median 15-year-old girl</span> in the U.S. With a waistline measuring 30.4 inches, she fits around a size 10 according to ASTM standards, which is usually considered a <span class=bold>Medium.</span></p> <p>While it’s unlikely that clothing designed for adults will fit a teen’s body perfectly, she has quite a few sizing options.</p>"
     },
     {
       "id": "4",
@@ -240,7 +240,7 @@
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "The median adult woman has a much harder time finding clothes that fit. Her waistline is 37.68 inches, placing her at a size 18 by ASTM standards."
+      "text": "The <span class=orange-outline-dash>median adult woman</span> has a much harder time finding clothes that fit. Her waistline is 37.68 inches, placing her at a <span class=bold>size 18</span> by ASTM standards."
     },
     {
       "id": "6",
@@ -254,21 +254,21 @@
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>Sizing issues are amplified even further within <span class=purple-span>Plus</span> size ranges.</p><p>There are no official boundaries determining where <span class=blue-span>Regular</span> sizes ranges end and Plus size ranges begin.</p><p>Some Plus size ranges start at size 12, others at 18. Others still consider any size from 00 to 30 is considered part of its Regular line.</p>"
+      "text": "<p>Sizing issues are amplified even further within <span class=purple-span>Plus</span> size ranges. Some Plus size ranges start at size 12, others at 18. Others still consider any size from 00 to 30 is considered part of its <span class=blue-span>Regular</span> line.</p>"
     },
     {
       "id": "8",
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap.”</p> <p>Here sizes within the <span class=blue-span>Regular</span> size range are too small, yet the next size up in the <span class=purple-span>Plus</span> range might be too big.</p>"
+      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap,” seen here in Anthropologie’s size chart.</p> <p>Sizes within the <span class=blue-span>Regular</span> size range are too small, yet the next size up in the <span class=purple-span>Plus</span> range might be too big.</p>"
     },
     {
       "id": "9",
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>Even the symbols used to describe certain sizes hold a wide range of meanings.</p>  <p>For the average adult woman, there are as many as TK10 different ways to describe the garments that she could conceivably wear from these brands alone.</p>"
+      "text": "<p>Even the symbols used to describe certain sizes hold a wide range of meanings.</p>  <p>For the average adult woman, there are as many as 10 different ways to describe the garments that she could conceivably wear from these brands alone.</p>"
     },
     {
       "id": "10",
@@ -306,13 +306,13 @@
       "step": "0",
       "visual": "display 1995 astm sizes",
       "animation": "",
-      "text": "It’s true: Sizes today are much larger than they were in the past. Roughly 30 years ago, ASTM guidelines cover 12.5 inches from 24–36.5 (sizes 2–20). However, extended sizes were not widely available in stores."
+      "text": "It’s true: Sizes today are much larger than they were in the past. Roughly 30 years ago, ASTM guidelines covered <span class=bold>12.5 inches</span> from 24–36.5 (sizes 2–20). However, extended sizes were not widely available in stores."
     },
     {
       "step": "1",
       "visual": "display 1995 + 2021 astm sizes",
       "animation": "add 2021 sizes; highlight size 2 from 2021 + size 8 from 1995",
-      "text": "Today because of vanity sizing, we can see an upward shift in all sizes. ASTM guidelines span 15.12 inches from 25.38–40.5 (sizes 00–20). In the early 2000s ASTM added size 00 and 0 to pad out the bottom of the range."
+      "text": "Today because of vanity sizing, we can see an upward shift in all sizes. ASTM guidelines span <span class=bold>15.12 inches</span> from 25.38–40.5 (sizes 00–20). In the early 2000s ASTM added size 00 and 0 to pad out the bottom of the range."
     },
     {
       "step": "2",

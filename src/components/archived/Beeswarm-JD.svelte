@@ -11,6 +11,7 @@
       generateDataPoints
     } from './utils/chart-utilities.js';
     import { generateRandomAvatar, determineAvatarSize} from './utils/avatar-generator.js';
+	import { shadow } from 'three/tsl';
 
     // Variables
     let svg;
@@ -229,6 +230,7 @@
                                         href={imgPath.path}
                                         class="avatar"
                                         class:grayscale={avatar.type !== 'percentile'}
+                                        class:shadow={avatar.type === 'percentile'}
                                     />
                                 {/each}
                             </g>
@@ -268,5 +270,9 @@
 
     .grayscale {
         filter: grayscale(100%);
+    }
+
+    .shadow {
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
     }
 </style>

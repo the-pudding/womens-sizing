@@ -36,7 +36,7 @@
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
   // let avatarHeight = $derived(avatarWidth * 1.2);
-  let avatarHeight = $derived( height / 6.5)
+  let avatarHeight = $derived( height / 8)
   let avatarWidth = $derived(avatarHeight * .4)
 
   /*** SCALES ***/
@@ -370,6 +370,7 @@
                               point.type == 'percentileMid' ||
                               (currentId == 5 && (point.id == 'p10' || point.id == 'p90'))
                             }
+                            class:shadow={point.type == 'percentileMid'}
                           />
                       {/each}
                   {/if}
@@ -425,9 +426,15 @@
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      font-family: var(--mono);
-      font-weight: 700;
       margin: 0;
+      background: var(--color-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      z-index: 1000;
+      font-family: var(--mono);
+      font-size: var(--12px);
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     }
 
     .size-key p {
@@ -469,6 +476,10 @@
 
     .colorized {
       filter: none;
+    }
+
+    .shadow {
+      filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.1));
     }
     
     .highlight-band {
@@ -565,6 +576,7 @@
     .scrolly-outer {
         position: relative;
         z-index: 2;
+        pointer-events: none;
     }
     .middle .scrolly-outer {
         margin-top: -60vh;
@@ -610,6 +622,7 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
+        pointer-events: auto;
     }
     .step.step0 {
         margin: 0 auto;

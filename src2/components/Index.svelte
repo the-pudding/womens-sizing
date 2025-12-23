@@ -86,4 +86,12 @@
 		font-weight: 700;
         font-family: var(--mono);
 	}
+
+	:global(.green-dot) {
+		height: 10px;
+		width: 10px;
+		background-color: var(--ws-green);
+		border-radius: 50%;
+		display: inline-block;
+	}
 </style>

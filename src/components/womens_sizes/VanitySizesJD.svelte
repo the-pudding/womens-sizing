@@ -20,6 +20,9 @@
     let tooltipSize = $state();
 
     function showTooltip(size, e) {
+        if (size.size == "0" || size.size == "00") {
+            return;
+        }
         tooltipVisible = true;
         tooltipSize = +size.size;
 
@@ -160,9 +163,10 @@
                                 <div onmouseenter={(e) => showTooltip(size, e)} 
                                     onmouseleave={hideTooltip} 
                                     role="tooltip"
+                                    id="form-{size.size}"
                                     class="size" 
                                     style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;
-                                    pointer-events: {move1995 && move2021 && value >= 5 ? "auto" : "none"};"
+                                    pointer-events: {move1995 && move2021 && value >= 5 && (size.size != "0" && size.size != "00") ? "auto" : "none"};"
                                     class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
                                         || (value == 4 && size.size == "18" && !tooltipVisible)
                                         || (tooltipVisible && size.size == tooltipSize)}>
@@ -502,6 +506,10 @@
 
     .size.scaled {
         transform: scale(1.2);
+    }
+
+    #form-0, #form-00 {
+        pointer-events: none;
     }
 
     .scrolly-outer {

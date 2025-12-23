@@ -75,7 +75,7 @@
                 // 3. Apply your three rules
                 const showASTM = brand.isASTM && value >= 0;
                 const showNonLuxury = brand.isNonLuxury && value >= 1;
-                const showLuxury = brand.isLuxury && value >= 6;
+                const showLuxury = brand.isLuxury && value >= 1;
 
                 return showASTM || showNonLuxury || showLuxury;
             })
@@ -84,10 +84,10 @@
                 
                 // Rule 1: ASTM brand always comes first
                 if (a.isASTM && !b.isASTM) {
-                    return -1; // a comes before b
+                    return 1; // a comes before b
                 }
                 if (!a.isASTM && b.isASTM) {
-                    return 1; // b comes before a
+                    return -1; // b comes before a
                 }
 
                 // Rule 2: For all other cases (both are ASTM or both are not),
@@ -107,6 +107,7 @@
     let tooltipSizeRange = $state();
     let tooltipX = $state();
     let tooltipY = $state();
+    let tooltipSide = $state('left');
 
     function showTooltip(size, e) {
         tooltipBrand = size.brand || "ASTM";
@@ -116,8 +117,13 @@
         tooltipWaistMin = size.waistMin;
         tooltipWaistMax = size.waistMax;
         tooltipSizeRange = size.sizeRange.toLowerCase();
+
+        const screenWidth = window.innerWidth;
+
+        tooltipY = e.y; 
         tooltipX = e.x;
-        tooltipY = e.y;
+        tooltipSide = tooltipX > screenWidth / 2 ? 'right' : 'left';
+        
         tooltipVisible = true;
     }
 
@@ -204,7 +210,7 @@
         <div class="visual-container">
             <p class="axis-label">Inches</p>
             <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-                 {#each filteredBrandData() as brand (brand.brandName)}
+                 {#each filteredBrandData() as brand, i (brand.brandName)}
                     <!-- Get all sizes for each range -->
                     {@const regularSizes = brand.brandSizes.filter(d => d.sizeRange && d.sizeRange.toLowerCase() === 'regular' || brand.brandName == "ASTM")}
                     {@const plusSizes = brand.brandSizes.filter(d => d.sizeRange && d.sizeRange.toLowerCase() === 'plus')}
@@ -224,7 +230,9 @@
                         id={brand.brandName} 
                         class="brand-row" 
                         class:visible={(brand.brandName == "ASTM" && value == 0) || value > 0}
-                        style="padding: {(containerHeight-100)/brandData.length*0.5}px;" 
+                        style="padding: {(containerHeight-100)/brandData.length*0.5}px;
+                        opacity: {((value == 6 && !brand.isLuxury) || (value == 8 && brand.brandName !== "Anthropologie")) ? 0.3 : 1}" 
+                        transition:fly={{ y: 20, duration: 500, delay: (brandData.length - 1 - i) * 100 }}
                         animate:flip>
                         <!-- Line for regular sizes -->
                         {#if brandMinWaistReg && brandMaxWaistReg}
@@ -306,14 +314,22 @@
                     class="median" 
                     class:visible={value > 2}
                     style="left: {xScale(median15Waistline) + margin.left}px">
-                    <div class="median-label">15-year-old median: {median15Waistline}" </div>
+                    <div class="median-label">
+                        <p>15-year-old</p>
+                        <p>median</p>
+                        <p>{median15Waistline}"</p>
+                    </div>
                     <div class="median-line" style="left: {xScale(median15Waistline)}px"></div>
                 </div>
                 <div 
                     class="median" 
                     class:visible={value > 4}
                     style="left: {xScale(medianWaistline) + margin.left}px">
-                    <div class="median-label">Adult median: {medianWaistline}" </div>
+                    <div class="median-label">
+                        <p>Adult</p>
+                        <p>median</p>
+                        <p>{medianWaistline}"</p>
+                    </div>
                     <div class="median-line" style="left: {xScale(medianWaistline)}px"></div>
                 </div>
                 <!-- X Axis -->
@@ -327,7 +343,7 @@
     </div>
 
     <!-- Tooltip -->
-    <div id="tooltip" class:visible={tooltipVisible} style="left: {tooltipX}px; top: {tooltipY}px">
+    <div id="tooltip" class:visible={tooltipVisible} style="left: {tooltipX}px; top: {tooltipY}px; transform: translate({tooltipSide === 'right' ? '-110%' : '10%'}, 0%);">
         <p>{tooltipBrand}</p>
         <p><strong>Size range:</strong> {tooltipSizeRange}</p>
         <p><strong>Alpha size:</strong> {tooltipAlphaSize}</p>
@@ -453,13 +469,13 @@
 
     .chart-container {
         width: 100%;
-        padding: 2rem;
+        padding: 2rem 2rem 4rem 2rem;
         height: 90svh;
         margin: 0 auto;
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: flex-end;
         align-items: center;
     }
 
@@ -491,11 +507,20 @@
         font-weight: 700;
         font-size: var(--12px);
         color: var(--ws-orange);
+        margin-top: -1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .median-label p {
+        margin: 0;
+        text-align: center;
+        line-height: 1.25;
     }
 
     .brand-row {
         width: 100%;
         position: relative;
+        transition: opacity 500ms linear;
     }
 
     .size-circle {
