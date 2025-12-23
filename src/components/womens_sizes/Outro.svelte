@@ -62,7 +62,7 @@
     
     .title-page-body {
         font-size: var(--18px);
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         margin: 2rem 0;
         font-family: var(--sans);

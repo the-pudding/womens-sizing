@@ -147,7 +147,7 @@
     .title-page-body {
         width: 100%;
         font-size: var(--18px);
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         display: flex;
         flex-direction: column;

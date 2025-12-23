@@ -419,7 +419,7 @@
     .text-block p {
         width: min(100%, 550px);
         font-size: 1.1rem;
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         font-family: var(--sans);
         font-size: var(--18px);

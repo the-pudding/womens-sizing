@@ -309,7 +309,7 @@
         margin-bottom: 60px;
         margin-top: 60px;
         font-size: 1.1rem;
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         font-family: var(--sans);
         font-size: var(--20px);

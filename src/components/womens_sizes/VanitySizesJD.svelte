@@ -165,7 +165,7 @@
                                     role="tooltip"
                                     class="size" 
                                     style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;
-                                    pointer-events: {move1995 && move2021 && value >= 4 ? "auto" : "none"};"
+                                    pointer-events: {move1995 && move2021 && value >= 5 ? "auto" : "none"};"
                                     class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
                                         || (value == 4 && size.size == "18" && !tooltipVisible)
                                         || (tooltipVisible && size.size == tooltipSize)}>
@@ -537,6 +537,7 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
         font-size: var(--18px);
+        pointer-events: auto;
     }
 
     .text-block {
@@ -562,7 +563,7 @@
     }
     .text-block p {
         width: min(100%, 550px);
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         font-family: var(--sans);
         font-size: var(--18px);

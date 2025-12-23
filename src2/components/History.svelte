@@ -75,7 +75,7 @@
     
     .history-body {
         font-size: 1.1rem;
-        line-height: 1.6;
+        line-height: 1.65;
         text-align: left;
         margin-bottom: 2rem;
         font-family: var(--sans);
