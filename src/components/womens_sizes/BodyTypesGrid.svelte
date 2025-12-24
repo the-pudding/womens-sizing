@@ -28,17 +28,27 @@
         "Bottom Hourglass": 9.4,
         "Spoon": 21.5
     }
+
+    $effect(() => {
+        console.log(value)
+
+        if (value == "to-enter" || value <= 1) {
+            d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0);
+        } else {
+            d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0.3);
+        }
+    });
 </script>
 
-{#if value >= 7}
+{#if (value == "to-enter" || value >= 0) && value <= 3}
     <div class="body-types-grid" transition:fade={{ duration: 400 }}>
         {#each copy.bodyTypes as bodyType, i} 
             {@const slugged = bodyType.toLowerCase().replace(/\s+/g, '-')}
-            <div class="box" class:visible={(value == 7 && bodyType == "Hourglass") || value >= 8}>
+            <div class="box" class:visible={(value == 0 && bodyType == "Hourglass") || value >= 1}>
                 <div 
                     class="bar"
                     style="transform: translateY({
-                        value >= 9 ? `${100-percentType[bodyType]}%` : '100%' });"
+                        value >= 3 ? `${100-percentType[bodyType]}%` : '100%' });"
                 >
                 </div>
                 <p>{bodyType}</p>

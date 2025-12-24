@@ -107,12 +107,38 @@
 {#if containerWidth && containerHeight}
     {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
     <svg>
-        <g class="median-group visible">
+        <g class="median-group" class:visible={value >= 4}>
             <path 
                 d={medianPathData.fullPath} 
                 fill="#9ABBD9" 
                 stroke="none" 
                 opacity=0.3 />
+        </g>
+        {#each filteredApparel as dress, i}
+            {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+            <g 
+                class="brand-group" 
+                class:visible={value >= 5}
+                id={`size-${dress.numericSizeMin}`}
+                role="tooltip"
+                >
+                {#each result.paths as path}
+                    <path class="hidden-path" d={path} />
+                    <path 
+                        class="main-path"
+                        class:highlight={
+                            (value == 6 && dress.numericSizeMin == 18) ||
+                            (value == 7 && dress.numericSizeMin == 12)
+                        }
+                        d={path}
+                    />
+                {/each}
+                <text class="label" x={result.textPositions.bustX - 10} y={30} text-anchor="end">{dress.bustMin}" </text>
+                <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 - 6} text-anchor="end">{dress.waistMin}"</text>
+                <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-42} text-anchor="end">{dress.hipMin}"</text>
+            </g>
+        {/each}
+        <g class="median-group median-lines" class:visible={value >= 4}>
             <g class="med-bust">
                 <line 
                     x1={medianPathData.bustLeft} 
@@ -147,30 +173,6 @@
                 <text x={containerWidth/2} y={medianPathData.yHip-42} text-anchor="middle">Median Hip: {medianMeasurements.hipMin}"</text>
             </g>
         </g>
-        {#each filteredApparel as dress, i}
-            {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
-            <g 
-                class="brand-group" 
-                class:visible={value >= 1}
-                id={`size-${dress.numericSizeMin}`}
-                role="tooltip"
-                >
-                {#each result.paths as path}
-                    <path class="hidden-path" d={path} />
-                    <path 
-                        class="main-path"
-                        class:highlight={
-                            (value == 2 && dress.numericSizeMin == 18) ||
-                            (value == 3 && dress.numericSizeMin == 12)
-                        }
-                        d={path}
-                    />
-                {/each}
-                <text class="label" x={result.textPositions.bustX - 10} y={30} text-anchor="end">{dress.bustMin}" </text>
-                <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 - 6} text-anchor="end">{dress.waistMin}"</text>
-                <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-42} text-anchor="end">{dress.hipMin}"</text>
-            </g>
-        {/each}
     </svg>
     {/if}
 </div>

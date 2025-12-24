@@ -193,71 +193,15 @@
         };
       }
     }
-
-    // calcs grid positions
-    function calculateGridPositions() {
-        if (!parentWidth || !parentHeight) return;
-
-        const PADDING_PX = 16;
-        const PADDED_WIDTH = parentWidth - PADDING_PX * 2;
-        const PADDED_HEIGHT = parentHeight - PADDING_PX * 2;
-        const GRID_CALC_WIDTH = Math.max(1, PADDED_WIDTH); 
-        const GRID_CALC_HEIGHT = Math.max(1, PADDED_HEIGHT);
-        const totalItems = brands.length;
-        const GRID_GAP = 0;
-
-        let cols;
-        if (GRID_CALC_WIDTH > 900) {
-            cols = 5;
-        } else {
-            cols = 3;
-        }
-
-        let rows = Math.ceil(totalItems / cols);
-
-        const ITEM_WIDTH_PX = (GRID_CALC_WIDTH - (cols - 1) * GRID_GAP) / cols;
-        const VISUAL_CONTAINER_HEIGHT = ITEM_WIDTH_PX * (2 / 3);
-        const HEADER_HEIGHT = 25;
-        const ITEM_HEIGHT_PX = VISUAL_CONTAINER_HEIGHT + HEADER_HEIGHT;
-        const gridHeight = rows * ITEM_HEIGHT_PX + (rows - 1) * GRID_GAP;
-        const startX = 0; 
-        const startY = (GRID_CALC_HEIGHT - gridHeight) / 2;
-        const finalX = GRID_CALC_WIDTH / 2 - ITEM_WIDTH_PX / 2;
-        const finalY = GRID_CALC_HEIGHT / 2 - ITEM_HEIGHT_PX / 2;
-        const newPositions = brands.map((brand, i) => {
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            const initialX = startX + col * ITEM_WIDTH_PX + col * GRID_GAP;
-            const initialY = startY + row * ITEM_HEIGHT_PX + row * GRID_GAP;
-            const isCentered = value >= 7;
-            const currentX = isCentered ? finalX : initialX;
-            const currentY = isCentered ? finalY : initialY;
-            const currentOpacity = isCentered ? 0 : 1;
-
-            return {
-                brand,
-                x: currentX,
-                y: currentY,
-                opacity: currentOpacity
-            };
-        });
-        
-        brandPositions = newPositions;
-    }
-
-    $effect(() => {
-        calculateGridPositions();
-    });
 </script>
 
-{#if value >= 4 && value !== "exit"}
-    <div class="select-wrapper" class:visible={value == 6}>
+{#if value >= 8 && value !== "exit"}
+    <div class="select-wrapper" class:visible={value == 10}>
         <p>Highlight</p>
         <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
     </div>
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
-        {#each brandPositions as pos (pos.brand)}
-            {@const brand = pos.brand}
+        {#each brands as brand, i}
             {@const filteredApparel = sizeCharts.filter(
                 d => d.brand == brand
                     // && d.sizeRange == "Regular"
@@ -265,10 +209,7 @@
                 )
             }
             <div class="brand-container"
-                style="
-                    transform: translate3d({pos.x}px, {pos.y}px, 0);
-                    opacity: {(value == 4 || value >= 6) ? pos.opacity : (value == 5 && brand == "H&M") ? pos.opacity : 0.25};
-                ">
+                style="opacity: {value !== 9 || (value == 9 && brand == "H&M") ? 1 : 0.3}">
                 <h3>{brand}</h3>
                 <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                     {#if containerWidth && containerHeight}
@@ -332,19 +273,19 @@
 
     .outer-container {
         position: relative; 
-        width: 100%;     
-        height: 100vh;      
-        display: block; 
+        width: 100%;          
+        display: flex; 
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
         margin: 0;
         padding: 4rem;
     }
 
     .brand-container {
         width: 33.333%;
-        position: absolute; 
         padding: 1rem;
-        top: 0; 
-        left: 0; 
         display: flex;
         flex-direction: column;
         align-items: center;

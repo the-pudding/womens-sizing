@@ -384,6 +384,56 @@
   "massProductionScroll": [
     {
       "step": "0",
+      "text": "As women, it’s drilled into our heads that the ideal body type is the hourglass: wide shoulders and hips and a snatched waist. But for most women, that’s an unattainable standard."
+    },
+    {
+      "step": "1",
+      "text": "\r\nResearchers have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to those told over the years to “dress for their body type.”"
+    },
+    {
+      "step": "2",
+      "text": "The <span class=blue-span>median woman</span> in the U.S. today has a waist-to-hip ratio that is half that of the traditional hourglass shape. Instead she’s much more likely to be shaped like a rectangle."
+    },
+    {
+      "step": "3",
+      "text": "Indeed, one 2007 study found that half of women (49%) in the U.S. were considered rectangle-shaped, while only 12% of women had a true hourglass figure."
+    },
+    {
+      "step": "4",
+      "text": "But, clothing sizes are optimized for mass production and appeal — not women’s bodies — so size charts continue to champion the wide-narrow-wide hourglass."
+    },
+    {
+      "step": "5",
+      "text": "For example, here’s J.Crew’s Regular size chart. They use a rigid set of dimensions, with a waist-to-hip ratio that’s exactly 10 inches for all sizes. That means the smallest and largest sizes in a range will have the exact same body shape."
+    },
+    {
+      "step": "6",
+      "text": "Actual bodies, however, are far less uniform or symmetrical. A <span class=green-span>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by a minimum of 6 inches."
+    },
+    {
+      "step": "7",
+      "text": "Conversely a <span class=green-span>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
+    },
+    {
+      "step": "8",
+      "text": "Of course, J. Crew isn’t the only brand whose size chart is this distorted. It’s the industry standard."
+    },
+    {
+      "step": "9",
+      "text": "Out of these 15 brands, only H&M close close to the median woman’s shape, especially as sizes get bigger."
+    },
+    {
+      "step": "10",
+      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Use the selector in the top left corner, to highlight a size.</p>"
+    },
+    {
+      "step": "11",
+      "text": ""
+    }
+  ],
+  "massProductionScrollALT": [
+    {
+      "step": "0",
       "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \r\n\r\n\r\n<p>The median woman in the U.S. today has a far less defined waistline. Her waist-to-hip ratio is half that of the traditional hourglass shape, yet this “ideal” still persists in many brands’ sizing charts.</p>"
     },
     {
