@@ -7,11 +7,12 @@
   import ASTMsizes from "$data/ASTMsizes.json";
   import pointsData from '$data/pointsData_JD.csv';
   import { generateRandomAvatar, determineAvatarSize } from '../utils/avatar-generator.js';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
   import Ransom from "$components/womens_sizes/Ransom.svelte";
   import Leet from "$components/womens_sizes/Leet.svelte";
   import Text from "$components/womens_sizes/Text.svelte";
   import checkScrollDir from "../../utils/checkScrollDir.js";
+  import ArrowDraw from "$components/womens_sizes/ArrowDraw.svelte";
 	import { on } from 'svelte/events';
 	import { log } from 'three/tsl';
 
@@ -152,7 +153,7 @@
         ...point,
         // The avatar object is already generated here
         // avatar: generateRandomAvatar("junior", point, valueKey)
-        avatar: generateRandomAvatar(getAvatarSizeForValueKey(valueKey), point, valueKey)
+        avatar: generateRandomAvatar(point.percentile, point, valueKey)
       };
     });
     return avatars
@@ -301,6 +302,10 @@
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
               <p class="title-text">{@html copy.heroText}</p>
+              <div class="scroll-hint">
+                <p> Scroll</p>
+               <ArrowDraw />
+              </div>
           </div>
       {/if}
       {#if (currentId >= 2 && currentId < 7) || (currentId >= 8)}
@@ -372,6 +377,18 @@
                             }
                             class:shadow={point.type == 'percentileMid'}
                           />
+                          {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
+                            <g transition:fly={{ y: 20, duration: 250}} class="avatar-label" transform={`translate(${avatarWidth / 2}, ${avatarHeight+12})`}>
+                              {#if point.percentile == "50"}
+                                <rect x={-40} y={-18} width={80} height={28} fill="white" opacity="1" rx="4"/>
+                                <text>Median</text>
+                              {:else}
+                                <rect x={-40} y={-18} width={80} height={40} fill="white" opacity="1" rx="4"/>
+                                <text>{point.percentile}th</text>
+                                <text transform="translate(0, 12)">percentile</text>
+                              {/if}
+                            </g>
+                          {/if}
                       {/each}
                   {/if}
                 </g>
@@ -460,6 +477,20 @@
         max-width: 500px;
     }
 
+    .scroll-hint {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: var(--14px);
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 1rem;
+    }
+
     .chart-container {
         width: 100%;
         padding: 1.5rem;
@@ -515,6 +546,14 @@
       transition: all 0.5s ease-in-out;
     }
 
+    .avatar-label {
+      text-anchor: middle;
+      font-family: var(--mono);
+      font-size: var(--12px);
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
     :global(.avatar-group) {
         /* transition: all 0.5s ease-in-out; */
         transform-box: fill-box;
@@ -523,6 +562,7 @@
 
     :global(.avatar) {
       filter: grayscale(100%);
+       transition: filter 0.5s ease-in;
     }
 
     :global(#band-S, #band-L, #band-12, #band-16) {
