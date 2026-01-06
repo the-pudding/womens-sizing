@@ -154,49 +154,37 @@
   "introBreak": [
     {
       "type": "text",
-      "value": "Children’s clothing is often tied to a kid’s age or stage of development. The idea is that as a young person grows older, her clothes will evolve with her. Youth styles tend to be boxy and oversized to allow room for young kids to move and grow, but by early adolescence, a shift starts to take shape. Girl’s clothing starts to become more fitted. Junior’s styles have higher waistlines and less-pronounced curves through the bust and hips compared to adult clothing lines. In short: tweens’ clothes are made for tween bodies."
+      "value": "I remember once being that teen girl. I took stacks upon stacks of jeans to the dressing room while shopping in the women’s section for the first time, searching in vain for that one pair that fit perfectly. Some 20 years later, my hunt continues. But now as an adult, I must contend with the countless ways that women’s apparel is not made for the average American, like me."
     },
     {
       "type": "text",
-      "value": "By the time that most teen girls can wear women’s clothes — around age 15 — their options are seemingly endless. The women’s apparel market, worth an estimated $963 billion worldwide, places a premium on grooming young girls into becoming dedicated, life-long customers. But the evolution in clothing sizes that followed girls throughout childhood abruptly stops there."
+      "value": "Children’s clothing is often tied to a kid’s age or stage of development. The idea is that as a young person grows older, her clothes will evolve with her. Youth styles tend to be boxy and oversized to allow room for kids to move and grow. By early adolescence, girls’ clothing becomes more fitted. Junior’s styles have higher waistlines and less-pronounced curves through the bust and hips compared to adult clothing lines. In short: clothes for tweens are made for tween bodies."
     },
     {
       "type": "text",
-      "value": "As a woman ages, she will sift through sizes that fit a greater proportion of teens than the adults they were made for in the first place."
+      "value": "By the time that most teenage girls can wear women’s clothes — around age 15 — their options are seemingly endless. But the evolution in clothing sizes that followed girls throughout childhood abruptly stops there."
+    },
+    {
+      "type": "text",
+      "value": "Instead, women’s clothing — designed for adults — fits modern teen girls better."
     }
   ],
   "sizeIntro": [
     {
       "type": "text",
-      "value": "Few life experiences feel as universal as the pains, frustrations, flashpoints of joy, and profound disillusionment that come with trying to find clothes that actually fit our bodies. We’ve all been through it, one way or another. Over the course of several decades the modern shopping experience has devolved into an undignified ritual of trial and error. At the heart of the problem is a system that is just as flawed as it is inconsistent: the chaos of women’s clothing sizes."
+      "value": "Few life experiences feel as universal, across generations, as the pains and frustrations of trying to find clothes that fit."
     },
     {
       "type": "text",
-      "value": "Sizes vary wildly from store to store. Even within a single brand, no one size will consistently fit. There are no regulations or universal standards."
+      "value": "Sizes vary wildly from store to store. Even within a single apparel company, no one size is consistent. There are no regulations or universal sizing standards. Instead each brand is incentivized to make up their own. When size guides change — and they’re always changing — brands are not obligated to disclose updates."
     },
     {
       "type": "text",
-      "value": "Instead each brand is incentivized to make up their own. When size guides change — and they’re always changing — brands are not obligated to disclose updates to consumers. There are often different sizing structures for every type of garment. Athleisure may go by alpha sizes (S, M, L, etc.), while dresses are sized numerically (0, 2, 4, etc.)."
+      "value": "There are also often different sizing structures for every type of garment. “Plus” size means one thing, “curve” means another, and “extended” sizes can be defined as all of the above or something else entirely. Don’t count on any of those sizes to be available to try on in-store, but do brace for return fees if your online order doesn’t fit. Free in-store alterations are largely a thing of the past, while a trip to the tailor’s can cost just as much as the item itself."
     },
     {
       "type": "text",
-      "value": "In theory, pants sizes are based on a person’s waistline circumference, however in practice, the numbers feel arbitrary. A person may wear a size 28 in jeans, but neither her actual waistline nor the waistband of her jeans are likely to measure 28 inches. “Plus” size means one thing, “curve” means another, and “extended” sizes can be defined as all of the above or something else entirely."
-    },
-    {
-      "type": "text",
-      "value": "Don’t count on any of those sizes to be available to try on in-store, but do brace for return fees if your online order doesn’t fit. Free in-store alterations are largely a thing of the past, while a trip to the tailors can cost just as much as the item itself."
-    },
-    {
-      "type": "text",
-      "value": "The only consistent feature is that the industry at large continues to cling onto the same underlying sizing system, one developed nearly a century ago based exclusively on the idealized body proportions of white women."
-    },
-    {
-      "type": "text",
-      "value": "For years I had assumed, perhaps naively, that fashion and apparel companies would replace its sizing system with something better, more efficient, or at the very least, appeal to a broader range of bodies. After all, imagine the growth potential from previously untapped markets, especially as women’s purchasing power expands. But that day has yet to come."
-    },
-    {
-      "type": "text",
-      "value": "If anything, things seem to have gotten worse."
+      "value": "The only consistent feature is that the industry at large continues to cling onto the same underlying sizing system that’s been broken for decades. And it’s only gotten worse."
     }
   ],
   "sizeScroll": [
@@ -282,23 +270,23 @@
   "vanityIntro": [
     {
       "type": "text",
-      "value": "Inconsistent sizing isn’t merely a bug in the system, it’s a feature. And vanity sizing is largely to blame, but for reasons you may not expect."
+      "value": "On top of all these problems, consumers often know the labels for any given size cannot be trusted."
     },
     {
       "type": "text",
-      "value": "Vanity sizing first emerged as a marketing strategy to attract loyal customers and get them to spend more. Studies have shown that women feel more positively toward an item of clothing when it is presented as a smaller size; conversely, if a woman finds they need a size larger than expected, they’re less likely to follow through with their purchase, and may even develop negative associations with the brand."
+      "value": "Vanity sizing, the practice where size labels stay the same even as the underlying measurements frequently become larger, is so ubiquitous across the fashion and apparel industry that younger generations have never experienced a world without it."
     },
     {
       "type": "text",
-      "value": "Because clothing sizes are unregulated, manufacturers are free to pursue vanity sizing as they please. In theory, labeling clothes as sizes smaller than reality could serve as a competitive edge over brands that opt against the practice. This creates an arms race toward artificially deflating size labels in order to attract customers who are now conditioned to expect that a certain size will fit."
+      "value": "Cultural narratives around vanity sizing often square the blame on the female shoppers, not the brands. Time magazine once called it “self-delusion on a mass scale” because women were more likely to buy items that were labeled as sizes smaller than reality. But there’s more to the story."
     },
     {
       "type": "text",
-      "value": "Narratives around vanity sizing often shift the blame on women as opposed to the companies that are actively behind the practice. In 2006, Time Magazine called it “self-delusion on a mass scale.”"
+      "value": "Vanity sizing first emerged as a marketing strategy. Companies found that whenever women needed a size larger than expected, they were less likely to follow through on their purchases. They may even develop negative associations with the brand. But when manufacturers manipulated the sizing labels, leading to a more positive customer experience, brands could have a slight competitive edge."
     },
     {
       "type": "text",
-      "value": "But where would we be today without vanity sizing?"
+      "value": "The dynamic perpetuates an arms race toward artificially deflating size labels. Most shoppers aren’t even aware when size charts change, or by how much. Vanity sizing, therefore, is closer to gaslighting women on a mass scale than anything else. But considering the difficulties that most women face in finding any size that will fit, where would we be today without vanity sizing?"
     }
   ],
   "vanityScroll": [
@@ -343,42 +331,22 @@
       "text": ""
     }
   ],
-  "sewingSection": [
+  "sewingLessons": [
     {
       "type": "text",
-      "value": "I started learning how to sew my own clothes after finally reaching a point where I could no longer rationalize buying anything new, let alone full-priced. Why spend a bunch of money on low-quality materials that don’t even fit?"
+      "value": "I once believed that change was inevitable, that these problems would become a relic of the past. If it wasn’t some scrappy upstart that promised to revolutionize the sizing system, then at least the major fashion conglomerates would be well-placed to modernize. The plus-size market seemingly had so much untapped potential. But that progress never fully materialized. And I got tired of waiting."
     },
     {
       "type": "text",
-      "value": "Like many girls, I learned from a young age to internalize shame around all aspects of my appearance, trapping me in a skewed worldview that saw my body as a problem in need of fixing. So many markers of my identity were shaped by the ways clothes failed to fit. I thought I was short, not because other girls around me were that much taller, but because my pants were always too long. Turns out at 5’3”, I’m exactly average height. While the body types of my peers were named after supple fruits — apples, even peaches, or pears — I was considered a brick. Clothes with the built-in curves of a woman would sag on my uneven frame."
+      "value": "A few years ago, I started learning how to sew. Somehow it felt more practical to make my own clothes than count on meaningful change to happen on its own. Getting started was easier than I thought. Among the many thousands of sewing patterns, tutorials, and free online resources, I found a vibrant community of seamstresses and home sewists who were eager to share their skills. The first sewing pattern I ever completed — a boxy, drop-shoulder top that came in three variations as either a shirt or dress — was free to download. It included a 29-page instruction manual with photos and illustrations documenting every step."
     },
     {
       "type": "text",
-      "value": "I had developed a hierarchy in my head that ranked each clothing size by its level of desirability. There were the sizes I wore, and the sizes that were “best.” As a chronic overachiever, I was in constant competition with myself to fight my way to the top. Studies show that women often construct entire identities around the clothes they fit into. I don’t just wear a size 6, I am a size 6. Or at least that’s what I used to tell myself. Who am I when I wear a size 16?"
+      "value": "Everything clicked once I learned how to draft my own sewing patterns from scratch. I had printed out more than 800 pages of step-by-step tutorials found in an outdated edition of a pattern-making textbook often taught in fashion design school. I kept everything in a canary yellow three-ring binder to serve as the curriculum for my self-guided course. With a tape measure in hand, I followed the book’s prompts to take a total of 58 individual body measurements. From there, I could make my own custom base pattern, known as a bodice block or sloper."
     },
     {
       "type": "text",
-      "value": "That’s exactly where I found myself, nearing my mid-30s and suddenly reckoning with the basic fact that I no longer looked like a teenager. I had come to terms with knowing I now occupied the body of an adult, along with all of the pains, joys, wisdom, and slights of social rejection that come with it. But the more my body changed, the harder it was to find replacements in my wardrobe. Nothing fit right, the quality of products took a nosedive, and I couldn’t justify spending more money than ever before on items that would have no chance of holding up or looking good on me."
-    },
-    {
-      "type": "text",
-      "value": "Somehow it felt more practical to learn how to make my own clothes than wait for the fashion industry at large to adopt some magical market solution to solve the many problems that have plagued women for generations. I started out with simple projects made from free sewing patterns that I found online. Many of the patterns were structured around an 8 — the size many fashion designers use as their starting point — with the other sizes being incrementally smaller or larger in a Russian doll-like effect."
-    },
-    {
-      "type": "text",
-      "value": "First, I tried a boxy, drop-shoulder top. Then a loose-fitting, tiered summer dress. The first pair of pants I made were an absolute disaster. The fabric I used was so thick I could barely sit down without busting through the leg seams, but then it sagged so much around my backside that I looked like I was wearing an adult diaper."
-    },
-    {
-      "type": "text",
-      "value": "My first major ‘aha’ moment came once I tried to draft my own sewing pattern from scratch. I took a PDF version of the textbook that most fashion design students study in school, printed out all 800+ pages, and placed them in a canary yellow 3-ring binder that would serve as the curriculum to my self-guided course. With a tape measure in hand, I followed the book’s prompts to take a total of 58 individual body measurements, and from there, I could make my own custom base pattern, known as a bodice block."
-    },
-    {
-      "type": "text",
-      "value": "In comparing my bespoke bodice block to commercial patterns and clothes available on the rack in stores, I had a revelation: my base measurements looked nothing like those of ready-to-wear garments."
-    },
-    {
-      "type": "text",
-      "value": "It didn’t matter how much weight I gained or lost, how much I contorted my body or tried to buy my way into styles that “flatter” my silhouette, there was no chance that clothes would ever be able to fit perfectly on their own."
+      "value": "In comparing my bespoke bodice block to commercial patterns and clothes available in stores, I had a revelation: my base measurements didn’t fit any one size found with ready-to-wear garments. It didn’t matter how much weight I gained or lost, how much I contorted my body or tried to buy my way into styles that “flatter” my silhouette, there was no chance that clothes would ever be able to fit perfectly on their own. I’d always known this deep down. Many women likely feel some version of the same thing. But finally I understood why."
     }
   ],
   "massProductionScroll": [
@@ -420,7 +388,7 @@
     },
     {
       "step": "9",
-      "text": "Out of these 15 brands, only H&M close close to the median woman’s shape, especially as sizes get bigger."
+      "text": "Out of these 15 brands, only H&M comes close to the median woman’s shape, especially as sizes get bigger."
     },
     {
       "step": "10",
