@@ -25,7 +25,6 @@ export const AVATAR_SIZE = {
 export function generateRandomAvatar(sizeType, point, valueKey) {
 
   // --- REMOVED CACHE RESET ---
-  console.log(sizeType)
   // 1. Handle 'p50' - this is the most specific rule
   if (point.id === 'p50') {
     if (valueKey === 'value10_11') {
