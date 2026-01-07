@@ -67,7 +67,8 @@
         // Determine the appropriate avatar size type
         const avatarSizeType = determineAvatarSize(point, allSizeData, 
                                value => findSizesForMeasurement(allSizeData, value));
-        
+        console.log(avatarSizeType)
+
         return {
           ...point,
           avatarSizeType: avatarSizeType,

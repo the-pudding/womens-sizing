@@ -76,9 +76,9 @@
         </div>
 
         <div class="title-page-body">
-            {#each copy.sewingSection as graf, i}
+            {#each copy.sewingLessons as graf, i}
                 <p>{graf.value}</p>
-                {#if i == 1}
+                <!-- {#if i == 1}
                     <div class="grid">
                         {#each shapeGrid as shape, i}
                             <div class="shape">
@@ -86,13 +86,13 @@
                             </div>
                         {/each}
                     </div>
-                {/if}
-                {#if i == 4}
+                {/if} -->
+                {#if i == 6}
                     <div id="bodice-svg">
                         {@html bodice}
                     </div>
                 {/if}
-                {#if i == 5}
+                <!-- {#if i == 1}
                     <div class="grid">
                         {#each clothingGrid as item, i}
                             <div class="shape">
@@ -100,8 +100,8 @@
                             </div>
                         {/each}
                     </div>
-                {/if}
-                {#if i == 6}
+                {/if} -->
+                {#if i == 2}
                     <div class="block">
                         <div class="block-wrapper" style="transform: {!blockCentered ? 'translate(-90%, -50%)' : 'translate(-50%, -50%)'}">
                             {@html blockStandard}

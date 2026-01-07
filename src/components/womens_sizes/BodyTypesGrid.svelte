@@ -30,7 +30,6 @@
     }
 
     $effect(() => {
-        console.log(value)
 
         if (value == "to-enter" || value <= 1) {
             d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0);

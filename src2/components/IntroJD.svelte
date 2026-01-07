@@ -7,7 +7,7 @@
   // import waistlinesData from '../data/waistlines.json';
   import ASTMsizes from "../data/ASTMsizes.json";
   import pointsData from '$data/pointsData.csv';
-  import { generateRandomAvatar, determineAvatarSize } from './utils/avatar-generator.js';
+  import { , determineAvatarSize } from './utils/avatar-generator.js';
 	import { fade } from 'svelte/transition';
   import Ransom from "$components/Ransom.svelte";
   import Leet from "$components/Leet.svelte";
@@ -127,7 +127,7 @@
       return {
         ...point,
         // The avatar object is already generated here
-        avatar: generateRandomAvatar("mid", point)
+        avatar: ("mid", point)
       };
     });
     return avatars

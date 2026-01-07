@@ -1,4 +1,8 @@
-{
+import"../chunks/Bzak7iHL.js";import{h as F,a as ve,f as se,aE as Fe,b as Ue,E as We,d as je,aF as Pe,af as Le,ad as Ne,c as He,a3 as ye,a2 as we,D as Je,p as qe,a5 as Oe,ag as Xe,V as _,X as c,ax as z,Z as b,_ as y,ay as I,aw as T,aA as $e,W as A,A as i,az as U,C as D,av as W,aG as Ve,U as Z,Y as Q,u as ce,aH as Ge,R as ke,B as Ye}from"../chunks/Dzm_WEGj.js";import{i as Ze,b as be,a as C,d as Qe}from"../chunks/ZgVi19R2.js";import{b as ze,c as xe,e as J,i as q,d as Ke,s as en,f as nn,g as tn}from"../chunks/CbB6GLjC.js";import{c as le}from"../chunks/DH1QYJyw.js";import{s as he,p as Y}from"../chunks/ihUrmXYw.js";import{S as an,h as _e,c as sn}from"../chunks/ButTBccu.js";import{i as H}from"../chunks/C0w0nz2X.js";import{s as rn}from"../chunks/BIhypZ3Q.js";import{b as on}from"../chunks/2H-b5Bg_.js";function de(e,n,a,s,o,h){let u=F;F&&ve();var m,v,r=null;F&&se.nodeType===Fe&&(r=se,ve());var p=F?se:e,t,l=xe;Ue(()=>{const f=n()||null;var g=f==="svg"?Pe:null;if(f!==m){var d=xe;ze(l),t&&(f===null?qe(t,()=>{t=null,v=null}):f===v?Oe(t):(Xe(t),be(!1))),f&&f!==v&&(t=je(()=>{if(r=F?r:g?document.createElementNS(g,f):document.createElement(f),Le(r,r),s){F&&Ze(f)&&r.append(document.createComment(""));var w=F?Ne(r):r.appendChild(He());F&&(w===null?ye(!1):we(w)),s(r,w)}Je.nodes_end=r,p.before(r)})),m=f,m&&(v=m),be(!0),ze(d)}},We),u&&(ye(!0),we(p))}var Te={},re={},oe=34,G=10,ie=13;function Re(e){return new Function("d","return {"+e.map(function(n,a){return JSON.stringify(n)+": d["+a+'] || ""'}).join(",")+"}")}function ln(e,n){var a=Re(e);return function(s,o){return n(a(s),o,e)}}function Se(e){var n=Object.create(null),a=[];return e.forEach(function(s){for(var o in s)o in n||a.push(n[o]=o)}),a}function R(e,n){var a=e+"",s=a.length;return s<n?new Array(n-s+1).join(0)+a:a}function hn(e){return e<0?"-"+R(-e,6):e>9999?"+"+R(e,6):R(e,4)}function dn(e){var n=e.getUTCHours(),a=e.getUTCMinutes(),s=e.getUTCSeconds(),o=e.getUTCMilliseconds();return isNaN(e)?"Invalid Date":hn(e.getUTCFullYear())+"-"+R(e.getUTCMonth()+1,2)+"-"+R(e.getUTCDate(),2)+(o?"T"+R(n,2)+":"+R(a,2)+":"+R(s,2)+"."+R(o,3)+"Z":s?"T"+R(n,2)+":"+R(a,2)+":"+R(s,2)+"Z":a||n?"T"+R(n,2)+":"+R(a,2)+"Z":"")}function cn(e){var n=new RegExp('["'+e+`
+\r]`),a=e.charCodeAt(0);function s(t,l){var f,g,d=o(t,function(w,x){if(f)return f(w,x-1);g=w,f=l?ln(w,l):Re(w)});return d.columns=g||[],d}function o(t,l){var f=[],g=t.length,d=0,w=0,x,S=g<=0,k=!1;t.charCodeAt(g-1)===G&&--g,t.charCodeAt(g-1)===ie&&--g;function M(){if(S)return re;if(k)return k=!1,Te;var X,B=d,E;if(t.charCodeAt(B)===oe){for(;d++<g&&t.charCodeAt(d)!==oe||t.charCodeAt(++d)===oe;);return(X=d)>=g?S=!0:(E=t.charCodeAt(d++))===G?k=!0:E===ie&&(k=!0,t.charCodeAt(d)===G&&++d),t.slice(B+1,X-1).replace(/""/g,'"')}for(;d<g;){if((E=t.charCodeAt(X=d++))===G)k=!0;else if(E===ie)k=!0,t.charCodeAt(d)===G&&++d;else if(E!==a)continue;return t.slice(B,X)}return S=!0,t.slice(B,g)}for(;(x=M())!==re;){for(var O=[];x!==Te&&x!==re;)O.push(x),x=M();l&&(O=l(O,w++))==null||f.push(O)}return f}function h(t,l){return t.map(function(f){return l.map(function(g){return p(f[g])}).join(e)})}function u(t,l){return l==null&&(l=Se(t)),[l.map(p).join(e)].concat(h(t,l)).join(`
+`)}function m(t,l){return l==null&&(l=Se(t)),h(t,l).join(`
+`)}function v(t){return t.map(r).join(`
+`)}function r(t){return t.map(p).join(e)}function p(t){return t==null?"":t instanceof Date?dn(t):n.test(t+="")?'"'+t.replace(/"/g,'""')+'"':t}return{parse:s,parseRows:o,format:u,formatBody:m,formatRows:v,formatRow:r,formatValue:p}}var pn=cn(","),un=pn.parse,mn=_('<section id="demo-link"><h2>Link</h2> <p><a href="elements">Default element styles demo</a></p> <p><a href="fonts">Pudding-hosted font previews</a></p></section>');function gn(e){var n=mn();c(e,n)}var fn=_('<section id="demo-image"><h2>Image</h2> <p>img tag</p> <img src="../assets/demo/test.jpg" alt="cat" class="svelte-o47y6s"/> <p>background image</p> <div class="svelte-o47y6s"></div></section>');function vn(e){var n=fn();c(e,n)}var yn=_('<section id="demo-element"><h2>Dynamic Svelte Element</h2> <!></section>');function wn(e){const n=[{tag:"h3",text:"I am a h3 tag."},{tag:"p",text:"I am p tag."}];var a=yn(),s=z(b(a),2);J(s,17,()=>n,q,(o,h)=>{let u=()=>i(h).tag,m=()=>i(h).text;var v=I(),r=T(v);de(r,u,!1,(p,t)=>{var l=$e();A(()=>C(l,m())),c(t,l)}),c(o,v)}),y(a),c(e,a)}var bn=_("<p> </p>");function zn(e,n){var a=bn(),s=b(a);y(a),A(()=>C(s,`I am component A and my favorite number is ${n.number??""}.`)),c(e,a)}var xn=_("<p> </p>");function _n(e,n){var a=xn(),s=b(a);y(a),A(()=>C(s,`I am component B and my name is ${n.name??""}.`)),c(e,a)}var Tn=_('<section id="demo-component"><h2>Dynamic Svelte Component</h2> <!></section>');function Sn(e){const n={A:zn,B:_n},a=[{component:"A",number:42},{component:"B",name:"Russell"}];var s=Tn(),o=z(b(s),2);J(o,17,()=>a,q,(h,u)=>{const m=U(()=>n[i(u).component]);var v=I(),r=T(v);le(r,()=>i(m),(p,t)=>{t(p,he(()=>i(u)))}),c(h,v)}),y(s),c(e,s)}var kn=_('<div><p class="svelte-12sq0x6"> </p></div>'),Rn=_('<section id="scrolly"><h2 class="svelte-12sq0x6">Scrolly <span> </span></h2> <div class="spacer svelte-12sq0x6"></div> <!> <div class="spacer svelte-12sq0x6"></div></section>');function In(e){let n=W(void 0);var a=Rn(),s=b(a),o=z(b(s)),h=b(o,!0);y(o),y(s);var u=z(s,4);an(u,{get value(){return i(n)},set value(m){D(n,m,!0)},children:(m,v)=>{var r=I(),p=T(r);J(p,16,()=>[0,1,2,3,4],q,(t,l,f)=>{const g=U(()=>i(n)===f);var d=kn();let w;var x=b(d),S=b(x,!0);y(x),y(d),A(k=>{w=Ke(d,1,"step svelte-12sq0x6",null,w,k),C(S,l)},[()=>({active:i(g)})]),c(t,d)}),c(m,r)},$$slots:{default:!0}}),Ve(2),y(a),A(()=>C(h,i(n)||"-")),c(e,a)}const Cn=`{
   "heroText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself. Shopping is fun, but it won’t always be this way.",
   "introScroll": [
     {
@@ -24,7 +28,7 @@
       "highlightEnd": "M",
       "omit": "XXL,XL,XS,XXS",
       "zoom": "1",
-      "text": "“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.\r\n\r\n\r\nFor now, our typical <span class=bold>11-year-old</span> wears a size 9 in the junior’s section, which is also considered a size <span class=orange-outline>Medium</span>."
+      "text": "“Junior’s” clothing lines often channel this interest with youthful styles that fit young girls as they grow.\\r\\n\\r\\n\\r\\nFor now, our typical <span class=bold>11-year-old</span> wears a size 9 in the junior’s section, which is also considered a size <span class=orange-outline>Medium</span>."
     },
     {
       "id": "2",
@@ -35,7 +39,7 @@
       "year": "2015",
       "sizeRange": "Junior's",
       "sizeType": "alphaSize",
-      "text": "But not all tweens wear the same size.\r\n\r\n\r\nIf we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S. from the National Center for Health Statistics, here are the junior’s sizes that match up with their body measurements."
+      "text": "But not all tweens wear the same size.\\r\\n\\r\\n\\r\\nIf we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S. from the National Center for Health Statistics, here are the junior’s sizes that match up with their body measurements."
     },
     {
       "id": "3",
@@ -46,7 +50,7 @@
       "year": "2015",
       "sizeRange": "Junior's",
       "sizeType": "alphaSize",
-      "text": "By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. \r\n\r\n\r\nMany have started to outgrow the junior’s size section."
+      "text": "By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. \\r\\n\\r\\n\\r\\nMany have started to outgrow the junior’s size section."
     },
     {
       "id": "4",
@@ -64,7 +68,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "alphaSize",
-      "text": "Girls who fall along the bottom <span class=bold>10th percentile</span> can now wear an <span class=bold>Extra Small</span> in women’s clothing, while girls near the <span class=bold>90th percentile</span> will find that an <span class=bold>Extra Large</span> generally fits. \r\n\r\n\r\nThe median 15-year-old wears a Medium, as she has throughout most of her childhood."
+      "text": "Girls who fall along the bottom <span class=bold>10th percentile</span> can now wear an <span class=bold>Extra Small</span> in women’s clothing, while girls near the <span class=bold>90th percentile</span> will find that an <span class=bold>Extra Large</span> generally fits. \\r\\n\\r\\n\\r\\nThe median 15-year-old wears a Medium, as she has throughout most of her childhood."
     },
     {
       "id": "6",
@@ -113,7 +117,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=orange-outline>Extra Large.</span>"
+      "text": "Her wardrobe will shift again in her 30s. \\r\\n\\r\\n\\r\\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=orange-outline>Extra Large.</span>"
     },
     {
       "id": "11",
@@ -122,7 +126,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "This trend will continue again, and again. \r\n\r\n\r\nAltogether, the median adult woman over the age of 20 fits a <span class=orange-outline>size 18.</span>"
+      "text": "This trend will continue again, and again. \\r\\n\\r\\n\\r\\nAltogether, the median adult woman over the age of 20 fits a <span class=orange-outline>size 18.</span>"
     },
     {
       "id": "12",
@@ -260,7 +264,7 @@
     },
     {
       "id": "10",
-      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Interact with the dots for more information about each brand and size.</p>"
+      "text": "<p><span class=interact>Explore more</span></p> \\r\\n\\r\\n\\r\\n<p>Interact with the dots for more information about each brand and size.</p>"
     },
     {
       "id": "11",
@@ -322,7 +326,7 @@
     },
     {
       "step": "5",
-      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Interact with the dress forms to see how sizes changed from 1995 to 2021.</p>"
+      "text": "<p><span class=interact>Explore more</span></p> \\r\\n\\r\\n\\r\\n<p>Interact with the dress forms to see how sizes changed from 1995 to 2021.</p>"
     },
     {
       "step": "6",
@@ -380,7 +384,7 @@
     },
     {
       "step": "1",
-      "text": "\r\nResearchers have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to those told over the years to “dress for their body type.”"
+      "text": "\\r\\nResearchers have identified as many as nine different categories of body proportions commonly found among adult women alone, many of which are likely familiar to those told over the years to “dress for their body type.”"
     },
     {
       "step": "2",
@@ -416,7 +420,7 @@
     },
     {
       "step": "10",
-      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Use the selector in the top left corner, to highlight a size.</p>"
+      "text": "<p><span class=interact>Explore more</span></p> \\r\\n\\r\\n\\r\\n<p>Use the selector in the top left corner, to highlight a size.</p>"
     },
     {
       "step": "11",
@@ -426,7 +430,7 @@
   "massProductionScrollALT": [
     {
       "step": "0",
-      "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \r\n\r\n\r\n<p>The median woman in the U.S. today has a far less defined waistline. Her waist-to-hip ratio is half that of the traditional hourglass shape, yet this “ideal” still persists in many brands’ sizing charts.</p>"
+      "text": "<p>Clothing sizes are optimized for mass production — not women’s bodies.</p> \\r\\n\\r\\n\\r\\n<p>The median woman in the U.S. today has a far less defined waistline. Her waist-to-hip ratio is half that of the traditional hourglass shape, yet this “ideal” still persists in many brands’ sizing charts.</p>"
     },
     {
       "step": "1",
@@ -450,7 +454,7 @@
     },
     {
       "step": "6",
-      "text": "<p><span class=interact>Explore more</span></p> \r\n\r\n\r\n<p>Use the selector in the top left corner, to highlight a size.</p>"
+      "text": "<p><span class=interact>Explore more</span></p> \\r\\n\\r\\n\\r\\n<p>Use the selector in the top left corner, to highlight a size.</p>"
     },
     {
       "step": "7",
@@ -494,4 +498,4 @@
       "value": "But who gets to be considered a brand’s target demographic?"
     }
   ]
-}
+}`;var An=_("<p><!></p>"),En=_("<section><!></section>");function Mn(e,n){Z(n,!0);let a=Y(n,"components",19,()=>({})),s=Y(n,"body",19,()=>[]);var o=I(),h=T(o);J(h,17,s,q,(u,m)=>{let v=()=>i(m).section,r=()=>i(m).content;const p=U(()=>v().toLowerCase().replace(/[^a-z0-9]/g,"")),t=U(()=>a()[v()]);var l=En(),f=b(l);{var g=w=>{var x=I(),S=T(x);le(S,()=>i(t),(k,M)=>{M(k,he(r))}),c(w,x)},d=w=>{var x=I(),S=T(x);J(S,17,r,q,(k,M,O,X)=>{let B=()=>i(M).type,E=()=>i(M).value;const pe=U(()=>a()[B()]),Ie=U(()=>typeof E()=="string");var ue=I(),Ce=T(ue);{var Ae=j=>{var $=I(),K=T($);le(K,()=>i(pe),(ee,ne)=>{ne(ee,he(E))}),c(j,$)},Ee=j=>{var $=I(),K=T($);{var ee=P=>{var L=An(),te=b(L);_e(te,E),y(L),c(P,L)},ne=P=>{var L=I(),te=T(L);{var Me=N=>{var V=I(),ae=T(V);de(ae,B,!1,(me,ge)=>{var fe=I(),De=T(fe);_e(De,E),c(ge,fe)}),c(N,V)},Be=N=>{var V=I(),ae=T(V);de(ae,B,!1,(me,ge)=>{nn(me,()=>({...E()}))}),c(N,V)};H(te,N=>{i(Ie)?N(Me):N(Be,!1)},!0)}c(P,L)};H(K,P=>{B()==="text"?P(ee):P(ne,!1)},!0)}c(j,$)};H(Ce,j=>{i(pe)?j(Ae):j(Ee,!1)})}c(k,ue)}),c(w,x)};H(f,w=>{i(t)?w(g):w(d,!1)})}y(l),A(()=>en(l,"id",i(p))),c(u,l)}),c(e,o),Q()}var Bn=_('<p> </p> <progress max="100"></progress>',1);function Dn(e,n){let a=Y(n,"label",3,"A"),s=Y(n,"value",3,0);var o=Bn(),h=T(o),u=b(h,!0);y(h);var m=z(h,2);A(()=>{C(u,a()),tn(m,s())}),c(e,o)}var Fn=_('<section id="cms"><h2>MicroCMS</h2> <code><pre> </pre></code> <!></section>');function Un(e,n){Z(n,!0);const{body:a}=sn,s={Test:Dn};var o=Fn(),h=z(b(o),2),u=b(h),m=b(u,!0);y(u),y(h);var v=z(h,2);Mn(v,{get components(){return s},get body(){return a}}),y(o),A(r=>C(m,r),[()=>Cn.replace(/\t/g," ")]),c(e,o),Q()}const Wn=(e,n=ke)=>{var a=jn(),s=b(a),o=b(s,!0);y(s);var h=z(s,2),u=b(h,!0);y(h),y(a),A(()=>{C(o,n().name),C(u,n().age)}),c(e,a)};var jn=_('<div class="person svelte-1ltx6da"><p class="svelte-1ltx6da"> </p> <p class="svelte-1ltx6da"> </p></div>'),Pn=(e,n)=>Ge(n),Ln=(e,n)=>n.random(Math.floor(Math.random()*10)),Nn=_('<h2>Svelte5</h2> <h3>Reactive variables 3 ways:</h3> <button class="svelte-1ltx6da">count++</button> <p class="svelte-1ltx6da"> </p> <p class="svelte-1ltx6da"> </p> <p class="svelte-1ltx6da"> </p> <h3>Children (previously slots):</h3> <div class="children"><!></div> <h3>Dispatch Event</h3> <button class="svelte-1ltx6da">Random</button>  <h3>Snippets</h3> <div class="people svelte-1ltx6da"></div>',1);function Hn(e,n){Z(n,!0),Y(n,"age",3,30);const a=[{name:"John",age:30},{name:"Jill",age:45}];let s=W(0),o=U(()=>i(s)*2),h=U(()=>i(s)*2),u=W(0);ce(()=>{D(u,i(s)*2)});var m=Nn(),v=z(T(m),4);v.__click=[Pn,s];var r=z(v,2),p=b(r);y(r);var t=z(r,2),l=b(t);y(t);var f=z(t,2),g=b(f);y(f);var d=z(f,4),w=b(d);rn(w,()=>n.children??ke),y(d);var x=z(d,4);x.__click=[Ln,n];var S=z(x,4);J(S,21,()=>a,q,(k,M)=>{Wn(k,()=>i(M))}),y(S),A(()=>{C(p,`${i(s)??""} doubled is ${i(o)??""} (derived)`),C(l,`${i(s)??""} doubled is ${i(h)??""} (derived by)`),C(g,`${i(s)??""} doubled is ${i(u)??""} ($effect)`)}),c(e,m),Q()}Qe(["click"]);const Jn=(e,n)=>{let a=W(Ye(e)),s=W(null),o=W(!0),h=W(void 0);const u=(r=!0)=>{D(o,r,!0),r===!0&&(D(h,null),D(s,null))},m=async()=>{try{const r=await fetch(i(a),n);if(!r.ok)throw new Error(`Unexpected error occurred (status ${r.status})`);let p;if(i(a).includes(".csv")){const t=await r.text();p=un(t)}else p=await r.json();return[null,p]}catch(r){const{errorMessage:p="Unexpected error eccurred"}=r;return[p,null]}},v=async r=>{u(!0);const[p,t]=await m();if(r===i(a)){if(p){u(!1),D(h,p,!0);return}u(!1),D(s,t,!0)}};return ce(()=>{v(i(a))}),{get data(){return i(s)},get loading(){return i(o)},get error(){return i(h)},get url(){return i(a)},set url(r){i(a)!==r&&D(a,r,!0)}}};var qn=_("<p>loading data...</p>"),On=_("<p> </p>"),Xn=_("<p>data loaded</p> <pre> </pre>",1),$n=_('<div class="c"><h2>Load Data</h2> <div class="response"><!></div></div>');function Vn(e,n){Z(n,!0);const a=`${on}/assets/demo/test.csv`,s=Jn(a);ce(()=>{});var o=$n(),h=z(b(o),2),u=b(h);{var m=r=>{var p=qn();c(r,p)},v=r=>{var p=I(),t=T(p);{var l=g=>{var d=On(),w=b(d);y(d),A(()=>C(w,`error: ${s.error??""}`)),c(g,d)},f=g=>{var d=Xn(),w=z(T(d),2),x=b(w,!0);y(w),A(S=>C(x,S),[()=>JSON.stringify(s.data,null,2)]),c(g,d)};H(t,g=>{s.error?g(l):g(f,!1)},!0)}c(r,p)};H(u,r=>{s.loading?r(m):r(v,!1)})}y(h),y(o),c(e,o),Q()}var Gn=_('<div id="demo" class="svelte-m1ilu3"><h1>Demo</h1> <!> <!> <!> <!> <!> <!> <!> <!></div>');function Yn(e){let n=W(0);function a(l){console.log(l)}var s=Gn(),o=z(b(s),2);Hn(o,{random:a,get value(){return i(n)},set value(l){D(n,l,!0)}});var h=z(o,2);gn(h);var u=z(h,2);vn(u);var m=z(u,2);wn(m);var v=z(m,2);Sn(v);var r=z(v,2);Un(r,{});var p=z(r,2);Vn(p,{});var t=z(p,2);In(t),y(s),c(e,s)}function it(e){Yn(e)}export{it as component};

@@ -22,10 +22,9 @@ export const AVATAR_SIZE = {
  * Generate a random avatar with layers
  * @param {string} sizeType - Size type (SMALL, MID, or LARGE)
  */
-export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point, valueKey) {
+export function generateRandomAvatar(sizeType, point, valueKey) {
 
   // --- REMOVED CACHE RESET ---
-
   // 1. Handle 'p50' - this is the most specific rule
   if (point.id === 'p50') {
     if (valueKey === 'value10_11') {
@@ -63,20 +62,19 @@ export function generateRandomAvatar(sizeType = AVATAR_SIZE.SMALL, point, valueK
     
     // Use different folder path based on avatar size
     let folderPath;
-    switch(sizeType) {
-      case AVATAR_SIZE.LARGE:
+    switch (true) {
+      case sizeType >= 90:
         folderPath = 'assets/avatars/24';
         break;
-      case AVATAR_SIZE.MID:
+      case sizeType >= 70:
         folderPath = 'assets/avatars/12';
         break;
-      case AVATAR_SIZE.SMALL:
-      default:
+      case sizeType >= 30:
         folderPath = 'assets/avatars/2';
         break;
-      case AVATAR_SIZE.JUNIOR:
-          folderPath = 'assets/avatars/junior';
-          break;
+      default: // This handles anything less than 25
+        folderPath = 'assets/avatars/junior';
+        break;
     }
     
     // Create layers in order from bottom to top
