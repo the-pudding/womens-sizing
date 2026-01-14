@@ -1,21 +1,20 @@
 <script>
     import Ransom from "$components/womens_sizes/Ransom.svelte";
+    import Leet from "$components/womens_sizes/Leet.svelte";
     import copy from "$data/copy.json";
 </script>
 
 
 <div class="title-page-container">
     <div class="title-page-content">
+        <p class="mono"><Leet string="sizing for" /></p>
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"outro"} />  
-        </div>
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"tktk"} />  
-        </div>
+            <Ransom class="title-page-title" string={"every body"} />  
+        </div>    
 
         <div class="title-page-body">
             {#each copy.outro as graf, i}
-                <p>{graf.value}</p>
+                <p>{@html graf.value}</p>
             {/each}
         </div>
     </div>

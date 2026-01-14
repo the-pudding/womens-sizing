@@ -142,9 +142,9 @@
 <div class="outer-container">
     <div class="text-block">
         <h3>
+            <Leet string="The villian arc of" />
             <Ransom string="vanity" />
             <Ransom string="sizing" />
-            <Leet string="is largely to blame" />
         </h3>
         {#each copy.vanityIntro as block}
             <p>{@html block.value}</p>

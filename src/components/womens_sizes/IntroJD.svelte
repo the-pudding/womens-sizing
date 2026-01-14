@@ -405,7 +405,7 @@
       {#each filteredStages as stage}
         <div 
           class="step step{stage.id}"
-          style="justify-content: {stage.id >= 10 ? 'flex-start' : 'flex-end'}"
+          style="justify-content: {stage.id >= 9 ? 'flex-start' : 'flex-end'}"
         >
           {#if stage.text}
             <div class="text">
@@ -669,9 +669,14 @@
         padding: 0;
 
     }
-    .step.step1, .step2, .step7, .step11 {
-      /* padding-right: 30%; */
-      justify-content: end;
+    .step.step7 {
+      justify-content: center;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .step.step7 .text {
+      margin: 0 auto;
     }
 
      @media (max-width: 900px) {

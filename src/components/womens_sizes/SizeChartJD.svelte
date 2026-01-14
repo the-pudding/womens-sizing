@@ -367,7 +367,9 @@
     <div class="scrolly-outer">
         <Scrolly bind:value>
             {#each copy.sizeScroll as stage, i}
-                <div class="step" id="step-{i}">
+                <div
+                    style="justify-content: {stage.id == 0 ? 'center' : 'flex-end'}" 
+                    class="step" id="step-{i}">
                     <div class="text">
                         <p>{@html stage.text}</p>
                     </div>
@@ -650,9 +652,9 @@
     .step {
         height: 100vh;
         display: flex;
-        justify-content: center;
+        /* justify-content: flex-end; */
         align-items: center;
-        padding-right: 2rem;
+        padding: 40vh 5% 70vh;
         font-family: var(--sans);
         font-size: var(--18px);
     }

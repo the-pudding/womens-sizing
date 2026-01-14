@@ -196,7 +196,7 @@
 </script>
 
 {#if value >= 8 && value !== "exit"}
-    <div class="select-wrapper" class:visible={value == 10}>
+    <div class="select-wrapper" class:visible={value >= 10}>
         <p>Highlight</p>
         <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
     </div>
