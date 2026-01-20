@@ -129,7 +129,6 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
-        console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")

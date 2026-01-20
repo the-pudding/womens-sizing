@@ -32,8 +32,6 @@
             .map(String)
     )];
 
-    console.log(sizeListMin)
-
     const zeroStrings = [];
     const otherSizes = [];
 

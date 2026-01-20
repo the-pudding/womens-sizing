@@ -266,7 +266,7 @@
     });
   
     $effect(() => {
-      console.log({currentId, value})
+      // console.log({currentId, value})
       // console.log(copy.intro[value])
     })
   </script>

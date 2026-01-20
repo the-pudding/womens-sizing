@@ -3,6 +3,8 @@
   "metaDescription": "The inter-generational struggle to find clothes that fit more than a tiny portion of women",
   "metaKeywords": "",
   "heroText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself. Shopping is fun, but it won’t always be this way.",
+  "byline": "By <a href=https://pudding.cool/author/amanda-sakuma/>Amanda Sakuma</a>",
+  "withline": "with <a href=https://pudding.cool/author/jan-diehm/>Jan Diehm</a>",
   "introScroll": [
     {
       "id": "0",
@@ -491,6 +493,20 @@
     {
       "type": "text",
       "value": "There are no rules forcing brands to adopt any particular sizing system. There is no such thing as a “true” size 8, or any size for that matter. If brands are constantly developing and customizing their size charts, then it makes little sense to perpetuate a broken system. Sizes are all made up anyway — why can’t we make them better?"
+    }
+  ],
+  "methods": [
+    {
+      "type": "text",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at sagittis quam. Pellentesque bibendum lorem eu purus pulvinar porttitor. Cras elit elit, viverra at nisi at, congue tristique mi. Phasellus elementum, lacus at fermentum laoreet, mauris velit pharetra nunc, in laoreet est leo vel nisi."
+    },
+    {
+      "type": "text",
+      "value": "Curabitur neque ex, ultrices ut finibus id, laoreet sit amet magna. In hac habitasse platea dictumst. Donec nec feugiat lacus. Proin mattis nisi libero, sed blandit neque tempus vel. Donec faucibus, enim in rutrum pharetra, tellus magna semper justo, eget pellentesque ante massa vitae quam. Nullam quam felis, congue vitae pharetra a, gravida vel turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      "type": "text",
+      "value": "Mauris non malesuada libero. Curabitur ac viverra lacus. Nulla non porttitor augue, in rhoncus elit. Proin lobortis vestibulum velit, vel congue metus volutpat sit amet. Duis ultricies urna vel velit dignissim facilisis sed nec diam. Integer vitae scelerisque est. Nulla facilisi."
     }
   ]
 }

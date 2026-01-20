@@ -97,9 +97,7 @@
   }
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
-  $effect(function() {
-    console.log(value, processedASTMData)
-  })
+
   function processASTMSizeData(filteredASTM) {
     let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
     // console.log(filteredASTM)

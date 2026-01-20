@@ -25,6 +25,6 @@
     span {
         font-family: var(--mono);
         font-weight: 700;
-        font-size: var(--24px);
+        font-size: var(--32px);
     }
 </style>

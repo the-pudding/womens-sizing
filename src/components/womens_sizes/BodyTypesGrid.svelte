@@ -30,7 +30,6 @@
     }
 
     $effect(() => {
-        console.log(value)
         if (value == "to-enter") {
             d3.selectAll(".svg-wrapper svg #median").style("opacity", 0);
         } else if (value <= 1) {

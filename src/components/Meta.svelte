@@ -1,9 +1,9 @@
 <script>
 	let {
-		title = "Title TK",
-		description = "Description TK",
-		url = "https://pudding.cool",
-		keywords = "",
+		title = "Sizing chaos",
+		description = "The inter-generational struggle to find clothes that fit more than a tiny portion of women",
+		url = "https://pudding.cool/2026/02/womens-sizing",
+		keywords = "women, size, clothing, clothes, fashion, body, shape, woman, girl, data",
 		preloadFont = []
 	} = $props();
 </script>
