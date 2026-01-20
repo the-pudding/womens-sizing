@@ -346,7 +346,7 @@
     <div id="tooltip" class:visible={tooltipVisible} style="left: {tooltipX}px; top: {tooltipY}px; transform: translate({tooltipSide === 'right' ? '-110%' : '10%'}, 0%);">
         <p>{tooltipBrand}</p>
         <p><strong>Size range:</strong> {tooltipSizeRange}</p>
-        <p><strong>Alpha size:</strong> {tooltipAlphaSize}</p>
+        <p><strong>Letter size:</strong> {tooltipAlphaSize}</p>
         <p><strong>Numeric size:</strong> 
             {#if tooltipNumericSizeMax && tooltipNumericSizeMax !== tooltipNumericSizeMin}
                 {tooltipNumericSizeMin}–{tooltipNumericSizeMax}

@@ -98,7 +98,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline but, from here on, the two will diverge.\r\n\r\n\r\nIn addition to generic letter sizes (Small, Medium, Large etc.), women have a numeric sizing system that is designed to be more tailored and precise. Here, the median 15-year-old’s waistline fits a <span class=orange-outline>size 10</span>."
+      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline but, from here on, the two will diverge.\r\n\r\n\r\nIn addition to generic letter sizes (Small, Medium, Large etc.), women have a numeric sizing system that is designed to be more tailored and precise. Here, the median 15-year-old’s waistline fits a <span class=bold>size 10</span>."
     },
     {
       "id": "9",
@@ -107,7 +107,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "The <span class=bold>median 20-something</span> will eventually move up a letter size to a <span class=orange-outline>Large</span>. \r\n\r\n\r\nIn U.S. women’s sizing, this translates to a <span class=orange-outline>size 14</span>."
+      "text": "The <span class=bold>median 20-something</span> will eventually move up a letter size to a <span class=bold>Large</span>. \r\n\r\n\r\nIn U.S. women’s sizing, this translates to a <span class=orange-outline>size 14</span>."
     },
     {
       "id": "10",
@@ -116,7 +116,7 @@
       "year": "2021",
       "sizeRange": "Women's",
       "sizeType": "size",
-      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=orange-outline>Extra Large.</span>"
+      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=bold>Extra Large.</span>"
     },
     {
       "id": "11",
@@ -349,7 +349,7 @@
     },
     {
       "type": "text",
-      "value": "Fashion designers often use body measurements for a size 8 as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
+      "value": "Fashion designers often use body measurements for a <span class=green-span>size 8</span> as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
     },
     {
       "type": "text",
@@ -375,7 +375,7 @@
     },
     {
       "step": "2",
-      "text": "<p>Most women do not have an exaggerated hourglass silhouette. </p> \r\n\r\n\r\n<p>That’s because age and race factor heavily into how our bodies are shaped. Genetics can influence everything from a person's proportions to how they build muscle mass to where their bodies tend to store fat. </p>"
+      "text": "<p>Most women do not have an exaggerated hourglass silhouette, instead the <span class=blue-span>median woman</span> is shaped more like a rectangle.</p> \r\n\r\n\r\n<p>That’s because age and race factor heavily into how our bodies are shaped. Genetics can influence everything from a person's proportions to how they build muscle mass to where their bodies tend to store fat. </p>"
     },
     {
       "step": "3",
@@ -383,7 +383,7 @@
     },
     {
       "step": "4",
-      "text": "<p>While the U.S. does not track bust measurements, we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=purple-span>'ideal' hourglass proportions</span>.</p> \r\n\r\n\r\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
+      "text": "<p>While the U.S. does not track bust measurements,* we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=purple-span>'ideal' hourglass proportions</span>.</p> \r\n\r\n\r\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
     },
     {
       "step": "5",

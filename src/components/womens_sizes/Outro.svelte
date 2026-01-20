@@ -9,7 +9,10 @@
     <div class="title-page-content">
         <p class="mono"><Leet string="sizing for" /></p>
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"every body"} />  
+            <Ransom class="title-page-title" string={"every"} />  
+        </div>    
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"body"} />  
         </div>    
 
         <div class="title-page-body">

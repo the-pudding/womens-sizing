@@ -54,6 +54,7 @@
 {#if value < 3}
     <div id="bodice-svg" transition:fade={{ duration: 400 }}>
         {@html bodice}
+        <p>Size 8</p>
     </div>
 {/if}
 
@@ -61,6 +62,7 @@
     #bodice-svg{
         width: 100%;
         height: 100%;
+        position: relative;
     }
 
     #bodice-svg img {
@@ -68,5 +70,12 @@
         width: 100%;
         height: 100%;
         z-index: 1;
+    }
+
+    p {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>

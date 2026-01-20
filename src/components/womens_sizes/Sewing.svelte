@@ -77,7 +77,7 @@
 
         <div class="title-page-body">
             {#each copy.sewingLessons as graf, i}
-                <p>{graf.value}</p>
+                <p>{@html graf.value}</p>
                 {#if i == 1}
                     <div class="img-wrapper">
                         <img src="/assets/patternmaking.jpg" />
@@ -174,6 +174,7 @@
         max-width: 720px;
         aspect-ratio: 1 / 1;
         height: auto;
+        position: relative;
     }
 
     :global(#bodice-svg svg) {

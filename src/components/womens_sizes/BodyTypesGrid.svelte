@@ -30,8 +30,10 @@
     }
 
     $effect(() => {
-
-        if (value == "to-enter" || value <= 1) {
+        console.log(value)
+        if (value == "to-enter") {
+            d3.selectAll(".svg-wrapper svg #median").style("opacity", 0);
+        } else if (value <= 1) {
             d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0);
         } else {
             d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0.3);
@@ -109,6 +111,10 @@
         display: block;
         object-fit: contain;
         position: relative;
+    }
+
+    :global(.box .svg-wrapper svg #median) {
+        opacity: 0;
     }
 
     .bar {

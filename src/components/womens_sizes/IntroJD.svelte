@@ -152,71 +152,48 @@
       return {
         ...point,
         // The avatar object is already generated here
-        // avatar: generateRandomAvatar("junior", point, valueKey)
         avatar: generateRandomAvatar(point.percentile, point, valueKey)
       };
     });
     return avatars
   }
 
-  let positionedAvatars = $derived(() => {
-    // if (!pointsData || pointsData.length === 0) return [];
-    if (!pointsData || pointsData.length === 0 || containerWidth === 0 || containerHeight === 0) return [];
+let positionedAvatars = $derived.by(() => {
+    if (!pointsData?.length || containerWidth === 0 || containerHeight === 0) return [];
 
-
-    // Clean and copy data
-    const data = pointsData.map(d => {
-        const value = d[valueKey] === "" ? null : +d[valueKey];
-        return {
-            ...d,
-            value: value
-        };
-    }).filter(d => d.value !== null && !isNaN(d.value)); // drop rows with no x value
-
-    // Bail if no valid rows
-    if (data.length === 0) return [];
+    const data = pointsData
+        .map(d => ({ 
+            ...d, 
+            value: d[valueKey] === "" ? null : +d[valueKey] 
+        }))
+        .filter(d => d.value !== null && !isNaN(d.value));
 
     const sim = d3.forceSimulation(data)
-        .force('x', d3.forceX(d => (xScale(d.value) - avatarWidth/1.2 )).strength(1))
-        // Use a single, conditional y-force
-        .force('y', d3.forceY(d => height / 2 - avatarHeight / 2).strength(d => d.id.startsWith("p") ? 1.0 : 0.15))
-        // Increase the collision radius for the highlighted avatar to create a larger, symmetrical gap
-        .force('collide', d3.forceCollide(d => d.id.startsWith("p") ? (avatarHeight / 4) : (avatarHeight / 5)))
+        .force('x', d3.forceX(d => xScale(d.value)).strength(5))
+        .force('y', d3.forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
+        .force('collide', d3.forceCollide(avatarHeight / 5))
         .stop();
 
-    const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
-    for (let i = 0; i < ticks; ++i) sim.tick();
+    for (let i = 0; i < 300; ++i) sim.tick();
 
-    data.forEach(d => {
-        // Clamp x to stay within boundaries
-        d.x = Math.max(0, Math.min(width - avatarWidth/2, d.x));
-
-        // Clamp y to stay within boundaries, considering the avatar's height
-        d.y = Math.max(0, Math.min(height - avatarHeight / 2, d.y));
-    });
-
-    // Sort by y-coordinate to control SVG render order (z-index)
     return data.sort((a, b) => {
-        const aIsP = a.id.startsWith("p");
-        const bIsP = b.id.startsWith("p");
+      const aIsP = a.id.startsWith("p");
+      const bIsP = b.id.startsWith("p");
 
-        if (aIsP && !bIsP) {
-            return 1;  // 'a' (which is 'p') comes after 'b'
-        } else if (!aIsP && bIsP) {
-            return -1; // 'a' (which is not 'p') comes before 'b'
-        } else if (aIsP && bIsP) {
-            // Both are 'p', sort them by y to control their relative stacking
-            return a.y - b.y;
-        } else {
-            // Neither are 'p', so preserve their existing order
-            return 0;
-        }
-      }).map((d, i) => ({
-          ...d,
-          x: d.x,
-          y: d.y,
-          // Creates a random delay between 0s and 1s
-          randomDelay: Math.random() * 1
+      if (aIsP && !bIsP) {
+          return 1;
+      } else if (!aIsP && bIsP) {
+          return -1;
+      } else if (aIsP && bIsP) {
+          return a.y - b.y;
+      } else {
+          return 0;
+      }
+    }).map((d, i) => ({
+        ...d,
+        x: d.x,
+        y: d.y,
+        randomDelay: Math.random() * 1
   }));
 });
 
@@ -348,12 +325,12 @@
               transform="translate(0, {height - margin.top - margin.bottom})"
               opacity={currentId >= 2 ? 1 : 0}></g>
 
-          {#if positionedAvatars() && avatarImages}
+          {#if positionedAvatars && avatarImages}
             <g class="avatars">
-              {#each positionedAvatars() as point, i}
+              {#each positionedAvatars as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  transform={`translate(${point.x - avatarWidth / 2}, ${point.y - avatarHeight / 2}) scale(${(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
                   opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
                   style="transition: {currentId == 'to-enter' 
                     ? 'none' 
