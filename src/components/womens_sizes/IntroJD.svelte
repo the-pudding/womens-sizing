@@ -200,17 +200,9 @@
         const aIsP = a.id.startsWith("p");
         const bIsP = b.id.startsWith("p");
 
-        if (aIsP && !bIsP) {
-            return 1;  // 'a' (which is 'p') comes after 'b'
-        } else if (!aIsP && bIsP) {
-            return -1; // 'a' (which is not 'p') comes before 'b'
-        } else if (aIsP && bIsP) {
-            // Both are 'p', sort them by y to control their relative stacking
-            return a.y - b.y;
-        } else {
-            // Neither are 'p', so preserve their existing order
-            return 0;
-        }
+        if (aIsP && !bIsP) return 1; 
+        if (!aIsP && bIsP) return -1;
+        return a.y - b.y;
       }).map((d, i) => ({
           ...d,
           x: d.x,
