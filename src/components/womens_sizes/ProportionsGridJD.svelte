@@ -22,8 +22,8 @@
 
     const brands = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.brand))];
     let selectedBrand = $state("J.Crew");
-    const sizeListMin = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMin))];
-    const sizeListMax = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMax))];
+    const sizeListMin = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel" && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMin))];
+    const sizeListMax = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel" && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMax))];
     const allUniqueSizes = [...new Set(
         [...sizeListMin, ...sizeListMax]
             // Filter out null (js type) and "null" (string type)
@@ -31,6 +31,8 @@
             // Convert all remaining values to strings for consistent sorting
             .map(String)
     )];
+
+    console.log(sizeListMin)
 
     const zeroStrings = [];
     const otherSizes = [];
@@ -206,6 +208,7 @@
                 d => d.brand == brand
                     // && d.sizeRange == "Regular"
                     && d.garmentType == "Apparel"
+                    && (d.bustMin !== null || d.bustMax !== null)
                 )
             }
             <div class="brand-container"
@@ -232,6 +235,12 @@
                                         {#each result.paths as path}
                                             <path class="main-path" d={path} />
                                         {/each}
+
+                                        {#if selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax}
+                                            <text class="label" x={result.textPositions.bustX - 10} y={20} text-anchor="end">{dress.bustMin}" </text>
+                                            <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 + 2} text-anchor="end">{dress.waistMin}"</text>
+                                            <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-10} text-anchor="end">{dress.hipMin}"</text>
+                                        {/if}
                                     </g>
                                 {/each}
                             </g>
@@ -280,7 +289,7 @@
         justify-content: center;
         flex-wrap: wrap;
         margin: 0;
-        padding: 4rem;
+        padding: 0;
     }
 
     .brand-container {
@@ -407,8 +416,9 @@
     .brand-group .label {
         font-family: var(--mono);
         font-weight: 700;
+        font-size: var(--12px);
         fill: var(--color-fg);
-        opacity: 0;
+        opacity: 1;
         transition: all 0.3s ease-in-out;
     }
 
