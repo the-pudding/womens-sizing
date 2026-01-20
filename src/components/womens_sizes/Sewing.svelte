@@ -80,7 +80,7 @@
                 <p>{@html graf.value}</p>
                 {#if i == 1}
                     <div class="img-wrapper">
-                        <img src="/assets/patternmaking.jpg" />
+                        <img src="assets/patternmaking.jpg" alt="a sketch of a bodice block on grid paper with a ruler and notebook" />
                         <p class="image-caption">Drafting a custom pattern based on my body measurements and proportions</p>
                     </div>
                 {/if}
