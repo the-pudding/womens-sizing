@@ -77,7 +77,13 @@
 
         <div class="title-page-body">
             {#each copy.sewingLessons as graf, i}
-                <p>{graf.value}</p>
+                <p>{@html graf.value}</p>
+                {#if i == 1}
+                    <div class="img-wrapper">
+                        <img src="/assets/patternmaking.jpg" />
+                        <p class="image-caption">Drafting a custom pattern based on my body measurements and proportions</p>
+                    </div>
+                {/if}
                 <!-- {#if i == 1}
                     <div class="grid">
                         {#each shapeGrid as shape, i}
@@ -87,7 +93,7 @@
                         {/each}
                     </div>
                 {/if} -->
-                {#if i == 6}
+                {#if i == 3}
                     <div id="bodice-svg">
                         {@html bodice}
                     </div>
@@ -101,7 +107,7 @@
                         {/each}
                     </div>
                 {/if} -->
-                {#if i == 2}
+                {#if i == 5}
                     <div class="block">
                         <div class="block-wrapper" style="transform: {!blockCentered ? 'translate(-90%, -50%)' : 'translate(-50%, -50%)'}">
                             {@html blockStandard}
@@ -168,6 +174,7 @@
         max-width: 720px;
         aspect-ratio: 1 / 1;
         height: auto;
+        position: relative;
     }
 
     :global(#bodice-svg svg) {
@@ -224,5 +231,27 @@
         transition: opacity 0.75s ease-in;
         margin-top: -1.5rem;
     }
+    .img-wrapper {
+        max-width: 720px;
+        width: 100%;
+        padding: 0 3rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
 
+    }   
+    
+    .img-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+   
+    .image-caption {
+        font-size: var(--12px);
+        font-family: var(--mono);
+        font-weight: 700;
+        margin-top: 0.5rem;
+        text-align: center; 
+        line-height: 1.2;
+    }
 </style>

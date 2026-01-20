@@ -10,6 +10,12 @@
         hipMin: 42
     };
 
+    const idealMeasurements = {
+        bustMin: 36,
+        waistMin: 26,
+        hipMin: 36
+    };
+
     let selectedBrand = $state("J.Crew");
 
     const filteredApparel = $derived(sizeCharts.filter(
@@ -21,7 +27,8 @@
     const margin = {top: 0, bottom: 0, left: 32, right: 32};
 
     const xScale = $derived(d3.scaleLinear()
-        .domain([20, 65])
+    //AS edit: I tweaked the range so that the smallest hourglass shapes would not look so distorted. If we want to change it back, the previous domain was [20, 65]
+        .domain([10, 65])
         .range([0, containerWidth - margin.left - margin.right]));
 
     // draws the paths
@@ -106,6 +113,7 @@
 <div class="svg-wrapper" transition:fade={{ duration: 400 }}>
 {#if containerWidth && containerHeight}
     {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
+    {@const idealPathData = createPaths(idealMeasurements, containerWidth / 2, 0, "brand")}
     <svg>
         <g class="median-group" class:visible={value >= 4}>
             <path 
@@ -114,11 +122,22 @@
                 stroke="none" 
                 opacity=0.3 />
         </g>
+<!-- AS edit: Added a path representing the 'ideal' hourglass body proportions  -->
+        <g class="ideal-group" class:visible={value == 4}>
+            {#each idealPathData.paths as path}
+                <path 
+                    class="ideal-path"
+                    d={path}
+                />
+            {/each}
+        </g>
         {#each filteredApparel as dress, i}
             {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+            {@const isHighlighted = (value == 6 && dress.numericSizeMin == 18) || (value == 7 && dress.numericSizeMin == 12)}
             <g 
                 class="brand-group" 
                 class:visible={value >= 5}
+                class:dimmed={(value == 6 || value == 7) && !isHighlighted}
                 id={`size-${dress.numericSizeMin}`}
                 role="tooltip"
                 >
@@ -198,8 +217,14 @@
         fill: none;
         stroke: var(--ws-purple);
         stroke-width: 2;
+        opacity: 1;
         transition: all 0.3s ease-in-out;
         pointer-events: none;
+    }
+
+
+    .brand-group.dimmed .main-path {
+        opacity: 0.4;
     }
 
     .brand-group .hidden-path {
@@ -209,6 +234,7 @@
         cursor: pointer;
         pointer-events: auto;
     }
+    
 
     .brand-group.smallest .main-path {
         stroke: var(--ws-purple);
@@ -261,5 +287,21 @@
        font-family: var(--mono);
        font-weight: 700; 
        text-transform: uppercase;
+    }
+
+    .ideal-group {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .ideal-group.visible {
+        opacity: 1;
+    }
+
+    .ideal-group .ideal-path {
+        fill: none;
+        stroke: var(--ws-purple);
+        stroke-width: 4;
+        transition: all 0.3s ease-in-out;
     }
 </style>

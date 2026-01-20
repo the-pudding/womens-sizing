@@ -116,7 +116,7 @@
     }
 
     .proportion-grid {
-        transition: all 0.3s ease-in;
+        transition: all 0.4s ease-in;
         transform-origin: center center;
         max-width: 1000px;
     }
