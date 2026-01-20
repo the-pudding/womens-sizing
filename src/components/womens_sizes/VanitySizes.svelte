@@ -125,7 +125,7 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
-        // console.log(value)
+        console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
@@ -189,7 +189,7 @@
                 </div>
                     <div 
                         class="highlight-box"
-                        class:visible={(value >= 2 && value !== 3 && barbellData) || tooltipVisible}
+                        class:visible={(value >= 2 && value !== 3 && value !== "exit" && barbellData) || tooltipVisible}
                         style="left: {boxStart}px;
                         width: {boxWidth}px"
                     >   

@@ -129,6 +129,7 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
+        console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
@@ -189,7 +190,7 @@
                 </div>
                     <div 
                         class="highlight-box"
-                        class:visible={(value >= 2 && value !== 3 && barbellData) || tooltipVisible}
+                        class:visible={(value >= 2 && value !== 3 && value !== 5 && value !== 6 && value !== "exit" && barbellData) || tooltipVisible}
                         style="left: {boxStart}px;
                         width: {boxWidth}px"
                     >   
@@ -198,7 +199,7 @@
                     {#if barbellData}
                         <p 
                             class="diff"
-                            class:visible={(value >= 2 && value !== 3 && barbellData) || tooltipVisible}
+                            class:visible={(value >= 2 && value !== 3 && value !== 5 && value !== 6 && value !== "exit" && barbellData) || tooltipVisible}
                             style="left: {boxStart + (boxWidth / 2)}px;"
                         >
                             {Math.round(barbellData.diff * 10) / 10}"
@@ -208,7 +209,7 @@
                         <div class="avg-start" class:visible={value >= 3} style="left: {xScale(34.88)+116}px;"></div>
                         <div class="avg-end" class:visible={value >= 3} style="left: {xScale(38.54)+116}px;"></div>
                     </div>
-                    <div class="barbell" class:visible={barbellData && move1995 && value !== 3}>
+                    <div class="barbell" class:visible={(barbellData && move1995 && value !== 3 && value !== 5 && value !== 6 && value !== "exit") || tooltipVisible}>
                         <div class="line" style="left: {boxStart}px; width: {boxWidth}px"></div>
                         <div class="circle-start" style="left: {boxStart}px;"></div>
                         <div class="circle-end" style="left: {boxEnd}px;"></div>

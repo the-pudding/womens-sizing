@@ -30,6 +30,10 @@ a {
 	text-decoration: 2px underline var(--color-link, blue);
 }
 
+a:hover {
+	text-decoration: 2px underline var(--ws-green);
+}
+
 
 img,
 video {
