@@ -1,21 +1,41 @@
+<!-- TitlePage.svelte -->
 <script>
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
     import copy from "$data/copy.json";
+    import { annotate } from 'rough-notation';
+    const titlePageData = copy.titlePage?.[0];
+
 </script>
 
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <p class="mono"><Leet string="sizing for" /></p>
         <div class="wrapper">
-            <Ransom class="title-page-title" string={"every body"} />  
-        </div>    
+            <Ransom class="title-page-title" string={"fit"} />  
+        </div>
+        <p class="mono"><Leet string="for a" /></p>
+<!--                 
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"for"} />  
+        </div>
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"a"} />  
+        </div> -->
+        <div class="wrapper">
+            <Ransom class="title-page-title" string={"teen"} />  
+        </div>
+        <!-- <p class="mono"><Leet string={copy.titlePage[0].subtitle} /></p> -->
 
         <div class="title-page-body">
-            {#each copy.outro as graf, i}
-                <p>{@html graf.value}</p>
+            {#each copy.titlePage[0].text as graf, i}
+                <p>{graf.value}</p>
             {/each}
+        </div>
+        
+        <!-- placeholder for possible image -->
+        <div class="title-page-art">
+
         </div>
     </div>
 </div>
@@ -61,7 +81,7 @@
     
     .title-page-body {
         font-size: var(--18px);
-        line-height: 1.65;
+        line-height: 1.6;
         text-align: left;
         margin: 2rem 0;
         font-family: var(--sans);

@@ -20,9 +20,6 @@
     let tooltipSize = $state();
 
     function showTooltip(size, e) {
-        if (size.size == "0" || size.size == "00") {
-            return;
-        }
         tooltipVisible = true;
         tooltipSize = +size.size;
 
@@ -60,17 +57,16 @@
 
     const formData = d3.groups(
         ASTMsizes.map(d => ({ ...d, waist: +d.waist }))
-            .filter(d => d.sizeRange == "Women's" && (d.year == "1995" || d.year == "2021")),
+            .filter(d => d.sizeRange == "straight" && (d.year == 1995 || d.year == 2021)),
         d => d.year
     ).sort((a, b) => a[0] - b[0]);
 
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([20, 42])
+            .domain([22, 42])
             .range([0, containerWidth - 32])
     );
-    const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
     
     // SCROLLY
     let value = $state(0);
@@ -129,44 +125,49 @@
     // REACTIVE 
     $effect(() => {
         updateChart(value);
+        // console.log(value)
 
         if (containerWidth > 0) {
             d3.select("#vanity-sizes .x-axis g")
-                .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
-                    return d % 2 === 0 ? `${d}"` : "";
-                }));
+                .call(d3.axisBottom(xScale));
         }
     })
 </script>
 
 <div class="outer-container">
     <div class="text-block">
-        <h3>
-            <Leet string="The villian arc of" />
-            <Ransom string="vanity" />
-            <Ransom string="sizing" />
-        </h3>
         {#each copy.vanityIntro as block}
-            <p>{@html block.value}</p>
-        {/each}
+        <div class="subtitle">
+            {#if block.subhed}
+                <h3>
+                    <Ransom string="vanity" />
+                    <Ransom string="sizing" />
+                    <Leet string="There's more to it than you may think" />
+                </h3>
+            {/if}
+            <p>{@html block.text}</p>
+        </div>
+    {/each}
     </div>
     <div class="sticky-container">
-        <div class="visual-container">
+        <div 
+            class="visual-container"
+            style="opacity: {value == 3 ? 0 : 1}"
+        >
             <div class="chart-container" id="vanity-sizes">
                 {#each formData as year, i}
                     <div class="year-wrapper" class:visible={(year[0] == 1995 && value >= 0) || (year[0] == 2021 && value >= 1)}>
                         <div class="year-label">
-                            <p>{year[0]} sizes</p>
+                            <Ransom string={year[0]} />
                         </div>
                         <div class="form-wrapper" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                             {#each year[1] as size, i}
                                 <div onmouseenter={(e) => showTooltip(size, e)} 
                                     onmouseleave={hideTooltip} 
                                     role="tooltip"
-                                    id="form-{size.size}"
                                     class="size" 
                                     style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;
-                                    pointer-events: {move1995 && move2021 && value >= 5 && (size.size != "0" && size.size != "00") ? "auto" : "none"};"
+                                    pointer-events: {move1995 && move2021 && value >= 4 ? "auto" : "none"};"
                                     class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
                                         || (value == 4 && size.size == "18" && !tooltipVisible)
                                         || (tooltipVisible && size.size == tooltipSize)}>
@@ -185,7 +186,6 @@
                     <svg>
                         <g class="axis" transform="translate(16, 10)"></g>
                     </svg>
-                    <p class="axis-label">Inches</p>
                 </div>
                     <div 
                         class="highlight-box"
@@ -193,20 +193,13 @@
                         style="left: {boxStart}px;
                         width: {boxWidth}px"
                     >   
-                        </div>
-
-                    {#if barbellData}
-                        <p 
-                            class="diff"
-                            class:visible={(value >= 2 && value !== 3 && barbellData) || tooltipVisible}
-                            style="left: {boxStart + (boxWidth / 2)}px;"
-                        >
-                            {Math.round(barbellData.diff * 10) / 10}"
-                        </p>
-                    {/if}
+                        {#if barbellData}
+                            <p class="diff">{Math.round(barbellData.diff * 10) / 10}"</p>
+                        {/if}
+                    </div>
                     <div class="averages" class:visible={value >= 3}>
-                        <div class="avg-start" class:visible={value >= 3} style="left: {xScale(34.88)+116}px;"></div>
-                        <div class="avg-end" class:visible={value >= 3} style="left: {xScale(38.54)+116}px;"></div>
+                        <div class="avg-start" class:visible={value >= 3} style="left: {xScale(34.88)+ 148}px;"></div>
+                        <div class="avg-end" class:visible={value >= 3} style="left: {xScale(38.74)+ 148}px;"></div>
                     </div>
                     <div class="barbell" class:visible={barbellData && move1995 && value !== 3}>
                         <div class="line" style="left: {boxStart}px; width: {boxWidth}px"></div>
@@ -223,13 +216,29 @@
 
     <div class="scrolly-outer">
             <Scrolly bind:value>
-                {#each copy.vanityScroll as stage, i}
+                {#each copy.vanitySizing as stage, i}
                     <div id="step-{i}" class="step">
                         <div class="text">
                             <p>{@html stage.text}</p>
                         </div>
                     </div>
                 {/each}
+                <!-- {#each copy.vanitySizing as stage, i}
+                    {#if i !== 3}
+                    <div class="step">
+                        <div class="text">
+                            <p>{@html stage.text}</p>
+                        </div>
+                    </div>
+                    {:else}
+                        <div id="step-{i}" class="step">
+                            <img src="" />
+                            <div class="text">
+                                <p>{@html stage.text}</p>
+                            </div>
+                        </div>
+                    {/if}
+                {/each} -->
             </Scrolly>
     </div>
 </div>
@@ -275,19 +284,7 @@
         justify-content: center;
         align-items: center;
         position: relative;
-    }
-
-    .axis-label {
-      width: 100%;
-      margin: -0.5rem 0 0 0;
-      font-family: var(--mono);
-      font-size: var(--14px);
-      font-weight: 700;
-      text-transform: uppercase;
-      text-anchor: middle;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        transition: opacity 1s ease-in-out; 
     }
 
     .chart-container {
@@ -307,7 +304,6 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: center;
         height: 200px;
         opacity: 0;
         transition: opacity 200ms ease-in-out;
@@ -322,13 +318,6 @@
         width: 100px;
     }
 
-    .year-label p {
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: var(--24px);
-        line-height: 1.25;
-    }
-
     .form-wrapper {
         width: calc(100% - 100px);
         position: relative;
@@ -336,7 +325,7 @@
 
     .x-axis {
         position: absolute;
-        bottom: 58%;
+        bottom: 50%;
         left: 100px;
         width: calc(100% - 100px);
         height: 50px;
@@ -390,7 +379,7 @@
         border-radius: 50%;
         background: var(--color-fg);
         position: absolute;
-        bottom: calc(58% + 36px);
+        bottom: calc(50% + 36px);
         transform: translate(-50%, 0);
         transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
     }
@@ -401,7 +390,7 @@
         border-radius: 50%;
         background: var(--ws-orange);
         position: absolute;
-        bottom: calc(58% + 32px);
+        bottom: calc(50% + 32px);
         transform: translate(-50%, 0);
         transition: all 500ms linear;
         opacity: 0;
@@ -414,7 +403,7 @@
 
     .avg-start::before, .avg-end::before  {
         position: absolute;
-        bottom: 20px;
+        bottom: -20px;
         left: 50%;
         transform: translate(-50%, 0);
         width: 100px;
@@ -437,13 +426,13 @@
         border-top: 3px solid var(--color-fg);
         transition: opacity 250ms linear, left 250ms linear 250ms, width 250ms linear 250ms;
         position: absolute;
-        bottom: calc(58% + 39px);
+        bottom: calc(50% + 39px);
         transform: translate(0, 0);
     }
 
     .highlight-box {
         background: rgba(154,187,217,0.3);
-        height: 80%;
+        height: 100%;
         position: absolute;
         top: 0%;
         z-index: 1;
@@ -457,23 +446,18 @@
 
     .diff {
         position: absolute;
-        top: 32%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 0.25rem 0.5rem;
         font-family: var(--mono);
         font-weight: 700;
-        font-size: var(--12px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        background: var(--color-bg);
-        border-radius: 8px;
+        font-size: var(--16px);
+        color: var(--color-fg);
+        background-color: var(--color-bg);
+        border: 2px solid var(--color-fg);
+        border-radius: 4px;
         z-index: 1000;
-        opacity: 0;
-        transition: opacity 250ms linear;
-    }
-
-    .diff.visible {
-        opacity: 1;
     }
 
     .size {
@@ -508,10 +492,6 @@
         transform: scale(1.2);
     }
 
-    #form-0, #form-00 {
-        pointer-events: none;
-    }
-
     .scrolly-outer {
         position: relative;
         z-index: 2;
@@ -528,9 +508,8 @@
         font-size: var(--18px);
     }
 
-    #step-6  {
-        opacity: 0;
-        pointer-events: none;
+    #step-3 p {
+        max-width: 600px;
     }
 
     .step .text {
@@ -541,8 +520,6 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
-        font-size: var(--18px);
-        pointer-events: auto;
     }
 
     .text-block {
@@ -564,14 +541,16 @@
     .text-block h3 {
         max-width: 800px;
         text-align: center;
-        margin: 0 0 6rem 0;
     }
     .text-block p {
         width: min(100%, 550px);
-        line-height: 1.65;
+        margin-bottom: 60px;
+        margin-top: 60px;
+        font-size: 1.1rem;
+        line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
-        font-size: var(--18px);
+        font-size: var(--20px);
     }
 
     :global(.tick text) {

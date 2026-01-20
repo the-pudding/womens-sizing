@@ -1,16 +1,18 @@
 <script>
-    import sizeCharts from '$data/sizeCharts.json';
-    import * as d3 from 'd3';
-    import { fade } from 'svelte/transition';
+    import { onMount } from 'svelte';
+    import copy from "$data/copy.json";
+    import Scrolly from '../helpers/Scrolly.svelte';
+    import Ransom from "$components/womens_sizes/Ransom.svelte";
+    import Leet from "$components/womens_sizes/Leet.svelte";
     import Select from "$components/helpers/Select.svelte";
-
-    let { value, parentWidth, parentHeight } = $props();
+    import sizeCharts from '$data/sizeCharts.json';
+	import { on } from 'svelte/events';
+    import * as d3 from 'd3';
 
     let containerHeight = $state(0);
     let containerWidth = $state(0);
     const margin = {top: 0, bottom: 0, left: 32, right: 32}
-
-    let brandPositions = $state([]);
+    let value = $state(0);
     
     let tooltipVisible = $state(false);
     let tooltipX = $state();
@@ -22,62 +24,20 @@
 
     const brands = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.brand))];
     let selectedBrand = $state("J.Crew");
-    const sizeListMin = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMin))];
-    const sizeListMax = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.numericSizeMax))];
-    const allUniqueSizes = [...new Set(
-        [...sizeListMin, ...sizeListMax]
-            // Filter out null (js type) and "null" (string type)
-            .filter(d => d !== null && d !== "null")
-            // Convert all remaining values to strings for consistent sorting
-            .map(String)
-    )];
 
-    const zeroStrings = [];
-    const otherSizes = [];
+    function handleBrandChange(event) {
+        selectedBrand = event.detail;
+        // console.log("Selected brand:", selectedBrand);
+    }
 
-    allUniqueSizes.forEach(size => {
-        // Check if the string consists only of '0's (handles "0", "00", "000")
-        if (/^0+$/.test(size)) {
-            zeroStrings.push(size);
-        } else {
-            otherSizes.push(size);
-        }
-    });
+    const filteredApparel = $derived(sizeCharts.filter(
+      d => d.brand == selectedBrand 
+        && d.sizeRange == "Regular"
+        && d.garmentType == "Apparel"
+    ));
 
-    zeroStrings.sort((a, b) => b.length - a.length);
-
-    otherSizes.sort((a, b) => {
-        const parseSize = (size) => {
-            const s = String(size);
-            const isWide = s.toUpperCase().endsWith('W');
-            // Use parseFloat instead of parseInt to handle cases where the size might be a decimal, 
-            // though parseInt is usually fine for clothing sizes.
-            const numericBase = parseFloat(s); 
-            return { numericBase, isWide };
-        };
-
-        const parsedA = parseSize(a);
-        const parsedB = parseSize(b);
-
-        // Primary sort: Numeric value
-        const numericDiff = parsedA.numericBase - parsedB.numericBase;
-
-        if (numericDiff !== 0) {
-            return numericDiff;
-        }
-
-        // Secondary sort: Handle the 'W' suffix (16 < "16W")
-        if (parsedA.isWide && !parsedB.isWide) {
-            return 1;
-        }
-        if (!parsedA.isWide && parsedB.isWide) {
-            return -1;
-        }
-        
-        return 0;
-    });
-
-    const finalSortedSizeList = ["All sizes", ...zeroStrings, ...otherSizes];
+    const minMeasurement = d3.min(sizeCharts, d => parseFloat(d.waistMin));
+    const maxMeasurement = d3.max(sizeCharts, d => parseFloat(d.hipMin));
 
     const medianMeasurements = {
         bustMin: 40,
@@ -86,36 +46,8 @@
     };
 
     const xScale = $derived(d3.scaleLinear()
-        .domain([20, 60])
+        .domain([20, 65])
         .range([0, containerWidth - margin.left - margin.right]));
-
-    let selectedSize = $state("All sizes");
-
-    // EVENTS
-    function handleSizeChange(event) {
-        selectedSize = event.detail;
-        // console.log("Selected brand:", selectedBrand);
-    }
-
-    function handleMouseEnter(dress, e) {
-        let group = d3.select(e.currentTarget);
-
-        group.classed("highlight", true);
-        
-        tooltipBrand = dress.brand;
-        tooltipBust = dress.bustMin;
-        tooltipWaist = dress.waistMin;
-        tooltipHip = dress.hipMin;
-        tooltipX = e.x+10;
-        tooltipY = e.y+10;
-        tooltipVisible = true;
-    }
-
-    function handleMouseExit() {
-        tooltipVisible = false;
-
-        d3.selectAll(".brand-group").classed("highlight", false);
-    }
 
     // draws the paths
     function createPaths(dress, centerX, offsetY, type) {  
@@ -193,55 +125,140 @@
         };
       }
     }
+    function handleMouseEnter(dress, e) {
+        let group = d3.select(e.currentTarget);
+
+        group.classed("highlight", true);
+        
+        tooltipBrand = dress.brand;
+        tooltipBust = dress.bustMin;
+        tooltipWaist = dress.waistMin;
+        tooltipHip = dress.hipMin;
+        tooltipX = e.x+10;
+        tooltipY = e.y+10;
+        tooltipVisible = true;
+    }
+
+    function handleMouseExit() {
+        tooltipVisible = false;
+
+        d3.selectAll(".brand-group").classed("highlight", false);
+    }
 </script>
 
-{#if value >= 8 && value !== "exit"}
-    <div class="select-wrapper" class:visible={value >= 10}>
-        <p>Highlight</p>
-        <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
-    </div>
-    <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
-        {#each brands as brand, i}
-            {@const filteredApparel = sizeCharts.filter(
-                d => d.brand == brand
-                    // && d.sizeRange == "Regular"
-                    && d.garmentType == "Apparel"
-                )
-            }
-            <div class="brand-container"
-                style="opacity: {value !== 9 || (value == 9 && brand == "H&M") ? 1 : 0.3}">
-                <h3>{brand}</h3>
-                <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
-                    {#if containerWidth && containerHeight}
-                        {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
-                        <svg>
-                            <g class="median-group">
-                                <path 
-                                    d={medianPathData.fullPath} 
-                                    fill="#9ABBD9" 
-                                    stroke="none" 
-                                    opacity=0.3 />
-                                {#each filteredApparel as dress, i}
-                                    {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
-                                    <g 
-                                        class="brand-group"
-                                        class:selected={selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax} 
-                                        class:faded={selectedSize && !(selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax || selectedSize == "All sizes")}
-                                        id={`size-${dress.numericSizeMin}`}
-                                        >
-                                        {#each result.paths as path}
-                                            <path class="main-path" d={path} />
-                                        {/each}
-                                    </g>
-                                {/each}
-                            </g>
-                        </svg>
-                    {/if}
-                </div>
+<div class="outer-container" id="proportions">
+    <!-- I'm not sure we actually need this block of text - AS -->
+    <!-- <div class="text-block">
+        {#each copy.proportionsIntro as block}
+            <div class="subtitle">
+                {#if block.subhed}
+                    <h3>
+                        <Leet string="Mass produced clothes do not fit" />
+                        <Ransom string="every" />
+                        <Ransom string="body" />
+                    </h3>
+                {/if}
+                <p>{@html block.text}</p>
             </div>
         {/each}
+    </div> -->
+    <div class="sticky-container">
+        <div class="select-wrapper" class:visible={value >= 3}>
+            <Select options={brands} value={selectedBrand} on:change={handleBrandChange}/>
+        </div>
+        <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
+            {#if containerWidth && containerHeight}
+                {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
+                <svg>
+                    <g class="median-group">
+                        <path 
+                            d={medianPathData.fullPath} 
+                            fill="#9ABBD9" 
+                            stroke="none" 
+                            opacity=0.3 />
+                        <g class="med-bust">
+                           <line 
+                                x1={medianPathData.bustLeft} 
+                                y1={medianPathData.yBust+36} 
+                                x2={medianPathData.bustRight} 
+                                y2={medianPathData.yBust+36} 
+                                stroke="black" 
+                                stroke-width="2" 
+                                stroke-dasharray="5,5" />
+                            <text x={containerWidth/2} y={medianPathData.yBust+30} text-anchor="middle">Median Bust: NA*</text>
+                        </g>
+                        <g class="med-waist">
+                            <line 
+                                x1={medianPathData.waistLeft} 
+                                y1={medianPathData.yWaist} 
+                                x2={medianPathData.waistRight} 
+                                y2={medianPathData.yWaist} 
+                                stroke="black" 
+                                stroke-width="2" 
+                                stroke-dasharray="5,5" />
+                            <text x={containerWidth/2} y={containerHeight/2 - 6} text-anchor="middle">Median Waist: {medianMeasurements.waistMin}"</text>
+                        </g>
+                        <g class="med-hip">
+                            <line 
+                                x1={medianPathData.hipLeft} 
+                                y1={medianPathData.yHip-36} 
+                                x2={medianPathData.hipRight} 
+                                y2={medianPathData.yHip-36} 
+                                stroke="black" 
+                                stroke-width="2" 
+                                stroke-dasharray="5,5" />
+                            <text x={containerWidth/2} y={medianPathData.yHip-42} text-anchor="middle">Median Hip: {medianMeasurements.hipMin}"</text>
+                        </g>
+                    </g>
+                    {#each filteredApparel as dress, i}
+                        {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+                        <g 
+                            class="brand-group" 
+                            id={`size-${dress.numericSizeMin}`}
+                            class:visible={dress.numericSizeMin == 18 && value >= 1
+                                || dress.numericSizeMin == 12 && value >= 2
+                                || value >= 3}
+                            class:highlight={dress.numericSizeMin == 18 && value == 1
+                                || dress.numericSizeMin == 12 && value == 2}
+                            class:biggest={value > 2 && i == filteredApparel.length - 1}
+                            class:smallest={value > 2 && i == 0}
+                            role="tooltip"
+                                    onmouseenter={(e) => handleMouseEnter(dress, e)} 
+                                    onmouseleave={handleMouseExit} 
+                            >
+                            {#each result.paths as path}
+                                <path class="hidden-path" d={path} />
+                                <path class="main-path" d={path} />
+                            {/each}
+                            <text class="label" x={result.textPositions.bustX - 10} y={30} text-anchor="end">{dress.bustMin}" </text>
+                            <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 - 6} text-anchor="end">{dress.waistMin}"</text>
+                            <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-42} text-anchor="end">{dress.hipMin}"</text>
+                        </g>
+                    {/each}
+                </svg>
+                {/if}
+                <div id="tooltip" class:visible={tooltipVisible} style="left: {tooltipX}px; top: {tooltipY}px">
+                    <p>{tooltipBrand}</p>
+                    <p><strong>Bust:</strong> {tooltipBust}"</p>
+                    <p><strong>Waist:</strong> {tooltipWaist}"</p>
+                    <p><strong>Hip:</strong>{tooltipHip}"</p>
+                </div>
+        </div>
     </div>
-{/if}
+
+
+    <div class="scrolly-outer">
+        <Scrolly bind:value>
+            {#each copy.proportions as stage, i}
+                <div class="step">
+                    <div class="text">
+                        <p>{@html stage.text}</p>
+                    </div>
+                </div>
+            {/each}
+        </Scrolly>
+    </div>
+</div>
 
 <style>
     #tooltip {
@@ -272,31 +289,8 @@
     }
 
     .outer-container {
-        position: relative; 
-        width: 100%;          
-        display: flex; 
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 4rem;
-    }
-
-    .brand-container {
-        width: 33.333%;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                    opacity 0.6s ease-out;
-    }
-
-    @media (min-width: 900px) { 
-        .brand-container {
-            width: 20%; 
-        }
+        position: relative;
+        width: 100%;
     }
     
     .sticky-container {
@@ -311,31 +305,17 @@
   
     .visual-container {
         width: 100%;
-        aspect-ratio: 3 / 2;
+        max-width: 1000px;
+        height: 100%;
         display: flex;
         position: relative;
         justify-content: center;
-        align-items: flex-end;
-        padding-bottom: 0;
-    }
-
-    h3 {
-        font-family: var(--mono);
-        font-size: var(--18px);
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0;
+        align-items: flex-end; /* Align to bottom to keep 20% space at top */
+        padding-bottom: 0; /* Images touch bottom of screen */
     }
 
     .select-wrapper {
         position: absolute;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-        font-family: var(--sans);
-        font-weight: 700;
-        font-size: var(--14px);
         top: 2rem;
         left: 2rem;
         opacity: 0;
@@ -355,7 +335,7 @@
     }
 
     .brand-group {
-        opacity: 1;
+        opacity: 0;
         transition: opacity 0.3s ease-in-out;
         pointer-events: none;
     }
@@ -367,18 +347,10 @@
 
     .brand-group .main-path {
         fill: none;
-        stroke: var(--ws-purple);
+        stroke: var(--ws-blue);
         stroke-width: 1;
         transition: all 0.3s ease-in-out;
         pointer-events: none;
-    }
-
-    .brand-group.selected .main-path {
-        stroke: var(--ws-green) !important;
-        stroke-width: 3 !important;
-    }
-    .brand-group.faded .main-path {
-        opacity: 0.3;
     }
 
     .brand-group .hidden-path {
@@ -458,7 +430,7 @@
         margin-bottom: 60px;
         margin-top: 60px;
         font-size: 1.1rem;
-        line-height: 1.65;
+        line-height: 1.6;
         text-align: left;
         font-family: var(--sans);
         font-size: var(--18px);
@@ -490,32 +462,6 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         margin: 0;
         pointer-events: auto;
-    }
-    
-    :global(.interact) {
-        font-family: var(--mono);
-        font-weight: 700; 
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-    }
-
-    :global(.interact::before) {
-        content: '';
-        background-image: url('$svg/interact.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-        display: inline-block;
-        margin: -0.5rem 0.25rem 0 0;
-        animation: wiggle 0.75s infinite;
-    }
-
-    @keyframes wiggle {
-        0% { transform: translateX(0px); }
-        50% { transform: translateX(1px); }
-        100% { transform: translateX(0px); }
     }
 
     @media (max-width: 768px) {

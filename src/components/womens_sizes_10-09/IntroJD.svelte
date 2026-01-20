@@ -5,14 +5,13 @@
   import Scrolly from '../helpers/Scrolly.svelte';
   import copy from '$data/copy.json';
   import ASTMsizes from "$data/ASTMsizes.json";
-  import pointsData from '$data/pointsData_JD.csv';
+  import pointsData from '$data/pointsData_AS.csv';
   import { generateRandomAvatar, determineAvatarSize } from '../utils/avatar-generator.js';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
   import Ransom from "$components/womens_sizes/Ransom.svelte";
   import Leet from "$components/womens_sizes/Leet.svelte";
   import Text from "$components/womens_sizes/Text.svelte";
   import checkScrollDir from "../../utils/checkScrollDir.js";
-  import ArrowDraw from "$components/womens_sizes/ArrowDraw.svelte";
 	import { on } from 'svelte/events';
 	import { log } from 'three/tsl';
 
@@ -20,7 +19,7 @@
   /*** SCROLLY ***/
   let value = $state(0);
   let { startStage = 0, endStage = null, introScroll = null } = $props();
-   let filteredStages = $derived(copy.introScroll ? copy.introScroll.slice(
+   let filteredStages = $derived(copy.intro ? copy.intro.slice(
         startStage, 
         endStage !== null ? endStage + 1 : undefined
     ) : []);
@@ -32,16 +31,16 @@
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
   let containerHeight = $state(0);
-  let margin = { top: 20, right: 20, bottom: 36, left: 20 };
+  let margin = { top: 20, right: 20, bottom: 20, left: 20 };
   let width = $derived(containerWidth - margin.left - margin.right);
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
   // let avatarHeight = $derived(avatarWidth * 1.2);
-  let avatarHeight = $derived( height / 8)
+  let avatarHeight = $derived( height / 6.5)
   let avatarWidth = $derived(avatarHeight * .4)
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([15, 65]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain(introScroll ? [20, 45]: [20,50]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -53,28 +52,25 @@
   * Allow script to filter here
   *****/
   let ASTMFilters = $derived(
-    currentId >= 4 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+    currentId >= 5 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? { year: "2021", sizeRange: "Women's" }
       : { year: "2015", sizeRange: "Junior's" }
   );
   // let waistlineFilters = $state({ yearRange: "2021-2023", race: "all", age: "10-11" });
-  let omittedSizeFilters = $derived(currentId >= 2 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
+  let omittedSizeFilters = $derived(currentId >= 3 && currentId !== "to-enter" ? [] : ["XXL", "XL", "XS", "XXS"]);
   let valueKey = $derived(
-    currentId <= 2 || (currentId == "to-enter" && introScroll)
+    currentId <= 3 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 2 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 3 && currentId < 8) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
       : currentId < 10
       ? "value20_29"
-      : currentId < 11
-      ? "value30_39"
       : "value20over"
   );
   let sizeLabel = $derived(
     valueKey == "value10_11" ? "Age: 10-11" :
     valueKey == "value14_15" ? "Age: 14-15" :
-    valueKey == "value20_29" ? "Age: 20-29" : 
-    valueKey == "value30_39" ? "Age: 30-39" : "Age: 20+"
+    valueKey == "value20_29" ? "Age: 20-29" : "Age: 20+"
   )
     function getAvatarSizeForValueKey(valueKey) {
     switch(valueKey) {
@@ -101,10 +97,14 @@
   }
 
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
+  $effect(function() {
+    console.log(value, processedASTMData)
+  })
   function processASTMSizeData(filteredASTM) {
     let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
+    // console.log(filteredASTM)
     const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
-
+    // console.log(sizeGroups)
 
     const mappedSizes = sizeGroups.map((d, i) => {
       let min;
@@ -153,7 +153,7 @@
         ...point,
         // The avatar object is already generated here
         // avatar: generateRandomAvatar("junior", point, valueKey)
-        avatar: generateRandomAvatar(point.percentile, point, valueKey)
+        avatar: generateRandomAvatar(getAvatarSizeForValueKey(valueKey), point, valueKey)
       };
     });
     return avatars
@@ -179,9 +179,9 @@
     const sim = d3.forceSimulation(data)
         .force('x', d3.forceX(d => (xScale(d.value) - avatarWidth/1.2 )).strength(1))
         // Use a single, conditional y-force
-        .force('y', d3.forceY(d => height / 2 - avatarHeight / 2).strength(d => d.id.startsWith("p") ? 1.0 : 0.15))
+        .force('y', d3.forceY(d => height / 2 - avatarHeight / 2).strength(d => d.id === "p50" ? 1.0 : 0.15))
         // Increase the collision radius for the highlighted avatar to create a larger, symmetrical gap
-        .force('collide', d3.forceCollide(d => d.id.startsWith("p") ? (avatarHeight / 4) : (avatarHeight / 5)))
+        .force('collide', d3.forceCollide(d => d.id === "p50" ? (avatarHeight / 4) : (avatarHeight / 5)))
         .stop();
 
     const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
@@ -196,28 +196,11 @@
     });
 
     // Sort by y-coordinate to control SVG render order (z-index)
-    return data.sort((a, b) => {
-        const aIsP = a.id.startsWith("p");
-        const bIsP = b.id.startsWith("p");
-
-        if (aIsP && !bIsP) {
-            return 1;  // 'a' (which is 'p') comes after 'b'
-        } else if (!aIsP && bIsP) {
-            return -1; // 'a' (which is not 'p') comes before 'b'
-        } else if (aIsP && bIsP) {
-            // Both are 'p', sort them by y to control their relative stacking
-            return a.y - b.y;
-        } else {
-            // Neither are 'p', so preserve their existing order
-            return 0;
-        }
-      }).map((d, i) => ({
-          ...d,
-          x: d.x,
-          y: d.y,
-          // Creates a random delay between 0s and 1s
-          randomDelay: Math.random() * 1
-  }));
+    return data.sort((a, b) => a.y - b.y).map((d, i) => ({
+        ...d,
+        x: d.x,
+        y: d.y
+    }));
 });
 
 
@@ -246,20 +229,22 @@
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
         .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
-          return d % 5 === 0 ? `${d}"` : "";
+          return d % 5 === 0 ? d : "";
         }));
       }
 
     // Background band tweens
-    const targetY = currentId <= 1 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
-    const targetHeight = currentId <= 1 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
+    const targetY = currentId <= 2 || (currentId == "to-enter" && introScroll)  ? height / 4 : 1;
+    const targetHeight = currentId <= 2 || (currentId == "to-enter" && introScroll) ? (height - margin.top - margin.bottom) / 2 : height - margin.top - margin.bottom - 1;
     animatedBand.set({ y: targetY, height: targetHeight });
+
+    // console.log({targetHeight})
 
     if (currentSizeRanges) {
         let highlightStart;
         let highlightWidth;
 
-        if (currentId == 1) {
+        if (currentId == 2) {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
         } else if (currentId == 8 || (currentId == "to-enter" && !introScroll)) {
@@ -268,18 +253,15 @@
         } else if (currentId === 9) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
-        } else if (currentId === 10) {
-            highlightStart = xScale(currentSizeRanges[9].min);
-            highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[9].min));
-        } else if (currentId === 11) {
+        } else if (currentId === 10 || currentId === 11) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
         } else if (currentId === 12) {
             highlightStart = xScale(currentSizeRanges[0].min);
-            highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[5].max) - xScale(currentSizeRanges[0].min));
         }  else if (currentId >= 13) {
             highlightStart = xScale(currentSizeRanges[10].min);
-            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[10].min));
+            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[9].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
             const maxWaist = d3.max(currentSizeRanges, d => d.max);
@@ -290,6 +272,11 @@
         animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
     }
   });
+
+  // $effect(() => {
+  //   console.log({currentId, value})
+  //   // console.log(copy.intro[value])
+  // })
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -301,27 +288,20 @@
           <div transition:fade={{duration: 500}} class="intro-title">
               <p class="mono"><Leet string="meet your typical" /></p>
               <Ransom string="tween" />
-              <p class="title-text">{@html copy.heroText}</p>
-              <div class="scroll-hint">
-                <p> Scroll</p>
-               <ArrowDraw />
-              </div>
+              <!-- <p class="title-text">{@html copy.introText}</p> -->
           </div>
       {/if}
-      {#if (currentId >= 2 && currentId < 7) || (currentId >= 8)}
+      {#if (currentId >= 3 && currentId < 7) || (currentId >= 8)}
         <div transition:fade={{duration: 500}} class="size-key">
           <p>{sizeLabel}</p>
-          <p>Sizes: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
+          <p>Size Range: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
         </div>
       {/if}
       <div id="beeswarm" 
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
-        {#if currentId >= 2}
-          <p class="axis-label">Inches</p>
-        {/if}
+        style="opacity: {currentId == 7 || currentId == 11 ||currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         <svg width={width} height={height}>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
@@ -332,33 +312,30 @@
                 {@const rectWidth = xScale(sizeRange.max) - x}
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
-                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
+                  class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 2 || currentId == "to-enter" )}
                   style="transition-delay: {setDelay(i, scrollDir)}s">
                   <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
-                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
+                  <text x={x + rectWidth / 2} y={currentId <= 2 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
+            <g class="highlight-band" class:visible={currentId == 2 || currentId == 6 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 7}>
               <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
           <g class="axis x-axis" 
               transform="translate(0, {height - margin.top - margin.bottom})"
-              opacity={currentId >= 2 ? 1 : 0}></g>
+              opacity={currentId >= 3 ? 1 : 0}></g>
 
           {#if positionedAvatars() && avatarImages}
             <g class="avatars">
               {#each positionedAvatars() as point, i}
                 <g class="avatar-group" 
                   id={point.id}
-                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
-                  opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
-                  style="transition: {currentId == 'to-enter' 
-                    ? 'none' 
-                    : `transform 0.5s ease-in-out, opacity 0.5s ease-in-out ${point.randomDelay}s`
-                  };"
+                  transform={`translate(${point.x}, ${point.y}) scale(${(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
+                  opacity={(point.type == 'percentile' && currentId <= 2 && introScroll) || (point.type == 'percentile' && currentId == "to-enter" && introScroll) || currentId > 2 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  style="transition: {currentId == "to-enter" ? "none" : "all 0.5s ease-in-out" };"
                 >
                   {#if avatarImages}
                     {@const avatar = avatarImages.find(a => a.id === point.id)}
@@ -371,24 +348,8 @@
                             href={layer.path}
                             xlink:href={layer.path}
                             class="avatar"
-                            class:colorized={
-                              point.type == 'percentileMid' ||
-                              (currentId == 5 && (point.id == 'p10' || point.id == 'p90'))
-                            }
-                            class:shadow={point.type == 'percentileMid'}
+                            class:grayscale={point.type !== 'percentile'}
                           />
-                          {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
-                            <g transition:fly={{ y: 20, duration: 250}} class="avatar-label" transform={`translate(${avatarWidth / 2}, ${avatarHeight+12})`}>
-                              {#if point.percentile == "50"}
-                                <rect x={-40} y={-18} width={80} height={28} fill="white" opacity="1" rx="4"/>
-                                <text>Median</text>
-                              {:else}
-                                <rect x={-40} y={-18} width={80} height={40} fill="white" opacity="1" rx="4"/>
-                                <text>{point.percentile}th</text>
-                                <text transform="translate(0, 12)">percentile</text>
-                              {/if}
-                            </g>
-                          {/if}
                       {/each}
                   {/if}
                 </g>
@@ -397,21 +358,30 @@
           {/if}
         </svg>
       </div>
+
+    </div>
+    <div class="text-container">
+      {#each copy.intro as paragraph}
+        {#if currentId >= paragraph.start && currentId <= paragraph.end && introScroll}
+        <div transition:fade>        
+          <Text copy={paragraph.text} />
+        </div>
+
+       {/if}
+      {/each}
+     
     </div>
   </div>
 
   <div class="scrolly-outer">
     <Scrolly bind:value>
       {#each filteredStages as stage}
-        <div 
-          class="step step{stage.id}"
-          style="justify-content: {stage.id >= 9 ? 'flex-start' : 'flex-end'}"
-        >
-          {#if stage.text}
+        <div class="step step{stage.id} ">
+          <!-- {#if stage.text}
             <div class="text">
               <Text copy={stage.text} />
             </div>
-          {/if}
+          {/if} -->
         </div>
       {/each}
     </Scrolly>
@@ -431,7 +401,7 @@
         z-index: 1;
     }
     .visual-container {
-        width: 100%;
+        width: 60%;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -443,18 +413,8 @@
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      margin: 0;
-      background: var(--color-bg);
-      border-radius: 8px;
-      padding: 1rem;
-      z-index: 1000;
       font-family: var(--mono);
-      font-size: var(--12px);
       font-weight: 700;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .size-key p {
       margin: 0;
     }
 
@@ -462,7 +422,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 60%;
+        width: 90%;
         padding: 0 10% 0 0;
         height: 100svh;
         display: flex;
@@ -473,22 +433,8 @@
 
     .title-text {
         font-family: var(--sans);
-        font-size: var(--18px);
+        font-size: var(--20px);
         max-width: 500px;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      font-family: var(--mono);
-      font-weight: 700;
-      font-size: var(--14px);
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 1rem;
     }
 
     .chart-container {
@@ -505,12 +451,8 @@
         transition: opacity 1s ease-in-out; 
     }
 
-    .colorized {
-      filter: none;
-    }
-
-    .shadow {
-      filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.1));
+    .grayscale {
+        filter: grayscale(100%);
     }
     
     .highlight-band {
@@ -546,23 +488,10 @@
       transition: all 0.5s ease-in-out;
     }
 
-    .avatar-label {
-      text-anchor: middle;
-      font-family: var(--mono);
-      font-size: var(--12px);
-      font-weight: 700;
-      text-transform: uppercase
-    }
-
     :global(.avatar-group) {
         /* transition: all 0.5s ease-in-out; */
         transform-box: fill-box;
         transform-origin: center;
-    }
-
-    :global(.avatar) {
-      filter: grayscale(100%);
-       transition: filter 0.5s ease-in;
     }
 
     :global(#band-S, #band-L, #band-12, #band-16) {
@@ -616,7 +545,6 @@
     .scrolly-outer {
         position: relative;
         z-index: 2;
-        pointer-events: none;
     }
     .middle .scrolly-outer {
         margin-top: -60vh;
@@ -626,32 +554,16 @@
       padding-top: 90vh;
     }
 
-    .title-text {
-      font-family: var(--sans);
-      font-size: var(--18px);
-      margin-top: 2rem;
-    }
-
-    .axis-label {
-      position: absolute;
-      bottom: 1rem;
-      margin: 0 0 0 -1rem;
-      font-family: var(--mono);
-      font-size: var(--14px);
-      font-weight: 700;
-      text-transform: uppercase;
-      text-anchor: middle;
-    }
-
     .step {
         height: auto;
-        padding: 40vh 5% 70vh;
+        padding: 40vh 10% 70vh;
         display: flex;
         align-items: center;
         font-family: var(--sans);
-        font-size: var(--18px);
+        font-size: var(--20px);
         box-sizing: content-box;
         justify-content: flex-end;
+        border: solid red;
     }
 
     .step .text {
@@ -662,21 +574,15 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin: 0;
-        pointer-events: auto;
     }
     .step.step0 {
         margin: 0 auto;
         padding: 0;
 
     }
-    .step.step7 {
+    .step.step1, .step2, .step7, .step11 {
+      /* padding-right: 30%; */
       justify-content: center;
-      padding-left: 5%;
-      padding-right: 5%;
-    }
-
-    .step.step7 .text {
-      margin: 0 auto;
     }
 
      @media (max-width: 900px) {
@@ -684,4 +590,22 @@
         margin: 0 auto;
       }
     }
+    .text-container {
+      width: 30%;
+      display: block;
+      position: absolute;
+      border: solid green;
+      align-content: center;
+      justify-content: center;
+      right: 0;
+      top: 0; 
+    }
+    .progress-bar {
+      position: fixed;
+      left:0;
+      top:0;
+      height: 20px;
+      background-color: red;
+    }
 </style>
+<!-- {currentId <= 2  || currentId == 7 || currentId == 11 ? "center" : "right"} -->
