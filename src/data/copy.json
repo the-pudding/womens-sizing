@@ -40,7 +40,7 @@
       "year": "2015",
       "sizeRange": "Junior's",
       "sizeType": "alphaSize",
-      "text": "But not all tweens wear the same size.\r\n\r\n\r\nIf we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S. from the <a href=https://stacks.cdc.gov/view/cdc/174595> National Center for Health Statistics,</a> here are the junior’s sizes that match up with their body measurements."
+      "text": "But not all tweens wear the same size.\r\n\r\n\r\nIf we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S. from the <a href=https://stacks.cdc.gov/view/cdc/174595> National Center for Health Statistics,</a> here are the junior’s sizes that match up with their waistline measurements."
     },
     {
       "id": "3",
@@ -359,7 +359,7 @@
     },
     {
       "type": "text",
-      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make my own custom base pattern, known as a bodice block or sloper."
+      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make <span class=green-span>my own custom base pattern,</span> known as a bodice block or sloper."
     },
     {
       "type": "text",
@@ -507,6 +507,37 @@
     {
       "type": "text",
       "value": "Mauris non malesuada libero. Curabitur ac viverra lacus. Nulla non porttitor augue, in rhoncus elit. Proin lobortis vestibulum velit, vel congue metus volutpat sit amet. Duis ultricies urna vel velit dignissim facilisis sed nec diam. Integer vitae scelerisque est. Nulla facilisi."
+    },
+    {
+      "type": "text",
+      "value": "Ransom note letters are from <a href=https://indieground.net/product/ransom-note-letters/>Indieground.</a>"
+    }
+  ],
+  "furtherReading": [
+    {
+      "name": "Inside the confusing world of women's clothing sizes",
+      "org": "The Straits Times",
+      "url": "https://www.straitstimes.com/multimedia/graphics/2025/09/womens-clothing-size-guide-singapore/index.html"
+    },
+    {
+      "name": "Women’s clothing retailers are still ignoring the reality of size in the US",
+      "org": "Quartz",
+      "url": "https://qz.com/quartzy/1309509/we-analyzed-750-pairs-of-jeans-and-found-definitive-skinny-bias-by-us-retailers"
+    },
+    {
+      "name": "Women’s pockets are inferior",
+      "org": "The Pudding",
+      "url": "https://pudding.cool/2018/08/pockets/"
+    },
+    {
+      "name": "The Inferior Clothing Choices Offered to Larger Women",
+      "org": "Kriti Singh",
+      "url": "https://kritisgh.github.io/Clothing-Disparity-Plus-Size-Women/"
+    },
+    {
+      "name": "Why women’s clothing sizes don’t make sense",
+      "org": "Vox",
+      "url": "https://www.vox.com/2016/8/3/12353906/womens-clothing-sizes-vanity-sizing"
     }
   ]
 }

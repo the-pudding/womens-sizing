@@ -66,14 +66,14 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <div class="ransom-wrapper">
+        <h2 class="ransom-wrapper">
             <div class="wrapper">
                 <Ransom class="title-page-title" string={"sew"} />  
             </div>
             <div class="wrapper">
                 <Ransom class="title-page-title" string={"what?"} />  
             </div>
-        </div>
+        </h2>
 
         <div class="title-page-body">
             {#each copy.sewingLessons as graf, i}

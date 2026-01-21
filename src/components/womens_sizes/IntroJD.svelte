@@ -276,8 +276,11 @@ let positionedAvatars = $derived.by(() => {
     <div class="visual-container">
       {#if (isNaN(currentId) || currentId == 0) && introScroll}
           <div transition:fade={{duration: 500}} class="intro-title">
-              <p class="mono"><Leet string="meet your typical" /></p>
-              <Ransom string="tween" />
+              <h1 class="visually-hidden">{copy.metaTitle}</h1>
+              <h2>
+                <p class="mono"><Leet string="meet your typical" /></p>
+                <Ransom string="tween" />
+              </h2>
               <p class="title-text">{@html copy.heroText}</p>
               <div class="scroll-hint">
                 <p> Scroll</p>
@@ -297,7 +300,7 @@ let positionedAvatars = $derived.by(() => {
         bind:clientWidth={containerWidth}
         style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         {#if currentId >= 2}
-          <p class="axis-label">Inches</p>
+          <p class="axis-label">Waistline in Inches</p>
         {/if}
         <svg width={width} height={height}>
           {#if currentSizeRanges}
@@ -416,6 +419,24 @@ let positionedAvatars = $derived.by(() => {
         position: relative;
     }
 
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
     .size-key {
       position: absolute;
       top: 0.5rem;
@@ -423,12 +444,14 @@ let positionedAvatars = $derived.by(() => {
       margin: 0;
       background: var(--color-bg);
       border-radius: 8px;
+      border: 2px solid var(--ws-orange);
       padding: 1rem;
       z-index: 1000;
       font-family: var(--mono);
       font-size: var(--12px);
       font-weight: 700;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      width: 150px;
     }
 
     .size-key p {

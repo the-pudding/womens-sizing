@@ -197,18 +197,18 @@
 
 <div class="outer-container">
     <div class="text-block">
-        <h3>
+        <h2>
             <Leet string="Pain is" />
             <Ransom string="universal" />
             <Leet string="sizing is not" />
-        </h3>
+        </h2>
         {#each copy.sizeIntro as block}
             <p>{@html block.value}</p>
         {/each}
     </div>
     <div class="sticky-container">
         <div class="visual-container">
-            <p class="axis-label">Inches</p>
+            <p class="axis-label">Waistline in Inches</p>
             <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                  {#each filteredBrandData() as brand, i (brand.brandName)}
                     <!-- Get all sizes for each range -->
@@ -290,7 +290,8 @@
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
                                         style="left: {xScale(size.waistMin)}px;"></div>
-                                    {#if (value == 2 && size.alphaSize == "L")  ||
+                                    {#if (value == 0 && brand.brandName == "ASTM" && (size.numericSizeMin == "4" || size.numericSizeMin == "8" || size.numericSizeMin == "12" || size.numericSizeMin == "16"))  ||
+                                        (value == 2 && size.alphaSize == "L")  ||
                                         (value == 3 && brand.brandName == "ASTM" && size.numericSizeMin == "10") ||
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 5 && brand.brandName == "ASTM" && size.numericSizeMin == "18") || 
@@ -428,7 +429,7 @@
         align-items: center;
     }
 
-    .text-block h3 {
+    .text-block h2 {
         max-width: 800px;
         margin: 5rem 0;
         text-align: center;
@@ -608,6 +609,12 @@
 
     .size-name p {
         margin: 0;
+        text-align: center;
+    }
+
+    .size-name p:first-of-type {
+        border-bottom: 1px solid var(--color-fg);
+        width: 100%;
     }
 
     .pill {
@@ -616,7 +623,7 @@
         height: 8px;
         transform: translateY(-50%);
         z-index: -1;
-        opacity: 0.2;
+        opacity: 0.3;
     }
 
     .pill-regular {

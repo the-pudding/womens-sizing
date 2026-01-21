@@ -91,7 +91,9 @@
     style="max-width: {string.length * 100}px;"
     use:inView
     onenter={inViewFly}
-    onexit={exitViewFly}>
+    onexit={exitViewFly}
+    role="img" 
+    aria-label={string}>
     {#each randomizedImagePaths as { letter, src, isSpace }, i (letter + i)}
         <span 
             class="ransom-letter" 

@@ -9,8 +9,18 @@
 
         <div class="title-page-body">
             {#each copy.methods as graf, i}
-                <p>{graf.value}</p>
+                <p>{@html graf.value}</p>
             {/each}
+        </div>
+
+        <h5>Related pieces</h5>
+
+        <div class="title-page-body">
+            <ul>
+                {#each copy.furtherReading as item, i}
+                    <li><a href={item.url}>{item.name}</a>, {item.org}</li>
+                {/each}
+            </ul>
         </div>
     </div>
 </div>

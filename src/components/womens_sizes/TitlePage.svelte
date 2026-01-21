@@ -7,10 +7,12 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <p class="mono"><Leet string="fit 4 a" /></p>
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"teen"} />  
-        </div>
+        <h2>
+            <p class="mono"><Leet string="fit 4 a" /></p>
+            <div class="wrapper">
+                <Ransom class="title-page-title" string={"teen"} />  
+            </div>
+        </h2>
 
         <p class="byline">{@html copy.byline}</p>
         <p class="withline">{@html copy.withline}</p>

@@ -141,11 +141,11 @@
 
 <div class="outer-container">
     <div class="text-block">
-        <h3>
+        <h2>
             <Leet string="The villian arc of" />
             <Ransom string="vanity" />
             <Ransom string="sizing" />
-        </h3>
+        </h2>
         {#each copy.vanityIntro as block}
             <p>{@html block.value}</p>
         {/each}
@@ -185,7 +185,7 @@
                     <svg>
                         <g class="axis" transform="translate(16, 10)"></g>
                     </svg>
-                    <p class="axis-label">Inches</p>
+                    <p class="axis-label">Waistline in Inches</p>
                 </div>
                     <div 
                         class="highlight-box"
@@ -561,7 +561,7 @@
         align-items: center;
     }
 
-    .text-block h3 {
+    .text-block h2 {
         max-width: 800px;
         text-align: center;
         margin: 0 0 6rem 0;

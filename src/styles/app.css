@@ -187,7 +187,7 @@ span.shade-bg::before {
         rgba(154,187,217,0.3) 65%,
         rgba(154,187,217,0.3) 100%
     );
-	opacity: 0.5;
+	opacity: 1;
 	display: inline-block;
 	margin-right: 0.25rem;
 }

@@ -7,13 +7,15 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <p class="mono"><Leet string="sizing for" /></p>
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"every"} />  
-        </div>    
-        <div class="wrapper">
-            <Ransom class="title-page-title" string={"body"} />  
-        </div>    
+        <h2>
+            <p class="mono"><Leet string="sizing for" /></p>
+            <div class="wrapper">
+                <Ransom class="title-page-title" string={"every"} />  
+            </div>    
+            <div class="wrapper">
+                <Ransom class="title-page-title" string={"body"} />  
+            </div>   
+        </h2> 
 
         <div class="title-page-body">
             {#each copy.outro as graf, i}
