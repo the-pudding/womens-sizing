@@ -278,8 +278,15 @@
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
                                         <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
-                                            <p>{size.alphaSize}</p>
-                                            <p>{size.numericSizeMin}</p>
+                                            {#if size.alphaSize !== ""}
+                                                <p>{size.alphaSize}</p>
+                                            {/if}
+                                            {#if size.numericSizeMin !== "" && size.alphaSize !== ""}
+                                                <div class="break"></div>
+                                            {/if}
+                                            {#if size.numericSizeMin !== ""}
+                                                <p>{size.numericSizeMin}</p>
+                                            {/if}
                                         </div>
                                     {/if}
                                 <!-- Else just the min circle -->
@@ -297,8 +304,15 @@
                                         (value == 5 && brand.brandName == "ASTM" && size.numericSizeMin == "18") || 
                                         (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
                                         <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
-                                            <p>{size.alphaSize}</p>
-                                            <p>{size.numericSizeMin}</p>
+                                            {#if size.alphaSize !== ""}
+                                                <p>{size.alphaSize}</p>
+                                            {/if}
+                                            {#if size.numericSizeMin !== "" && size.alphaSize !== ""}
+                                                <div class="break"></div>
+                                            {/if}
+                                            {#if size.numericSizeMin !== ""}
+                                                <p>{size.numericSizeMin}</p>
+                                            {/if}
                                         </div>
                                     {/if}
                                 {/if}
@@ -612,8 +626,8 @@
         text-align: center;
     }
 
-    .size-name p:first-of-type {
-        border-bottom: 1px solid var(--color-fg);
+    .break {
+        border-top: 1px solid var(--color-fg);
         width: 100%;
     }
 
