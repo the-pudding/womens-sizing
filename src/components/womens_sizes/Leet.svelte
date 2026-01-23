@@ -27,4 +27,10 @@
         font-weight: 700;
         font-size: var(--32px);
     }
+
+    @media (max-width: 700px) {
+      span {
+        font-size: var(--20px);
+      }
+    }
 </style>

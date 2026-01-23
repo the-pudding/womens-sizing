@@ -42,7 +42,7 @@
 
 	select {
 		width: 100%;
-		height: 50px;
+		height: 40px;
 		font-family: inherit;
 		font-size: 1em;
 		cursor: pointer;
@@ -51,7 +51,7 @@
 		border-width:2px;
         border-color: var(--window-button-stroke);
         border-style:solid;
-		padding: 0.5em 2.5em 0.5em 0.5em;
+		padding: 0em 2.5em 0em 0.5em;
 		appearance: none;
 		line-height: 1.4;
 		color: var(--fanfic-black);
@@ -64,7 +64,7 @@
 		display: block;
 		content: "";
 		position: absolute;
-		bottom: 1.75em;
+		bottom: 2.5em;
 		right: 1.25em;
 		width: 0.75em;
 		height: 0.75em;

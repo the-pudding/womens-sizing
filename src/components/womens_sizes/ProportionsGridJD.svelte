@@ -165,7 +165,10 @@
                 bustX: bustLeft,
                 waistX: waistLeft,
                 hipX: hipLeft
-            }
+            },
+            bustRight,
+            waistRight,
+            hipRight
         };
       } else {
         // This part needs similar adjustment if you want the median path to also be smooth
@@ -196,9 +199,15 @@
 </script>
 
 {#if value >= 8 && value !== "exit"}
-    <div class="select-wrapper" class:visible={value >= 10}>
-        <p>Highlight</p>
-        <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
+    <div class="select-wrapper">
+        <p class="key">
+            <span class="purple-span" style="height: 40px; display: flex; align-items: center;">Regular</span>
+            <span class="green-span" style="height: 40px; display: flex; align-items: center;">Plus</span>
+        </p>
+        <div class="dropdown" class:visible={value >= 10}>
+            <p>Highlight</p>
+            <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
+        </div>
     </div>
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
         {#each brands as brand, i}
@@ -215,34 +224,47 @@
                 <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                     {#if containerWidth && containerHeight}
                         {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
+                        
                         <svg>
                             <g class="median-group">
-                                <path 
-                                    d={medianPathData.fullPath} 
-                                    fill="#9ABBD9" 
-                                    stroke="none" 
-                                    opacity=0.3 />
-                                {#each filteredApparel as dress, i}
+                                <path d={medianPathData.fullPath} fill="#9ABBD9" stroke="none" opacity=0.3 />
+                                {#each filteredApparel as dress}
                                     {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
-                                    <g 
-                                        class="brand-group"
-                                        class:selected={selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax} 
-                                        class:faded={selectedSize && !(selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax || selectedSize == "All sizes")}
-                                        id={`size-${dress.numericSizeMin}`}
-                                        >
+                                    <g class="brand-group" 
+                                    class:selected={selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax} 
+                                    class:faded={selectedSize && !(selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax || selectedSize == "All sizes")}>
                                         {#each result.paths as path}
-                                            <path class="main-path" d={path} />
+                                            <path class="main-path main-path-{dress.sizeRange}" d={path} />
                                         {/each}
-
-                                        {#if selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax}
-                                            <text class="label" x={result.textPositions.bustX - 10} y={20} text-anchor="end">{dress.bustMin}" </text>
-                                            <text class="label" x={result.textPositions.waistX - 10} y={containerHeight/2 + 2} text-anchor="end">{dress.waistMin}"</text>
-                                            <text class="label" x={result.textPositions.hipX - 10} y={containerHeight-10} text-anchor="end">{dress.hipMin}"</text>
-                                        {/if}
                                     </g>
                                 {/each}
                             </g>
                         </svg>
+
+                        {#each filteredApparel as dress}
+                            {@const result = createPaths(dress, containerWidth / 2, 0, "brand")}
+                            {#if selectedSize == dress.numericSizeMin || selectedSize == dress.numericSizeMax}
+                                <div class="html-label-layer range-{dress.sizeRange}">
+                                    <div class="html-label {dress.sizeRange == 'Regular' ? 'purple-label' : 'green-label'}"
+                                        style="left: {dress.sizeRange == 'Regular' ? result.textPositions.bustX - 10 : result.bustRight + 10}px; 
+                                            top: {10}px;">
+                                        {dress.bustMin}"
+                                    </div>
+                                    
+                                    <div class="html-label {dress.sizeRange == 'Regular' ? 'purple-label' : 'green-label'}"
+                                        style="left: {dress.sizeRange == 'Regular' ? result.textPositions.waistX - 10 : result.waistRight + 10}px; 
+                                            top: {containerHeight/2 + 2}px;">
+                                        {dress.waistMin}"
+                                    </div>
+                                    
+                                    <div class="html-label {dress.sizeRange == 'Regular' ? 'purple-label' : 'green-label'}"
+                                        style="left: {dress.sizeRange == 'Regular' ? result.textPositions.hipX - 10 : result.hipRight + 10}px; 
+                                            top: {containerHeight - 10}px;">
+                                        {dress.hipMin}"
+                                    </div>
+                                </div>
+                            {/if}
+                        {/each}
                     {/if}
                 </div>
             </div>
@@ -326,6 +348,52 @@
         padding-bottom: 0;
     }
 
+    .visual-container {
+        position: relative; /* Ensure this is here */
+    }
+
+    /* Container for HTML labels to ensure they don't block SVG mouse events */
+    .html-label-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* Let clicks pass through to the SVG */
+    }
+
+    .range-Regular .html-label {
+        transform: translate(-100%, -50%);
+    }
+
+    /* For Plus: no horizontal shift needed (it will start at coordinate + 10px and grow right) */
+    .range-Plus .html-label {
+        transform: translate(0, -50%);
+    }
+
+    /* Remove the transform from the base .html-label class if you added the above */
+    .html-label {
+        position: absolute;
+        padding: 0.25rem;
+        border-radius: 8px;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: var(--12px);
+        color: var(--color-fg);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        white-space: nowrap;
+        z-index: 10;
+        /* transform: translate(-100%, -50%); <-- Remove this from here */
+    }
+
+    .purple-label {
+        background: rgba(181, 123, 220, 0.5);
+    }
+
+    .green-label {
+       background: rgba(194, 217, 50, 0.5);
+    }
+
     h3 {
         font-family: var(--mono);
         font-size: var(--18px);
@@ -339,19 +407,37 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 0.5rem;
-        font-family: var(--sans);
+        gap: 2rem;
+        font-family: var(--mono);
         font-weight: 700;
         font-size: var(--14px);
         top: 2rem;
         left: 2rem;
+    }
+
+    .key {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .key p {
+        height: 40px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .dropdown {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease-in-out;
         z-index: 1000;
     }
 
-     .select-wrapper.visible {
+    .dropdown.visible {
         opacity: 1;
         pointer-events: auto;
     }
@@ -374,14 +460,20 @@
 
     .brand-group .main-path {
         fill: none;
-        stroke: var(--ws-purple);
         stroke-width: 1;
         transition: all 0.3s ease-in-out;
         pointer-events: none;
     }
 
+    .brand-group .main-path-Regular {
+        stroke: var(--ws-purple);
+    }
+
+    .brand-group .main-path-Plus {
+        stroke: var(--ws-green);
+    }
+
     .brand-group.selected .main-path {
-        stroke: var(--ws-green) !important;
         stroke-width: 3 !important;
     }
     .brand-group.faded .main-path {

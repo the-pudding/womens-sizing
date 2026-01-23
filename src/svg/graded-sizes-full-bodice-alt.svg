@@ -8,7 +8,7 @@
       }
 
       .st0, .st1 {
-        stroke: #B57BDC;
+        stroke: #9ABBD9;
         stroke-dasharray: 8;
         stroke-width: 4px;
       }
@@ -24,7 +24,7 @@
       }
 
       .st2 {
-        stroke: #C2D932;
+        stroke: #d96f32;
         stroke-width: 8px;
       }
 

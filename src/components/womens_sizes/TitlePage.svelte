@@ -107,21 +107,13 @@
         }
     }
     
-    @media (max-width: 768px) {
+    @media (max-width: 700px) {
         .title-page-content {
-            padding: 2rem;
+            padding: 1rem;
         }
         
-        .title-page-title {
-            font-size: 1rem;
-        }
-        
-        .title-page-subtitle {
-            font-size: 1.2rem;
-        }
-        
-        .title-page-body {
-            font-size: 1rem;
+        .title-page-body p {
+            font-size: var(--16px);
         }
     }
 </style>

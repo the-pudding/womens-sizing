@@ -12,8 +12,14 @@
 </header>
 
 <style>
+	header {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+	}
 	.wordmark {
-		max-width: 14em;
+		max-width: 12em;
 		margin: 0 auto;
 		padding: 32px 0;
 		transform: rotate(-4deg);

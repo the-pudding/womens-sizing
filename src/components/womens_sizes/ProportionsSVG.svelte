@@ -144,7 +144,7 @@
                 {#each result.paths as path}
                     <path class="hidden-path" d={path} />
                     <path 
-                        class="main-path"
+                        class="main-path main-path-{dress}"
                         class:highlight={
                             (value == 6 && dress.numericSizeMin == 18) ||
                             (value == 7 && dress.numericSizeMin == 12)
@@ -247,7 +247,7 @@
     }
 
     .brand-group .main-path.highlight  {
-        stroke: var(--ws-green) !important;
+        stroke: var(--ws-orange) !important;
         stroke-width: 4 !important;
     }
 
@@ -300,7 +300,7 @@
 
     .ideal-group .ideal-path {
         fill: none;
-        stroke: var(--ws-purple);
+        stroke: var(--ws-orange);
         stroke-width: 4;
         transition: all 0.3s ease-in-out;
     }

@@ -122,10 +122,10 @@
         position: absolute;
         top: 0;
         left: 0;
-        background-color: var(--ws-green);
+        background-color: var(--ws-blue);
         z-index: 1;
         mix-blend-mode: multiply;
-        opacity: 0.5;
+        opacity: 0.75;
         transition: transform 0.3s ease-in;
     }
 </style>

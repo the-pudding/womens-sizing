@@ -407,6 +407,7 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         transition: opacity 100ms linear;
         pointer-events: none;
+        min-width: 180px;
     }
 
     #tooltip.visible {
@@ -549,19 +550,19 @@
         transform: translateY(-50%);
         transition: all 500ms linear;
         cursor: pointer;
-        background: var(--ws-green);
-    }
-
-    .size-circle-Regular {
         background: var(--ws-blue);
     }
 
-    .size-circle-Plus {
+    .size-circle-Regular {
         background: var(--ws-purple);
     }
 
-    #ATSM .size-circle {
+    .size-circle-Plus {
         background: var(--ws-green);
+    }
+
+    #ATSM .size-circle {
+        background: var(--ws-blue);
     }
 
     .size-circle:hover {
@@ -574,20 +575,20 @@
         height: 2px;
         transform: translateY(-50%);
         z-index: -1;
-        background: var(--ws-green);
+        background: var(--ws-purple);
         transition: all 250ms linear;
     }
 
     .brand-line-reg {
-        background: var(--ws-blue);
-    }
-
-    .brand-line-plus {
         background: var(--ws-purple);
     }
 
-    #ASTM .brand-line {
+    .brand-line-plus {
         background: var(--ws-green);
+    }
+
+    #ASTM .brand-line {
+        background: var(--ws-blue);
     }
 
     .brand-name {
@@ -637,15 +638,15 @@
         height: 8px;
         transform: translateY(-50%);
         z-index: -1;
-        opacity: 0.3;
+        opacity: 0.2;
     }
 
     .pill-regular {
-        background: var(--ws-blue);
+        background: var(--ws-purple);
     }
 
     .pill-plus {
-        background: var(--ws-purple);
+        background: var(--ws-green);
     }
 
     .x-axis {

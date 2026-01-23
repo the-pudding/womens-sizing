@@ -198,14 +198,14 @@
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "excludeNearMedian",
-      "text": "<p>While there are no universal sizing standards, an organization called <span class=green-span>ASTM International</span> regularly releases informal guidelines. </p><p>Here, each current ASTM size (00–20) is represented by a <span class=green-dot>dot.</span></p>"
+      "text": "<p>While there are no universal sizing standards, an organization called <span class=blue-span>ASTM International</span> regularly releases informal guidelines. </p><p>Here, each current ASTM size (00–20) is represented by a <span class=blue-dot>dot.</span></p>"
     },
     {
       "id": "1",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
-      "text": "<p>Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer base.</p> <p>These <span class=blue-dot>dots</span> represent the size charts of 17 popular brands. Dots connected by a <span class=shade-bg>shaded background</span> show when measurements or sizes are presented as a range.</p>"
+      "text": "<p>Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer base.</p> <p>These <span class=purple-dot>dots</span> represent the size charts of 17 popular brands. Dots connected by a <span class=shade-bg>shaded background</span> show when measurements or sizes are presented as a range.</p>"
     },
     {
       "id": "2",
@@ -247,14 +247,14 @@
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>Sizing issues are amplified even further within <span class=purple-span>Plus</span> size ranges. Some Plus sizes start at size 12, others at 18. Others still consider any size from 00 to 30 as part of their <span class=blue-span>Regular</span> line.</p>"
+      "text": "<p>Sizing issues are amplified even further within <span class=green-span>Plus</span> size ranges. Some Plus sizes start at size 12, others at 18. Others still consider any size from 00 to 30 as part of their <span class=purple-span>Regular</span> line.</p>"
     },
     {
       "id": "8",
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap,” seen here in Anthropologie’s size chart.</p> <p>Sizes within the <span class=blue-span>Regular</span> size range are too small, yet the next size up in the <span class=purple-span>Plus</span> range might be too big.</p>"
+      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap,” seen here in Anthropologie’s size chart.</p> <p>Sizes within the <span class=purple-span>Regular</span> size range are too small, yet the next size up in the <span class=green-span>Plus</span> range might be too big.</p>"
     },
     {
       "id": "9",
@@ -317,7 +317,7 @@
       "step": "3",
       "visual": "display 1995 + 2021 astm sizes + median waistline markers",
       "animation": "add markers for median waistlines in 1994 & 2023",
-      "text": "<p>But vanity sizing didn’t just account for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown. </p>\r\n\r\n\r\n<p>The <span class=orange-span>median woman’s waistline</span> today is nearly <span class=bold>3 inches</span> wider than it was in the mid-1990s.</p>"
+      "text": "<p>But vanity sizing didn’t just account for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown. </p>\r\n\r\n\r\n<p>The <span class=orange-span>average woman’s waistline</span> today is nearly <span class=bold>4 inches</span> wider than it was in the mid-1990s.</p>"
     },
     {
       "step": "4",
@@ -351,7 +351,7 @@
     },
     {
       "type": "text",
-      "value": "Fashion designers often use body measurements for a <span class=green-span>size 8</span> as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
+      "value": "Fashion designers often use body measurements for a <span class=orange-outline>size 8</span> as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
     },
     {
       "type": "text",
@@ -359,7 +359,7 @@
     },
     {
       "type": "text",
-      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make <span class=green-span>my own custom base pattern,</span> known as a bodice block or sloper."
+      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make my own <span class=orange-outline>custom base pattern,</span> known as a bodice block or sloper."
     },
     {
       "type": "text",
@@ -385,19 +385,19 @@
     },
     {
       "step": "4",
-      "text": "<p>While the U.S. does not track bust measurements,* we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=purple-span>'ideal' hourglass proportions</span>.</p> \r\n\r\n\r\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
+      "text": "<p>While the U.S. does not track bust measurements,* we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=orange-outline>'ideal' hourglass proportions.</span></p> \r\n\r\n\r\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
     },
     {
       "step": "5",
-      "text": "<p>For example, here’s J.Crew’s Regular size chart. They use a rigid set of dimensions, where the waist measurement is exactly <span class=bold>10 inches smaller</span> than the hip for all sizes.</p>  \r\n\r\n\r\n<p>That means the smallest and largest sizes in a range will have the exact same body shape.</p>"
+      "text": "<p>For example, here’s J.Crew’s size chart. They use a rigid set of dimensions, where the waist measurement is exactly <span class=bold>10 inches smaller</span> than the hip for all sizes.</p>  \r\n\r\n\r\n<p>That means the smallest and largest sizes in a range will have the exact same body shape.</p>"
     },
     {
       "step": "6",
-      "text": "<p>Actual bodies, however, are far less uniform or symmetrical.</p>  \r\n\r\n\r\n<p>A <span class=green-span>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by at least 6 inches.</p>"
+      "text": "<p>Actual bodies, however, are far less uniform or symmetrical.</p>  \r\n\r\n\r\n<p>A <span class=orange-outline>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by at least 6 inches.</p>"
     },
     {
       "step": "7",
-      "text": "Conversely a <span class=green-span>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
+      "text": "Conversely a <span class=orange-outline>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
     },
     {
       "step": "8",

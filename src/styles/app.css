@@ -28,7 +28,7 @@
 	--color-primary: var(--color-gray-900);
 	--color-link: var(--color-gray-900);
 	--color-link-hover: var(--color-gray-700);
-	--color-focus: var(--ws-green);
+	--color-focus: var(--ws-orange);
 	--color-mark: var(--color-yellow);
 	--color-selection: var(--color-gray-300);
 	--color-border: var(--color-gray-300);
@@ -149,7 +149,7 @@ svg {
 	box-decoration-break: clone;
 }
 
-span.bold, span.green-dot, span.blue-dot,span.shade-bg {
+span.bold, span.green-dot, span.blue-dot, span.purple-dot, span.shade-bg {
 	font-weight: 700;
 	font-family: var(--mono);
 }
@@ -174,18 +174,28 @@ span.blue-dot::before {
 	margin-right: 0.25rem;
 }
 
+span.purple-dot::before {
+	content: '';
+	height: 12px;
+	width: 12px;
+	background-color: var(--ws-purple);
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 0.25rem;
+}
+
 span.shade-bg::before {
 	content: '';
 	height: 14px;
 	width: 20px;
 	background: linear-gradient(
         to bottom,
-        rgba(154,187,217,0.3) 0%,
-        rgba(154,187,217,0.3) 45%,
-        var(--ws-blue) 45%,
-        var(--ws-blue) 65%,
-        rgba(154,187,217,0.3) 65%,
-        rgba(154,187,217,0.3) 100%
+        rgba(181,123,220,0.3) 0%,
+        rgba(181,123,220,0.3) 45%,
+        var(--ws-purple) 45%,
+        var(--ws-purple) 65%,
+        rgba(181,123,220,0.3) 65%,
+        rgba(181,123,220,0.3) 100%
     );
 	opacity: 1;
 	display: inline-block;

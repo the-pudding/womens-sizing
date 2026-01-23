@@ -37,7 +37,7 @@
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
   // let avatarHeight = $derived(avatarWidth * 1.2);
-  let avatarHeight = $derived( height / 8)
+  let avatarHeight = $derived( height / 9)
   let avatarWidth = $derived(avatarHeight * .4)
 
   /*** SCALES ***/
@@ -542,6 +542,7 @@ let positionedAvatars = $derived.by(() => {
 
     .size-band-group text {
       font-family: var(--mono);
+      font-size: var(--14px);
       font-weight: 700;
       transition: all 0.5s ease-in-out;
     }
@@ -553,6 +554,10 @@ let positionedAvatars = $derived.by(() => {
       font-weight: 700;
       text-transform: uppercase
     }
+
+    :global(.x-axis .tick text) {
+        font-size: var(--14px);
+      }
 
     :global(.avatar-group) {
         /* transition: all 0.5s ease-in-out; */
@@ -649,15 +654,18 @@ let positionedAvatars = $derived.by(() => {
         display: flex;
         align-items: center;
         font-family: var(--sans);
-        font-size: var(--18px);
         box-sizing: content-box;
         justify-content: flex-end;
+    }
+
+    .step .text p {
+      font-size: var(--18px);
     }
 
     .step .text {
         max-width: 500px;
         width: 90%;
-        padding: 20px;
+        padding: 1rem 2rem;
         background: white;
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -679,9 +687,66 @@ let positionedAvatars = $derived.by(() => {
       margin: 0 auto;
     }
 
-     @media (max-width: 900px) {
-      .step .text{
-        margin: 0 auto;
+    @media (max-width: 1000px) {
+      .intro-title {
+        width: 100%;
+        left: 0;
+        padding: 6rem 0 0 0;
+        justify-content: flex-start;
+      }
+
+      .title-text {
+        position: absolute;
+        right: 0;
+        top: 45%;
+        transform: translateY(-50%);
+        padding: 0 3rem 0 0;
+        max-width: 540px;
+      }
+
+      .size-band-group text {
+        font-size: var(--12px);
+      }
+
+      :global(.x-axis .tick text) {
+        font-size: var(--12px);
+      }
+
+    }
+
+    @media (max-width: 850px) {
+      .title-text {
+        max-width: 440px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .intro-title {
+        padding: 5rem 0 0 0;
+      }
+
+      .title-text {
+        position: relative;
+        transform: translate(0, 0);
+        top: auto;
+        left: auto;
+        right: auto;
+        max-width: none;
+        padding: 0 2rem;
+        margin: 0;
+        font-size: var(--16px);
+      }
+
+      .mono {
+        margin: 0;
+      }
+
+      .step .text {
+        padding: 0.5rem 1.5rem;
+      }
+
+      .step .text p {
+        font-size: var(--16px);
       }
     }
 </style>

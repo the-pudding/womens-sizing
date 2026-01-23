@@ -612,5 +612,10 @@
       height: 20px;
       /* background-color: red; */
     }
+
+    @media (max-width: 1000px) {
+      .intro-title {
+        justify-content: flex-start;
+      }
+    }
 </style>
-<!-- {currentId <= 2  || currentId == 7 || currentId == 11 ? "center" : "right"} -->
