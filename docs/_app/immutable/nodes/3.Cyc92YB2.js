@@ -1,4 +1,4 @@
-import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E as je,d as Pe,aF as Ue,af as Le,ad as We,c as Ne,a3 as ye,a2 as we,D as Oe,p as He,a5 as Je,ag as Xe,V as _,X as p,ax as z,Z as b,_ as y,ay as R,aw as T,aA as $e,W as A,A as o,az as q,C as F,av as j,aG as Ve,U as Z,Y as K,u as pe,aH as Ge,R as ke,B as Ye}from"../chunks/Dzm_WEGj.js";import{i as Ze,b as be,a as C,d as Ke}from"../chunks/ZgVi19R2.js";import{b as ze,c as xe,e as O,i as H,d as Qe,s as en,f as nn,g as tn}from"../chunks/CbB6GLjC.js";import{c as le}from"../chunks/DH1QYJyw.js";import{s as he,p as Y}from"../chunks/ihUrmXYw.js";import{S as an,h as _e,c as sn}from"../chunks/BwI-gNGi.js";import{i as N}from"../chunks/C0w0nz2X.js";import{s as rn}from"../chunks/BIhypZ3Q.js";import{b as on}from"../chunks/pF0XDOdT.js";function de(e,n,a,s,i,h){let c=B;B&&ve();var m,v,r=null;B&&se.nodeType===Be&&(r=se,ve());var u=B?se:e,t,l=xe;qe(()=>{const f=n()||null;var g=f==="svg"?Ue:null;if(f!==m){var d=xe;ze(l),t&&(f===null?He(t,()=>{t=null,v=null}):f===v?Je(t):(Xe(t),be(!1))),f&&f!==v&&(t=Pe(()=>{if(r=B?r:g?document.createElementNS(g,f):document.createElement(f),Le(r,r),s){B&&Ze(f)&&r.append(document.createComment(""));var w=B?We(r):r.appendChild(Ne());B&&(w===null?ye(!1):we(w)),s(r,w)}Oe.nodes_end=r,u.before(r)})),m=f,m&&(v=m),be(!0),ze(d)}},je),c&&(ye(!0),we(u))}var Te={},re={},ie=34,G=10,oe=13;function Ie(e){return new Function("d","return {"+e.map(function(n,a){return JSON.stringify(n)+": d["+a+'] || ""'}).join(",")+"}")}function ln(e,n){var a=Ie(e);return function(s,i){return n(a(s),i,e)}}function Se(e){var n=Object.create(null),a=[];return e.forEach(function(s){for(var i in s)i in n||a.push(n[i]=i)}),a}function I(e,n){var a=e+"",s=a.length;return s<n?new Array(n-s+1).join(0)+a:a}function hn(e){return e<0?"-"+I(-e,6):e>9999?"+"+I(e,6):I(e,4)}function dn(e){var n=e.getUTCHours(),a=e.getUTCMinutes(),s=e.getUTCSeconds(),i=e.getUTCMilliseconds();return isNaN(e)?"Invalid Date":hn(e.getUTCFullYear())+"-"+I(e.getUTCMonth()+1,2)+"-"+I(e.getUTCDate(),2)+(i?"T"+I(n,2)+":"+I(a,2)+":"+I(s,2)+"."+I(i,3)+"Z":s?"T"+I(n,2)+":"+I(a,2)+":"+I(s,2)+"Z":a||n?"T"+I(n,2)+":"+I(a,2)+"Z":"")}function pn(e){var n=new RegExp('["'+e+`
+import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E as je,d as Pe,aF as Ue,af as Le,ad as We,c as Ne,a3 as ye,a2 as we,D as Oe,p as He,a5 as Je,ag as Xe,V as _,X as p,ax as z,Z as b,_ as y,ay as R,aw as T,aA as $e,W as A,A as o,az as q,C as F,av as j,aG as Ve,U as Z,Y as K,u as pe,aH as Ge,R as ke,B as Ye}from"../chunks/Dzm_WEGj.js";import{i as Ze,b as be,a as C,d as Ke}from"../chunks/ZgVi19R2.js";import{b as ze,c as xe,e as O,i as H,d as Qe,s as en,f as nn,g as tn}from"../chunks/CbB6GLjC.js";import{c as le}from"../chunks/DH1QYJyw.js";import{s as he,p as Y}from"../chunks/ihUrmXYw.js";import{S as an,h as _e,c as sn}from"../chunks/EGpspJyj.js";import{i as N}from"../chunks/C0w0nz2X.js";import{s as rn}from"../chunks/BIhypZ3Q.js";import{b as on}from"../chunks/BdvcdZH-.js";function de(e,n,a,s,i,h){let c=B;B&&ve();var m,v,r=null;B&&se.nodeType===Be&&(r=se,ve());var u=B?se:e,t,l=xe;qe(()=>{const f=n()||null;var g=f==="svg"?Ue:null;if(f!==m){var d=xe;ze(l),t&&(f===null?He(t,()=>{t=null,v=null}):f===v?Je(t):(Xe(t),be(!1))),f&&f!==v&&(t=Pe(()=>{if(r=B?r:g?document.createElementNS(g,f):document.createElement(f),Le(r,r),s){B&&Ze(f)&&r.append(document.createComment(""));var w=B?We(r):r.appendChild(Ne());B&&(w===null?ye(!1):we(w)),s(r,w)}Oe.nodes_end=r,u.before(r)})),m=f,m&&(v=m),be(!0),ze(d)}},je),c&&(ye(!0),we(u))}var Te={},re={},ie=34,G=10,oe=13;function Ie(e){return new Function("d","return {"+e.map(function(n,a){return JSON.stringify(n)+": d["+a+'] || ""'}).join(",")+"}")}function ln(e,n){var a=Ie(e);return function(s,i){return n(a(s),i,e)}}function Se(e){var n=Object.create(null),a=[];return e.forEach(function(s){for(var i in s)i in n||a.push(n[i]=i)}),a}function I(e,n){var a=e+"",s=a.length;return s<n?new Array(n-s+1).join(0)+a:a}function hn(e){return e<0?"-"+I(-e,6):e>9999?"+"+I(e,6):I(e,4)}function dn(e){var n=e.getUTCHours(),a=e.getUTCMinutes(),s=e.getUTCSeconds(),i=e.getUTCMilliseconds();return isNaN(e)?"Invalid Date":hn(e.getUTCFullYear())+"-"+I(e.getUTCMonth()+1,2)+"-"+I(e.getUTCDate(),2)+(i?"T"+I(n,2)+":"+I(a,2)+":"+I(s,2)+"."+I(i,3)+"Z":s?"T"+I(n,2)+":"+I(a,2)+":"+I(s,2)+"Z":a||n?"T"+I(n,2)+":"+I(a,2)+"Z":"")}function pn(e){var n=new RegExp('["'+e+`
 \r]`),a=e.charCodeAt(0);function s(t,l){var f,g,d=i(t,function(w,x){if(f)return f(w,x-1);g=w,f=l?ln(w,l):Ie(w)});return d.columns=g||[],d}function i(t,l){var f=[],g=t.length,d=0,w=0,x,S=g<=0,k=!1;t.charCodeAt(g-1)===G&&--g,t.charCodeAt(g-1)===oe&&--g;function E(){if(S)return re;if(k)return k=!1,Te;var X,D=d,M;if(t.charCodeAt(D)===ie){for(;d++<g&&t.charCodeAt(d)!==ie||t.charCodeAt(++d)===ie;);return(X=d)>=g?S=!0:(M=t.charCodeAt(d++))===G?k=!0:M===oe&&(k=!0,t.charCodeAt(d)===G&&++d),t.slice(D+1,X-1).replace(/""/g,'"')}for(;d<g;){if((M=t.charCodeAt(X=d++))===G)k=!0;else if(M===oe)k=!0,t.charCodeAt(d)===G&&++d;else if(M!==a)continue;return t.slice(D,X)}return S=!0,t.slice(D,g)}for(;(x=E())!==re;){for(var J=[];x!==Te&&x!==re;)J.push(x),x=E();l&&(J=l(J,w++))==null||f.push(J)}return f}function h(t,l){return t.map(function(f){return l.map(function(g){return u(f[g])}).join(e)})}function c(t,l){return l==null&&(l=Se(t)),[l.map(u).join(e)].concat(h(t,l)).join(`
 `)}function m(t,l){return l==null&&(l=Se(t)),h(t,l).join(`
 `)}function v(t){return t.map(r).join(`
@@ -202,14 +202,14 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "excludeNearMedian",
-      "text": "<p>While there are no universal sizing standards, an organization called <span class=green-span>ASTM International</span> regularly releases informal guidelines. </p><p>Here, each current ASTM size (00–20) is represented by a <span class=green-dot>dot.</span></p>"
+      "text": "<p>While there are no universal sizing standards, an organization called <span class=blue-span>ASTM International</span> regularly releases informal guidelines. </p><p>Here, each current ASTM size (00–20) is represented by a <span class=blue-dot>dot.</span></p>"
     },
     {
       "id": "1",
       "displayRegular": "true",
       "displayPlus": "false",
       "brandFilter": "null",
-      "text": "<p>Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer base.</p> <p>These <span class=blue-dot>dots</span> represent the size charts of 17 popular brands. Dots connected by a <span class=shade-bg>shaded background</span> show when measurements or sizes are presented as a range.</p>"
+      "text": "<p>Clothing manufacturers may loosely follow those standards, but more often than not, brands prefer to tailor their own practices to their target customer base.</p> <p>These <span class=purple-dot>dots</span> represent the size charts of 17 popular brands. Dots connected by a <span class=shade-bg>shaded background</span> show when measurements or sizes are presented as a range.</p>"
     },
     {
       "id": "2",
@@ -251,14 +251,14 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>Sizing issues are amplified even further within <span class=purple-span>Plus</span> size ranges. Some Plus sizes start at size 12, others at 18. Others still consider any size from 00 to 30 as part of their <span class=blue-span>Regular</span> line.</p>"
+      "text": "<p>Sizing issues are amplified even further within <span class=green-span>Plus</span> size ranges. Some Plus sizes start at size 12, others at 18. Others still consider any size from 00 to 30 as part of their <span class=purple-span>Regular</span> line.</p>"
     },
     {
       "id": "8",
       "displayRegular": "true",
       "displayPlus": "true",
       "brandFilter": "null",
-      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap,” seen here in Anthropologie’s size chart.</p> <p>Sizes within the <span class=blue-span>Regular</span> size range are too small, yet the next size up in the <span class=purple-span>Plus</span> range might be too big.</p>"
+      "text": "<p>The median adult woman may also find herself in what’s informally called the “mid-size gap,” seen here in Anthropologie’s size chart.</p> <p>Sizes within the <span class=purple-span>Regular</span> size range are too small, yet the next size up in the <span class=green-span>Plus</span> range might be too big.</p>"
     },
     {
       "id": "9",
@@ -321,7 +321,7 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
       "step": "3",
       "visual": "display 1995 + 2021 astm sizes + median waistline markers",
       "animation": "add markers for median waistlines in 1994 & 2023",
-      "text": "<p>But vanity sizing didn’t just account for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown. </p>\\r\\n\\r\\n\\r\\n<p>The <span class=orange-span>median woman’s waistline</span> today is nearly <span class=bold>3 inches</span> wider than it was in the mid-1990s.</p>"
+      "text": "<p>But vanity sizing didn’t just account for women’s unconscious shopping behaviors. Clothes needed to be larger because our waistlines had grown. </p>\\r\\n\\r\\n\\r\\n<p>The <span class=orange-span>average woman’s waistline</span> today is nearly <span class=bold>4 inches</span> wider than it was in the mid-1990s.</p>"
     },
     {
       "step": "4",
@@ -355,7 +355,7 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
     },
     {
       "type": "text",
-      "value": "Fashion designers often use body measurements for a <span class=green-span>size 8</span> as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
+      "value": "Fashion designers often use body measurements for a <span class=orange-outline>size 8</span> as a starting point when creating new design samples. Manufacturers then use a mathematical formula to determine each next size up or down the range in a process called grading. The effect is like a Russian doll. Each size up is incrementally larger than the last."
     },
     {
       "type": "text",
@@ -363,7 +363,7 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
     },
     {
       "type": "text",
-      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make <span class=green-span>my own custom base pattern,</span> known as a bodice block or sloper."
+      "value": "I, like the vast majority of women, do not fit the standard mold. Instead I took an old pattern-making textbook often taught in fashion design schools to start making clothes to fit my own unique proportions. I gathered and recorded over 58 different body measurements in order to get started and from there, I could make my own <span class=orange-outline>custom base pattern,</span> known as a bodice block or sloper."
     },
     {
       "type": "text",
@@ -389,19 +389,19 @@ import"../chunks/Bzak7iHL.js";import{h as B,a as ve,f as se,aE as Be,b as qe,E a
     },
     {
       "step": "4",
-      "text": "<p>While the U.S. does not track bust measurements,* we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=purple-span>'ideal' hourglass proportions</span>.</p> \\r\\n\\r\\n\\r\\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
+      "text": "<p>While the U.S. does not track bust measurements,* we know that the <span class=blue-span>median woman's</span> waist-to-hip difference is roughly half that of <span class=orange-outline>'ideal' hourglass proportions.</span></p> \\r\\n\\r\\n\\r\\n<p>Still, size charts continue to champion a defined waistline as the sole foundation to most women’s apparel.</p>"
     },
     {
       "step": "5",
-      "text": "<p>For example, here’s J.Crew’s Regular size chart. They use a rigid set of dimensions, where the waist measurement is exactly <span class=bold>10 inches smaller</span> than the hip for all sizes.</p>  \\r\\n\\r\\n\\r\\n<p>That means the smallest and largest sizes in a range will have the exact same body shape.</p>"
+      "text": "<p>For example, here’s J.Crew’s size chart. They use a rigid set of dimensions, where the waist measurement is exactly <span class=bold>10 inches smaller</span> than the hip for all sizes.</p>  \\r\\n\\r\\n\\r\\n<p>That means the smallest and largest sizes in a range will have the exact same body shape.</p>"
     },
     {
       "step": "6",
-      "text": "<p>Actual bodies, however, are far less uniform or symmetrical.</p>  \\r\\n\\r\\n\\r\\n<p>A <span class=green-span>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by at least 6 inches.</p>"
+      "text": "<p>Actual bodies, however, are far less uniform or symmetrical.</p>  \\r\\n\\r\\n\\r\\n<p>A <span class=orange-outline>size 18</span> pair of pants from J.Crew might fit the median woman’s waist, but they’d likely be too large in the hips by at least 6 inches.</p>"
     },
     {
       "step": "7",
-      "text": "Conversely a <span class=green-span>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
+      "text": "Conversely a <span class=orange-outline>size 12</span> would fit her hips best, but it’s unlikely that she’d be able to squeeze into a waistband that’s 6 inches smaller than her own."
     },
     {
       "step": "8",
