@@ -695,4 +695,23 @@
         opacity: 0;
         pointer-events: none;
     }
+
+    @media (max-width: 700px) {
+      .step .text {
+        padding: 0.5rem 1.5rem;
+        max-width: 400px;
+      }
+
+      .step .text p {
+        font-size: var(--16px);
+      }
+
+      .text-block {
+        padding: 1rem;
+      }
+
+      .text-block p {
+        font-size: var(--16px);
+      }
+    }
 </style>

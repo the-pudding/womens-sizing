@@ -304,4 +304,10 @@
         stroke-width: 4;
         transition: all 0.3s ease-in-out;
     }
+
+    @media (max-width: 700px) {
+        .median-group text {
+            font-size: var(--14px);
+        }
+    }
 </style>

@@ -66,6 +66,10 @@
         margin-bottom: 1.5rem;
         font-size: var(--14px);
     }
+
+    li {
+       font-size: var(--14px); 
+    }
     
     .title-page-art {
         margin-top: 2rem;

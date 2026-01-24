@@ -254,4 +254,10 @@
         text-align: center; 
         line-height: 1.2;
     }
+
+    @media (max-width: 700px) {
+        .title-page-body p {
+            font-size: var(--16px);
+        }
+    }
 </style>

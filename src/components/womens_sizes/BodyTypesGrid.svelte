@@ -128,4 +128,10 @@
         opacity: 0.75;
         transition: transform 0.3s ease-in;
     }
+
+    @media (max-width: 700px) {
+        .box p {
+            font-size: var(--14px);
+        }
+    }
 </style>

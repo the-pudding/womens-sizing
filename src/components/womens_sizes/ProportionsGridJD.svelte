@@ -220,7 +220,7 @@
             }
             <div class="brand-container"
                 style="opacity: {value !== 9 || (value == 9 && brand == "H&M") ? 1 : 0.3}">
-                <h3>{brand}</h3>
+                <p>{brand}</p>
                 <div class="visual-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
                     {#if containerWidth && containerHeight}
                         {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
@@ -309,23 +309,18 @@
         justify-content: center;
         flex-wrap: wrap;
         margin: 0;
-        padding: 0;
+        padding: 5rem 0 0 0;
+        height: 100%;
     }
 
     .brand-container {
-        width: 33.333%;
-        padding: 1rem;
+        width: 20%;
+        padding: 0.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
                     opacity 0.6s ease-out;
-    }
-
-    @media (min-width: 900px) { 
-        .brand-container {
-            width: 20%; 
-        }
     }
     
     .sticky-container {
@@ -394,9 +389,9 @@
        background: rgba(194, 217, 50, 0.5);
     }
 
-    h3 {
+    .brand-container p {
         font-family: var(--mono);
-        font-size: var(--18px);
+        font-size: var(--16px);
         text-transform: uppercase;
         font-weight: 700;
         margin: 0;
@@ -418,6 +413,7 @@
     .key {
         display: flex;
         flex-direction: row;
+        margin: 0;
     }
 
     .key p {
@@ -618,14 +614,47 @@
         100% { transform: translateX(0px); }
     }
 
-    @media (max-width: 768px) {
-        .step .text {
-            max-width: 300px;
-            padding: 15px;
+    @media (max-width: 1000px) { 
+        .brand-container  {
+            width: 25%;
         }
-        
+    }
+
+    @media (max-width: 750px) { 
+        .brand-container {
+            width: 33.3%; 
+        }
+
+        .visual-container {
+            max-height: 120px;
+        }
+
+        .select-wrapper {
+            top: 1rem;
+            left: 1rem;
+        }
+    }
+
+    @media (max-width: 700px) { 
+        .step .text {
+            padding: 0.5rem 1.5rem;
+            max-width: 400px;
+        }
+
+        .step .text p {
+            font-size: var(--16px);
+        }
+
         .image-container {
             height: 75vh; 
+        }
+
+        .brand-container {
+            width: 33.3%; 
+        }
+
+        .html-label {
+            font-size: 10px;
         }
     }
 </style>

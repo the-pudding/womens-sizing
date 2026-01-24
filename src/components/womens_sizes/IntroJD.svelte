@@ -32,7 +32,7 @@
   /*** DIMENSIONS ***/
   let containerWidth = $state(0);
   let containerHeight = $state(0);
-  let margin = { top: 20, right: 20, bottom: 36, left: 20 };
+  let margin = { top: 20, right: 4, bottom: 36, left: 16 };
   let width = $derived(containerWidth - margin.left - margin.right);
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
@@ -493,7 +493,7 @@ let positionedAvatars = $derived.by(() => {
 
     .chart-container {
         width: 100%;
-        padding: 1.5rem;
+        padding: 1rem;
         height: 100%;
         /* max-height: 600px; */
         margin: 0 auto;
@@ -722,7 +722,7 @@ let positionedAvatars = $derived.by(() => {
 
     @media (max-width: 700px) {
       .intro-title {
-        padding: 5rem 0 0 0;
+        padding: 5rem 1rem 0 1rem;
       }
 
       .title-text {
@@ -732,7 +732,7 @@ let positionedAvatars = $derived.by(() => {
         left: auto;
         right: auto;
         max-width: none;
-        padding: 0 2rem;
+        padding: 0;
         margin: 0;
         font-size: var(--16px);
       }
@@ -743,10 +743,20 @@ let positionedAvatars = $derived.by(() => {
 
       .step .text {
         padding: 0.5rem 1.5rem;
+        max-width: 400px;
       }
 
       .step .text p {
         font-size: var(--16px);
+      }
+
+      .size-key {
+        padding: 0.5rem;
+        width: 130px;
+      }
+
+      :global(.size-band-group:nth-child(even) text) {
+        opacity: 0;
       }
     }
 </style>

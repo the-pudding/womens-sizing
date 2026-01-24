@@ -88,4 +88,10 @@
 		cursor: not-allowed;
 		background-color: var(--color-gray-300);
 	}
+
+	@media (max-width: 750px) {
+		.select::after {
+			bottom: 1.6rem;
+		}
+	}
 </style>

@@ -68,7 +68,7 @@
     const xScale = $derived(
         d3.scaleLinear()
             .domain([20, 42])
-            .range([0, containerWidth - 32])
+            .range([0, containerWidth])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
     
@@ -165,7 +165,9 @@
                                     role="tooltip"
                                     id="form-{size.size}"
                                     class="size" 
-                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? (xScale(size.waist) - (imageWidth/2) + 16) : (xScale(24)) - (imageWidth/2) + 16)}px;
+                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) 
+                                    ? xScale(size.waist) 
+                                    : xScale(24))}px;
                                     pointer-events: {move1995 && move2021 && value >= 5 && (size.size != "0" && size.size != "00") ? "auto" : "none"};"
                                     class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
                                         || (value == 4 && size.size == "18" && !tooltipVisible)
@@ -190,10 +192,9 @@
                     <div 
                         class="highlight-box"
                         class:visible={(value >= 2 && value !== 3 && value !== 5 && value !== 6 && value !== "exit" && barbellData) || tooltipVisible}
-                        style="left: {boxStart}px;
-                        width: {boxWidth}px"
-                    >   
-                        </div>
+                        style="left: calc(var(--label-width) + 16px + {barbellData?.startCircle ?? 0}px);
+                            width: {(barbellData?.endCircle ?? 0) - (barbellData?.startCircle ?? 0)}px"
+                    ></div>
 
                     {#if barbellData}
                         <p 
@@ -205,13 +206,13 @@
                         </p>
                     {/if}
                     <div class="averages" class:visible={value >= 3}>
-                        <div class="avg-start" class:visible={value >= 3} style="left: {xScale(34.88)+116}px;"></div>
-                        <div class="avg-end" class:visible={value >= 3} style="left: {xScale(38.54)+116}px;"></div>
+                        <div class="avg-start" style="left: calc(var(--label-width) + 16px + {xScale(34.88)}px);"></div>
+                        <div class="avg-end" style="left: calc(var(--label-width) + 16px + {xScale(38.54)}px);"></div>
                     </div>
                     <div class="barbell" class:visible={(barbellData && move1995 && value !== 3 && value !== 5 && value !== 6 && value !== "exit") || tooltipVisible}>
-                        <div class="line" style="left: {boxStart}px; width: {boxWidth}px"></div>
-                        <div class="circle-start" style="left: {boxStart}px;"></div>
-                        <div class="circle-end" style="left: {boxEnd}px;"></div>
+                        <div class="line" style="left: calc(var(--label-width) + 16px + {barbellData?.startCircle ?? 0}px); width: {(barbellData?.endCircle ?? 0) - (barbellData?.startCircle ?? 0)}px"></div>
+                        <div class="circle-start" style="left: calc(var(--label-width) + 16px + {barbellData?.startCircle ?? 0}px);"></div>
+                        <div class="circle-end" style="left: calc(var(--label-width) + 16px + {barbellData?.endCircle ?? 0}px);"></div>
                     </div>
             </div>
         </div>
@@ -235,6 +236,16 @@
 </div>
 
 <style>
+    :root {
+        --label-width: 100px;
+    }
+
+    @media (max-width: 700px) {
+        :root {
+            --label-width: 60px; /* Shrink the label on mobile */
+        }
+    }
+
     #tooltip {
         position: fixed;
         opacity: 0;
@@ -319,7 +330,7 @@
     }
 
     .year-label {
-        width: 100px;
+        width: var(--label-width);
     }
 
     .year-label p {
@@ -330,18 +341,18 @@
     }
 
     .form-wrapper {
-        width: calc(100% - 100px);
+        width: calc(100% - var(--label-width));
         position: relative;
     }
 
     .x-axis {
         position: absolute;
         bottom: 58%;
-        left: 100px;
-        width: calc(100% - 100px);
+        left: var(--label-width); /* Dynamic based on media query */
+        width: calc(100% - var(--label-width));
         height: 50px;
         margin: 0;
-        padding: 0 2rem;
+        padding: 0;
         z-index: 900;
     }
 
@@ -479,8 +490,13 @@
     .size {
         position: absolute;
         height: 120px;
+        transform: translateX(-50%);
         transition: all 500ms ease-in-out;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
     .size p {
@@ -498,14 +514,16 @@
 
     .size img {
         height: 100%;
+        width: auto;
+        object-fit: contain;
     }
 
     .size:hover {
-       transform: scale(1.2);
+       transform: translateX(-50%) scale(1.2);
     }
 
     .size.scaled {
-        transform: scale(1.2);
+        transform: translateX(-50%) scale(1.2);
     }
 
     #form-0, #form-00 {
@@ -578,5 +596,47 @@
         font-family: var(--mono);
         font-weight: 700;
         font-size: var(--14px);
+    }
+
+    @media (max-width: 700px) {
+        .text-block {
+            padding: 1rem;
+        }
+
+        .text-block p {
+            font-size: var(--16px);
+        }
+
+        .step .text {
+            padding: 0.5rem 1.5rem;
+            max-width: 400px;
+        }
+
+        .step .text p {
+            font-size: var(--16px);
+        }
+
+        /* .year-label {
+            width: 60px;
+        } */
+
+        .year-label p {
+            font-size: var(--18px);
+        }
+
+        .size {
+            height: 80px;
+        }
+
+        /* .form-wrapper, .x-axis {
+            width: calc(100% - 60px);
+        } */
+        
+        /* .size img {
+            height: 75%;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 15%);
+        } */
     }
 </style>

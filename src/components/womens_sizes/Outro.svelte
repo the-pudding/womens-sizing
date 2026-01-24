@@ -92,7 +92,7 @@
         }
     }
     
-    @media (max-width: 768px) {
+    @media (max-width: 760px) {
         .title-page-content {
             padding: 2rem;
         }
@@ -107,6 +107,10 @@
         
         .title-page-body {
             font-size: 1rem;
+        }
+
+        .title-page-body p {
+            font-size: var(--16px);
         }
     }
 </style>

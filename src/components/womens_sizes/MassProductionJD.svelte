@@ -341,12 +341,16 @@
         pointer-events: none;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 700px) {
         .step .text {
-            max-width: 300px;
-            padding: 15px;
+            padding: 0.5rem 1.5rem;
+            max-width: 400px;
         }
-        
+
+        .step .text p {
+            font-size: var(--16px);
+        }
+
         .image-container {
             height: 75vh; 
         }
