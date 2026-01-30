@@ -193,7 +193,7 @@ let positionedAvatars = $derived.by(() => {
         ...d,
         x: d.x,
         y: d.y,
-        randomDelay: Math.random() * 1
+        randomDelay: Math.random() * 0.5
   }));
 });
 
@@ -577,10 +577,11 @@ let positionedAvatars = $derived.by(() => {
 
     :global(.avatar-group) {
         /* Use the CSS variables for positioning */
+        isolation: isolate; /* Tells Safari: Don't worry about the background during the move */
         transform: translate(var(--x), var(--y));
+        transform-box: fill-box;
         
         /* Critical: Tells Safari to calculate transform based on the SVG box */
-        transform-box: fill-box;
         transform-origin: center;
 
         /* Transition both the move and the scale (if scaled class is added) */
@@ -599,8 +600,8 @@ let positionedAvatars = $derived.by(() => {
     }
 
     :global(.avatar) {
-       filter: url(#svg-grayscale);
-        -webkit-filter: url(#svg-grayscale);
+       filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
        transition: filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out;
        will-change: filter;
     }
