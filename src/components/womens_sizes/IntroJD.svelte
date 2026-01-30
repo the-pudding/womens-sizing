@@ -37,8 +37,8 @@
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
   // let avatarHeight = $derived(avatarWidth * 1.2);
-  let avatarHeight = $derived( height / 9)
-  let avatarWidth = $derived(avatarHeight * .4)
+  let avatarHeight = $derived(height / 9)
+  let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
   const xScale = $derived(d3.scaleLinear().domain([15, 65]).range([margin.left, width - margin.right - margin.left]));
@@ -191,9 +191,9 @@ let positionedAvatars = $derived.by(() => {
       }
     }).map((d, i) => ({
         ...d,
-        x: d.x,
-        y: d.y,
-        randomDelay: Math.random() * 0.5
+        x: Math.round(d.x), // Round the X
+        y: Math.round(d.y),
+        randomDelay: Math.random() * 0.2
   }));
 });
 
@@ -303,20 +303,6 @@ let positionedAvatars = $derived.by(() => {
           <p class="axis-label">Waistline in Inches</p>
         {/if}
         <svg width={width} height={height}>
-          <defs>
-            <filter id="svg-grayscale">
-              <feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 
-                                                  0.3333 0.3333 0.3333 0 0 
-                                                  0.3333 0.3333 0.3333 0 0 
-                                                  0      0      0      1 0"/>
-            </filter>
-            <filter id="svg-color">
-              <feColorMatrix type="matrix" values="1 0 0 0 0
-                                                  0 1 0 0 0
-                                                  0 0 1 0 0
-                                                  0 0 0 1 0"/>
-            </filter>
-          </defs>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
             {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
@@ -355,42 +341,54 @@ let positionedAvatars = $derived.by(() => {
                     "
                     opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
                   >
-                  {#if avatarImages}
-                    {@const avatar = avatarImages.find(a => a.id === point.id)}
-                      {#each avatar.avatar.layers as layer}
-                        <image
-                            x={0}
-                            y={0}
-                            width={avatarWidth}
-                            height={avatarHeight}
-                            href={layer.path}
-                            xlink:href={layer.path}
-                            class="avatar"
-                            class:colorized={
-                              point.type == 'percentileMid' ||
-                              (currentId == 5 && (point.id == 'p10' || point.id == 'p90'))
-                            }
-                            class:shadow={point.type == 'percentileMid'}
-                          />
-                          {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
-                            <g transition:fly={{ y: 20, duration: 250}} class="avatar-label" transform={`translate(${avatarWidth / 2}, ${avatarHeight+12})`}>
-                              {#if point.percentile == "50"}
-                                <rect x={-40} y={-18} width={80} height={28} fill="white" opacity="1" rx="4"/>
-                                <text>Median</text>
-                              {:else}
-                                <rect x={-40} y={-18} width={80} height={40} fill="white" opacity="1" rx="4"/>
-                                <text>{point.percentile}th</text>
-                                <text transform="translate(0, 12)">percentile</text>
-                              {/if}
-                            </g>
-                          {/if}
-                      {/each}
-                  {/if}
+
                 </g>
               {/each}
             </g>
           {/if}
         </svg>
+
+        <div class="avatar-overlay" style="width: {width}px; height: {height}px;">
+          {#if positionedAvatars && avatarImages}
+              {#each positionedAvatars as point, i}
+                {@const isColorized = point.type == 'percentileMid' || (currentId == 5 && (point.id == 'p10' || point.id == 'p90'))}
+                {@const isScaled = (point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll)}
+                {@const isVisible = (point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll)}
+                
+                <div class="avatar-html-group" 
+                    id={point.id}
+                    class:colorized={isColorized}
+                    class:scaled={isScaled}
+                    style="
+                      --x: {point.x - avatarWidth / 2}px; 
+                      --y: {point.y - avatarHeight / 2}px; 
+                      --delay: {currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
+                      opacity: {isVisible ? 1 : 0};
+                      width: {avatarWidth}px;
+                      height: {avatarHeight}px;
+                    "
+                  >
+                  {#if avatarImages}
+                    {@const avatar = avatarImages.find(a => a.id === point.id)}
+                      {#each avatar.avatar.layers as layer}
+                        <img
+                            src={layer.path}
+                            alt=""
+                            class="avatar-layer-img"
+                            style="width: 100%; height: 100%;"
+                          />
+                      {/each}
+
+                      {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
+                        <div transition:fly={{ y: 10, duration: 250}} class="html-label">
+                            <p>{point.percentile == "50" ? "Median" : point.percentile + "th percentile"}</p>
+                        </div>
+                      {/if}
+                  {/if}
+                </div>
+              {/each}
+          {/if}
+        </div>
       </div>
     </div>
   </div>
@@ -520,9 +518,65 @@ let positionedAvatars = $derived.by(() => {
         transition: opacity 1s ease-in-out; 
     }
 
-    :global(.avatar.colorized) {
-        filter: url(#svg-color);
-        -webkit-filter: url(#svg-color);
+    .chart-container svg {
+        width: auto;
+    }
+
+    .avatar-overlay {
+        position: absolute;
+        pointer-events: none;
+        overflow: visible;
+    }
+
+    .avatar-html-group {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: var(--avatar-height); 
+      width: var(--avatar-width);
+      
+      -webkit-transform: translate(var(--x), var(--y));
+      transform: translate(var(--x), var(--y));
+
+      transition: 
+          transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) var(--delay), 
+          opacity 0.5s ease-in-out var(--delay),
+          filter 0.4s ease-in-out;
+  }
+
+    .avatar-html-group.colorized {
+        filter: grayscale(0%);
+        -webkit-filter: grayscale(0%);
+    }
+
+    .avatar-html-group.scaled {
+        transform: translate(var(--x), var(--y)) scale(2);
+        z-index: 100;
+    }
+
+    .avatar-layer-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+  }
+
+    .html-label {
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .shadow {
@@ -574,37 +628,6 @@ let positionedAvatars = $derived.by(() => {
     :global(.x-axis .tick text) {
         font-size: var(--14px);
       }
-
-    :global(.avatar-group) {
-        /* Use the CSS variables for positioning */
-        isolation: isolate; /* Tells Safari: Don't worry about the background during the move */
-        transform: translate(var(--x), var(--y));
-        transform-box: fill-box;
-        
-        /* Critical: Tells Safari to calculate transform based on the SVG box */
-        transform-origin: center;
-
-        /* Transition both the move and the scale (if scaled class is added) */
-        transition: 
-            transform 0.5s ease-in-out var(--delay), 
-            opacity 0.5s ease-in-out var(--delay);
-
-        /* GPU acceleration triggers */
-        will-change: transform, opacity;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-
-    :global(.avatar-group.scaled) {
-        transform: translate(var(--x), var(--y)) scale(2);
-    }
-
-    :global(.avatar) {
-       filter: grayscale(100%);
-        -webkit-filter: grayscale(100%);
-       transition: filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out;
-       will-change: filter;
-    }
 
     :global(#band-S, #band-L, #band-12, #band-16) {
         transition-delay: 0.5s;
