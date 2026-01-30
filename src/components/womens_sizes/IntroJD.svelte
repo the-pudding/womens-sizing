@@ -303,6 +303,20 @@ let positionedAvatars = $derived.by(() => {
           <p class="axis-label">Waistline in Inches</p>
         {/if}
         <svg width={width} height={height}>
+          <defs>
+            <filter id="svg-grayscale">
+              <feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 
+                                                  0.3333 0.3333 0.3333 0 0 
+                                                  0.3333 0.3333 0.3333 0 0 
+                                                  0      0      0      1 0"/>
+            </filter>
+            <filter id="svg-color">
+              <feColorMatrix type="matrix" values="1 0 0 0 0
+                                                  0 1 0 0 0
+                                                  0 0 1 0 0
+                                                  0 0 0 1 0"/>
+            </filter>
+          </defs>
           {#if currentSizeRanges}
             {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
             {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
@@ -332,14 +346,15 @@ let positionedAvatars = $derived.by(() => {
             <g class="avatars">
               {#each positionedAvatars as point, i}
                 <g class="avatar-group" 
-                  id={point.id}
-                  transform={`translate(${point.x - avatarWidth / 2}, ${point.y - avatarHeight / 2}) scale(${(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) ? 2 : 1})`}
-                  opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
-                  style="transition: {currentId == 'to-enter' 
-                    ? 'none' 
-                    : `transform 0.5s ease-in-out, opacity 0.5s ease-in-out ${point.randomDelay}s`
-                  };"
-                >
+                    id={point.id}
+                    class:scaled={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll)}
+                    style="
+                      --x: {point.x - avatarWidth / 2}px; 
+                      --y: {point.y - avatarHeight / 2}px; 
+                      --delay: {currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
+                    "
+                    opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
+                  >
                   {#if avatarImages}
                     {@const avatar = avatarImages.find(a => a.id === point.id)}
                       {#each avatar.avatar.layers as layer}
@@ -505,8 +520,9 @@ let positionedAvatars = $derived.by(() => {
         transition: opacity 1s ease-in-out; 
     }
 
-    .colorized {
-      filter: none;
+    :global(.avatar.colorized) {
+        filter: url(#svg-color);
+        -webkit-filter: url(#svg-color);
     }
 
     .shadow {
@@ -560,14 +576,33 @@ let positionedAvatars = $derived.by(() => {
       }
 
     :global(.avatar-group) {
-        /* transition: all 0.5s ease-in-out; */
+        /* Use the CSS variables for positioning */
+        transform: translate(var(--x), var(--y));
+        
+        /* Critical: Tells Safari to calculate transform based on the SVG box */
         transform-box: fill-box;
         transform-origin: center;
+
+        /* Transition both the move and the scale (if scaled class is added) */
+        transition: 
+            transform 0.5s ease-in-out var(--delay), 
+            opacity 0.5s ease-in-out var(--delay);
+
+        /* GPU acceleration triggers */
+        will-change: transform, opacity;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    :global(.avatar-group.scaled) {
+        transform: translate(var(--x), var(--y)) scale(2);
     }
 
     :global(.avatar) {
-      filter: grayscale(100%);
-       transition: filter 0.5s ease-in;
+       filter: url(#svg-grayscale);
+        -webkit-filter: url(#svg-grayscale);
+       transition: filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out;
+       will-change: filter;
     }
 
     :global(#band-S, #band-L, #band-12, #band-16) {

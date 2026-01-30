@@ -120,6 +120,7 @@
 
     span.ransom-letter {
         opacity: 0;
+        aspect-ratio: 1 / 1;
         display: inline-block;
         transition: opacity 200ms ease-in-out;
         animation-name: fade-in;
