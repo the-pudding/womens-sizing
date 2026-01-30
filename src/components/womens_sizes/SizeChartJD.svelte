@@ -134,7 +134,7 @@
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([15, 65])
+            .domain([20, 65])
             .range([0, containerWidth - margin.left - margin.right])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
@@ -445,6 +445,7 @@
     }
 
     .text-block h2 {
+        width: 100%;
         max-width: 800px;
         margin: 5rem 0;
         text-align: center;

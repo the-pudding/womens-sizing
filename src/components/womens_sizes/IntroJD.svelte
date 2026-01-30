@@ -41,7 +41,7 @@
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([15, 65]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -448,6 +448,7 @@ let positionedAvatars = $derived.by(() => {
       display: flex;
       align-items: center;
       flex-direction: column;
+      width: 100%;
     }
 
     .size-key {
@@ -534,6 +535,8 @@ let positionedAvatars = $derived.by(() => {
       left: 0;
       height: var(--avatar-height); 
       width: var(--avatar-width);
+      filter: grayscale(100%);
+      -webkit-filter: grayscale(100%);
       
       -webkit-transform: translate(var(--x), var(--y));
       transform: translate(var(--x), var(--y));
@@ -549,10 +552,10 @@ let positionedAvatars = $derived.by(() => {
         -webkit-filter: grayscale(0%);
     }
 
-    .avatar-html-group.scaled {
-        transform: translate(var(--x), var(--y)) scale(2);
-        z-index: 100;
-    }
+  .avatar-html-group.scaled {
+      transform: translate(var(--x), var(--y)) scale(2);
+      z-index: 100;
+  }
 
     .avatar-layer-img {
       position: absolute;
@@ -565,7 +568,7 @@ let positionedAvatars = $derived.by(() => {
 
     .html-label {
         position: absolute;
-        bottom: -30px;
+        bottom: -24px;
         left: 50%;
         transform: translateX(-50%);
         background: white;
@@ -577,6 +580,10 @@ let positionedAvatars = $derived.by(() => {
         font-weight: 700;
         text-transform: uppercase;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .html-label p {
+      margin: 0.25rem 0rem;
     }
 
     .shadow {
@@ -626,7 +633,9 @@ let positionedAvatars = $derived.by(() => {
     }
 
     :global(.x-axis .tick text) {
+        font-family: var(--mono);
         font-size: var(--14px);
+        font-weight: 700;
       }
 
     :global(#band-S, #band-L, #band-12, #band-16) {

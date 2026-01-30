@@ -218,6 +218,7 @@
     }
 
     .text-block h2 {
+        width: 100%;
         max-width: 800px;
         text-align: center;
         margin: 0 0 6rem 0;
