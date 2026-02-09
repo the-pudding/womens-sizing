@@ -843,4 +843,12 @@ let positionedAvatars = $derived.by(() => {
         opacity: 0;
       } */
     }
+
+    @media (max-width: 500px) {
+      .intro-title {
+        height: 100%;
+        justify-content: space-between;
+        padding-bottom: 50%;
+      }
+    }
 </style>

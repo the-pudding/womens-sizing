@@ -88,7 +88,7 @@
     
     @media (max-width: 768px) {
         .title-page-content {
-            padding: 2rem;
+            padding: 1rem;
         }
         
         .title-page-title {

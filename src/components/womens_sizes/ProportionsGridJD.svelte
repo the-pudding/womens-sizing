@@ -306,10 +306,10 @@
         display: flex; 
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
         margin: 0;
-        padding: 5rem 0 0 0;
+        padding: 3rem 0 0 0;
         height: 100%;
     }
 
@@ -653,8 +653,23 @@
             width: 33.3%; 
         }
 
+        .brand-container p {
+            line-height: 1;
+            font-size: var(--14px);
+            height: 24px;
+            margin-bottom: 0.5rem;
+            max-width: 140px;
+            text-align: center;
+            display: flex;
+            align-items: flex-end;
+        }
+
         .html-label {
             font-size: 10px;
+        }
+
+        .visual-container {
+            max-height: 100px;
         }
     }
 </style>

@@ -132,6 +132,12 @@
     @media (max-width: 700px) {
         .box p {
             font-size: var(--14px);
+            line-height: 1;
+            text-align: center;
+            max-width: 100px;
+            height: 1.5rem;
+            display: flex;
+            align-items: flex-end;
         }
     }
 </style>

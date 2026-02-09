@@ -341,6 +341,12 @@
         pointer-events: none;
     }
 
+    @media (max-width: 800px) {
+        .step {
+            justify-content: center;
+        }
+    }
+
     @media (max-width: 700px) {
         .step .text {
             padding: 0.5rem 1.5rem;

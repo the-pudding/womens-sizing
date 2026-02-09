@@ -64,7 +64,7 @@
 		display: block;
 		content: "";
 		position: absolute;
-		bottom: 2.5em;
+		bottom: 1.9em;
 		right: 1.25em;
 		width: 0.75em;
 		height: 0.75em;
