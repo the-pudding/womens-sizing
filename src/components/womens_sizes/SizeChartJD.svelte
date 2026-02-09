@@ -134,7 +134,7 @@
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([20, 65])
+            .domain([20, 62])
             .range([0, containerWidth - margin.left - margin.right])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
@@ -330,7 +330,7 @@
                     class:visible={value > 2}
                     style="left: {xScale(median15Waistline) + margin.left}px">
                     <div class="median-label">
-                        <p>15-year-old</p>
+                        <p>Age 15</p>
                         <p>median</p>
                         <p>{median15Waistline}"</p>
                     </div>
@@ -383,7 +383,6 @@
         <Scrolly bind:value>
             {#each copy.sizeScroll as stage, i}
                 <div
-                    style="justify-content: {stage.id == 0 ? 'center' : 'flex-end'}" 
                     class="step" id="step-{i}">
                     <div class="text">
                         <p>{@html stage.text}</p>
@@ -540,6 +539,7 @@
         width: 100%;
         position: relative;
         transition: opacity 500ms linear;
+        z-index: 999;
     }
 
     .size-circle {
@@ -601,6 +601,11 @@
         font-weight: 700;
         font-size: var(--14px);
         pointer-events: none;
+    }
+
+    .brand-name p {
+          text-shadow: -2px -2px 0 var(--color-bg), 2px -2px 0 var(--color-bg), -2px 2px 0 var(--color-bg), 2px 2px 0 var(--color-bg);
+
     }
 
     .size-name {
@@ -675,9 +680,9 @@
     .step {
         height: 100vh;
         display: flex;
-        /* justify-content: flex-end; */
-        align-items: center;
         padding: 40vh 5% 70vh;
+        justify-content: flex-end;
+        align-items: center;
         font-family: var(--sans);
         font-size: var(--18px);
     }
@@ -695,6 +700,16 @@
     #step-11 {
         opacity: 0;
         pointer-events: none;
+    }
+
+    @media (max-width: 850px) {
+      .title-text {
+        max-width: 440px;
+      }
+
+      .step {
+        justify-content: center;
+      }
     }
 
     @media (max-width: 700px) {

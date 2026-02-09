@@ -156,7 +156,7 @@
                     {/if}
                 {/each}
 
-                <div class="chart-overlays" style="--label-offset: var(--label-width); --padding-offset: 0.5rem;">
+                <div class="chart-overlays" style="--label-offset: var(--label-width); --padding-offset: 1.5rem;">
                     <div class="highlight-box"
                         class:visible={(value >= 2 && value !== 3 && value !== 5 && value !== 6 && value !== 'exit' && barbellData) || tooltipVisible}
                         style="left: calc(var(--label-offset) + (2 * var(--padding-offset)) + {boxStart}px); width: {boxWidth}px">
@@ -247,7 +247,7 @@
 
     .chart-container {
         width: 100%; 
-        padding: 1rem; 
+        padding: 1rem 2rem; 
         margin: 0 auto; 
         position: relative;
         display: flex; 
@@ -403,7 +403,7 @@
         font-size: var(--14px);
     }
     .avg-start::before { 
-        content: "'88 -'94"; 
+        content: "'88-'94"; 
         position: relative; 
         display: inline-block;
         color: var(--ws-orange); 
@@ -416,7 +416,7 @@
         transform: translateX(-50%);
     }
     .avg-end::before { 
-        content: "'21 -'23"; 
+        content: "'21-'23"; 
         position: relative; 
         display: inline-block;
         color: var(--ws-orange); 
@@ -456,8 +456,7 @@
     .step { 
         height: 100vh; 
         display: flex; 
-        justify-content: 
-        center; 
+        justify-content: center; 
         align-items: center; 
     }
 
@@ -474,6 +473,7 @@
         border-radius: 8px; 
         box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
         pointer-events: auto;
+        font-family: var(--sans);
     }
     
     #tooltip { 
@@ -500,9 +500,6 @@
         .step .text {
             padding: 0.5rem 1.5rem;
             max-width: 400px;
-        }
-
-        .step .text p {
             font-size: var(--16px);
         }
 
@@ -525,6 +522,10 @@
         .size .size-label { 
             top: 15%; 
             font-size: var(--12px); 
+        }
+
+        .size .size-inches { 
+            top: -12px; 
         }
     }
 </style>

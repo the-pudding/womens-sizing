@@ -166,7 +166,7 @@
         margin-bottom: 1.5rem;
         font-size: var(--18px);
         max-width: 720px;
-        padding: 0 3rem;
+        padding: 0;
     }
 
     #bodice-svg {
@@ -229,7 +229,9 @@
         font-weight: 700;
         text-transform: uppercase;
         transition: opacity 0.75s ease-in;
-        margin-top: -1.5rem;
+        margin-top: -0.5rem;
+        line-height: 1;
+        text-align: center;
     }
     .img-wrapper {
         max-width: 720px;
@@ -258,6 +260,11 @@
     @media (max-width: 700px) {
         .title-page-body p {
             font-size: var(--16px);
+        }
+
+        .block-wrapper p {
+            font-size: var(--14px);
+            width: 160px;
         }
     }
 </style>

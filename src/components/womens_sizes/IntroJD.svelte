@@ -41,7 +41,7 @@
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([20, 65]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain([20, 62]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -256,7 +256,7 @@ let positionedAvatars = $derived.by(() => {
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
         }  else if (currentId >= 13) {
             highlightStart = xScale(currentSizeRanges[10].min);
-            highlightWidth = Math.max(0, xScale(65) - xScale(currentSizeRanges[10].min));
+            highlightWidth = Math.max(0, xScale(62) - xScale(currentSizeRanges[10].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
             const maxWaist = d3.max(currentSizeRanges, d => d.max);
@@ -381,7 +381,12 @@ let positionedAvatars = $derived.by(() => {
 
                       {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
                         <div transition:fly={{ y: 10, duration: 250}} class="html-label">
-                            <p>{point.percentile == "50" ? "Median" : point.percentile + "th percentile"}</p>
+                          {#if point.percentile == "50"}
+                            <p>Median</p>
+                          {:else}
+                            <p>{point.percentile}th</p>
+                            <p>percentile</p>
+                          {/if}
                         </div>
                       {/if}
                   {/if}
@@ -397,8 +402,7 @@ let positionedAvatars = $derived.by(() => {
     <Scrolly bind:value>
       {#each filteredStages as stage}
         <div 
-          class="step step{stage.id}"
-          style="justify-content: {stage.id >= 9 ? 'flex-start' : 'flex-end'}"
+          class="step step{stage.id} step-{stage.textPos}"
         >
           {#if stage.text}
             <div class="text">
@@ -572,7 +576,7 @@ let positionedAvatars = $derived.by(() => {
         left: 50%;
         transform: translateX(-50%);
         background: white;
-        padding: 2px 8px;
+        padding: 8px;
         border-radius: 4px;
         white-space: nowrap;
         font-family: var(--mono);
@@ -583,7 +587,9 @@ let positionedAvatars = $derived.by(() => {
     }
 
     .html-label p {
-      margin: 0.25rem 0rem;
+      margin: 0rem;
+      text-align: center;
+      line-height: 1;
     }
 
     .shadow {
@@ -745,14 +751,16 @@ let positionedAvatars = $derived.by(() => {
         padding: 0;
 
     }
-    .step.step7 {
+    .step-center{
       justify-content: center;
-      padding-left: 5%;
-      padding-right: 5%;
     }
 
-    .step.step7 .text {
-      margin: 0 auto;
+    .step-left {
+      justify-content: flex-start;
+    }
+
+    .step-right {
+      justify-content: flex-end;
     }
 
     @media (max-width: 1000px) {
@@ -785,6 +793,10 @@ let positionedAvatars = $derived.by(() => {
     @media (max-width: 850px) {
       .title-text {
         max-width: 440px;
+      }
+
+      .step-center, .step-left, .step-right {
+        justify-content: center;
       }
     }
 
@@ -823,8 +835,12 @@ let positionedAvatars = $derived.by(() => {
         width: 130px;
       }
 
-      :global(.size-band-group:nth-child(even) text) {
-        opacity: 0;
+      .size-band-group text {
+        font-size: 10px;
       }
+
+      /* :global(.size-band-group:nth-child(even) text) {
+        opacity: 0;
+      } */
     }
 </style>

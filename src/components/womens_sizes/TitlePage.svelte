@@ -42,7 +42,7 @@
     
     .title-page-content {
         max-width: 720px;
-        padding: 3rem;
+        padding: 3rem 0;
         text-align: center;
         animation: slideUp 1s ease-out both;
     }
