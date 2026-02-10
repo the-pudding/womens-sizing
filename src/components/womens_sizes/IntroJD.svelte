@@ -41,7 +41,7 @@
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([20, 62]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain([20, 60]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -256,7 +256,7 @@ let positionedAvatars = $derived.by(() => {
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
         }  else if (currentId >= 13) {
             highlightStart = xScale(currentSizeRanges[10].min);
-            highlightWidth = Math.max(0, xScale(62) - xScale(currentSizeRanges[10].min));
+            highlightWidth = Math.max(0, xScale(60) - xScale(currentSizeRanges[10].min));
         } else {
             const minWaist = d3.min(currentSizeRanges, d => d.min);
             const maxWaist = d3.max(currentSizeRanges, d => d.max);
@@ -784,7 +784,7 @@ let positionedAvatars = $derived.by(() => {
         font-size: var(--12px);
       }
 
-      :global(.x-axis .tick text) {
+      :global(.x-axis .tick text, .axis-group .tick text) {
         font-size: var(--12px);
       }
 
@@ -849,6 +849,14 @@ let positionedAvatars = $derived.by(() => {
         height: 100%;
         justify-content: space-between;
         padding-bottom: 10rem;
+      }
+
+      .size-band-group:first-child text {
+        transform: translateX(-8px);
+      }
+
+      .size-band-group:last-child text {
+        transform: translateX(8px);
       }
     }
 </style>

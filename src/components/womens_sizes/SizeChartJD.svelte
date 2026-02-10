@@ -134,7 +134,7 @@
     // SCALE
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([20, 62])
+            .domain([20, 60])
             .range([0, containerWidth - margin.left - margin.right])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
@@ -729,5 +729,15 @@
       .text-block p {
         font-size: var(--16px);
       }
+    }
+
+    @media (max-width: 500px) {
+        .brand-row .size-name {
+            transform: translate(-50%, -50%);
+        }
+
+        .brand-row div:has(.size-name) ~ div:has(.size-name) .size-name {
+            transform: translate(0%, -50%);
+        }
     }
 </style>

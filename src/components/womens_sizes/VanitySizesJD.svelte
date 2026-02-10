@@ -64,7 +64,7 @@
     const margin = 16;
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([20, 42])
+            .domain([22, 42])
             .range([margin, containerWidth - margin])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
@@ -156,7 +156,7 @@
                     {/if}
                 {/each}
 
-                <div class="chart-overlays" style="--label-offset: var(--label-width); --padding-offset: 1.5rem;">
+                <div class="chart-overlays" style="--label-offset: var(--label-width); --padding-offset: 0.5rem;">
                     <div class="highlight-box"
                         class:visible={(value >= 2 && value !== 3 && value !== 5 && value !== 6 && value !== 'exit' && barbellData) || tooltipVisible}
                         style="left: calc(var(--label-offset) + (2 * var(--padding-offset)) + {boxStart}px); width: {boxWidth}px">
@@ -247,7 +247,7 @@
 
     .chart-container {
         width: 100%; 
-        padding: 1rem 2rem; 
+        padding: 1rem 1rem; 
         margin: 0 auto; 
         position: relative;
         display: flex; 
@@ -403,29 +403,33 @@
         font-size: var(--14px);
     }
     .avg-start::before { 
-        content: "'88-'94"; 
+        content: "1988\a–94"; 
+        white-space: pre-wrap;
         position: relative; 
         display: inline-block;
         color: var(--ws-orange); 
         font-family: var(--mono); 
         width: 60px; 
         text-align: center;
-        top: -24px;
+        top: -26px;
         left: 50%; 
         font-size: 12px; 
+        line-height: 1;
         transform: translateX(-50%);
     }
     .avg-end::before { 
-        content: "'21-'23"; 
+        content: "2021\a–23"; 
+        white-space: pre-wrap;
         position: relative; 
         display: inline-block;
         color: var(--ws-orange); 
         font-family: var(--mono); 
         width: 60px; 
         text-align: center;
-        top: -24px;
+        top: -26px;
         left: 50%; 
         font-size: 12px; 
+        line-height: 1;
         transform: translateX(-50%);
     }
 
@@ -482,6 +486,12 @@
         pointer-events: none; 
     }
 
+    @media (max-width: 1000px) {
+        :global(.x-axis-svg .tick text) {
+            font-size: var(--12px);
+        }
+    }
+
     @media (max-width: 700px) { 
         :root { --label-width: 60px; } 
 
@@ -508,24 +518,42 @@
         }
     }
 
-    @media (max-width: 460px) { 
-        :root { --label-width: 40px; } 
+    @media (max-width: 500px) { 
+        :root { --label-width: 20px; } 
 
         .year-label p {
-            font-size: var(--18px);
+            font-size: var(--14px);
         }
 
         .size img {
-            height: 60%;
+            height: 50%;
         }
 
         .size .size-label { 
-            top: 15%; 
-            font-size: var(--12px); 
+            top: 18%; 
+            font-size: 10px; 
         }
 
         .size .size-inches { 
             top: -12px; 
+        }
+
+        .axis-label {
+            margin-top: 1rem;
+        }
+
+        .diff {
+            bottom: calc(50% - 24px); 
+        }
+
+        .avg-start, .avg-end {
+            width: 12px; 
+            height: 12px; 
+            bottom: calc(50% + 24px); 
+        }
+
+        :global(.x-axis-svg .tick:nth-of-type(even) text) {
+            display: none;
         }
     }
 </style>
