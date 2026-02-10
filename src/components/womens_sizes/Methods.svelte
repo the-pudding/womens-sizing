@@ -5,7 +5,7 @@
 
 <div class="title-page-container">
     <div class="title-page-content">
-        <h5>Methodology</h5>
+        <h4>Methodology</h4>
 
         <div class="title-page-body">
             {#each copy.methods as graf, i}
@@ -13,7 +13,7 @@
             {/each}
         </div>
 
-        <h5>Related pieces</h5>
+        <h4>Related pieces</h4>
 
         <div class="title-page-body">
             <ul>
@@ -45,7 +45,7 @@
         animation: slideUp 1s ease-out both;
     }
     
-    h5 {
+    h4 {
         text-align: left;
         font-family: var(--mono);
         font-size: var(--24px);
