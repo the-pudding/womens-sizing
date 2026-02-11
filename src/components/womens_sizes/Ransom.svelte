@@ -1,6 +1,5 @@
 <script>
     import inView from "$actions/inView.js";
-    import { fade } from 'svelte/transition';
 
     let inViewTrigger = $state(false);
 

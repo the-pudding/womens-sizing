@@ -6,12 +6,6 @@
     import bodice from "$svg/graded-sizes-full-bodice-alt.svg";
     import blockAmanda from "$svg/block-amanda.svg";
     import blockStandard from "$svg/block-standard.svg";
-    import { fade } from 'svelte/transition';
-    import inView from "$actions/inView.js";
-	import { on } from 'svelte/events';
-
-    const shapeGrid = ["apple", "peach", "pear", "brick"];
-    const clothingGrid = ["top", "dress", "pants"];
 
     let blockCentered = $state(true);
 

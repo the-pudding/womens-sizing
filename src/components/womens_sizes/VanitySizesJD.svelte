@@ -1,13 +1,9 @@
 <script>
-    import { onMount } from 'svelte';
     import { 
         scaleLinear, 
         range, 
-        min, 
-        max, 
         groups, 
-        select,
-        selectAll, 
+        select, 
         axisBottom
     } from 'd3';
     import ASTMsizes from '$data/ASTMsizes.json';
@@ -15,15 +11,12 @@
     import Scrolly from '../helpers/Scrolly.svelte';
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
-    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     // DIMENSIONS
     let containerWidth = $state(0);
 
     // TOOLTIP
     let tooltipVisible = $state(false);
-    let tooltipX = $state();
-    let tooltipY = $state();
     let tooltipSize = $state();
 
     function showTooltip(size, e) {
@@ -107,10 +100,6 @@
             select("#vanity-sizes .axis-group")
                 .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => d % 2 === 0 ? `${d}"` : ""));
         }
-    });
-
-    onMount(() => {
-      initMotionWatcher();
     });
 </script>
 

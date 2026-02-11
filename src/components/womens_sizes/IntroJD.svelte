@@ -19,7 +19,7 @@
   import copy from '$data/copy.json';
   import ASTMsizes from "$data/ASTMsizes.json";
   import pointsData from '$data/pointsData_JD.csv';
-  import { generateRandomAvatar, determineAvatarSize } from '../utils/avatar-generator.js';
+  import { generateRandomAvatar } from '../utils/avatar-generator.js';
 	import { fade, fly } from 'svelte/transition';
   import Ransom from "$components/womens_sizes/Ransom.svelte";
   import Leet from "$components/womens_sizes/Leet.svelte";

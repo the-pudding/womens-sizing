@@ -1,5 +1,5 @@
 <script>
-    import { selectAll, interpolateString, easeLinear } from "d3";
+    import { selectAll, easeLinear } from "d3";
     import { onMount } from "svelte";
     let visible = $state(false);
 
