@@ -148,6 +148,7 @@
     }
 
     img {
+        width: 100%;
         height: 100%;
         aspect-ratio: 1 / 1;
         filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.06)) 

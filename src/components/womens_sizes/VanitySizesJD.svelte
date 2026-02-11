@@ -1,6 +1,15 @@
 <script>
     import { onMount } from 'svelte';
-    import * as d3 from 'd3';
+    import { 
+        scaleLinear, 
+        range, 
+        min, 
+        max, 
+        groups, 
+        select,
+        selectAll, 
+        axisBottom
+    } from 'd3';
     import ASTMsizes from '$data/ASTMsizes.json';
     import copy from '$data/copy.json';
     import Scrolly from '../helpers/Scrolly.svelte';
@@ -28,8 +37,6 @@
         const waist1995 = waist1995Data?.waist;
         const waist2021 = waist2021Data?.waist;
 
-        console.log({waist1995, waist2021});
-
         if (waist1995 && waist2021) {
              barbellData = {
                 startCircle: xScale(waist1995),
@@ -56,7 +63,7 @@
     const boxEnd = $derived(barbellData?.endCircle ?? 0);
     const boxWidth = $derived(boxEnd - boxStart);
 
-    const formData = d3.groups(
+    const formData = groups(
         ASTMsizes.map(d => ({ ...d, waist: +d.waist }))
             .filter(d => d.sizeRange == "Women's" && (d.year == "1995" || d.year == "2021")),
         d => d.year
@@ -65,11 +72,11 @@
     // SCALE
     const margin = 16;
     const xScale = $derived(
-        d3.scaleLinear()
+        scaleLinear()
             .domain([22, 42])
             .range([margin, containerWidth - margin])
     );
-    const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
+    const tickValues = $derived(range(xScale.domain()[0], xScale.domain()[1] + 1));
     
     // SCROLLY
     let value = $state(0);
@@ -97,8 +104,8 @@
     $effect(() => {
         updateChart(value);
         if (containerWidth > 0) {
-            d3.select("#vanity-sizes .axis-group")
-                .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => d % 2 === 0 ? `${d}"` : ""));
+            select("#vanity-sizes .axis-group")
+                .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => d % 2 === 0 ? `${d}"` : ""));
         }
     });
 

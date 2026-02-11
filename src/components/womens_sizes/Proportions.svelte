@@ -7,7 +7,13 @@
     import Select from "$components/helpers/Select.svelte";
     import sizeCharts from '$data/sizeCharts.json';
 	import { on } from 'svelte/events';
-    import * as d3 from 'd3';
+    import { 
+        scaleLinear, 
+        min, 
+        max, 
+        select, 
+        selectAll,  
+    } from 'd3';
 
     let containerHeight = $state(0);
     let containerWidth = $state(0);
@@ -36,8 +42,8 @@
         && d.garmentType == "Apparel"
     ));
 
-    const minMeasurement = d3.min(sizeCharts, d => parseFloat(d.waistMin));
-    const maxMeasurement = d3.max(sizeCharts, d => parseFloat(d.hipMin));
+    const minMeasurement = min(sizeCharts, d => parseFloat(d.waistMin));
+    const maxMeasurement = max(sizeCharts, d => parseFloat(d.hipMin));
 
     const medianMeasurements = {
         bustMin: 40,
@@ -45,7 +51,7 @@
         hipMin: 42
     };
 
-    const xScale = $derived(d3.scaleLinear()
+    const xScale = $derived(scaleLinear()
         .domain([20, 65])
         .range([0, containerWidth - margin.left - margin.right]));
 
@@ -126,7 +132,7 @@
       }
     }
     function handleMouseEnter(dress, e) {
-        let group = d3.select(e.currentTarget);
+        let group = select(e.currentTarget);
 
         group.classed("highlight", true);
         
@@ -142,7 +148,7 @@
     function handleMouseExit() {
         tooltipVisible = false;
 
-        d3.selectAll(".brand-group").classed("highlight", false);
+        selectAll(".brand-group").classed("highlight", false);
     }
 </script>
 

@@ -1,6 +1,4 @@
 <script>
-    import { onMount } from "svelte";
-    // import data from "$data/data.csv";
     import sizeCharts from "$data/sizeCharts.json"
     import * as d3 from "d3";
     

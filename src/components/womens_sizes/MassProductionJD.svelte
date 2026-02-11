@@ -1,10 +1,6 @@
 <script>
-    import { onMount } from 'svelte';
     import copy from "$data/copy.json";
     import Scrolly from '../helpers/Scrolly.svelte';
-    import * as d3 from 'd3';
-    import { fade } from 'svelte/transition';
-    import Bodice from "$components/womens_sizes/Bodice.svelte";
     import ProportionsSVG from "$components/womens_sizes/ProportionsSVG.svelte";
     import ProportionsGrid from "$components/womens_sizes/ProportionsGridJD.svelte";
     import BodyTypesGrid from "$components/womens_sizes/BodyTypesGrid.svelte";

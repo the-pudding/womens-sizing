@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import Ransom from "$components/womens_sizes/Ransom.svelte";
-    import * as d3 from 'd3';
+    import { select, selectAll } from 'd3';
     import copy from "$data/copy.json";
     import bodice from "$svg/graded-sizes-full-bodice-alt.svg";
     import blockAmanda from "$svg/block-amanda.svg";
@@ -18,16 +18,16 @@
     function loopGrading() {
         const centralSize = 8;
         const baseSelector = "#bodice-svg svg g";
-        const groups = d3.selectAll(baseSelector);
+        const groups = selectAll(baseSelector);
         const outerSizes = groups.filter(function() {
-            const id = d3.select(this).attr("id");
+            const id = select(this).attr("id");
             return id && id.startsWith("size") && id !== `size${centralSize}`;
         });
 
         outerSizes
             .transition()
             .delay(function() {
-                const id = d3.select(this).attr("id");
+                const id = select(this).attr("id");
                 const sizeNumber = parseInt(id.replace("size", ""));
                 const distance = Math.abs(sizeNumber - centralSize);
                 return distance * 200;

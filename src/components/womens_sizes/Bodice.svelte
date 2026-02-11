@@ -1,5 +1,5 @@
 <script>
-    import * as d3 from 'd3';
+    import { select, selectAll } from "d3";
     let { value } = $props();
     import copy from "$data/copy.json";
     import { fade } from 'svelte/transition';
@@ -11,17 +11,17 @@
         const baseSelector = "#bodice-svg svg g";
 
         if (value == "to-enter" || value == 0) {
-            d3.selectAll("#bodice-svg svg g").style("opacity", 0); 
-            d3.selectAll("#bodice-svg svg #size8").style("opacity", 1);
+            selectAll("#bodice-svg svg g").style("opacity", 0); 
+            selectAll("#bodice-svg svg #size8").style("opacity", 1);
         } else if (value == 1) {
-            d3.selectAll(baseSelector)
+            selectAll(baseSelector)
                 .filter(function() { 
-                    const id = d3.select(this).attr("id");
+                    const id = select(this).attr("id");
                     return id && id.startsWith("size") && id !== `size${centralSize}`;
                 })
                 .transition()
                 .delay(function() {
-                    const id = d3.select(this).attr("id");
+                    const id = select(this).attr("id");
                     const sizeNumber = parseInt(id.replace("size", ""));
                     const distance = Math.abs(sizeNumber - centralSize);
                     return distance * 150;
@@ -29,14 +29,14 @@
                 .duration(400)
                 .style("opacity", 1);
         } else if (value == 2) {
-            d3.selectAll(baseSelector)
+            selectAll(baseSelector)
                 .filter(function() { 
-                    const id = d3.select(this).attr("id");
+                    const id = select(this).attr("id");
                     return id && id.startsWith("mock");
                 })
                 .transition()
                 .delay(function() {
-                    const id = d3.select(this).attr("id");
+                    const id = select(this).attr("id");
                     const sizeNumber = parseInt(id.replace("mock", ""));
                     const distance = Math.abs(sizeNumber - centralSize);
                     return distance * 150; // Apply the same distance-based delay

@@ -1,6 +1,19 @@
 <script>
   import { onMount } from 'svelte';
-  import * as d3 from 'd3';
+  import { 
+    scaleLinear, 
+    range, 
+    min, 
+    max, 
+    groups, 
+    forceSimulation, 
+    forceX, 
+    forceY, 
+    forceCollide, 
+    selectAll, 
+    axisBottom, 
+    easeCubicInOut 
+  } from 'd3';
   import { tweened } from 'svelte/motion';
   import Scrolly from '../helpers/Scrolly.svelte';
   import copy from '$data/copy.json';
@@ -40,12 +53,12 @@
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([20, 60]).range([margin.left, width - margin.right - margin.left]));
-  const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
+  const xScale = $derived(scaleLinear().domain([20, 60]).range([margin.left, width - margin.right - margin.left]));
+  const tickValues = $derived(range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
-  let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
-  let animatedHighlight = tweened({ x: 0, y: 0, width: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
+  let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: easeCubicInOut });
+  let animatedHighlight = tweened({ x: 0, y: 0, width: 0, height: 0 }, { duration: 500, easing: easeCubicInOut });
 
   /*** FILTERS ***/
   /*%%%%%%%%%%%%%
@@ -102,34 +115,34 @@
   let processedASTMData = $derived(processASTMSizeData(filteredASTM));
   function processASTMSizeData(filteredASTM) {
     let sizeType = currentId < 9 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? "alphaSize" : "size";
-    const sizeGroups = d3.groups(filteredASTM, d => d[sizeType]);
+    const sizeGroups = groups(filteredASTM, d => d[sizeType]);
 
 
     const mappedSizes = sizeGroups.map((d, i) => {
-      let min;
-      let max;
+      let minSize;
+      let maxSize;
       if (d[1].length == 1) {
         if (i == sizeGroups.length - 1) {
-          min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
-          max = +d[1][0].waist + 1;
+          minSize = (+d[1][0].waist + +max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+          maxSize = +d[1][0].waist + 1;
         } else if (i == 0) {
-          min = +d[1][0].waist - 1;
-          max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+          minSize = +d[1][0].waist - 1;
+          maxSize = (+d[1][0].waist + +min(sizeGroups[i + 1][1], d => d.waist)) / 2;
         } else {
-          min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
-          max = (+d[1][0].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+          minSize = (+d[1][0].waist + +max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+          maxSize = (+d[1][0].waist + +min(sizeGroups[i + 1][1], d => d.waist)) / 2;
         }
       } else {
-        min = (+d[1][0].waist + +d3.max(sizeGroups[i - 1][1], d => d.waist)) / 2;
-        max = (+d[1][1].waist + +d3.min(sizeGroups[i + 1][1], d => d.waist)) / 2;
+        minSize = (+d[1][0].waist + +max(sizeGroups[i - 1][1], d => d.waist)) / 2;
+        maxSize = (+d[1][1].waist + +min(sizeGroups[i + 1][1], d => d.waist)) / 2;
       }
 
       return {
         ...d,
         alphaSize: currentId < 9 ? d[1][0].alphaSize : d[0],
         size: currentId < 9 ? d[0] : d[1][0].size,
-        min,
-        max
+        min: minSize,
+        max: maxSize
       }
     });
 
@@ -167,10 +180,10 @@ let positionedAvatars = $derived.by(() => {
         }))
         .filter(d => d.value !== null && !isNaN(d.value));
 
-    const sim = d3.forceSimulation(data)
-        .force('x', d3.forceX(d => xScale(d.value)).strength(5))
-        .force('y', d3.forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
-        .force('collide', d3.forceCollide(avatarHeight / 5))
+    const sim = forceSimulation(data)
+        .force('x', forceX(d => xScale(d.value)).strength(5))
+        .force('y', forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
+        .force('collide', forceCollide(avatarHeight / 5))
         .stop();
 
     for (let i = 0; i < 300; ++i) sim.tick();
@@ -219,8 +232,8 @@ let positionedAvatars = $derived.by(() => {
   $effect(() => {
     // Sets up axis
     if (containerWidth > 0) {
-      d3.selectAll("#beeswarm .x-axis")
-        .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
+      selectAll("#beeswarm .x-axis")
+        .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
           return d % 5 === 0 ? `${d}"` : "";
         }));
       }
@@ -256,8 +269,8 @@ let positionedAvatars = $derived.by(() => {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(60) - xScale(currentSizeRanges[10].min));
         } else {
-            const minWaist = d3.min(currentSizeRanges, d => d.min);
-            const maxWaist = d3.max(currentSizeRanges, d => d.max);
+            const minWaist = min(currentSizeRanges, d => d.min);
+            const maxWaist = max(currentSizeRanges, d => d.max);
             highlightStart = xScale(minWaist);
             highlightWidth = Math.max(0, xScale(maxWaist) - xScale(minWaist));
         }
@@ -306,8 +319,8 @@ let positionedAvatars = $derived.by(() => {
         {/if}
         <svg width={width} height={height}>
           {#if currentSizeRanges}
-            {@const minWaist = d3.min(currentSizeRanges, d => d.min)}
-            {@const maxWaist = d3.max(currentSizeRanges, d => d.max)}
+            {@const minWaist = min(currentSizeRanges, d => d.min)}
+            {@const maxWaist = max(currentSizeRanges, d => d.max)}
             <g class="size-backgrounds">
               {#each currentSizeRanges as sizeRange, i}
                 {@const x = xScale(sizeRange.min)}

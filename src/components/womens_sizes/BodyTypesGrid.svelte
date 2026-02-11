@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import * as d3 from 'd3';
+    import { select, selectAll, easeCubicIn } from "d3";
     let { value } = $props();
     import copy from "$data/copy.json";
     import { fade } from 'svelte/transition';
@@ -33,11 +33,11 @@
 
     $effect(() => {
         if (value == "to-enter") {
-            d3.selectAll(".svg-wrapper svg #median").style("opacity", 0);
+            selectAll(".svg-wrapper svg #median").style("opacity", 0);
         } else if (value <= 1) {
-            d3.selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(d3.easeCubicIn).style("opacity", 0);
+            selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(easeCubicIn).style("opacity", 0);
         } else {
-            d3.selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(d3.easeCubicIn).style("opacity", 0.3);
+            selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(easeCubicIn).style("opacity", 0.3);
         }
     });
 

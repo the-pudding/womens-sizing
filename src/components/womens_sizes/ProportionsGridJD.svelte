@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import sizeCharts from '$data/sizeCharts.json';
-    import * as d3 from 'd3';
+    import { scaleLinear, select, selectAll } from 'd3';
     import { fade } from 'svelte/transition';
     import Select from "$components/helpers/Select.svelte";
     import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
@@ -87,7 +87,7 @@
         hipMin: 42
     };
 
-    const xScale = $derived(d3.scaleLinear()
+    const xScale = $derived(scaleLinear()
         .domain([20, 60])
         .range([0, containerWidth - margin.left - margin.right]));
 
@@ -100,7 +100,7 @@
     }
 
     function handleMouseEnter(dress, e) {
-        let group = d3.select(e.currentTarget);
+        let group = select(e.currentTarget);
 
         group.classed("highlight", true);
         
@@ -116,7 +116,7 @@
     function handleMouseExit() {
         tooltipVisible = false;
 
-        d3.selectAll(".brand-group").classed("highlight", false);
+        selectAll(".brand-group").classed("highlight", false);
     }
 
     // draws the paths

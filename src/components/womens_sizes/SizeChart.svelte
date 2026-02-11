@@ -1,7 +1,16 @@
 <script>
     // TODO
     // Mobile
-    import * as d3 from 'd3';
+    import { 
+        scaleLinear, 
+        range, 
+        min, 
+        max, 
+        groups, 
+        select,
+        selectAll, 
+        axisBottom
+    } from 'd3';
     import sizeCharts from "$data/sizeCharts.json";
     import ASTMsizes from "$data/ASTMsizes.json";
     import generatedPercentiles from '$data/generatedPercentiles.json';
@@ -20,7 +29,7 @@
     let value = $state(0);
 
     // DATA
-    let brandData = d3.groups(sizeCharts, (d) => d.brand);
+    let brandData = groups(sizeCharts, (d) => d.brand);
     const ASTM2021 = ASTMsizes.filter(d => 
             d.year === "2021" && 
             d.sizeRange === "straight"
@@ -91,7 +100,7 @@
     
     // SCALE
     const xScale = $derived(
-        d3.scaleLinear()
+        scaleLinear()
             .domain([20, 65])
             .range([0, containerWidth - margin.left - margin.right])
     );
@@ -109,8 +118,8 @@
     // REACTIVE 
     $effect(() => {
         if (containerWidth > 0) {
-            d3.select("#size-chart .x-axis g")
-                .call(d3.axisBottom(xScale));
+            select("#size-chart .x-axis g")
+                .call(axisBottom(xScale));
         }
     })
 </script>
@@ -139,13 +148,13 @@
                     {@const plusSizes = brand.brandSizes.filter(d => d.sizeRange && d.sizeRange.toLowerCase() === 'plus')}
 
                     <!-- Calculate min/max waist values -->
-                    {@const brandMinWaistReg = d3.min(regularSizes, (d) => d.waistMin)}
-                    {@const maxWaistMinReg = d3.max(regularSizes, d => d.waistMin)}
+                    {@const brandMinWaistReg = min(regularSizes, (d) => d.waistMin)}
+                    {@const maxWaistMinReg = max(regularSizes, d => d.waistMin)}
                     {@const largestRegSize = regularSizes.find(d => d.waistMin === maxWaistMinReg)}
                     {@const brandMaxWaistReg = largestRegSize ? (largestRegSize.waistMax ?? largestRegSize.waistMin) : null}
 
-                    {@const brandMinWaistPlus = d3.min(plusSizes, (d) => d.waistMin)}
-                    {@const maxWaistMinPlus = d3.max(plusSizes, d => d.waistMin)}
+                    {@const brandMinWaistPlus = min(plusSizes, (d) => d.waistMin)}
+                    {@const maxWaistMinPlus = max(plusSizes, d => d.waistMin)}
                     {@const largestPlusSize = plusSizes.find(d => d.waistMin === maxWaistMinPlus)}
                     {@const brandMaxWaistPlus = largestPlusSize ? (largestPlusSize.waistMax ?? largestPlusSize.waistMin) : null}
 

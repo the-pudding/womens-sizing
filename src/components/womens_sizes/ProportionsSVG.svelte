@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import * as d3 from 'd3';
+    import { scaleLinear } from 'd3';
     import sizeCharts from '$data/sizeCharts.json';
     let { value, containerWidth, containerHeight } = $props();
     import { fade } from 'svelte/transition';
@@ -28,7 +28,7 @@
 
     const margin = {top: 0, bottom: 0, left: 32, right: 32};
 
-    const xScale = $derived(d3.scaleLinear()
+    const xScale = $derived(scaleLinear()
     //AS edit: I tweaked the range so that the smallest hourglass shapes would not look so distorted. If we want to change it back, the previous domain was [20, 65]
         .domain([10, 65])
         .range([0, containerWidth - margin.left - margin.right]));
