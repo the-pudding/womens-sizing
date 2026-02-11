@@ -537,10 +537,12 @@ let positionedAvatars = $derived.by(() => {
         justify-content: space-around;
         align-items: center;
         transition: opacity var(--1s) ease-in-out; 
+        pointer-events: none;
     }
 
     .chart-container svg {
         width: auto;
+        pointer-events: none;
     }
 
     .avatar-overlay {
