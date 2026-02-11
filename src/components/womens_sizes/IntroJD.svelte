@@ -45,6 +45,7 @@
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
+  let prefersReducedMotion = $state(false);
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
   let animatedHighlight = tweened({ x: 0, y: 0, width: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
 
@@ -218,7 +219,7 @@ let positionedAvatars = $derived.by(() => {
   }
 
   $effect(() => {
-
+    console.log(currentId)
     // Sets up axis
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
@@ -267,6 +268,10 @@ let positionedAvatars = $derived.by(() => {
         animatedHighlight.set({ x: highlightStart, y: targetY, width: highlightWidth, height: targetHeight });
     }
   });
+
+  onMount(() => {
+    prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+});
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -274,7 +279,7 @@ let positionedAvatars = $derived.by(() => {
 <div class="outer-container" class:intro={introScroll} class:middle={!introScroll}>
   <div class="sticky-container">
     <div class="visual-container">
-      {#if (isNaN(currentId) || currentId == 0) && introScroll}
+      {#if (isNaN(currentId) || currentId == 0) && introScroll && currentId !== "exit"}
           <div transition:fade={{duration: 500}} class="intro-title">
               <h1 class="visually-hidden">{copy.metaTitle}</h1>
               <h2>
@@ -313,14 +318,14 @@ let positionedAvatars = $derived.by(() => {
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
                   class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
-                  style="transition-delay: {setDelay(i, scrollDir)}s">
-                  <rect x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
-                  <text x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
+                  style="transition-delay: {prefersReducedMotion ? 0 : setDelay(i, scrollDir)}s">
+                  <rect style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
+                  <text style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
-              <rect x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
+            <g class="highlight-band" style="transition: {prefersReducedMotion ? 'none' : 'opacity var(--ms-500) ease-in-out'}" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
+              <rect style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
@@ -328,13 +333,14 @@ let positionedAvatars = $derived.by(() => {
               transform="translate(0, {height - margin.top - margin.bottom})"
               opacity={currentId >= 2 ? 1 : 0}></g>
 
-          {#if positionedAvatars && avatarImages}
+          <!-- {#if positionedAvatars && avatarImages}
             <g class="avatars">
               {#each positionedAvatars as point, i}
                 <g class="avatar-group" 
                     id={point.id}
                     class:scaled={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll)}
                     style="
+                      transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'};
                       --x: {point.x - avatarWidth / 2}px; 
                       --y: {point.y - avatarHeight / 2}px; 
                       --delay: {currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
@@ -345,7 +351,7 @@ let positionedAvatars = $derived.by(() => {
                 </g>
               {/each}
             </g>
-          {/if}
+          {/if} -->
         </svg>
 
         <div class="avatar-overlay" style="width: {width}px; height: {height}px;">
@@ -362,7 +368,7 @@ let positionedAvatars = $derived.by(() => {
                     style="
                       --x: {point.x - avatarWidth / 2}px; 
                       --y: {point.y - avatarHeight / 2}px; 
-                      --delay: {currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
+                      --delay: {prefersReducedMotion ? 0 : currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
                       opacity: {isVisible ? 1 : 0};
                       width: {avatarWidth}px;
                       height: {avatarHeight}px;
@@ -380,7 +386,7 @@ let positionedAvatars = $derived.by(() => {
                       {/each}
 
                       {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
-                        <div transition:fly={{ y: 10, duration: 250}} class="html-label">
+                        <div transition:fly={{ y: 10, duration: prefersReducedMotion ? 0 : 250}} class="html-label">
                           {#if point.percentile == "50"}
                             <p>Median</p>
                           {:else}
@@ -520,7 +526,7 @@ let positionedAvatars = $derived.by(() => {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        transition: opacity 1s ease-in-out; 
+        transition: opacity var(--1s) ease-in-out; 
     }
 
     .chart-container svg {
@@ -546,9 +552,9 @@ let positionedAvatars = $derived.by(() => {
       transform: translate(var(--x), var(--y));
 
       transition: 
-          transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) var(--delay), 
-          opacity 0.5s ease-in-out var(--delay),
-          filter 0.4s ease-in-out;
+          transform var(--ms-500) cubic-bezier(0.4, 0, 0.2, 1) var(--delay), 
+          opacity var(--ms-500) ease-in-out var(--delay),
+          filter var(--ms-500) ease-in-out;
   }
 
     .avatar-html-group.colorized {
@@ -601,33 +607,38 @@ let positionedAvatars = $derived.by(() => {
         stroke: var(--ws-orange);
         stroke-width: 3;
         opacity: 0;
-        transition: transform 0.5s ease-in-out;
+        /* transition: transform var(--ms-500) ease-in-out; */
         /* stroke-dasharray: 2, 2; */
     }
 
     .highlight-band.visible {
         opacity: 1;
-        transition: opacity 0.5s ease-in-out; 
+        /* transition: opacity var(--ms-500) ease-in-out;  */
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      /* Kill transitions on the group AND the rectangle */
+      .highlight-band, 
+      .highlight-band.visible,
+      .highlight-band rect {
+          transition: none !important;
+          animation: none !important;
+      }
+  }
+
     .size-band-group {
-       transition: all 0.5s ease-in-out; 
+       transition: all var(--ms-500) ease-in-out; 
     }
 
     .omit {
         opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-    }
-
-    .size-band-group rect {
-      transition: all 0.5s ease-in-out;
+        transition: opacity var(--ms-500) ease-in-out;
     }
 
     .size-band-group text {
       font-family: var(--mono);
       font-size: var(--14px);
       font-weight: 700;
-      transition: all 0.5s ease-in-out;
     }
 
     .avatar-label {
@@ -645,15 +656,15 @@ let positionedAvatars = $derived.by(() => {
       }
 
     :global(#band-S, #band-L, #band-12, #band-16) {
-        transition-delay: 0.5s;
+        transition-delay: var(--ms-500);
     }
 
     :global(#band-XS, #band-XL) {
-        transition-delay: 1s;
+        transition-delay: var(--1s);
     }
 
     :global(#band-XXS, #band-XXL) {
-        transition-delay: 1.5s;
+        transition-delay: var(--1-5s);
     }
 
     :global(#band-M rect, #band-14 rect) {

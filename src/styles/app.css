@@ -40,7 +40,12 @@
 	--color-placeholder: var(--color-gray-500);
 
 	/* "1" second duration */
-	--1s: 1ms;
+	--ms-100: 1ms;
+	--ms-250: 1ms;
+    --ms-500: 1ms;
+    --ms-750: 1ms;
+    --1s: 1ms;
+	--1-5s: 1ms;
 }
 
 /* dark theme */
@@ -52,7 +57,12 @@
 
 @media screen and (prefers-reduced-motion: no-preference) {
 	:root {
-		--1s: 1s;
+		--ms-100: 100ms;
+		--ms-250: 250ms;
+        --ms-500: 500ms;
+        --ms-750: 750ms;
+        --1s: 1s;
+		--1-5s: 1500ms;
 	}
 }
 

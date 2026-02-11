@@ -22,7 +22,15 @@
     }
 
     onMount(() => {
-        drawInPaths(".arrow-draw #stroke path");
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+            // Skip the animation entirely
+            visible = true;
+        } else {
+            // Run your existing animation logic
+            drawInPaths(".arrow-draw #stroke path");
+        }
     });
 </script>
 
@@ -46,6 +54,12 @@
         height: 4rem;
         transform: rotate(25deg);
         animation: bounce 2s infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .arrow-draw {
+            animation: none;
+        }
     }
 
     #stroke {

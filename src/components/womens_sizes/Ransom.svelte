@@ -81,10 +81,6 @@
             };
         }
     });
-
-    // $effect(() => {
-    //     console.log({inViewTrigger})
-    // })
 </script>
 
 <p class="ransom" class:animate-in={inViewTrigger}
@@ -122,12 +118,20 @@
         opacity: 0;
         aspect-ratio: 1 / 1;
         display: inline-block;
-        transition: opacity 200ms ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         animation-name: fade-in;
-        animation-duration: 100ms;
+        animation-duration: var(--ms-100);
         animation-timing-function: ease-in-out;
         animation-play-state: paused;
         animation-fill-mode: forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        span.ransom-letter {
+            opacity: 1 !important;
+            animation: none !important;
+            transition: none !important;
+        }
     }
 
     p.animate-in span.ransom-letter {
