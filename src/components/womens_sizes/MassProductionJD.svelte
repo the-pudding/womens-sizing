@@ -65,7 +65,7 @@
         font-family: var(--mono);
         font-size: var(--12px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: opacity 100ms linear;
+        transition: opacity var(--ms-100) linear;
         pointer-events: none;
     }
 
@@ -116,7 +116,7 @@
     }
 
     .proportion-grid {
-        transition: all 0.4s ease-in;
+        transition: all var(--ms-500) ease-in;
         transform-origin: center center;
         max-width: 1000px;
     }
@@ -162,7 +162,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;
-        transition: transform 0.5s ease-in;
+        transition: transform var(--ms-500) ease-in;
     }
 
     .body-type-grid .type {
@@ -172,7 +172,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease-in;
+        transition: all var(--ms-250) ease-in;
         opacity: 0.5;
     }
 
@@ -183,7 +183,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease-in;
+        transition: all var(--ms-250) ease-in;
         opacity: 1;
     }
 
@@ -193,7 +193,7 @@
         left: 2rem;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         z-index: 1000;
     }
 
@@ -208,20 +208,20 @@
 
     .brand-group {
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         pointer-events: none;
     }
 
     .brand-group.visible {
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
     }
 
     .brand-group .main-path {
         fill: none;
         stroke: var(--ws-blue);
         stroke-width: 1;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
         pointer-events: none;
     }
 
@@ -253,7 +253,7 @@
         font-weight: 700;
         fill: var(--color-fg);
         opacity: 0;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
     }
 
     .brand-group.smallest .label {

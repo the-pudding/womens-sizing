@@ -1,6 +1,7 @@
 <script>
     // TODO
     // Mobile
+    import { onMount } from 'svelte';
     import * as d3 from 'd3';
     import sizeCharts from "$data/sizeCharts.json";
     import ASTMsizes from "$data/ASTMsizes.csv";
@@ -11,6 +12,7 @@
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
     import {fly} from 'svelte/transition';
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     // DIMENSIONS
     let containerHeight = $state(0);
@@ -193,7 +195,11 @@
                 }));
         }
     })
-</script>
+
+    onMount(() => {
+      initMotionWatcher();
+    });
+</script>   
 
 <div class="outer-container">
     <div class="text-block">
@@ -232,7 +238,7 @@
                         class:visible={(brand.brandName == "ASTM" && value == 0) || value > 0}
                         style="padding: {(containerHeight-100)/brandData.length*0.5}px;
                         opacity: {((value == 6 && !brand.isLuxury) || (value == 8 && brand.brandName !== "Anthropologie")) ? 0.3 : 1}" 
-                        transition:fly={{ y: 20, duration: 500, delay: (brandData.length - 1 - i) * 100 }}
+                        transition:fly={{ y: 20, duration: $reducedMotion ? 0 : 500, delay: (brandData.length - 1 - i) * 100 }}
                         animate:flip>
                         <!-- Line for regular sizes -->
                         {#if brandMinWaistReg && brandMaxWaistReg}
@@ -277,7 +283,7 @@
                                     {#if (value == 2 && size.alphaSize == "L")  ||
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
-                                        <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
+                                        <div transition:fly={{duration: $reducedMotion ? 0: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
                                             {#if size.alphaSize !== ""}
                                                 <p>{size.alphaSize}</p>
                                             {/if}
@@ -303,7 +309,7 @@
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 5 && brand.brandName == "ASTM" && size.numericSizeMin == "18") || 
                                         (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
-                                        <div transition:fly={{duration: 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
+                                        <div transition:fly={{duration: $reducedMotion ? 0 : 250, y:50 }} class="size-name" style="left: {xScale(size.waistMin)}px;">
                                             {#if size.alphaSize !== ""}
                                                 <p>{size.alphaSize}</p>
                                             {/if}
@@ -404,7 +410,7 @@
         font-family: var(--mono);
         font-size: var(--12px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: opacity 100ms linear;
+        transition: opacity var(--ms-100) linear;
         pointer-events: none;
         min-width: 180px;
     }
@@ -538,7 +544,7 @@
     .brand-row {
         width: 100%;
         position: relative;
-        transition: opacity 500ms linear;
+        transition: opacity var(--ms-500) linear;
         z-index: 999;
     }
 
@@ -549,7 +555,7 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        transition: all 500ms linear;
+        transition: all var(--ms-500) linear;
         cursor: pointer;
         background: var(--ws-blue);
     }
@@ -577,7 +583,7 @@
         transform: translateY(-50%);
         z-index: -1;
         background: var(--ws-purple);
-        transition: all 250ms linear;
+        transition: all var(--ms-250) linear;
     }
 
     .brand-line-reg {
@@ -625,7 +631,7 @@
         padding: 0.3rem;
         z-index: 1000;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: opacity 100ms linear;
+        transition: opacity var(--ms-100) linear;
     }
 
     .size-name p {

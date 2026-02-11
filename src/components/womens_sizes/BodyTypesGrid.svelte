@@ -1,8 +1,10 @@
 <script>
+    import { onMount } from 'svelte';
     import * as d3 from 'd3';
     let { value } = $props();
     import copy from "$data/copy.json";
     import { fade } from 'svelte/transition';
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     // SVGS
     import invertedTriangle from "$svg/bodyTypes/inverted-triangle.svg";
@@ -33,15 +35,19 @@
         if (value == "to-enter") {
             d3.selectAll(".svg-wrapper svg #median").style("opacity", 0);
         } else if (value <= 1) {
-            d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0);
+            d3.selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(d3.easeCubicIn).style("opacity", 0);
         } else {
-            d3.selectAll(".svg-wrapper svg #median").transition(1000).ease(d3.easeCubicIn).style("opacity", 0.3);
+            d3.selectAll(".svg-wrapper svg #median").transition($reducedMotion ? 0 : 1000).ease(d3.easeCubicIn).style("opacity", 0.3);
         }
+    });
+
+    onMount(() => {
+        initMotionWatcher();
     });
 </script>
 
 {#if (value == "to-enter" || value >= 0) && value <= 3}
-    <div class="body-types-grid" transition:fade={{ duration: 400 }}>
+    <div class="body-types-grid" transition:fade={{ duration: $reducedMotion ? 0 : 500 }}>
         {#each copy.bodyTypes as bodyType, i} 
             {@const slugged = bodyType.toLowerCase().replace(/\s+/g, '-')}
             <div class="box" class:visible={(value == 0 && bodyType == "Hourglass") || value >= 1}>
@@ -82,7 +88,7 @@
         justify-content: center;
         align-items: center;
         opacity: 0;
-        transition: all 0.3s ease-in;
+        transition: all var(--ms-250) ease-in;
         overflow: hidden;
     }
 
@@ -126,7 +132,7 @@
         z-index: 1;
         mix-blend-mode: multiply;
         opacity: 0.75;
-        transition: transform 0.3s ease-in;
+        transition: transform var(--ms-250) ease-in;
     }
 
     @media (max-width: 700px) {

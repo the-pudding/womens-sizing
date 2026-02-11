@@ -221,14 +221,14 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        transition: transform 0.75s ease-in;
+        transition: transform var(--ms-750) ease-in;
     }
 
     .block-wrapper p {
         font-family: var(--mono);
         font-weight: 700;
         text-transform: uppercase;
-        transition: opacity 0.75s ease-in;
+        transition: opacity var(--ms-750) ease-in;
         margin-top: -0.5rem;
         line-height: 1;
         text-align: center;

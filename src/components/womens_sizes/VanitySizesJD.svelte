@@ -1,10 +1,12 @@
 <script>
+    import { onMount } from 'svelte';
     import * as d3 from 'd3';
     import ASTMsizes from '$data/ASTMsizes.json';
     import copy from '$data/copy.json';
     import Scrolly from '../helpers/Scrolly.svelte';
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     // DIMENSIONS
     let containerWidth = $state(0);
@@ -98,6 +100,10 @@
             d3.select("#vanity-sizes .axis-group")
                 .call(d3.axisBottom(xScale).tickValues(tickValues).tickFormat(d => d % 2 === 0 ? `${d}"` : ""));
         }
+    });
+
+    onMount(() => {
+      initMotionWatcher();
     });
 </script>
 
@@ -262,7 +268,7 @@
         justify-content: center;
         height: 160px;
         opacity: 0; 
-        transition: opacity 200ms ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
     }
     .year-row.visible { opacity: 1; z-index: 10; }
 
@@ -315,9 +321,15 @@
     }
 
     .size {
-        position: absolute; height: 120px; aspect-ratio: 1/2;
-        transform: translateX(-50%); transition: all 500ms ease-in-out;
-        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        position: absolute; 
+        height: 120px; 
+        aspect-ratio: 1/2;
+        transform: translateX(-50%); 
+        transition: all var(--ms-500) ease-in-out;
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
     }
     .size .size-label { 
         position: absolute; 
@@ -335,14 +347,21 @@
         font-weight: 700; 
         z-index: 10; 
         opacity: 0;
-        transition: opacity 250ms linear;
+        transition: opacity var(--ms-250) linear;
     }
 
     .size .size-inches.visible { 
         opacity: 1; 
     }
-    .size img { height: 100%; width: auto; object-fit: contain; }
-    .size:hover, .size.scaled { transform: translateX(-50%) scale(1.2); }
+    .size img { 
+        height: 100%; 
+        width: auto; 
+        object-fit: contain; 
+    }
+
+    .size:hover, .size.scaled { 
+        transform: translateX(-50%) scale(1.2); 
+    }
 
     .chart-overlays {
         position: absolute; 
@@ -364,15 +383,20 @@
         transform: translateY(-50%); 
         z-index: -1;
         opacity: 0; 
-        transition: all 250ms linear;
+        transition: all var(--ms-250) linear;
     }
 
     .highlight-box.visible {
          opacity: 1; 
     }
 
-    .barbell, .averages { opacity: 0; transition: opacity 250ms linear; }
-    .barbell.visible, .averages.visible { opacity: 1; }
+    .barbell, .averages { 
+        opacity: 0; 
+        transition: opacity var(--ms-250) linear; 
+    }
+    .barbell.visible, .averages.visible { 
+        opacity: 1; 
+    }
 
     .line { 
         border-top: 3px solid var(--color-fg); 

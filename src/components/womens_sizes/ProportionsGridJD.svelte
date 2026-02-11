@@ -1,8 +1,10 @@
 <script>
+    import { onMount } from 'svelte';
     import sizeCharts from '$data/sizeCharts.json';
     import * as d3 from 'd3';
     import { fade } from 'svelte/transition';
     import Select from "$components/helpers/Select.svelte";
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     let { value, parentWidth, parentHeight } = $props();
 
@@ -196,6 +198,10 @@
         };
       }
     }
+
+    onMount(() => {
+        initMotionWatcher();
+    });
 </script>
 
 {#if value >= 8 && value !== "exit"}
@@ -209,7 +215,7 @@
             <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
         </div>
     </div>
-    <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
+    <div class="outer-container" id="proportions" transition:fade={{ duration: $reducedMotion ? 0 : 500 }}>
         {#each brands as brand, i}
             {@const filteredApparel = sizeCharts.filter(
                 d => d.brand == brand
@@ -283,7 +289,7 @@
         font-family: var(--mono);
         font-size: var(--12px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: opacity 100ms linear;
+        transition: opacity var(--ms-100) linear;
         pointer-events: none;
     }
 
@@ -319,8 +325,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                    opacity 0.6s ease-out;
+        transition: transform var(--ms-750) cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    opacity var(--ms-750) ease-out;
     }
     
     .sticky-container {
@@ -429,7 +435,7 @@
         gap: 0.5rem;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         z-index: 1000;
     }
 
@@ -445,19 +451,19 @@
 
     .brand-group {
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         pointer-events: none;
     }
 
     .brand-group.visible {
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
     }
 
     .brand-group .main-path {
         fill: none;
         stroke-width: 1;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
         pointer-events: none;
     }
 
@@ -505,7 +511,7 @@
         font-size: var(--12px);
         fill: var(--color-fg);
         opacity: 1;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
     }
 
     .brand-group.smallest .label {

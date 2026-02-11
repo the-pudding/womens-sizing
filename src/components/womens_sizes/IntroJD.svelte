@@ -13,8 +13,7 @@
   import Text from "$components/womens_sizes/Text.svelte";
   import checkScrollDir from "../../utils/checkScrollDir.js";
   import ArrowDraw from "$components/womens_sizes/ArrowDraw.svelte";
-	import { on } from 'svelte/events';
-	import { log } from 'three/tsl';
+	import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
 
   /*** SCROLLY ***/
@@ -45,7 +44,6 @@
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
-  let prefersReducedMotion = $state(false);
   let animatedBand = tweened({ y: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
   let animatedHighlight = tweened({ x: 0, y: 0, width: 0, height: 0 }, { duration: 500, easing: d3.easeCubicInOut });
 
@@ -219,7 +217,6 @@ let positionedAvatars = $derived.by(() => {
   }
 
   $effect(() => {
-    console.log(currentId)
     // Sets up axis
     if (containerWidth > 0) {
       d3.selectAll("#beeswarm .x-axis")
@@ -270,8 +267,8 @@ let positionedAvatars = $derived.by(() => {
   });
 
   onMount(() => {
-    prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-});
+      initMotionWatcher();
+  });
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -280,7 +277,7 @@ let positionedAvatars = $derived.by(() => {
   <div class="sticky-container">
     <div class="visual-container">
       {#if (isNaN(currentId) || currentId == 0) && introScroll && currentId !== "exit"}
-          <div transition:fade={{duration: 500}} class="intro-title">
+          <div transition:fade={{duration: $reducedMotion ? 0 : 500}} class="intro-title">
               <h1 class="visually-hidden">{copy.metaTitle}</h1>
               <h2>
                 <p class="mono"><Leet string="meet your typical" /></p>
@@ -294,7 +291,7 @@ let positionedAvatars = $derived.by(() => {
           </div>
       {/if}
       {#if (currentId >= 2 && currentId < 7) || (currentId >= 8)}
-        <div transition:fade={{duration: 500}} class="size-key">
+        <div transition:fade={{duration: $reducedMotion ? 0 : 500}} class="size-key">
           <p>{sizeLabel}</p>
           <p>Sizes: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
         </div>
@@ -318,14 +315,14 @@ let positionedAvatars = $derived.by(() => {
                 <g class="size-band-group" 
                   id="band-{sizeRange.alphaSize}" 
                   class:omit={(omittedSizeFilters.includes(sizeRange.size) || currentId < 1 || currentId == "to-enter" )}
-                  style="transition-delay: {prefersReducedMotion ? 0 : setDelay(i, scrollDir)}s">
-                  <rect style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
-                  <text style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
+                  style="transition-delay: {$reducedMotion ? 0 : setDelay(i, scrollDir)}s">
+                  <rect style="transition: {$reducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x} y={$animatedBand.y} width={rectWidth} height={$animatedBand.height} fill="#9ABBD9"/>
+                  <text style="transition: {$reducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={x + rectWidth / 2} y={currentId <= 1 || isNaN(currentId) ? $animatedBand.height*1.5 : height - margin.top - margin.bottom - 20} text-anchor="middle">{currentId <= 8 || (currentId == "to-enter" && introScroll) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) ? sizeRange.alphaSize : sizeRange.size}</text>
                 </g>
               {/each}
             </g>
-            <g class="highlight-band" style="transition: {prefersReducedMotion ? 'none' : 'opacity var(--ms-500) ease-in-out'}" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
-              <rect style="transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
+            <g class="highlight-band" style="transition: {$reducedMotion ? 'none' : 'opacity var(--ms-500) ease-in-out'}" class:visible={currentId == 1 || currentId == 6 || currentId == 7 || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll) || currentId >= 8}>
+              <rect style="transition: {$reducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'}" x={$animatedHighlight.x} y={$animatedHighlight.y} width={$animatedHighlight.width} height={$animatedHighlight.height}/>
             </g>
           {/if}
 
@@ -368,7 +365,7 @@ let positionedAvatars = $derived.by(() => {
                     style="
                       --x: {point.x - avatarWidth / 2}px; 
                       --y: {point.y - avatarHeight / 2}px; 
-                      --delay: {prefersReducedMotion ? 0 : currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
+                      --delay: {$reducedMotion ? 0 : currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
                       opacity: {isVisible ? 1 : 0};
                       width: {avatarWidth}px;
                       height: {avatarHeight}px;
@@ -386,7 +383,7 @@ let positionedAvatars = $derived.by(() => {
                       {/each}
 
                       {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
-                        <div transition:fly={{ y: 10, duration: prefersReducedMotion ? 0 : 250}} class="html-label">
+                        <div transition:fly={{ y: 10, duration: $reducedMotion ? 0 : 250}} class="html-label">
                           {#if point.percentile == "50"}
                             <p>Median</p>
                           {:else}

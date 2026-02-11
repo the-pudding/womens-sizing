@@ -1,8 +1,10 @@
 <script>
+    import { onMount } from 'svelte';
     import * as d3 from 'd3';
     import sizeCharts from '$data/sizeCharts.json';
     let { value, containerWidth, containerHeight } = $props();
     import { fade } from 'svelte/transition';
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     const medianMeasurements = {
         bustMin: 40,
@@ -107,10 +109,14 @@
         };
       }
     }
+
+    onMount(() => {
+        initMotionWatcher();
+    });
 </script>
 
 
-<div class="svg-wrapper" transition:fade={{ duration: 400 }}>
+<div class="svg-wrapper" transition:fade={{ duration: $reducedMotion ? 0 : 500 }}>
 {#if containerWidth && containerHeight}
     {@const medianPathData = createPaths(medianMeasurements, containerWidth / 2, 0, "median")}
     {@const idealPathData = createPaths(idealMeasurements, containerWidth / 2, 0, "brand")}
@@ -204,13 +210,13 @@
 
     .brand-group {
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
         pointer-events: none;
     }
 
     .brand-group.visible {
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
     }
 
     .brand-group .main-path {
@@ -218,7 +224,7 @@
         stroke: var(--ws-purple);
         stroke-width: 2;
         opacity: 1;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250)s ease-in-out;
         pointer-events: none;
     }
 
@@ -256,7 +262,7 @@
         font-weight: 700;
         fill: var(--color-fg);
         opacity: 0;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
     }
 
     .brand-group.smallest .label {
@@ -276,7 +282,7 @@
 
     .median-group {
         opacity: 0;
-         transition: all 0.3s ease-in-out;
+         transition: all var(--ms-250) ease-in-out;
     }
 
     .median-group.visible {
@@ -291,7 +297,7 @@
 
     .ideal-group {
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--ms-250) ease-in-out;
     }
 
     .ideal-group.visible {
@@ -302,7 +308,7 @@
         fill: none;
         stroke: var(--ws-orange);
         stroke-width: 4;
-        transition: all 0.3s ease-in-out;
+        transition: all var(--ms-250) ease-in-out;
     }
 
     @media (max-width: 700px) {
