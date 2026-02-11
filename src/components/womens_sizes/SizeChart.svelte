@@ -29,45 +29,57 @@
     let value = $state(0);
 
     // DATA
-    let brandData = groups(sizeCharts, (d) => d.brand);
-    const ASTM2021 = ASTMsizes.filter(d => 
-            d.year === "2021" && 
-            d.sizeRange === "straight"
-        ).map(d => ({
-                ...d,
-                brandName: "ASTM",
-                waistMin: parseFloat(d.waist),
-                waistMax: parseFloat(d.waist),
-                numericSizeMin: d.size,
-                numericSizeMax: d.size
-        })).filter(d => !isNaN(d.waistMin));
-    
-    // Adds ASTM to other data
-    brandData.unshift(["ASTM", ASTM2021]);
+    const excluded = new Set(["Banana Republic", "J. Crew"]); // Check if it's "J.Crew" or "J. Crew"
 
-        const filteredBrandData = $derived(() => {
-        return brandData
-            .map(([brandName, brandSizes]) => {
-                const regularSizes = brandSizes.filter(d => 
-                    d.sizeRange && d.sizeRange.toLowerCase() === 'regular' &&
-                    d.waistMin !== null && d.waistMin !== undefined
-                );
-                const allSizesAreBelowMedian = regularSizes.every(d => {
-                    const waistMax = d.waistMax ?? d.waistMin;
-                    return waistMax <= medianWaistline;
-                });
-                const shouldDisplayBrand = brandName === "ASTM" || (regularSizes.length > 0 && allSizesAreBelowMedian);
+const filteredBrandData = $derived(() => {
+    // 1. Group and filter the raw data inside the derived function
+    const grouped = groups(
+        sizeCharts.filter(d => !excluded.has(d.brand)), 
+        (d) => d.brand
+    );
 
-                return {
-                    brandName: brandName,
-                    brandSizes: brandSizes,
-                    shouldDisplayBrand: shouldDisplayBrand,
-                };
-            })
-            .filter(brand => {
-                return ((value <= 0 || value === undefined) && brand.shouldDisplayBrand) || value > 0;
+    // 2. Prep ASTM data
+    const ASTM2021 = ASTMsizes
+        .filter(d => d.year === "2021" && d.sizeRange === "straight")
+        .map(d => ({
+            ...d,
+            brandName: "ASTM",
+            waistMin: parseFloat(d.waist),
+            waistMax: parseFloat(d.waist),
+            numericSizeMin: d.size,
+            numericSizeMax: d.size
+        }))
+        .filter(d => !isNaN(d.waistMin));
+
+    // 3. Combine them
+    const combinedData = [["ASTM", ASTM2021], ...grouped];
+
+    // 4. Map to your display object
+    return combinedData
+        .map(([brandName, brandSizes]) => {
+            const regularSizes = brandSizes.filter(d => 
+                d.sizeRange?.toLowerCase() === 'regular' &&
+                d.waistMin != null
+            );
+            
+            const allSizesAreBelowMedian = regularSizes.every(d => {
+                const waistMax = d.waistMax ?? d.waistMin;
+                return waistMax <= medianWaistline;
             });
-    });
+
+            const shouldDisplayBrand = brandName === "ASTM" || (regularSizes.length > 0 && allSizesAreBelowMedian);
+
+            return {
+                brandName,
+                brandSizes,
+                shouldDisplayBrand,
+            };
+        })
+        .filter(brand => {
+            // Your existing visibility logic
+            return ((value <= 0 || value === undefined) && brand.shouldDisplayBrand) || value > 0;
+        });
+});
 
     // TOOLTIP
     let tooltipVisible = $state(false);

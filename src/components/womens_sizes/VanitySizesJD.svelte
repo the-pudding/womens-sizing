@@ -106,7 +106,7 @@
 <div class="outer-container">
     <div class="text-block">
         <h2>
-            <Leet string="The villian arc of" />
+            <Leet string="The villain arc of" />
             <Ransom string="vanity" />
             <Ransom string="sizing" />
         </h2>

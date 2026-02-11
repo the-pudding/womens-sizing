@@ -22,10 +22,18 @@
     let tooltipWaist = $state();
     let tooltipHip = $state();
 
-    const brands = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel").map(d => d.brand))];
+    const excludedBrands = ["Banana Republic", "Polo Ralph Lauren"];
+    const brands = [...new Set(
+        sizeCharts
+            .filter(d => 
+                (d.garmentType === "Apparel" || d.garmentType === "Dresses") && 
+                !excludedBrands.includes(d.brand)
+            )
+            .map(d => d.brand)
+    )];
     let selectedBrand = $state("J.Crew");
-    const sizeListMin = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel" && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMin))];
-    const sizeListMax = [...new Set(sizeCharts.filter(d => d.garmentType === "Apparel" && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMax))];
+    const sizeListMin = [...new Set(sizeCharts.filter(d => (d.garmentType === "Apparel" || d.garmentType === "Dresses") && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMin))];
+    const sizeListMax = [...new Set(sizeCharts.filter(d => (d.garmentType === "Apparel" || d.garmentType === "Dresses") && (d.bustMin !== null || d.bustMax !== null)).map(d => d.numericSizeMax))];
     const allUniqueSizes = [...new Set(
         [...sizeListMin, ...sizeListMax]
             // Filter out null (js type) and "null" (string type)
@@ -220,7 +228,7 @@
             {@const filteredApparel = sizeCharts.filter(
                 d => d.brand == brand
                     // && d.sizeRange == "Regular"
-                    && d.garmentType == "Apparel"
+                    && (d.garmentType == "Apparel" || d.garmentType == "Dresses")
                     && (d.bustMin !== null || d.bustMax !== null)
                 )
             }

@@ -184,6 +184,7 @@ let positionedAvatars = $derived.by(() => {
         .force('x', forceX(d => xScale(d.value)).strength(5))
         .force('y', forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
         .force('collide', forceCollide(avatarHeight / 5))
+        .alphaDecay(0.02)
         .stop();
 
     for (let i = 0; i < 300; ++i) sim.tick();
@@ -874,12 +875,16 @@ let positionedAvatars = $derived.by(() => {
         padding-bottom: 10rem;
       }
 
-      .size-band-group:first-child text {
+      /* .size-band-group:first-child text {
         transform: translateX(-8px);
       }
 
       .size-band-group:last-child text {
         transform: translateX(8px);
+      } */
+
+      .size-band-group:nth-of-type(odd) text {
+        transform: translateY(12px);
       }
     }
 </style>

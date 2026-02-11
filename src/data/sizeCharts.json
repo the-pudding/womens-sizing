@@ -1734,7 +1734,7 @@
     "marketType": "mass market",
     "sizeRange": "Regular",
     "garmentType": "Apparel",
-    "alphaSize": "XXL / 1X",
+    "alphaSize": "XXL/1X",
     "numericSizeMin": "18",
     "numericSizeMax": null,
     "numericBottoms": null,

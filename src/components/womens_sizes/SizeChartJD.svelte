@@ -32,7 +32,12 @@
     let value = $state(0);
 
     // DATA
-    let brandData = groups(sizeCharts, (d) => d.brand);
+    const excluded = new Set(["Banana Republic", "Polo Ralph Lauren"]);
+
+    let brandData = groups(
+        sizeCharts.filter(d => !excluded.has(d.brand)), 
+        (d) => d.brand
+    );
     const ASTM2021 = ASTMsizes.filter(d => 
             d.year === "2021" && 
             d.sizeRange === "straight"
@@ -312,8 +317,7 @@
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
                                         style="left: {xScale(size.waistMin)}px;"></div>
-                                    {#if (value == 0 && brand.brandName == "ASTM" && (size.numericSizeMin == "4" || size.numericSizeMin == "8" || size.numericSizeMin == "12" || size.numericSizeMin == "16"))  ||
-                                        (value == 2 && size.alphaSize == "L")  ||
+                                    {#if (value == 2 && size.alphaSize == "L")  ||
                                         (value == 3 && brand.brandName == "ASTM" && size.numericSizeMin == "10") ||
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 5 && brand.brandName == "ASTM" && size.numericSizeMin == "18") || 
