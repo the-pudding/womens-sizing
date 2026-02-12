@@ -12,7 +12,7 @@
     {
       "id": "1",
       "textPos": "right",
-      "text": "“Junior’s” clothing lines often channel tweens’ interests with youthful styles that fit young girls as they grow.\r\n\r\n\r\nFor now, our typical <span class=bold>11-year-old</span> wears a size 9 in the junior’s section, which is also considered a size <span class=orange-outline>Medium</span>."
+      "text": "“Junior’s” clothing lines often channel tweens’ interests with youthful styles that fit young girls as they grow.\r\n\r\n\r\nFor now, our typical (or median) <span class=bold>11-year-old</span> wears a size 9 in the junior’s section, which is also considered a size <span class=orange-outline>Medium</span>."
     },
     {
       "id": "2",
@@ -47,35 +47,40 @@
     {
       "id": "8",
       "textPos": "right",
-      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline but, from here on, the two will diverge.\r\n\r\n\r\nIn addition to generic letter sizes (Small, Medium, Large etc.), women have a numeric sizing system that is designed to be more tailored and precise. Here, the median 15-year-old’s waistline fits a <span class=bold>size 10</span>."
+      "text": "At age 15 a size <span class=orange-outline>Medium</span> still equals the median waistline but, from here on, the two will diverge."
     },
     {
       "id": "9",
       "textPos": "right",
-      "text": "The <span class=bold>median 20-something</span> will eventually move up a letter size to a <span class=bold>Large</span>. \r\n\r\n\r\nIn U.S. women’s sizing, this translates to a <span class=orange-outline>size 14</span>."
+      "text": "In addition to generic letter sizes (Small, Medium, Large etc.), women have a numeric sizing system that is designed to be more tailored and precise. Here, the median 15-year-old’s waistline fits a <span class=bold>size 10</span>."
     },
     {
       "id": "10",
       "textPos": "right",
-      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=bold>Extra Large.</span>"
+      "text": "The <span class=bold>median 20-something</span> will eventually move up a letter size to a <span class=bold>Large</span>. \r\n\r\n\r\nIn U.S. women’s sizing, this translates to a <span class=orange-outline>size 14</span>."
     },
     {
       "id": "11",
       "textPos": "right",
-      "text": "This trend will continue again, and again. \r\n\r\n\r\nAltogether, the median adult woman over the age of 20 fits a <span class=orange-outline>size 18.</span>"
+      "text": "Her wardrobe will shift again in her 30s. \r\n\r\n\r\nAt this point the median woman is closer to a <span class=orange-outline>size 16</span> or <span class=bold>Extra Large.</span>"
     },
     {
       "id": "12",
       "textPos": "right",
-      "text": "The problem is that most “Standard” or “Regular” size ranges only go up to a size 16."
+      "text": "This trend will continue again, and again. \r\n\r\n\r\nAltogether, the median adult woman over the age of 20 fits a <span class=orange-outline>size 18.</span>"
     },
     {
       "id": "13",
+      "textPos": "right",
+      "text": "The problem is that most “Straight” or “Regular” size ranges only go up to a size 16."
+    },
+    {
+      "id": "14",
       "textPos": "left",
       "text": "That leaves millions of people — over half of all adult women — who are excluded from standard size ranges."
     },
     {
-      "id": "14"
+      "id": "15"
     }
   ],
   "introBreak": [

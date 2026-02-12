@@ -75,11 +75,11 @@
   let valueKey = $derived(
     currentId <= 2 || (currentId == "to-enter" && introScroll)
       ? "value10_11"
-      : (currentId > 2 && currentId < 9) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
+      : (currentId > 2 && currentId < 10) || (currentId == "exit" && introScroll) || (currentId == "to-enter" && !introScroll)
       ? "value14_15"
-      : currentId < 10
-      ? "value20_29"
       : currentId < 11
+      ? "value20_29"
+      : currentId < 12
       ? "value30_39"
       : "value20over"
   );
@@ -279,18 +279,21 @@ let positionedAvatars = $derived.by(() => {
           highlightStart = xScale(currentSizeRanges[3].min);
           highlightWidth = Math.max(0, xScale(currentSizeRanges[3].max) - xScale(currentSizeRanges[3].min));
         } else if (currentId === 9) {
+            highlightStart = xScale(currentSizeRanges[6].min);
+            highlightWidth = Math.max(0, xScale(currentSizeRanges[6].max) - xScale(currentSizeRanges[6].min)); 
+        } else if (currentId === 10) {
             highlightStart = xScale(currentSizeRanges[8].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[8].max) - xScale(currentSizeRanges[8].min));
-        } else if (currentId === 10) {
+        } else if (currentId === 11) {
             highlightStart = xScale(currentSizeRanges[9].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[9].min));
-        } else if (currentId === 11) {
+        } else if (currentId === 12) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[10].max) - xScale(currentSizeRanges[10].min));
-        } else if (currentId === 12) {
+        } else if (currentId === 13) {
             highlightStart = xScale(currentSizeRanges[0].min);
             highlightWidth = Math.max(0, xScale(currentSizeRanges[9].max) - xScale(currentSizeRanges[0].min));
-        }  else if (currentId >= 13) {
+        }  else if (currentId >= 14) {
             highlightStart = xScale(currentSizeRanges[10].min);
             highlightWidth = Math.max(0, xScale(60) - xScale(currentSizeRanges[10].min));
         } else {
@@ -341,7 +344,7 @@ let positionedAvatars = $derived.by(() => {
         class="chart-container" 
         bind:clientHeight={containerHeight} 
         bind:clientWidth={containerWidth}
-        style="opacity: {currentId == 7 || currentId == 14 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
+        style="opacity: {currentId == 7 || currentId == 15 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 0 : 1}">
         {#if currentId >= 2}
           <p class="axis-label">Waistline in Inches</p>
         {/if}
@@ -423,7 +426,7 @@ let positionedAvatars = $derived.by(() => {
                           />
                       {/each}
 
-                      {#if (point.percentile == "50" && currentId >= 2) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
+                      {#if (point.percentile == "50" && currentId >= 1) || (currentId == 5 && (point.percentile == "10" || point.percentile == "90"))}
                         <div transition:fly={{ y: 10, duration: $reducedMotion ? 0 : 250}} class="html-label">
                           {#if point.percentile == "50"}
                             <p>Median</p>
