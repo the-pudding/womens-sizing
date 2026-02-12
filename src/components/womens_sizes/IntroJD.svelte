@@ -204,8 +204,6 @@ let positionedAvatars = $derived.by(() => {
     const yStrength = $isMobile ? 0.1 : 0.1;
     const collideRadius = $isMobile ? (avatarHeight / 5) : (avatarHeight / 5);
 
-    console.log({$isMobile, xStrength, yStrength, collideRadius})
-
     const sim = forceSimulation(data)
         .force('x', forceX(d => xScale(d.value)).strength(xStrength))
         .force('y', forceY(height/2).strength(yStrength))
