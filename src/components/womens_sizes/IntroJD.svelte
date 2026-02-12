@@ -256,7 +256,6 @@ let positionedAvatars = $derived.by(() => {
 
   $effect(() => {
     // Sets up axis
-    console.log($isMobile)
     if (containerWidth > 0) {
       selectAll("#beeswarm .x-axis")
         .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
