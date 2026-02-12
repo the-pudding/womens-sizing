@@ -27,6 +27,7 @@
   import checkScrollDir from "../../utils/checkScrollDir.js";
   import ArrowDraw from "$components/womens_sizes/ArrowDraw.svelte";
 	import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
+  import { isMobile, initMobileWatcher } from '$utils/isMobile.js';
 
 
   /*** SCROLLY ***/
@@ -49,7 +50,7 @@
   let height = $derived(containerHeight - margin.top - margin.bottom);
   // let avatarWidth = $derived(width / 20);
   // let avatarHeight = $derived(avatarWidth * 1.2);
-  let avatarHeight = $derived(height / 9)
+  let avatarHeight = $derived($isMobile ? height/12 : height/9)
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
@@ -174,18 +175,55 @@ let positionedAvatars = $derived.by(() => {
     if (!pointsData?.length || containerWidth === 0 || containerHeight === 0) return [];
 
     const data = pointsData
-        .map(d => ({ 
-            ...d, 
-            value: d[valueKey] === "" ? null : +d[valueKey] 
-        }))
+        .map(d => {
+            const val = d[valueKey] === "" ? null : +d[valueKey];
+            const targetX = xScale(val);
+            
+            // 2. PIN THE PERCENTILE NODES
+            // If it's a "p" node, we set fx/fy to lock it to the exact scale coordinate.
+            // This makes the 'strength' settings irrelevant for these specific nodes.
+            if (d.id.startsWith("p")) {
+                let targetY;
+                
+                if (d.id === "p50") {
+                    // Lock Median exactly at the vertical center
+                    targetY = height / 2;
+                } else {
+                    // Lock p10, p90, etc., at 1/4 of the height
+                    targetY = height/2 + avatarHeight/2.5;
+                }
+
+                return { 
+                    ...d, 
+                    value: val, 
+                    fx: targetX, 
+                    fy: targetY 
+                };
+            }
+
+            return { ...d, value: val };
+        })
         .filter(d => d.value !== null && !isNaN(d.value));
+    
+    const xStrength = $isMobile ? 5 : 1;
+    const yStrength = $isMobile ? 0.1 : 0.1;
+    const collideRadius = $isMobile ? (avatarHeight / 5) : (avatarHeight / 5);
+
+    console.log({$isMobile, xStrength, yStrength, collideRadius})
 
     const sim = forceSimulation(data)
-        .force('x', forceX(d => xScale(d.value)).strength(5))
-        .force('y', forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
-        .force('collide', forceCollide(avatarHeight / 5))
+        .force('x', forceX(d => xScale(d.value)).strength(xStrength))
+        .force('y', forceY(height/2).strength(yStrength))
+        .force('collide', forceCollide(collideRadius).iterations(3))
         .alphaDecay(0.02)
         .stop();
+      
+        // const sim = forceSimulation(data)
+    // .force('x', forceX(d => xScale(d.value)).strength(5))
+    // .force('y', forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
+    // .force('collide', forceCollide(avatarHeight / 5))
+    // .alphaDecay(0.02)
+    // .stop();
 
     for (let i = 0; i < 300; ++i) sim.tick();
 
@@ -204,8 +242,8 @@ let positionedAvatars = $derived.by(() => {
       }
     }).map((d, i) => ({
         ...d,
-        x: Math.round(d.x), // Round the X
-        y: Math.round(d.y),
+        x: d.x, // Round the X
+        y: d.y,
         randomDelay: Math.random() * 0.2
   }));
 });
@@ -232,6 +270,7 @@ let positionedAvatars = $derived.by(() => {
 
   $effect(() => {
     // Sets up axis
+    console.log($isMobile)
     if (containerWidth > 0) {
       selectAll("#beeswarm .x-axis")
         .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => {
@@ -282,6 +321,9 @@ let positionedAvatars = $derived.by(() => {
 
   onMount(() => {
       initMotionWatcher();
+
+      const stop = initMobileWatcher(700);
+      return stop; // Clean up when the app unmounts
   });
 </script>
 
