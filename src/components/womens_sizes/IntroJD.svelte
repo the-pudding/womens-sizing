@@ -179,17 +179,12 @@ let positionedAvatars = $derived.by(() => {
             const val = d[valueKey] === "" ? null : +d[valueKey];
             const targetX = xScale(val);
             
-            // 2. PIN THE PERCENTILE NODES
-            // If it's a "p" node, we set fx/fy to lock it to the exact scale coordinate.
-            // This makes the 'strength' settings irrelevant for these specific nodes.
             if (d.id.startsWith("p")) {
                 let targetY;
                 
                 if (d.id === "p50") {
-                    // Lock Median exactly at the vertical center
                     targetY = height / 2;
                 } else {
-                    // Lock p10, p90, etc., at 1/4 of the height
                     targetY = height/2 + avatarHeight/2.5;
                 }
 
@@ -217,13 +212,6 @@ let positionedAvatars = $derived.by(() => {
         .force('collide', forceCollide(collideRadius).iterations(3))
         .alphaDecay(0.02)
         .stop();
-      
-        // const sim = forceSimulation(data)
-    // .force('x', forceX(d => xScale(d.value)).strength(5))
-    // .force('y', forceY(height / 2).strength(d => d.id.startsWith("p") ? 5 : 0.2))
-    // .force('collide', forceCollide(avatarHeight / 5))
-    // .alphaDecay(0.02)
-    // .stop();
 
     for (let i = 0; i < 300; ++i) sim.tick();
 
@@ -242,7 +230,7 @@ let positionedAvatars = $derived.by(() => {
       }
     }).map((d, i) => ({
         ...d,
-        x: d.x, // Round the X
+        x: d.x,
         y: d.y,
         randomDelay: Math.random() * 0.2
   }));
