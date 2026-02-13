@@ -125,7 +125,23 @@
     let tooltipY = $state();
     let tooltipSide = $state('left');
 
+    function handleGlobalClick(e) {
+        if (!tooltipVisible) return;
+        if (!e.target.closest('.size-circle')) {
+            hideTooltip();
+        }
+    }
+
+    function handleScroll() {
+        if (tooltipVisible) {
+            hideTooltip();
+        }
+    }
+
     function showTooltip(size, e) {
+
+        if (e.stopPropagation) e.stopPropagation();
+
         tooltipBrand = size.brand || "ASTM";
         tooltipAlphaSize = size.alphaSize;
         tooltipNumericSizeMin = size.numericSizeMin;
@@ -208,7 +224,20 @@
                     return d % 5 === 0 ? `${d}"` : "";
                 }));
         }
-    })
+    });
+
+    $effect(() => {
+        if (typeof window !== 'undefined') {
+            window.addEventListener('click', handleGlobalClick);
+            // Passive: true improves scroll performance
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            return () => {
+                window.removeEventListener('click', handleGlobalClick);
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }
+    });
 
     onMount(() => {
       initMotionWatcher();
@@ -283,17 +312,22 @@
                                         style="left: {xScale(size.waistMin)}px;
                                             width: {xScale(size.waistMax) - xScale(size.waistMin)}px;">
                                     </div>
-                                    <div onmouseenter={(e) => showTooltip(size, e)} 
-                                        onmouseleave={hideTooltip} 
-                                        role="tooltip"
-                                        class="size-circle size-circle-{size.sizeRange}" 
-                                        style="left: {xScale(size.waistMin)}px;"></div>
-                                    <div 
+                                    <button
+                                        onclick={(e) => showTooltip(size, e)} 
                                         onmouseenter={(e) => showTooltip(size, e)} 
-                                        onmouseleave={hideTooltip} 
+                                        onmouseleave={hideTooltip}
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
-                                        style="left: {xScale(size.waistMax)}px;"></div>
+                                        style="left: {xScale(size.waistMin)}px;">
+                                    </button>
+                                    <button 
+                                        onclick={(e) => showTooltip(size, e)} 
+                                        onmouseenter={(e) => showTooltip(size, e)} 
+                                        onmouseleave={hideTooltip}
+                                        role="tooltip"
+                                        class="size-circle size-circle-{size.sizeRange}" 
+                                        style="left: {xScale(size.waistMax)}px;">
+                                </button>
                                     {#if (value == 2 && size.alphaSize == "L")  ||
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
                                         (value == 9 && Math.abs(+size.waistMin - medianWaistline) <= 1)}
@@ -311,12 +345,14 @@
                                     {/if}
                                 <!-- Else just the min circle -->
                                 {:else}
-                                    <div 
+                                    <button 
+                                        onclick={(e) => showTooltip(size, e)} 
                                         onmouseenter={(e) => showTooltip(size, e)} 
-                                        onmouseleave={hideTooltip} 
+                                        onmouseleave={hideTooltip}
                                         role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
-                                        style="left: {xScale(size.waistMin)}px;"></div>
+                                        style="left: {xScale(size.waistMin)}px;">
+                                    </button>
                                     {#if (value == 2 && size.alphaSize == "L")  ||
                                         (value == 3 && brand.brandName == "ASTM" && size.numericSizeMin == "10") ||
                                         (value == 4 && Math.abs(+size.waistMin - median15Waistline) <= 1) ||
@@ -571,6 +607,7 @@
         transition: all var(--ms-500) linear;
         cursor: pointer;
         background: var(--ws-blue);
+        padding: 0;
     }
 
     .size-circle-Regular {

@@ -19,7 +19,23 @@
     let tooltipVisible = $state(false);
     let tooltipSize = $state();
 
+    function handleGlobalClick(e) {
+        if (!tooltipVisible) return;
+        
+        if (!e.target.closest('.size')) {
+            hideTooltip();
+        }
+    }
+
+    function handleScroll() {
+        if (tooltipVisible) {
+            hideTooltip();
+        }
+    }
+
     function showTooltip(size, e) {
+        if (e && e.stopPropagation) e.stopPropagation();
+
         if (size.size == "0" || size.size == "00") return;
         tooltipVisible = true;
         tooltipSize = +size.size;
@@ -101,6 +117,18 @@
                 .call(axisBottom(xScale).tickValues(tickValues).tickFormat(d => d % 2 === 0 ? `${d}"` : ""));
         }
     });
+
+    $effect(() => {
+        if (typeof window !== 'undefined') {
+            window.addEventListener('click', handleGlobalClick);
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            return () => {
+                window.removeEventListener('click', handleGlobalClick);
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }
+    });
 </script>
 
 <div class="outer-container">
@@ -126,8 +154,9 @@
                         </div>
                         <div class="form-wrapper" bind:clientWidth={containerWidth}>
                             {#each year[1] as size}
-                                <div onmouseenter={(e) => showTooltip(size, e)} 
-                                    onmouseleave={hideTooltip} 
+                                <button onclick={(e) => showTooltip(size, e)} 
+                                    onmouseenter={(e) => showTooltip(size, e)} 
+                                    onmouseleave={hideTooltip}
                                     role="tooltip"
                                     class="size" 
                                     style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? xScale(size.waist) : xScale(24))}px;
@@ -140,7 +169,7 @@
                                     <p class="size-inches"
                                         class:visible={tooltipVisible && tooltipSize == +size.size}>
                                         {size.waist}"</p>
-                                </div>
+                                </button>
                             {/each}
                         </div>
                     </div>
@@ -326,6 +355,9 @@
         display: flex; 
         align-items: center; 
         justify-content: center;
+        background: transparent;
+        border: none;   
+        padding: 0;
     }
     .size .size-label { 
         position: absolute; 
