@@ -9,8 +9,6 @@
 	import Sewing from "$components/womens_sizes/Sewing.svelte";
 	import Outro from "$components/womens_sizes/Outro.svelte";
 	import Methods from "$components/womens_sizes/Methods.svelte";
-
-
 </script>
 
 <div class="grid-bg"></div>
@@ -24,11 +22,6 @@
 <MassProduction />
 <Outro />
 <Methods />
-
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<Footer recirc={true} />
 </svelte:boundary>
-
-<style>
-
-</style>
