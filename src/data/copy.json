@@ -1,7 +1,10 @@
 {
-  "metaTitle": "Sizing chaos",
-  "metaDescription": "The inter-generational struggle to find clothes that fit more than a tiny portion of women",
-  "metaKeywords": "",
+  "meta": {
+    "title": "Sizing chaos",
+    "description": "The inter-generational struggle to find clothes that fit more than a tiny portion of women",
+    "url": "hhttps://pudding.cool/2026/02/womens-sizing",
+    "keywords": "women, size, clothing, clothes, fashion, body, shape, woman, girl, data"
+  },
   "heroText": "Like many girls her age, she loves to keep up with the latest fashion trends and explore new ways to express herself. Shopping is fun, but it won’t always be this way.",
   "byline": "By <a href=https://pudding.cool/author/amanda-sakuma/>Amanda Sakuma</a>",
   "withline": "with <a href=https://pudding.cool/author/jan-diehm/>Jan Diehm</a>",
@@ -108,7 +111,7 @@
     },
     {
       "type": "text",
-      "value": "Sizes vary wildly from store to store. Even within a single apparel company, no one size is consistent. There are no regulations or universal sizing standards. Instead each brand is incentivized to make up their own. When size guides change — and they’re always changing — brands are not obligated to disclose updates."
+      "value": "Sizes vary wildly from store to store. Even within a single apparel company, no one size is consistent. There are no regulations or universal sizing standards. Instead each brand is incentivized to make up its own. When size guides change — and they’re always changing — brands are not obligated to disclose updates."
     },
     {
       "type": "text",
@@ -232,7 +235,7 @@
       "step": "1",
       "visual": "display 1995 + 2021 astm sizes",
       "animation": "add 2021 sizes; highlight size 2 from 2021 + size 8 from 1995",
-      "text": "<p>In the early 2000s ASTM added size 00 and 0 to pad out the bottom of the range.</p>\r\n<p>Now today, because of vanity sizing, we can see an upward shift in all sizes. ASTM guidelines span <span class=bold>15.12 inches</span> from 25.38–40.5 inches for sizes 00–20. </p>"
+      "text": "<p>In the early 2000s ASTM added size 00 and 0 to pad out the bottom of the range.</p>\r\n<p>Today, because of vanity sizing, we can see an upward shift in all sizes. ASTM guidelines span <span class=bold>15.12 inches</span> from 25.38–40.5 inches for sizes 00–20. </p>"
     },
     {
       "step": "2",
