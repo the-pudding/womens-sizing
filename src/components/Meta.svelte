@@ -6,6 +6,9 @@
 		keywords = "",
 		preloadFont = []
 	} = $props();
+
+	const cleanUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+    const ogImage = `${cleanUrl}/assets/og.jpg`;
 </script>
 
 <svelte:head>
@@ -21,7 +24,8 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:locale" content="en_US" />
 
-	<meta property="og:image" content="{url}/assets/social.jpg" />
+	<meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
 	<meta property="og:image:type" content="image/jpeg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
@@ -31,11 +35,11 @@
 	<meta name="twitter:creator" content="@puddingviz" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image:src" content="{url}/assets/social.jpg" />
+	<meta name="twitter:image:src" content={ogImage} />
 
 	<meta name="robots" content="max-image-preview:large" />
 
-	<link rel="canonical" href="{url}/" />
+	<link rel="canonical" href="https://pudding.cool/2026/02/womens-sizing/" />
 
 	{#each preloadFont as href}
 		<link rel="preload" {href} as="font" type="font/woff2" crossorigin />
