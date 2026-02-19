@@ -41,7 +41,7 @@
   let avatarWidth = $derived(Math.round(avatarHeight * (290 / 969)));
 
   /*** SCALES ***/
-  const xScale = $derived(d3.scaleLinear().domain([20, 60]).range([margin.left, width - margin.right - margin.left]));
+  const xScale = $derived(d3.scaleLinear().domain([20, 50]).range([margin.left, width - margin.right - margin.left]));
   const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
 
   /*** TWEENS ***/
@@ -281,7 +281,7 @@ let positionedAvatars = $derived.by(() => {
     <div class="visual-container">
       {#if (isNaN(currentId) || currentId == 0) && introScroll && currentId !== "exit"}
           <div transition:fade={{duration: 500}} class="intro-title">
-              <h1 class="visually-hidden">{copy.metaTitle}</h1>
+              <!-- <h1 class="visually-hidden">{copy.metaTitle}</h1>
               <h2>
                 <p class="mono"><Leet string="meet your typical" /></p>
                 <Ransom string="tween" />
@@ -290,14 +290,14 @@ let positionedAvatars = $derived.by(() => {
               <div class="scroll-hint">
                 <p> Scroll</p>
                <ArrowDraw />
-              </div>
+              </div> -->
           </div>
       {/if}
       {#if (currentId >= 2 && currentId < 7) || (currentId >= 8)}
-        <div transition:fade={{duration: 500}} class="size-key">
+        <!-- <div transition:fade={{duration: 500}} class="size-key">
           <p>{sizeLabel}</p>
           <p>Sizes: {filteredASTM && filteredASTM.length > 0 ? filteredASTM[0].sizeRange : ''}</p>
-        </div>
+        </div> -->
       {/if}
       <div id="beeswarm" 
         class="chart-container" 
@@ -408,6 +408,7 @@ let positionedAvatars = $derived.by(() => {
     <Scrolly bind:value>
       {#each filteredStages as stage}
         <div 
+        style="opacity: 0"
           class="step step{stage.id} step-{stage.textPos}"
         >
           {#if stage.text}
@@ -425,12 +426,17 @@ let positionedAvatars = $derived.by(() => {
     .outer-container {
         position: relative;
         width: 100%;
+        /* padding-top: 250px;     */
+        padding-bottom: 350px; 
+        padding-left: 20px;  
+        padding-right: 100px;
     }
     .sticky-container {
         position: sticky;
         top: 0;
         height: 100svh;
         width: 100%;
+        padding-bottom: 50px;
         z-index: 1;
     }
     .visual-container {
@@ -486,7 +492,7 @@ let positionedAvatars = $derived.by(() => {
         position: absolute;
         top: 0;
         right: 0;
-        width: 60%;
+        width: 80%;
         padding: 0 10% 0 0;
         height: 100svh;
         display: flex;

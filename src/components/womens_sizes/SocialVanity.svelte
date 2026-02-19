@@ -64,7 +64,7 @@
     const margin = 16;
     const xScale = $derived(
         d3.scaleLinear()
-            .domain([22, 42])
+            .domain([22, 40])
             .range([margin, containerWidth - margin])
     );
     const tickValues = $derived(d3.range(xScale.domain()[0], xScale.domain()[1] + 1));
@@ -191,9 +191,13 @@
         <Scrolly bind:value>
             {#each copy.vanityScroll as stage, i}
                 <div id="step-{i}" 
-                style="opacity: 0;"
+                style="opacity: 0"
                 class="step">
-                    <div class="text"><p>{@html stage.text}</p></div>
+                    <div class="text">
+                        <!-- <p>{@html stage.text}</p> -->
+                        <p><span class=bold>Vanity sizing has exploded over the last 30 years.</span></p>
+                        <p>A <span class=orange-outline>size 8</span> from 1995 is now roughly equivalent to a <span class=orange-outline>size 2</span> today.</p>
+                    </div>
                 </div>
             {/each}
         </Scrolly>
@@ -243,7 +247,8 @@
     }
     
     .visual-container { 
-        width: 100%; height: 100%; 
+        /* padding-top: 350px; */
+        width: 100%; height: 80%; 
         display: flex; justify-content: center; align-items: center; 
     }
 
@@ -258,7 +263,7 @@
     }
 
     .year-row {
-        width: 100%; 
+        width: 80%; 
         display: flex; 
         flex-direction: row; 
         justify-content: center;
@@ -272,12 +277,14 @@
         width: var(--label-width); 
         flex-shrink: 0; 
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+ 
+        padding-left: 100px
     }
     .year-label p { 
         font-family: var(--mono); 
         font-weight: 700; 
-        font-size: 24px; 
+        font-size: 20px; 
         line-height: 1.2;
     }
 
@@ -462,7 +469,8 @@
     .step { 
         height: 100vh; 
         display: flex; 
-        justify-content: center; 
+        justify-content: center;
+        margin-left: -80px; 
         align-items: center; 
     }
 
@@ -472,7 +480,7 @@
     }
 
     .step .text { 
-        max-width: 500px; 
+        max-width: 475px; 
         width: 90%; 
         padding: 20px; 
         background: white; 
@@ -480,6 +488,8 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
         pointer-events: auto;
         font-family: var(--sans);
+        font-size: var(--20px);
+        /* line-height: 1.65; */
     }
     
     #tooltip { 
@@ -557,5 +567,30 @@
         :global(.x-axis-svg .tick:nth-of-type(even) text) {
             display: none;
         }
+
+        .top-labels {
+    position: absolute;
+    top: 1rem;
+    left: calc(var(--label-offset) + (2 * var(--padding-offset)));
+    width: calc(100% - var(--label-offset) - (2 * var(--padding-offset)));
+    display: flex;
+    flex-direction: column;
+    gap: 160px; /* Same as year-row height */
+    pointer-events: none;
+}
+
+.top-label {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.top-label.visible {
+    opacity: 1;
+}
     }
 </style>

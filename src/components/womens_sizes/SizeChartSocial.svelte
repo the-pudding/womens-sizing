@@ -202,11 +202,18 @@
             <Ransom string="universal" />
             <Leet string="sizing is not" />
         </h2>
-        {#each copy.sizeIntro as block}
+        <p>Few life experiences feel as universal, across generations, as the pains and frustrations of trying to find clothes that fit. </p>
+        <p>Sizes vary wildly from store to store. There are no regulations or universal sizing standards. Instead each brand is incentivized to make up their own. When size charts change — and they’re always changing — brands are not obligated to disclose updates. </p>
+        <p>The industry continues to cling onto a sizing system that’s been broken for decades. And it’s only gotten worse. </p>
+        <!-- {#each copy.sizeIntro as block}
             <p>{@html block.value}</p>
-        {/each}
+        {/each} -->
     </div>
+   
     <div class="sticky-container">
+        <!-- <div style="padding-top: 20px;">
+            <h2>Size charts are chaotic and inconsistent</h2>
+        </div> -->
         <div class="visual-container">
             <p class="axis-label">Waistline in Inches</p>
             <div id="size-chart" class="chart-container" bind:clientHeight={containerHeight} bind:clientWidth={containerWidth}>
@@ -383,9 +390,12 @@
         <Scrolly bind:value>
             {#each copy.sizeScroll as stage, i}
                 <div
-                    style="opacity: 0;"
+                    style="opacity: 0"
                     class="step" id="step-{i}">
                     <div class="text">
+                        
+                        <p><span class=bold>Size charts show major inconsistences across brands.</span></p>
+                        <p>For example, here’s every option labeled as a <span class=bold>Size Large</span>, spanning waistlines from 29 to 34 inches.</p>
                         <p>{@html stage.text}</p>
                     </div>
                 </div>
@@ -426,9 +436,10 @@
     .outer-container {
         position: relative;
         width: 100%;
-        padding-bottom: 350px; 
-        padding-left: 20px;  
-        padding-right: 20px;
+        margin: 0 auto;
+        /* padding-bottom: 350px;  */
+        /* padding-left: 20px;   */
+        /* padding-right: 20px; */
     }
 
     .text-block {
@@ -470,9 +481,9 @@
         z-index: 1;
     }
     .visual-container {
-        width: 100%;
-        height: 90%;
-        padding-top: 50px;
+        width: 85%;
+        height: 70%;
+        padding-top: 250px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -481,8 +492,8 @@
 
     .axis-label {
       position: absolute;
-      bottom: 1rem;
-      margin: 0 0 0 -1rem;
+      bottom: -20rem;
+      /* margin: 0 0 0 -1rem; */
       font-family: var(--mono);
       font-size: var(--14px);
       font-weight: 700;
@@ -491,9 +502,9 @@
     }
 
     .chart-container {
-        width: 100%;
-        padding: 2rem 2rem 4rem 2rem;
-        height: 90svh;
+        width: 90%;
+        padding: 2rem 2rem 3rem 2rem;
+        height: 95svh;
         margin: 0 auto;
         position: relative;
         display: flex;
@@ -686,13 +697,14 @@
         height: 100vh;
         display: flex;
         padding: 40vh 5% 70vh;
+        margin-right: 60px;
         justify-content: flex-end;
         align-items: center;
         font-family: var(--sans);
         font-size: var(--18px);
     }
     .step .text {
-        max-width: 500px;
+        max-width: 400px;
         width: 90%;
         padding: 20px;
         background: white;

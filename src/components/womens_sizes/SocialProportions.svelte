@@ -101,8 +101,8 @@
     }
   
     .visual-container {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
         display: flex;
         position: relative;
         justify-content: center;

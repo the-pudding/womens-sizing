@@ -19,7 +19,7 @@
 
         <div class="title-page-body">
             {#each copy.outro as graf, i}
-                <p>{@html graf.value}</p>
+                <!-- <p>{@html graf.value}</p> -->
             {/each}
         </div>
     </div>

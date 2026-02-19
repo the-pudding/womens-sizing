@@ -78,6 +78,79 @@
       "id": "14"
     }
   ],
+  "socialScroll": [
+    {
+      "id": "0"
+    },
+    {
+      "id": "1",
+      "textPos": "right",
+      "text": "“Junior’s” clothing lines often channel tweens’ interests with youthful styles that fit young girls as they grow.\r\n\r\n\r\nFor now, our typical <span class=bold>11-year-old</span> wears a size 9 in the junior’s section, which is also considered a size <span class=orange-outline>Medium</span>."
+    },
+    {
+      "id": "2",
+      "textPos": "right",
+      "text": "But not all tweens wear the same size.\r\n\r\n\r\nIf we were to look at a sample of all <span class=bold>10- and 11-year-old girls</span> in the U.S. from the <a href=https://stacks.cdc.gov/view/cdc/174595> National Center for Health Statistics,</a> here are the junior’s sizes that match up with their waistline measurements."
+    },
+    {
+      "id": "3",
+      "textPos": "right",
+      "text": "By <span class=bold>age 15</span>, most girls have gone through growth spurts and puberty, and they’ve reached their adult height. \r\n\r\n\r\nMany have started to outgrow the junior’s size section."
+    },
+    {
+      "id": "4",
+      "textPos": "right",
+      "text": "This marks an important turning point as they shift into <span class=bold>women’s sizes.</span>"
+    },
+    {
+      "id": "5",
+      "textPos": "right",
+      "text": "Girls who fall along the bottom <span class=bold>10th percentile</span> can now wear an <span class=bold>Extra Small</span> in women’s clothing, while girls near the <span class=bold>90th percentile</span> will find that an <span class=bold>Extra Large</span> generally fits. \r\n\r\n\r\nThe median 15-year-old wears a Medium, as she has throughout most of her childhood."
+    },
+    {
+      "id": "6",
+      "textPos": "right",
+      "text": "This means for the first time ever, most girls in their cohort will be able to find a size in the women’s clothing section."
+    },
+    {
+      "id": "7",
+      "textPos": "center",
+      "text": "This will also likely be the  <span class=bold>last time this ever happens in their lives.</span>"
+    },
+    {
+      "id": "8",
+      "textPos": "center",
+      "text": "But as the <span class=bold> median woman</span> ages, her sizing options get slimmer and slimmer."
+    },
+    {
+      "id": "9",
+      "textPos": "center",
+      "text": "But as the <span class=bold> median woman</span> ages, her sizing options get slimmer and slimmer."
+    },
+    {
+      "id": "10",
+      "textPos": "center",
+      "text": "But as the <span class=bold> median woman</span> ages, her sizing options get slimmer and slimmer."
+    },
+    {
+      "id": "11",
+      "textPos": "center",
+      "text": "But as the <span class=bold> median woman</span> ages, her sizing options get slimmer and slimmer."
+    },
+    {
+      "id": "12",
+      "textPos": "center",
+      "text": "Until eventually, she joins <span class=bold>over half of all adult women</span> who are pushed out of ‘Regular’ size ranges."
+    },
+    {
+      "id": "13",
+      "textPos": "center",
+      "text": "Altogether, the median woman is among <span class=bold>over half of all adults</span> who are pushed out of ‘Regular’ size ranges."
+    },
+    {
+      "id": "14"
+    }
+  ],
   "introBreak": [
     {
       "type": "text",
@@ -233,7 +306,7 @@
       "step": "2",
       "visual": "display 1995 + 2021 astm sizes",
       "animation": "highlight size 8 from 2021",
-      "text": "By comparison, today’s <span class=blue-span>size 8</span> is <span class=bold>2.5 inches</span> larger in the waist than it was 30 years ago."
+      "text": "A <span class=orange-outline>size 8</span> from 30 years ago is now considered roughly a <span class=orange-outline>size 2</span> today."
     },
     {
       "step": "3",
@@ -486,4 +559,5 @@
       "url": "https://www.vox.com/2016/8/3/12353906/womens-clothing-sizes-vanity-sizing"
     }
   ]
+  
 }

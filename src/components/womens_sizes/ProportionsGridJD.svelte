@@ -204,10 +204,10 @@
             <span class="purple-span" style="height: 40px; display: flex; align-items: center;">Regular</span>
             <span class="green-span" style="height: 40px; display: flex; align-items: center;">Plus</span>
         </p>
-        <div class="dropdown" class:visible={value >= 10}>
+        <!-- <div class="dropdown" class:visible={value >= 10}>
             <p>Highlight</p>
             <Select options={finalSortedSizeList} value={selectedSize} on:change={handleSizeChange}/>
-        </div>
+        </div> -->
     </div>
     <div class="outer-container" id="proportions" transition:fade={{ duration: 400 }}>
         {#each brands as brand, i}
