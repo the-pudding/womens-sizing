@@ -124,6 +124,7 @@
     let tooltipX = $state();
     let tooltipY = $state();
     let tooltipSide = $state('left');
+    let hoveredSizeKey = $state(null);
 
     function handleGlobalClick(e) {
         if (!tooltipVisible) return;
@@ -138,9 +139,14 @@
         }
     }
 
-    function showTooltip(size, e) {
+    function showTooltip(size, e, brandName) {
 
         if (e.stopPropagation) e.stopPropagation();
+
+        const currentBrand = brandName || size.brand || "ASTM";
+        hoveredSizeKey = getSizeKey(currentBrand, size);
+
+        console.log(size)
 
         tooltipBrand = size.brand || "ASTM";
         tooltipAlphaSize = size.alphaSize;
@@ -161,6 +167,15 @@
 
     function hideTooltip() {
         tooltipVisible = false;
+        hoveredSizeKey = null;
+    }
+
+    function getSizeKey(brandName, size) {
+        const sizeId = (size.alphaSize && size.alphaSize !== "") 
+            ? size.alphaSize 
+            : size.numericSizeMin;
+            
+        return `${brandName}-${sizeId}`;
     }
     
     // SCALE
@@ -313,19 +328,21 @@
                                             width: {xScale(size.waistMax) - xScale(size.waistMin)}px;">
                                     </div>
                                     <button
+                                        aria-label="{brand.brandName} {size.alphaSize}"
                                         onclick={(e) => showTooltip(size, e)} 
-                                        onmouseenter={(e) => showTooltip(size, e)} 
+                                        onmouseenter={(e) => showTooltip(size, e, brand.brandName)} 
                                         onmouseleave={hideTooltip}
-                                        role="tooltip"
-                                        class="size-circle size-circle-{size.sizeRange}" 
+                                        class="size-circle size-circle-{size.sizeRange}"
+                                        class:is-highlighted={hoveredSizeKey === getSizeKey(brand.brandName, size)}
                                         style="left: {xScale(size.waistMin)}px;">
                                     </button>
                                     <button 
+                                        aria-label="{brand.brandName} {size.alphaSize}"
                                         onclick={(e) => showTooltip(size, e)} 
-                                        onmouseenter={(e) => showTooltip(size, e)} 
+                                        onmouseenter={(e) => showTooltip(size, e, brand.brandName)} 
                                         onmouseleave={hideTooltip}
-                                        role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
+                                        class:is-highlighted={hoveredSizeKey === getSizeKey(brand.brandName, size)}
                                         style="left: {xScale(size.waistMax)}px;">
                                 </button>
                                     {#if (value == 2 && size.alphaSize == "L")  ||
@@ -346,10 +363,10 @@
                                 <!-- Else just the min circle -->
                                 {:else}
                                     <button 
+                                        aria-label="{brand.brandName} {size.alphaSize}"
                                         onclick={(e) => showTooltip(size, e)} 
-                                        onmouseenter={(e) => showTooltip(size, e)} 
+                                        onmouseenter={(e) => showTooltip(size, e, brand.brandName)} 
                                         onmouseleave={hideTooltip}
-                                        role="tooltip"
                                         class="size-circle size-circle-{size.sizeRange}" 
                                         style="left: {xScale(size.waistMin)}px;">
                                     </button>
@@ -624,6 +641,14 @@
 
     .size-circle:hover {
         transform: translateY(-50%) scale(2);
+        z-index: 1001;
+        outline: 1px solid white
+    }
+
+    .size-circle.is-highlighted {
+        transform: translateY(-50%) scale(2);
+        z-index: 1001;
+        outline: 1px solid white
     }
 
     .brand-line {
