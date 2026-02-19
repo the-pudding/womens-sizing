@@ -26,7 +26,7 @@
     // DIMENSIONS
     let containerHeight = $state(0);
     let containerWidth = $state(0);
-    const margin = {top: 0, bottom: 16, left: 32, right: 32}
+    const margin = {top: 0, bottom: 16, left: 32, right: 32};
 
     // SCROLLY
     let value = $state(0);

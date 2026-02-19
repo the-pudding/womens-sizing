@@ -6,6 +6,8 @@
     import bodice from "$svg/graded-sizes-full-bodice-alt.svg";
     import blockAmanda from "$svg/block-amanda.svg";
     import blockStandard from "$svg/block-standard.svg";
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
+
 
     let blockCentered = $state(true);
 
@@ -18,7 +20,8 @@
             return id && id.startsWith("size") && id !== `size${centralSize}`;
         });
 
-        outerSizes
+        if (!$reducedMotion) {
+            outerSizes
             .transition()
             .delay(function() {
                 const id = select(this).attr("id");
@@ -43,12 +46,19 @@
                         });
                 }
             });
+        } else {
+            outerSizes.style("opacity", 1);
+        }
     }
 
     function loopBlock() {
-        setInterval(() => {
-            blockCentered = !blockCentered;
-        }, 4000);
+        if (!$reducedMotion) {
+            setInterval(() => {
+                blockCentered = !blockCentered;
+            }, 4000);
+        } else {
+            blockCentered = false;
+        }
     }
 
     onMount(() => {
@@ -78,29 +88,11 @@
                         <p class="image-caption">Drafting a custom pattern based on my body measurements and proportions</p>
                     </div>
                 {/if}
-                <!-- {#if i == 1}
-                    <div class="grid">
-                        {#each shapeGrid as shape, i}
-                            <div class="shape">
-                                <p>{shape}</p>
-                            </div>
-                        {/each}
-                    </div>
-                {/if} -->
                 {#if i == 3}
                     <div id="bodice-svg">
                         {@html bodice}
                     </div>
                 {/if}
-                <!-- {#if i == 1}
-                    <div class="grid">
-                        {#each clothingGrid as item, i}
-                            <div class="shape">
-                                <p>{item}</p>
-                            </div>
-                        {/each}
-                    </div>
-                {/if} -->
                 {#if i == 5}
                     <div class="block">
                         <div class="block-wrapper" style="transform: {!blockCentered ? 'translate(-90%, -50%)' : 'translate(-50%, -50%)'}">

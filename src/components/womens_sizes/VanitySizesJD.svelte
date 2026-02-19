@@ -11,6 +11,7 @@
     import Scrolly from '../helpers/Scrolly.svelte';
     import Ransom from "$components/womens_sizes/Ransom.svelte";
     import Leet from "$components/womens_sizes/Leet.svelte";
+    import { reducedMotion, initMotionWatcher } from "$utils/reduceMotion.js";
 
     // DIMENSIONS
     let containerWidth = $state(0);
@@ -157,9 +158,9 @@
                                 <button onclick={(e) => showTooltip(size, e)} 
                                     onmouseenter={(e) => showTooltip(size, e)} 
                                     onmouseleave={hideTooltip}
-                                    role="tooltip"
+                                    aria-label={`Size ${size.size} with a waist measurement of ${size.waist} inches`}
                                     class="size" 
-                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) ? xScale(size.waist) : xScale(24))}px;
+                                    style="left: {((year[0] == 1995 && move1995) || (year[0] == 2021 && move2021) || $reducedMotion ? xScale(size.waist) : xScale(24))}px;
                                     pointer-events: {move1995 && move2021 && value >= 5 && (size.size != '0' && size.size != '00') ? 'auto' : 'none'};"
                                     class:scaled={(value == 2 && size.size == "8" && !tooltipVisible) 
                                         || (value == 4 && size.size == "18" && !tooltipVisible)
@@ -498,7 +499,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         border: 2px solid var(--color-fg);
         opacity: 0; 
-        transition: opacity 250ms;
+        transition: opacity var(--ms-250);
         z-index: 1000;
     }
     .diff.visible { opacity: 1; }

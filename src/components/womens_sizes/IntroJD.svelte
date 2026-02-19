@@ -69,11 +69,17 @@
 	/*** TWEENS ***/
 	let animatedBand = tweened(
 		{ y: 0, height: 0 },
-		{ duration: 500, easing: easeCubicInOut }
+		{ 
+			duration: (from, to) => $reducedMotion ? 0 : 500, 
+			easing: easeCubicInOut 
+		}
 	);
 	let animatedHighlight = tweened(
 		{ x: 0, y: 0, width: 0, height: 0 },
-		{ duration: 500, easing: easeCubicInOut }
+			{ 
+			duration: (from, to) => $reducedMotion ? 0 : 500, 
+			easing: easeCubicInOut 
+		}
 	);
 
 	/*** FILTERS ***/
@@ -447,6 +453,7 @@
 				{#if currentId >= 2}
 					<p class="axis-label">Waistline in Inches</p>
 				{/if}
+				{#if containerWidth > 0 && containerHeight > 0}
 				<svg {width} {height}>
 					{#if currentSizeRanges}
 						{@const minWaist = min(currentSizeRanges, (d) => d.min)}
@@ -454,7 +461,7 @@
 						<g class="size-backgrounds">
 							{#each currentSizeRanges as sizeRange, i}
 								{@const x = xScale(sizeRange.min)}
-								{@const rectWidth = xScale(sizeRange.max) - x}
+								{@const rectWidth = Math.max(0, xScale(sizeRange.max) - x)}
 								<g
 									class="size-band-group"
 									id="band-{sizeRange.alphaSize}"
@@ -523,27 +530,8 @@
 						transform="translate(0, {height - margin.top - margin.bottom})"
 						opacity={currentId >= 2 ? 1 : 0}
 					></g>
-
-					<!-- {#if positionedAvatars && avatarImages}
-            <g class="avatars">
-              {#each positionedAvatars as point, i}
-                <g class="avatar-group" 
-                    id={point.id}
-                    class:scaled={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll)}
-                    style="
-                      transition: {prefersReducedMotion ? 'none' : 'all var(--ms-500) ease-in-out'};
-                      --x: {point.x - avatarWidth / 2}px; 
-                      --y: {point.y - avatarHeight / 2}px; 
-                      --delay: {currentId == 'to-enter' ? '0s' : point.randomDelay + 's'};
-                    "
-                    opacity={(point.type == 'percentileMid' && currentId <= 1 && introScroll) || (point.type == 'percentileMid' && currentId == "to-enter" && introScroll) || currentId > 1 || currentId == "exit" || (currentId == "to-enter" && !introScroll) ? 1 : 0}
-                  >
-
-                </g>
-              {/each}
-            </g>
-          {/if} -->
 				</svg>
+				{/if}
 
 				<div
 					class="avatar-overlay"

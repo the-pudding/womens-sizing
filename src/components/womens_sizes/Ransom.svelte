@@ -53,29 +53,44 @@
         return String(num).padStart(3, "0");
     };
 
-    // Gets an image path from the letter and its random number
-    const randomizedImagePaths = letters.map((letter) => {
-        // If the letter is a space, add an isSpace flag
-        if (letter === " ") {
-            return { letter, isSpace: true };
+    const getSeededRandom = (seed, max) => {
+        // Basic hash function
+        let hash = 0;
+        for (let i = 0; i < seed.length; i++) {
+            hash = (hash << 5) - hash + seed.charCodeAt(i);
+            hash |= 0; // Convert to 32bit integer
         }
+        // Use the hash to pick a number between 1 and max
+        return (Math.abs(hash) % max) + 1;
+    };
 
-        // The letter is not a space, get the image path
+    // Gets an image path from the letter and its random number
+    const randomizedImagePaths = letters.map((letter, i) => {
+        if (letter === " ") return { letter, isSpace: true };
+
         const upper = letter.toUpperCase();
         const isSpecial = specialCharNames.hasOwnProperty(letter);
-        const randomNum = isSpecial ? getRandomIndex(3) : getRandomIndex(20);
+        
+        // Use the string + index as a seed so it's the same on Server and Client
+        const seed = `${string}-${letter}-${i}`;
+        
+        const randomNum = isSpecial ? getSeededRandom(seed, 3) : getSeededRandom(seed, 20);
         const padded = getFormattedNum(randomNum);
         
-        // If the letter is a special character, use its mapped name
+        // Pick rotation deterministically too
+        const rotationIndex = getSeededRandom(seed + "rot", rotations.length) - 1;
+        const rotation = rotations[rotationIndex];
+
         if (isSpecial) {
             return {
                 letter,
+                rotation,
                 src: `./assets/letters/png_letters/specialChars/${specialCharNames[letter]}-${padded}.png`
             };
-        // Otherwise use the letter itself
         } else {
             return {
                 letter,
+                rotation,
                 src: `./assets/letters/png_letters/${upper}/${upper}-${padded}.png`
             };
         }
@@ -89,11 +104,11 @@
     onexit={exitViewFly}
     role="img" 
     aria-label={string}>
-    {#each randomizedImagePaths as { letter, src, isSpace }, i (letter + i)}
+    {#each randomizedImagePaths as { letter, src, isSpace, rotation }, i (letter + i)}
         <span 
             class="ransom-letter" 
             style="width: {100/randomizedImagePaths.length}%;
-            transform: rotate({rotations[getRandomIndex(rotations.length - 1)]}deg);
+            transform: rotate({rotation}deg);
             animation-delay: {i * 200}ms;">
             
             {#if !isSpace}
