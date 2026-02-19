@@ -324,6 +324,7 @@
                                 <!-- If there is a range render pills and min/max circles -->
                                 {#if hasRange}
                                     <div class="pill pill-{size.sizeRange?.toLowerCase()}"
+                                        class:is-highlighted={hoveredSizeKey === getSizeKey(brand.brandName, size)}
                                         style="left: {xScale(size.waistMin)}px;
                                             width: {xScale(size.waistMax) - xScale(size.waistMin)}px;">
                                     </div>
@@ -726,6 +727,12 @@
         transform: translateY(-50%);
         z-index: -1;
         opacity: 0.2;
+        transition: opacity var(--ms-250) ease-out;
+    }
+
+    .pill.is-highlighted {
+        opacity: 0.8;
+        z-index: 1000; /* Bring it above other non-highlighted elements */
     }
 
     .pill-regular {
