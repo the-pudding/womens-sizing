@@ -25,3 +25,12 @@
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<Footer recirc={true} />
 </svelte:boundary>
+
+<style>
+	.tip-wrapper {
+		position: fixed;
+		top: 0; 
+		left: 0;
+		z-index: var(--z-overlay);
+	}
+</style>
